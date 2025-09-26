@@ -16,9 +16,11 @@ body {
 
 /* Color variables */
 :root {
-    --navy: #1e293b;
-    --gold: #fbbf24;
-    --light-gold: #fde68a;
+    --navy: #1e40af;
+    --blue: #3b82f6;
+    --light-blue: #93c5fd;
+    --red: #dc2626;
+    --light-red: #fca5a5;
     --white: #ffffff;
     --gray-50: #f9fafb;
     --gray-100: #f3f4f6;
@@ -26,6 +28,9 @@ body {
     --gray-300: #d1d5db;
     --gray-600: #4b5563;
     --gray-700: #374151;
+    /* Legacy variables for compatibility */
+    --gold: #dc2626;
+    --light-gold: #fca5a5;
 }
 
 /* Utility classes */
@@ -41,12 +46,12 @@ body {
 
 /* Header */
 header {
-    background-color: var(--navy);
+    background-color: var(--white);
     position: fixed;
     width: 100%;
     top: 0;
     z-index: 1000;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.15);
 }
 
 .header-content {
@@ -88,6 +93,14 @@ header {
     margin: 0;
 }
 
+.logo-image {
+    height: 3rem;
+    width: auto;
+    max-width: 200px;
+    border-radius: 8px;
+    padding: 0.25rem;
+}
+
 /* Navigation */
 nav {
     display: flex;
@@ -95,20 +108,21 @@ nav {
 }
 
 nav a {
-    color: var(--white);
+    color: var(--navy);
     text-decoration: none;
     transition: color 0.3s ease;
+    font-weight: 500;
 }
 
 nav a:hover {
-    color: var(--gold);
+    color: var(--red);
 }
 
 .mobile-menu-btn {
     display: none;
     background: none;
     border: none;
-    color: var(--white);
+    color: var(--navy);
     font-size: 1.5rem;
     cursor: pointer;
 }
@@ -123,13 +137,13 @@ nav a:hover {
 .mobile-menu a {
     display: block;
     padding: 0.5rem 0;
-    color: var(--white);
+    color: var(--navy);
     text-decoration: none;
     transition: color 0.3s ease;
 }
 
 .mobile-menu a:hover {
-    color: var(--gold);
+    color: var(--red);
 }
 
 /* Banner */
@@ -148,7 +162,7 @@ nav a:hover {
 
 .banner .subtitle {
     font-size: 1.5rem;
-    color: var(--light-gold);
+    color: var(--light-red);
     margin-bottom: 1rem;
 }
 
@@ -161,8 +175,8 @@ nav a:hover {
 }
 
 .btn-primary {
-    background-color: var(--gold);
-    color: var(--navy);
+    background-color: var(--red);
+    color: var(--white);
     padding: 0.75rem 2rem;
     border: none;
     border-radius: 0.5rem;
@@ -175,7 +189,7 @@ nav a:hover {
 }
 
 .btn-primary:hover {
-    background-color: #f59e0b;
+    background-color: #b91c1c;
     transform: translateY(-2px);
 }
 
@@ -567,6 +581,15 @@ footer {
     color: var(--gold);
     font-size: 0.875rem;
     margin: 0;
+}
+
+.footer-logo-image {
+    height: 2.5rem;
+    width: auto;
+    max-width: 150px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 6px;
+    padding: 0.2rem;
 }
 
 .footer h4 {
