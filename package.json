@@ -1,0 +1,54 @@
+{
+  "name": "cursillo-stewart",
+  "version": "1.0.0",
+  "description": "Sitio web oficial del Cursillo Stewart - Universidad Politécnica Taiwan Paraguay",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server --port=3000 --open=/index.html",
+    "dev": "live-server --port=3000 --open=/index.html --watch=.",
+    "build": "echo 'No build process needed for static site'",
+    "test": "echo 'No tests specified yet'",
+    "lint": "echo 'Linting not configured yet'",
+    "validate": "html-validate index.html"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/MatiasVeraG/Cursillo-Stewart.git"
+  },
+  "keywords": [
+    "cursillo",
+    "stewart",
+    "uptp",
+    "universidad",
+    "paraguay",
+    "taiwan",
+    "educacion",
+    "sitio-web",
+    "html",
+    "css"
+  ],
+  "author": {
+    "name": "Matias Vera G",
+    "email": "matias@uptp.edu.py",
+    "url": "https://github.com/MatiasVeraG"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/MatiasVeraG/Cursillo-Stewart/issues"
+  },
+  "homepage": "https://github.com/MatiasVeraG/Cursillo-Stewart#readme",
+  "devDependencies": {
+    "live-server": "^1.2.2",
+    "html-validate": "^8.0.0"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  }
+}
