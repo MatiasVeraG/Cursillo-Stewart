@@ -1,551 +1,816 @@
 <!DOCTYPE html>
 <html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="Cursillo Stewart - Programa introductorio de apoyo académico para aspirantes a la Universidad Politécnica Taiwan Paraguay (UPTP). Prepárate para tu futuro universitario.">
-    <meta name="keywords" content="cursillo, stewart, UPTP, universidad, paraguay, taiwan, educación, preparación universitaria">
-    <meta name="author" content="Universidad Politécnica Taiwan Paraguay">
-    <meta name="robots" content="index, follow">
-    
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Cursillo Stewart - Programa introductorio de apoyo académico para aspirantes a la Universidad Politécnica Taiwan Paraguay (UPTP). Prepárate para tu futuro universitario."
+    />
+    <meta
+      name="keywords"
+      content="cursillo, stewart, UPTP, universidad, paraguay, taiwan, educación, preparación universitaria"
+    />
+    <meta name="author" content="Universidad Politécnica Taiwan Paraguay" />
+    <meta name="robots" content="index, follow" />
+
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://cursillo-stewart.uptp.edu.py/">
-    <meta property="og:title" content="Cursillo Stewart - Universidad Politécnica Taiwan Paraguay">
-    <meta property="og:description" content="Programa introductorio de apoyo académico para aspirantes universitarios. Prepárate para tu futuro en UPTP.">
-    <meta property="og:image" content="images/logo-cursillo-stewart.png">
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cursillo-stewart.uptp.edu.py/" />
+    <meta
+      property="og:title"
+      content="Cursillo Stewart - Universidad Politécnica Taiwan Paraguay"
+    />
+    <meta
+      property="og:description"
+      content="Programa introductorio de apoyo académico para aspirantes universitarios. Prepárate para tu futuro en UPTP."
+    />
+    <meta property="og:image" content="images/logo-cursillo-stewart.png" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image">
-    <meta property="twitter:url" content="https://cursillo-stewart.uptp.edu.py/">
-    <meta property="twitter:title" content="Cursillo Stewart - Universidad Politécnica Taiwan Paraguay">
-    <meta property="twitter:description" content="Programa introductorio de apoyo académico para aspirantes universitarios. Prepárate para tu futuro en UPTP.">
-    <meta property="twitter:image" content="images/logo-cursillo-stewart.png">
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://cursillo-stewart.uptp.edu.py/" />
+    <meta
+      property="twitter:title"
+      content="Cursillo Stewart - Universidad Politécnica Taiwan Paraguay"
+    />
+    <meta
+      property="twitter:description"
+      content="Programa introductorio de apoyo académico para aspirantes universitarios. Prepárate para tu futuro en UPTP."
+    />
+    <meta property="twitter:image" content="images/logo-cursillo-stewart.png" />
 
     <!-- Favicon -->
-    <link rel="icon" type="image/png" sizes="32x32" href="images/logo-cursillo-stewart.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="images/logo-cursillo-stewart.png">
-    <link rel="apple-touch-icon" href="images/logo-cursillo-stewart.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/logo-cursillo-stewart.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/logo-cursillo-stewart.png" />
+    <link rel="apple-touch-icon" href="images/logo-cursillo-stewart.png" />
 
-    <title>Cursillo Stewart - Universidad Politécnica Taiwan Paraguay | Preparación Universitaria</title>
-    
+    <title>
+      Cursillo Stewart - Universidad Politécnica Taiwan Paraguay | Preparación Universitaria
+    </title>
+
     <!-- Preconnect para mejorar rendimiento -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    
-    <link rel="stylesheet" href="styles.css">
-    
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link rel="stylesheet" href="styles.css" />
+
     <!-- Structured Data -->
     <script type="application/ld+json">
-    {
-      "@context": "https://schema.org",
-      "@type": "EducationalOrganization",
-      "name": "Cursillo Stewart - UPTP",
-      "description": "Programa introductorio de apoyo académico para aspirantes a la Universidad Politécnica Taiwan Paraguay",
-      "url": "https://cursillo-stewart.uptp.edu.py/",
-      "logo": "images/logo-cursillo-stewart.png",
-      "sameAs": [
-        "https://www.facebook.com/uptp",
-        "https://www.instagram.com/uptp"
-      ]
-    }
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "Cursillo Stewart - UPTP",
+        "description": "Programa introductorio de apoyo académico para aspirantes a la Universidad Politécnica Taiwan Paraguay",
+        "url": "https://cursillo-stewart.uptp.edu.py/",
+        "logo": "images/logo-cursillo-stewart.png",
+        "sameAs": ["https://www.facebook.com/uptp", "https://www.instagram.com/uptp"]
+      }
     </script>
-</head>
-<body>
+  </head>
+  <body>
     <!-- Header -->
     <header>
-        <div class="container">
-            <div class="header-content">
-                <!-- Logo -->
-                <div class="logo">
-                    <img src="images/logo-cursillo-stewart.png" alt="Cursillo Stewart Logo" class="logo-image">
-                </div>
-                
-                <!-- Navigation Menu -->
-                <nav>
-                    <a href="#inicio">Inicio</a>
-                    <a href="#sobre">Sobre</a>
-                    <a href="#programa">Programa</a>
-                    <a href="#calendario">Calendario</a>
-                    <a href="#inscripcion">Inscripción</a>
-                    <a href="#docentes">Docentes</a>
-                    <a href="#contacto">Contacto</a>
-                </nav>
-                
-                <!-- Mobile Menu Button -->
-                <button class="mobile-menu-btn" onclick="toggleMenu()">
-                    ☰
-                </button>
-            </div>
-            
-            <!-- Mobile Menu -->
-            <div id="mobile-menu" class="mobile-menu hidden">
-                <a href="#inicio">Inicio</a>
-                <a href="#sobre">Sobre</a>
-                <a href="#programa">Programa</a>
-                <a href="#calendario">Calendario</a>
-                <a href="#inscripcion">Inscripción</a>
-                <a href="#docentes">Docentes</a>
-                <a href="#contacto">Contacto</a>
-            </div>
+      <div class="container">
+        <div class="header-content">
+          <!-- Logo -->
+          <div class="logo">
+            <img
+              src="images/logo-cursillo-stewart.png"
+              alt="Cursillo Stewart Logo"
+              class="logo-image"
+            />
+          </div>
+
+          <!-- Navigation Menu -->
+          <nav>
+            <a href="#inicio">Inicio</a>
+            <a href="#sobre">Sobre</a>
+            <a href="#programa">Programa</a>
+            <a href="#calendario">Calendario</a>
+            <a href="#inscripcion">Inscripción</a>
+            <a href="#docentes">Docentes</a>
+            <a href="#contacto">Contacto</a>
+          </nav>
+
+          <!-- Mobile Menu Button -->
+          <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
         </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+          <a href="#inicio">Inicio</a>
+          <a href="#sobre">Sobre</a>
+          <a href="#programa">Programa</a>
+          <a href="#calendario">Calendario</a>
+          <a href="#inscripcion">Inscripción</a>
+          <a href="#docentes">Docentes</a>
+          <a href="#contacto">Contacto</a>
+        </div>
+      </div>
     </header>
 
     <!-- Banner Initial -->
     <section id="inicio" class="banner">
-        <div class="container">
-            <h2>Cursillo Stewart</h2>
-            <p class="subtitle">Universidad Politécnica Taiwan Paraguay</p>
-            <p class="description">Programa introductorio de apoyo académico para aspirantes. Prepárate para tu futuro universitario con nosotros.</p>
-            <button class="btn-primary">
-                Inscríbete Ahora
-            </button>
-        </div>
+      <div class="container">
+        <h2>Cursillo Stewart</h2>
+        <p class="subtitle">Universidad Politécnica Taiwan Paraguay</p>
+        <p class="description">
+          Programa de Precálculo basado en el libro "Precalculus - Mathematics for Calculus" de
+          James Stewart. Domina los fundamentos matemáticos para tu carrera universitaria.
+          <br /><small style="opacity: 0.9">Materiales en inglés</small>
+        </p>
+        <button class="btn-primary">Inscríbete Ahora</button>
+      </div>
+
+      <!-- Indicadores del carousel -->
+      <div class="carousel-indicators">
+        <div class="indicator active"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+      </div>
     </section>
 
     <!-- Sección Sobre -->
     <section id="sobre" class="bg-gray">
-        <div class="container">
-            <div class="section-header">
-                <h2>Sobre el Cursillo Stewart</h2>
-                <p>Un programa diseñado para fortalecer las competencias académicas de los futuros estudiantes universitarios.</p>
-            </div>
-            <div class="grid grid-3">
-                <div class="card">
-                    <div class="card-icon">
-                        ✓
-                    </div>
-                    <h3>Preparación Integral</h3>
-                    <p>Fortalecemos las habilidades necesarias para el éxito universitario.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">
-                        👥
-                    </div>
-                    <h3>Docentes Calificados</h3>
-                    <p>Profesionales experimentados comprometidos con tu aprendizaje.</p>
-                </div>
-                <div class="card">
-                    <div class="card-icon">
-                        ♥
-                    </div>
-                    <h3>Apoyo Personalizado</h3>
-                    <p>Atención individualizada para maximizar tu potencial.</p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <h2>Sobre el Cursillo Stewart</h2>
+          <p>
+            Un programa de preparación universitaria basado en el libro "Precalculus - Mathematics
+            for Calculus" de James Stewart, diseñado para fortalecer las competencias matemáticas
+            fundamentales. El material de estudio está completamente en inglés.
+          </p>
         </div>
+        <div class="grid grid-3">
+          <div class="card">
+            <div class="card-icon">📚</div>
+            <h3>Libro de James Stewart</h3>
+            <p>
+              Seguimos la metodología del reconocido texto "Precalculus - Mathematics for Calculus".
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-icon">�</div>
+            <h3>Enfoque Sistemático</h3>
+            <p>
+              Metodología progresiva que construye conceptos desde fundamentos hasta aplicaciones.
+            </p>
+          </div>
+          <div class="card">
+            <div class="card-icon">🎯</div>
+            <h3>Preparación Universitaria</h3>
+            <p>Te preparamos específicamente para cursos de Cálculo y matemáticas superiores.</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Programa -->
     <section id="programa">
-        <div class="container">
-            <div class="section-header">
-                <h2>Programa de Estudios</h2>
-                <p>Currículo estructurado para tu éxito académico</p>
-            </div>
-            <div class="table-container">
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Materia</th>
-                            <th>Horario</th>
-                            <th>Duración</th>
-                            <th>Docente</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Matemáticas</td>
-                            <td>08:00 - 10:00</td>
-                            <td>2 horas</td>
-                            <td>Prof. García</td>
-                        </tr>
-                        <tr>
-                            <td>Física</td>
-                            <td>10:30 - 12:30</td>
-                            <td>2 horas</td>
-                            <td>Prof. Martínez</td>
-                        </tr>
-                        <tr>
-                            <td>Química</td>
-                            <td>14:00 - 16:00</td>
-                            <td>2 horas</td>
-                            <td>Prof. López</td>
-                        </tr>
-                        <tr>
-                            <td>Lengua Española</td>
-                            <td>16:30 - 18:30</td>
-                            <td>2 horas</td>
-                            <td>Prof. Rodríguez</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <h2>Programa de Estudios</h2>
+          <p>Basado en "Precalculus - Mathematics for Calculus" de James Stewart</p>
+          <p class="subtitle-secondary">Horarios Extensivos - Elige el que mejor se adapte a ti</p>
         </div>
+
+        <!-- Horarios Extensivos -->
+        <div class="schedule-grid">
+          <!-- Grupo 1: Turno Mañana -->
+          <div class="schedule-card presencial">
+            <div class="schedule-header">
+              <h3>Grupo 1 - Turno Mañana</h3>
+              <span class="schedule-type presencial">Semanal Presencial</span>
+            </div>
+            <div class="schedule-info">
+              <div class="schedule-time"><strong>Horario:</strong> 8:00 - 12:00</div>
+              <div class="schedule-days"><strong>Días:</strong> Lunes a Viernes</div>
+              <div class="schedule-dates">
+                <strong>Período:</strong> 4 de Agosto - 31 de Octubre
+              </div>
+            </div>
+          </div>
+
+          <!-- Grupo 2: Turno Tarde -->
+          <div class="schedule-card presencial">
+            <div class="schedule-header">
+              <h3>Grupo 2 - Turno Tarde</h3>
+              <span class="schedule-type presencial">Semanal Presencial</span>
+            </div>
+            <div class="schedule-info">
+              <div class="schedule-time"><strong>Horario:</strong> 14:00 - 18:00</div>
+              <div class="schedule-days"><strong>Días:</strong> Lunes a Viernes</div>
+              <div class="schedule-dates">
+                <strong>Período:</strong> 4 de Agosto - 31 de Octubre
+              </div>
+            </div>
+          </div>
+
+          <!-- Grupo 3: Sábados (Inicio Marzo) -->
+          <div class="schedule-card sabados">
+            <div class="schedule-header">
+              <h3>Grupo 3 - Sábados</h3>
+              <span class="schedule-type sabados">Sabados Presencial</span>
+            </div>
+            <div class="schedule-info">
+              <div class="schedule-time"><strong>Horario:</strong> 8:00 - 18:00</div>
+              <div class="schedule-days"><strong>Días:</strong> Todos los Sábados</div>
+              <div class="schedule-dates">
+                <strong>Período:</strong> 29 de Marzo - 25 de Octubre
+              </div>
+            </div>
+          </div>
+
+          <!-- Grupo 4: Sábados (Inicio Abril) -->
+          <div class="schedule-card sabados">
+            <div class="schedule-header">
+              <h3>Grupo 4 - Sábados</h3>
+              <span class="schedule-type sabados">Sabados Presencial</span>
+            </div>
+            <div class="schedule-info">
+              <div class="schedule-time"><strong>Horario:</strong> 8:00 - 18:00</div>
+              <div class="schedule-days"><strong>Días:</strong> Todos los Sábados</div>
+              <div class="schedule-dates">
+                <strong>Período:</strong> 12 de Abril - 25 de Octubre
+              </div>
+            </div>
+          </div>
+
+          <!-- Grupo 5: Sábados (Inicio Julio) -->
+          <div class="schedule-card sabados">
+            <div class="schedule-header">
+              <h3>Grupo 5 - Sábados</h3>
+              <span class="schedule-type sabados">Sabados Presencial</span>
+            </div>
+            <div class="schedule-info">
+              <div class="schedule-time"><strong>Horario:</strong> 8:00 - 18:00</div>
+              <div class="schedule-days"><strong>Días:</strong> Todos los Sábados</div>
+              <div class="schedule-dates">
+                <strong>Período:</strong> 12 de Julio - 25 de Octubre
+              </div>
+            </div>
+          </div>
+
+          <!-- Grupo 6: Virtual Nocturno -->
+          <div class="schedule-card virtual">
+            <div class="schedule-header">
+              <h3>Grupo 6 - Virtual Nocturno</h3>
+              <span class="schedule-type virtual">Sabados Virtual</span>
+            </div>
+            <div class="schedule-info">
+              <div class="schedule-time"><strong>Horario:</strong> 19:00 - 22:00</div>
+              <div class="schedule-days"><strong>Días:</strong> Sábados</div>
+              <div class="schedule-dates"><strong>Período:</strong> 5 de Julio - 25 de Octubre</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Información adicional -->
+        <div class="program-info">
+          <div class="info-card">
+            <h4>📚 Contenido del Cursillo</h4>
+            <div class="book-info">
+              <h5>"Precalculus - Mathematics for Calculus"</h5>
+              <p class="author">por <strong>James Stewart</strong></p>
+              <p class="book-description">
+                Reconocido mundialmente como uno de los mejores textos de Precálculo, este libro
+                proporciona una base sólida para el estudio del Cálculo y las matemáticas
+                superiores. <strong>Materiales en inglés.</strong>
+              </p>
+            </div>
+            <ul>
+              <li>Chapter 1: Fundamentals</li>
+              <li>Chapter 2: Functions</li>
+              <li>Chapter 3: Polynomial and Rational Functions</li>
+              <li>Chapter 4: Exponential and Logarithmic Functions</li>
+              <li>Chapter 5: Trigonometric Functions: Unit Circle Approach</li>
+              <li>Chapter 6: Trigonometric Functions: Right Triangle Approach</li>
+              <li>Chapter 7: Analytic Trigonometry</li>
+              <li>Chapter 8: Polar Coordinates and Parametric Equations</li>
+              <li>Chapter 9: Vectors in Two and Three Dimensions</li>
+              <li>Chapter 10: Systems of Equations and Inequalities</li>
+              <li>Chapter 11: Conic Sections</li>
+              <li>Chapter 12: Sequences and Series</li>
+              <li>Chapter 13: Limits: A Preview of Calculus</li>
+            </ul>
+          </div>
+          <div class="info-card">
+            <h4>✅ Modalidades Disponibles</h4>
+            <ul>
+              <li><span class="badge presencial">Semanal Presencial</span> Lunes a Viernes</li>
+              <li><span class="badge sabados">Sabados Presencial</span> Solo Sábados</li>
+              <li><span class="badge virtual">Sabados Virtual</span> Sábados Nocturnos</li>
+            </ul>
+
+            <h4>📝 Materiales y Actividades Incluidas</h4>
+            <ul>
+              <li>📋 Ejercitarios por capítulo</li>
+              <li>📊 Exámenes parciales y totales</li>
+              <li>📚 Weekly Problems (ejercicios del libro)</li>
+              <li>🎯 Actividades de práctica dirigida</li>
+              <li>📖 Material de apoyo complementario</li>
+              <li>💻 Recursos digitales interactivos</li>
+            </ul>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Calendario -->
     <section id="calendario" class="bg-gray">
-        <div class="container">
-            <div class="section-header">
-                <h2>Calendario de Eventos</h2>
-                <p>Mantente informado sobre fechas importantes</p>
-            </div>
-            <div class="grid grid-3">
-                <div class="calendar-card">
-                    <div class="calendar-date">
-                        <div class="date-circle">15</div>
-                        <div class="date-info">
-                            <h3>Enero</h3>
-                            <p>2024</p>
-                        </div>
-                    </div>
-                    <h4>Inicio de Inscripciones</h4>
-                    <p>Apertura del período de inscripciones para el cursillo</p>
-                </div>
-                
-                <div class="calendar-card">
-                    <div class="calendar-date">
-                        <div class="date-circle">01</div>
-                        <div class="date-info">
-                            <h3>Febrero</h3>
-                            <p>2024</p>
-                        </div>
-                    </div>
-                    <h4>Inicio de Clases</h4>
-                    <p>Comienzo oficial del programa académico</p>
-                </div>
-                
-                <div class="calendar-card">
-                    <div class="calendar-date">
-                        <div class="date-circle">15</div>
-                        <div class="date-info">
-                            <h3>Marzo</h3>
-                            <p>2024</p>
-                        </div>
-                    </div>
-                    <h4>Evaluación Parcial</h4>
-                    <p>Primera evaluación del progreso académico</p>
-                </div>
-                
-                <div class="calendar-card">
-                    <div class="calendar-date">
-                        <div class="date-circle">30</div>
-                        <div class="date-info">
-                            <h3>Abril</h3>
-                            <p>2024</p>
-                        </div>
-                    </div>
-                    <h4>Examen Final</h4>
-                    <p>Evaluación final del cursillo</p>
-                </div>
-                
-                <div class="calendar-card">
-                    <div class="calendar-date">
-                        <div class="date-circle">15</div>
-                        <div class="date-info">
-                            <h3>Mayo</h3>
-                            <p>2024</p>
-                        </div>
-                    </div>
-                    <h4>Graduación</h4>
-                    <p>Ceremonia de clausura y entrega de certificados</p>
-                </div>
-                
-                <div class="calendar-card">
-                    <div class="calendar-date">
-                        <div class="date-circle">01</div>
-                        <div class="date-info">
-                            <h3>Junio</h3>
-                            <p>2024</p>
-                        </div>
-                    </div>
-                    <h4>Ingreso UPTP</h4>
-                    <p>Inicio del período universitario regular</p>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <h2>Calendario de Eventos</h2>
+          <p>Mantente informado sobre fechas importantes</p>
         </div>
+        <div class="grid grid-3">
+          <div class="calendar-card">
+            <div class="calendar-date">
+              <div class="date-circle">15</div>
+              <div class="date-info">
+                <h3>Enero</h3>
+                <p>2024</p>
+              </div>
+            </div>
+            <h4>Inicio de Inscripciones</h4>
+            <p>Apertura del período de inscripciones para el cursillo</p>
+          </div>
+
+          <div class="calendar-card">
+            <div class="calendar-date">
+              <div class="date-circle">01</div>
+              <div class="date-info">
+                <h3>Febrero</h3>
+                <p>2024</p>
+              </div>
+            </div>
+            <h4>Inicio de Clases</h4>
+            <p>Comienzo oficial del programa académico</p>
+          </div>
+
+          <div class="calendar-card">
+            <div class="calendar-date">
+              <div class="date-circle">15</div>
+              <div class="date-info">
+                <h3>Marzo</h3>
+                <p>2024</p>
+              </div>
+            </div>
+            <h4>Evaluación Parcial</h4>
+            <p>Primera evaluación del progreso académico</p>
+          </div>
+
+          <div class="calendar-card">
+            <div class="calendar-date">
+              <div class="date-circle">30</div>
+              <div class="date-info">
+                <h3>Abril</h3>
+                <p>2024</p>
+              </div>
+            </div>
+            <h4>Examen Final</h4>
+            <p>Evaluación final del cursillo</p>
+          </div>
+
+          <div class="calendar-card">
+            <div class="calendar-date">
+              <div class="date-circle">15</div>
+              <div class="date-info">
+                <h3>Mayo</h3>
+                <p>2024</p>
+              </div>
+            </div>
+            <h4>Graduación</h4>
+            <p>Ceremonia de clausura y entrega de certificados</p>
+          </div>
+
+          <div class="calendar-card">
+            <div class="calendar-date">
+              <div class="date-circle">01</div>
+              <div class="date-info">
+                <h3>Junio</h3>
+                <p>2024</p>
+              </div>
+            </div>
+            <h4>Ingreso UPTP</h4>
+            <p>Inicio del período universitario regular</p>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Inscripción -->
     <section id="inscripcion">
-        <div class="container">
-            <div class="section-header">
-                <h2>Inscripción</h2>
-                <p>Completa tu registro para formar parte del Cursillo Stewart</p>
-            </div>
-            <div class="form-container">
-                <form class="form">
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label">Nombre</label>
-                            <input type="text" class="form-input" placeholder="Tu nombre">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Apellido</label>
-                            <input type="text" class="form-input" placeholder="Tu apellido">
-                        </div>
-                    </div>
-                    <div class="form-grid">
-                        <div class="form-group">
-                            <label class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-input" placeholder="tu@email.com">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Teléfono</label>
-                            <input type="tel" class="form-input" placeholder="Tu teléfono">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Colegio de Procedencia</label>
-                        <input type="text" class="form-input" placeholder="Nombre de tu colegio">
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Carrera de Interés</label>
-                        <select class="form-input">
-                            <option>Selecciona una carrera</option>
-                            <option>Ingeniería en Sistemas</option>
-                            <option>Ingeniería Industrial</option>
-                            <option>Ingeniería Civil</option>
-                            <option>Administración de Empresas</option>
-                            <option>Contabilidad</option>
-                        </select>
-                    </div>
-                    <div class="form-group">
-                        <label class="form-label">Mensaje (Opcional)</label>
-                        <textarea class="form-input" placeholder="Cuéntanos sobre tus expectativas"></textarea>
-                    </div>
-                    <button type="submit" class="btn-primary" style="width: 100%;">
-                        Enviar Inscripción
-                    </button>
-                </form>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <h2>Inscripción</h2>
+          <p>Completa tu registro para formar parte del Cursillo Stewart</p>
         </div>
+        <div class="form-container">
+          <form class="form">
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Nombre</label>
+                <input type="text" class="form-input" placeholder="Tu nombre" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Apellido</label>
+                <input type="text" class="form-input" placeholder="Tu apellido" />
+              </div>
+            </div>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-input" placeholder="tu@email.com" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Teléfono</label>
+                <input type="tel" class="form-input" placeholder="Tu teléfono" />
+              </div>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Colegio de Procedencia</label>
+              <input type="text" class="form-input" placeholder="Nombre de tu colegio" />
+            </div>
+            <div class="form-group">
+              <label class="form-label">Carrera de Interés</label>
+              <select class="form-input">
+                <option>Selecciona una carrera</option>
+                <option>Ingeniería en Sistemas</option>
+                <option>Ingeniería Industrial</option>
+                <option>Ingeniería Civil</option>
+                <option>Administración de Empresas</option>
+                <option>Contabilidad</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label class="form-label">Mensaje (Opcional)</label>
+              <textarea
+                class="form-input"
+                placeholder="Cuéntanos sobre tus expectativas"
+              ></textarea>
+            </div>
+            <button type="submit" class="btn-primary" style="width: 100%">
+              Enviar Inscripción
+            </button>
+          </form>
+        </div>
+      </div>
     </section>
 
     <!-- Docentes -->
     <section id="docentes" class="bg-gray">
-        <div class="container">
-            <div class="section-header">
-                <h2>Nuestros Docentes</h2>
-                <p>Profesionales comprometidos con tu formación académica</p>
-            </div>
-            <div class="grid grid-4">
-                <div class="teacher-card">
-                    <div class="teacher-header">
-                        <div class="teacher-avatar">MG</div>
-                    </div>
-                    <div class="teacher-info">
-                        <h3>Prof. María García</h3>
-                        <p class="teacher-subject">Matemáticas</p>
-                        <p class="teacher-bio">Licenciada en Matemáticas con 15 años de experiencia en educación universitaria.</p>
-                    </div>
-                </div>
-                
-                <div class="teacher-card">
-                    <div class="teacher-header">
-                        <div class="teacher-avatar">JM</div>
-                    </div>
-                    <div class="teacher-info">
-                        <h3>Prof. Juan Martínez</h3>
-                        <p class="teacher-subject">Física</p>
-                        <p class="teacher-bio">Doctor en Física con especialización en mecánica y termodinámica aplicada.</p>
-                    </div>
-                </div>
-                
-                <div class="teacher-card">
-                    <div class="teacher-header">
-                        <div class="teacher-avatar">AL</div>
-                    </div>
-                    <div class="teacher-info">
-                        <h3>Prof. Ana López</h3>
-                        <p class="teacher-subject">Química</p>
-                        <p class="teacher-bio">Química Industrial con maestría en Educación y metodologías activas de aprendizaje.</p>
-                    </div>
-                </div>
-                
-                <div class="teacher-card">
-                    <div class="teacher-header">
-                        <div class="teacher-avatar">CR</div>
-                    </div>
-                    <div class="teacher-info">
-                        <h3>Prof. Carlos Rodríguez</h3>
-                        <p class="teacher-subject">Lengua Española</p>
-                        <p class="teacher-bio">Licenciado en Letras con especialización en comunicación académica y redacción científica.</p>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <h2>Nuestros Docentes</h2>
+          <p>Profesionales comprometidos con tu formación académica</p>
         </div>
+        <div class="grid grid-4">
+          <div class="teacher-card">
+            <div class="teacher-header">
+              <div class="teacher-avatar">MG</div>
+            </div>
+            <div class="teacher-info">
+              <h3>Prof. María García</h3>
+              <p class="teacher-subject">Matemáticas</p>
+              <p class="teacher-bio">
+                Licenciada en Matemáticas con 15 años de experiencia en educación universitaria.
+              </p>
+            </div>
+          </div>
+
+          <div class="teacher-card">
+            <div class="teacher-header">
+              <div class="teacher-avatar">JM</div>
+            </div>
+            <div class="teacher-info">
+              <h3>Prof. Juan Martínez</h3>
+              <p class="teacher-subject">Física</p>
+              <p class="teacher-bio">
+                Doctor en Física con especialización en mecánica y termodinámica aplicada.
+              </p>
+            </div>
+          </div>
+
+          <div class="teacher-card">
+            <div class="teacher-header">
+              <div class="teacher-avatar">AL</div>
+            </div>
+            <div class="teacher-info">
+              <h3>Prof. Ana López</h3>
+              <p class="teacher-subject">Química</p>
+              <p class="teacher-bio">
+                Química Industrial con maestría en Educación y metodologías activas de aprendizaje.
+              </p>
+            </div>
+          </div>
+
+          <div class="teacher-card">
+            <div class="teacher-header">
+              <div class="teacher-avatar">CR</div>
+            </div>
+            <div class="teacher-info">
+              <h3>Prof. Carlos Rodríguez</h3>
+              <p class="teacher-subject">Lengua Española</p>
+              <p class="teacher-bio">
+                Licenciado en Letras con especialización en comunicación académica y redacción
+                científica.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Contacto -->
     <section id="contacto">
-        <div class="container">
-            <div class="section-header">
-                <h2>Contacto</h2>
-                <p>Estamos aquí para resolver todas tus dudas</p>
-            </div>
-            <div class="contact-grid">
-                <!-- Formulario de Contacto -->
-                <div>
-                    <h3 style="font-size: 1.5rem; font-weight: bold; color: var(--navy); margin-bottom: 1.5rem;">Envíanos un Mensaje</h3>
-                    <form style="display: flex; flex-direction: column; gap: 1.5rem;">
-                        <div class="form-group">
-                            <label class="form-label">Nombre Completo</label>
-                            <input type="text" class="form-input" placeholder="Tu nombre completo">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Correo Electrónico</label>
-                            <input type="email" class="form-input" placeholder="tu@email.com">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Asunto</label>
-                            <input type="text" class="form-input" placeholder="Asunto de tu consulta">
-                        </div>
-                        <div class="form-group">
-                            <label class="form-label">Mensaje</label>
-                            <textarea class="form-input" placeholder="Escribe tu mensaje aquí"></textarea>
-                        </div>
-                        <button type="submit" class="btn-primary" style="width: 100%;">
-                            Enviar Mensaje
-                        </button>
-                    </form>
-                </div>
-                
-                <!-- Información de Contacto y Mapa -->
-                <div>
-                    <h3 style="font-size: 1.5rem; font-weight: bold; color: var(--navy); margin-bottom: 1.5rem;">Información de Contacto</h3>
-                    <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
-                        <div class="contact-item">
-                            <div class="contact-icon">📍</div>
-                            <div class="contact-info">
-                                <p>Dirección</p>
-                                <p>Campus UPTP, San Lorenzo, Paraguay</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">📞</div>
-                            <div class="contact-info">
-                                <p>Teléfono</p>
-                                <p>+595 21 585-492</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">📧</div>
-                            <div class="contact-info">
-                                <p>Email</p>
-                                <p>cursillostewart@uptp.edu.py</p>
-                            </div>
-                        </div>
-                        
-                        <div class="contact-item">
-                            <div class="contact-icon">🕒</div>
-                            <div class="contact-info">
-                                <p>Horarios</p>
-                                <p>Lun - Vie: 8:00 - 18:00</p>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Mapa Placeholder -->
-                    <div class="map-placeholder">
-                        <div>
-                            <div class="map-icon">📍</div>
-                            <p style="font-weight: 600;">Mapa de Ubicación</p>
-                            <p style="font-size: 0.875rem;">Campus UPTP, San Lorenzo</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <div class="section-header">
+          <h2>Contacto</h2>
+          <p>Estamos aquí para resolver todas tus dudas</p>
         </div>
+        <div class="contact-grid">
+          <!-- Formulario de Contacto -->
+          <div>
+            <h3
+              style="
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: var(--navy);
+                margin-bottom: 1.5rem;
+              "
+            >
+              Envíanos un Mensaje
+            </h3>
+            <form style="display: flex; flex-direction: column; gap: 1.5rem">
+              <div class="form-group">
+                <label class="form-label">Nombre Completo</label>
+                <input type="text" class="form-input" placeholder="Tu nombre completo" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-input" placeholder="tu@email.com" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Asunto</label>
+                <input type="text" class="form-input" placeholder="Asunto de tu consulta" />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Mensaje</label>
+                <textarea class="form-input" placeholder="Escribe tu mensaje aquí"></textarea>
+              </div>
+              <button type="submit" class="btn-primary" style="width: 100%">Enviar Mensaje</button>
+            </form>
+          </div>
+
+          <!-- Información de Contacto y Mapa -->
+          <div>
+            <h3
+              style="
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: var(--navy);
+                margin-bottom: 1.5rem;
+              "
+            >
+              Información de Contacto
+            </h3>
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem">
+              <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <div class="contact-info">
+                  <p>Dirección</p>
+                  <p>Campus UPTP, San Lorenzo, Paraguay</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">📞</div>
+                <div class="contact-info">
+                  <p>Teléfono</p>
+                  <p>+595 21 585-492</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <div class="contact-info">
+                  <p>Email</p>
+                  <p>cursillostewart@uptp.edu.py</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">🕒</div>
+                <div class="contact-info">
+                  <p>Horarios</p>
+                  <p>Lun - Vie: 8:00 - 18:00</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Mapa Placeholder -->
+            <div class="map-placeholder">
+              <div>
+                <div class="map-icon">📍</div>
+                <p style="font-weight: 600">Mapa de Ubicación</p>
+                <p style="font-size: 0.875rem">Campus UPTP, San Lorenzo</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- Footer -->
     <footer>
-        <div class="container">
-            <div class="footer-grid">
-                <div>
-                    <div class="footer-logo">
-                        <img src="images/logo-cursillo-stewart.png" alt="Cursillo Stewart Logo" class="footer-logo-image">
-                    </div>
-                    <p style="color: var(--gray-300); font-size: 0.875rem;">Preparándote para un futuro universitario exitoso en la Universidad Politécnica Taiwan Paraguay.</p>
-                </div>
-                
-                <div>
-                    <h4>Enlaces Rápidos</h4>
-                    <ul>
-                        <li><a href="#inicio">Inicio</a></li>
-                        <li><a href="#sobre">Sobre Nosotros</a></li>
-                        <li><a href="#programa">Programa</a></li>
-                        <li><a href="#inscripcion">Inscripción</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4>Información</h4>
-                    <ul>
-                        <li><a href="#docentes">Docentes</a></li>
-                        <li><a href="#calendario">Calendario</a></li>
-                        <li><a href="#contacto">Contacto</a></li>
-                    </ul>
-                </div>
-                
-                <div>
-                    <h4>Síguenos</h4>
-                    <div class="social-links">
-                        <a href="#" class="social-link">f</a>
-                        <a href="#" class="social-link">t</a>
-                        <a href="#" class="social-link">i</a>
-                    </div>
-                </div>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">
+              <img
+                src="images/logo-cursillo-stewart.png"
+                alt="Cursillo Stewart Logo"
+                class="footer-logo-image"
+              />
             </div>
-            
-            <div class="footer-bottom">
-                <p>&copy; 2024 Cursillo Stewart - UPTP. Todos los derechos reservados.</p>
+            <p style="color: var(--gray-300); font-size: 0.875rem">
+              Preparándote para un futuro universitario exitoso en la Universidad Politécnica Taiwan
+              Paraguay.
+            </p>
+          </div>
+
+          <div>
+            <h4>Enlaces Rápidos</h4>
+            <ul>
+              <li><a href="#inicio">Inicio</a></li>
+              <li><a href="#sobre">Sobre Nosotros</a></li>
+              <li><a href="#programa">Programa</a></li>
+              <li><a href="#inscripcion">Inscripción</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Información</h4>
+            <ul>
+              <li><a href="#docentes">Docentes</a></li>
+              <li><a href="#calendario">Calendario</a></li>
+              <li><a href="#contacto">Contacto</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Síguenos</h4>
+            <div class="social-links">
+              <a href="#" class="social-link">f</a>
+              <a href="#" class="social-link">t</a>
+              <a href="#" class="social-link">i</a>
             </div>
+          </div>
         </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2024 Cursillo Stewart - UPTP. Todos los derechos reservados.</p>
+        </div>
+      </div>
     </footer>
 
     <script>
-        // Toggle mobile menu
-        function toggleMenu() {
-            const mobileMenu = document.getElementById('mobile-menu');
-            if (mobileMenu.classList.contains('hidden')) {
-                mobileMenu.classList.remove('hidden');
-                mobileMenu.classList.add('show');
-            } else {
-                mobileMenu.classList.add('hidden');
-                mobileMenu.classList.remove('show');
-            }
+      // Toggle mobile menu
+      function toggleMenu() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.remove('hidden');
+          mobileMenu.classList.add('show');
+        } else {
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('show');
+        }
+      }
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }
+          // Close mobile menu if open
+          const mobileMenu = document.getElementById('mobile-menu');
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('show');
+        });
+      });
+
+      // Form submission handlers
+      document.querySelectorAll('form').forEach(form => {
+        form.addEventListener('submit', function (e) {
+          e.preventDefault();
+          alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+        });
+      });
+
+      // ===== CAROUSEL DE IMÁGENES DE FONDO =====
+      class BackgroundCarousel {
+        constructor() {
+          this.images = [
+            'images/Imagen de Fondo 1.jpeg',
+            'images/Imagen de Fondo 3.jpeg',
+            'images/Imagen de Fondo 4.jpeg',
+            'images/Imagen de Fondo 5.jpeg',
+          ];
+          this.currentIndex = 0;
+          this.banner = document.querySelector('.banner');
+          this.indicators = document.querySelectorAll('.indicator');
+          this.intervalTime = 10000; // 10 segundos
+          this.interval = null;
+          this.init();
         }
 
-        // Smooth scrolling for anchor links
-        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-            anchor.addEventListener('click', function (e) {
-                e.preventDefault();
-                const target = document.querySelector(this.getAttribute('href'));
-                if (target) {
-                    target.scrollIntoView({
-                        behavior: 'smooth',
-                        block: 'start'
-                    });
-                }
-                // Close mobile menu if open
-                const mobileMenu = document.getElementById('mobile-menu');
-                mobileMenu.classList.add('hidden');
-                mobileMenu.classList.remove('show');
-            });
-        });
+        init() {
+          this.preloadImages();
+          this.setInitialBackground();
+          this.setupIndicators();
+          this.startCarousel();
+        }
 
-        // Form submission handlers
-        document.querySelectorAll('form').forEach(form => {
-            form.addEventListener('submit', function(e) {
-                e.preventDefault();
-                alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+        preloadImages() {
+          this.images.forEach(src => {
+            const img = new Image();
+            img.src = src;
+          });
+        }
+
+        setInitialBackground() {
+          if (this.banner) {
+            this.banner.style.backgroundImage = `linear-gradient(135deg, rgba(30, 64, 175, 0.8) 0%, rgba(30, 64, 175, 0.6) 100%), url('${this.images[0]}')`;
+            this.banner.style.backgroundSize = 'cover';
+            this.banner.style.backgroundPosition = 'center';
+            this.banner.style.backgroundAttachment = 'fixed';
+          }
+        }
+
+        setupIndicators() {
+          this.indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+              this.goToSlide(index);
             });
-        });
+          });
+        }
+
+        updateIndicators() {
+          this.indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === this.currentIndex);
+          });
+        }
+
+        goToSlide(index) {
+          this.currentIndex = index;
+          this.changeBackground();
+          this.updateIndicators();
+          this.restartCarousel();
+        }
+
+        changeBackground() {
+          const newImage = this.images[this.currentIndex];
+
+          if (this.banner) {
+            // Smooth transition
+            this.banner.style.transition = 'background-image 1s ease-in-out';
+            this.banner.style.backgroundImage = `linear-gradient(135deg, rgba(30, 64, 175, 0.8) 0%, rgba(30, 64, 175, 0.6) 100%), url('${newImage}')`;
+          }
+        }
+
+        nextSlide() {
+          this.currentIndex = (this.currentIndex + 1) % this.images.length;
+          this.changeBackground();
+          this.updateIndicators();
+        }
+
+        startCarousel() {
+          this.interval = setInterval(() => {
+            this.nextSlide();
+          }, this.intervalTime);
+        }
+
+        restartCarousel() {
+          if (this.interval) {
+            clearInterval(this.interval);
+          }
+          this.startCarousel();
+        }
+      }
+
+      // Inicializar el carousel cuando el DOM esté listo
+      document.addEventListener('DOMContentLoaded', () => {
+        new BackgroundCarousel();
+      });
     </script>
-</body>
+  </body>
 </html>
