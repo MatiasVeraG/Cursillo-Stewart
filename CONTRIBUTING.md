@@ -9,6 +9,7 @@ Al participar en este proyecto, te comprometes a mantener un ambiente respetuoso
 ## 🚀 Cómo Contribuir
 
 ### 1. Fork y Clone
+
 ```bash
 # Fork del repositorio en GitHub
 # Luego clona tu fork
@@ -17,11 +18,13 @@ cd Cursillo-Stewart
 ```
 
 ### 2. Configurar el Repositorio Upstream
+
 ```bash
 git remote add upstream https://github.com/MatiasVeraG/Cursillo-Stewart.git
 ```
 
 ### 3. Crear una Rama de Feature
+
 ```bash
 # Siempre trabaja desde develop
 git checkout develop
@@ -32,11 +35,13 @@ git checkout -b feature/nombre-descriptivo
 ```
 
 ### 4. Hacer Cambios
+
 - Sigue las convenciones de código existentes
 - Escribe commits descriptivos
 - Prueba tus cambios en diferentes navegadores
 
 ### 5. Commit y Push
+
 ```bash
 # Usar conventional commits
 git add .
@@ -45,6 +50,7 @@ git push origin feature/nombre-descriptivo
 ```
 
 ### 6. Crear Pull Request
+
 - Ve a GitHub y crea un PR desde tu rama hacia `develop`
 - Completa la plantilla de PR
 - Espera la revisión
@@ -52,18 +58,21 @@ git push origin feature/nombre-descriptivo
 ## 📝 Convenciones de Código
 
 ### HTML
+
 - Usar indentación de 2 espacios
 - Incluir atributos `alt` en imágenes
 - Usar etiquetas semánticas
 - Validar HTML con W3C Validator
 
 ### CSS
+
 - Usar metodología BEM para clases
 - Agrupar propiedades relacionadas
 - Usar variables CSS para colores
 - Comentar secciones principales
 
 ### Commits
+
 Usar [Conventional Commits](https://conventionalcommits.org/):
 
 - `feat:` Nueva funcionalidad
@@ -75,6 +84,7 @@ Usar [Conventional Commits](https://conventionalcommits.org/):
 - `chore:` Tareas de mantenimiento
 
 ### Nombres de Ramas
+
 - `feature/descripcion-funcionalidad` - Nuevas funcionalidades
 - `fix/descripcion-bug` - Corrección de bugs
 - `docs/descripcion-cambio` - Cambios en documentación
@@ -83,27 +93,32 @@ Usar [Conventional Commits](https://conventionalcommits.org/):
 ## 🎨 Estándares de Diseño
 
 ### Colores
+
 - Azul marino: `#1e40af` (elementos principales)
 - Rojo: `#dc2626` (acentos y botones)
 - Blanco: `#ffffff` (fondos)
 
 ### Tipografía
+
 - Familia principal: Montserrat
 - Pesos: 300, 400, 500, 600, 700
 
 ### Responsive
+
 - Mobile first approach
 - Breakpoints: 768px, 1024px, 1200px
 
 ## 🧪 Testing
 
 ### Navegadores Soportados
+
 - Chrome (últimas 2 versiones)
 - Firefox (últimas 2 versiones)
 - Safari (últimas 2 versiones)
 - Edge (últimas 2 versiones)
 
 ### Dispositivos
+
 - Mobile: 320px - 768px
 - Tablet: 768px - 1024px
 - Desktop: 1024px+
@@ -118,6 +133,7 @@ Usar [Conventional Commits](https://conventionalcommits.org/):
 ## ❓ Preguntas
 
 Si tienes preguntas, puedes:
+
 - Abrir un issue con la etiqueta `question`
 - Contactar a [@MatiasVeraG](https://github.com/MatiasVeraG)
 

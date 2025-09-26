@@ -8,6 +8,7 @@ y este proyecto adhiere al [Semantic Versioning](https://semver.org/spec/v2.0.0.
 ## [Unreleased]
 
 ### Planned
+
 - Sistema de inscripciones online
 - Galería de fotos del cursillo
 - Formulario de contacto funcional
@@ -17,6 +18,7 @@ y este proyecto adhiere al [Semantic Versioning](https://semver.org/spec/v2.0.0.
 ## [1.0.0] - 2025-09-26
 
 ### ✨ Added
+
 - Sitio web inicial del Cursillo Stewart
 - Diseño responsive con HTML5 y CSS3
 - Paleta de colores roja y azul acorde al logo institucional
@@ -28,6 +30,7 @@ y este proyecto adhiere al [Semantic Versioning](https://semver.org/spec/v2.0.0.
 - Documentación completa del proyecto
 
 ### 🎨 Design
+
 - Header con fondo blanco para mejor visibilidad del logo
 - Gradiente azul en banner principal
 - Botones rojos con efectos hover
@@ -35,6 +38,7 @@ y este proyecto adhiere al [Semantic Versioning](https://semver.org/spec/v2.0.0.
 - Iconos y elementos visuales consistentes
 
 ### 🛠️ Technical
+
 - Variables CSS para mantenimiento fácil
 - Código semántico y accesible
 - Optimización de rendimiento con preconnect
@@ -44,6 +48,7 @@ y este proyecto adhiere al [Semantic Versioning](https://semver.org/spec/v2.0.0.
 - Configuración de Prettier y EditorConfig
 
 ### 📚 Documentation
+
 - README completo con instrucciones
 - Guía de contribución
 - Licencia MIT
@@ -55,7 +60,7 @@ y este proyecto adhiere al [Semantic Versioning](https://semver.org/spec/v2.0.0.
 ## Tipos de Cambios
 
 - ✨ **Added** - Nuevas funcionalidades
-- 🔄 **Changed** - Cambios en funcionalidades existentes  
+- 🔄 **Changed** - Cambios en funcionalidades existentes
 - 🗑️ **Deprecated** - Funcionalidades que serán removidas
 - 🗂️ **Removed** - Funcionalidades removidas
 - 🐛 **Fixed** - Corrección de bugs
