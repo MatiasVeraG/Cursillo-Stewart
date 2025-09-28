@@ -15,7 +15,13 @@
     <meta name="robots" content="index, follow" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
+    <meta
+      property="og:type"
+      content="web      // EmailJS initialization
+      (function() {
+        emailjs.init('xW-mdqdZ0aTjeEmGS'); // Clave pública de EmailJS
+      })();"
+    />
     <meta property="og:url" content="https://cursillo-stewart.uptp.edu.py/" />
     <meta
       property="og:title"
@@ -54,6 +60,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- EmailJS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -409,49 +421,114 @@
           <p>Completa tu registro para formar parte del Cursillo Stewart</p>
         </div>
         <div class="form-container">
-          <form class="form">
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="form-label">Nombre</label>
-                <input type="text" class="form-input" placeholder="Tu nombre" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Apellido</label>
-                <input type="text" class="form-input" placeholder="Tu apellido" />
-              </div>
-            </div>
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-input" placeholder="tu@email.com" />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Teléfono</label>
-                <input type="tel" class="form-input" placeholder="Tu teléfono" />
-              </div>
-            </div>
+          <p style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem; color: var(--navy)">
+            ¡Bienvenido a Cursillo Stewart! Por favor completar el formulario para finalizar el
+            proceso de inscripción
+          </p>
+          <form id="inscription-form" class="form">
+            <!-- Nombre y apellido -->
             <div class="form-group">
-              <label class="form-label">Colegio de Procedencia</label>
-              <input type="text" class="form-input" placeholder="Nombre de tu colegio" />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Carrera de Interés</label>
-              <select class="form-input">
-                <option>Selecciona una carrera</option>
-                <option>Ingeniería en Sistemas</option>
-                <option>Ingeniería Industrial</option>
-                <option>Ingeniería Civil</option>
-                <option>Administración de Empresas</option>
-                <option>Contabilidad</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Mensaje (Opcional)</label>
-              <textarea
+              <label class="form-label">Nombre y Apellido</label>
+              <input
+                type="text"
+                name="nombre_apellido"
                 class="form-input"
-                placeholder="Cuéntanos sobre tus expectativas"
-              ></textarea>
+                placeholder="Nombre y apellido completo"
+                required
+              />
             </div>
+
+            <!-- Número de cédula -->
+            <div class="form-group">
+              <label class="form-label">Número de cédula </label>
+              <input
+                type="text"
+                name="cedula"
+                class="form-input"
+                placeholder="12345678"
+                pattern="[0-9]+"
+                title="Solo se permiten números"
+                required
+              />
+            </div>
+
+            <!-- Número de teléfono -->
+            <div class="form-group">
+              <label class="form-label">Número de teléfono </label>
+              <input
+                type="tel"
+                name="telefono"
+                class="form-input"
+                placeholder="0987654321"
+                required
+              />
+            </div>
+
+            <!-- Colegio o institución -->
+            <div class="form-group">
+              <label class="form-label">Colegio o institución de estudios secundarios </label>
+              <input
+                type="text"
+                name="colegio"
+                class="form-input"
+                placeholder="Nombre de tu colegio o institución"
+                required
+              />
+            </div>
+
+            <!-- Nombre y apellido de familiar -->
+            <div class="form-group">
+              <label class="form-label">Nombre y apellido de un familiar o encargado</label>
+              <input
+                type="text"
+                name="familiar_nombre"
+                class="form-input"
+                placeholder="Nombre y apellido del familiar o encargado"
+                required
+              />
+            </div>
+
+            <!-- Teléfono de familiar -->
+            <div class="form-group">
+              <label class="form-label">Número de teléfono de un familiar o encargado</label>
+              <input
+                type="tel"
+                name="familiar_telefono"
+                class="form-input"
+                placeholder="0987654321"
+                required
+              />
+            </div>
+
+            <!-- Términos y condiciones con enlace -->
+            <div class="form-group">
+              <div style="margin-bottom: 1rem">
+                <p style="margin-bottom: 0.5rem; color: var(--navy)">
+                  He leído los términos y condiciones del curso extensivo, y me comprometo a
+                  seguirlos.
+                  <a
+                    href="documents/terminos_y_condiciones.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="color: var(--primary); text-decoration: underline"
+                    >Haga click aquí.</a
+                  >
+                  *
+                </p>
+              </div>
+              <div class="form-group">
+                <label class="form-label">
+                  <input
+                    type="checkbox"
+                    name="acepto_terminos"
+                    required
+                    style="margin-right: 0.5rem"
+                  />
+                  Acepto los términos y condiciones (Luego te paso los términos y condiciones) *
+                </label>
+              </div>
+            </div>
+
             <button type="submit" class="btn-primary" style="width: 100%">
               Enviar Inscripción
             </button>
@@ -544,24 +621,49 @@
             >
               Envíanos un Mensaje
             </h3>
-            <form style="display: flex; flex-direction: column; gap: 1.5rem">
+            <form id="contact-form" style="display: flex; flex-direction: column; gap: 1.5rem">
               <div class="form-group">
                 <label class="form-label">Nombre Completo</label>
-                <input type="text" class="form-input" placeholder="Tu nombre completo" />
+                <input
+                  type="text"
+                  name="from_name"
+                  class="form-input"
+                  placeholder="Tu nombre completo"
+                  required
+                />
               </div>
               <div class="form-group">
                 <label class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-input" placeholder="tu@email.com" />
+                <input
+                  type="email"
+                  name="from_email"
+                  class="form-input"
+                  placeholder="tu@email.com"
+                  required
+                />
               </div>
               <div class="form-group">
                 <label class="form-label">Asunto</label>
-                <input type="text" class="form-input" placeholder="Asunto de tu consulta" />
+                <input
+                  type="text"
+                  name="subject"
+                  class="form-input"
+                  placeholder="Asunto de tu consulta"
+                  required
+                />
               </div>
               <div class="form-group">
                 <label class="form-label">Mensaje</label>
-                <textarea class="form-input" placeholder="Escribe tu mensaje aquí"></textarea>
+                <textarea
+                  name="message"
+                  class="form-input"
+                  placeholder="Escribe tu mensaje aquí"
+                  required
+                ></textarea>
               </div>
-              <button type="submit" class="btn-primary" style="width: 100%">Enviar Mensaje</button>
+              <button type="submit" id="submit-btn" class="btn-primary" style="width: 100%">
+                Enviar Mensaje
+              </button>
             </form>
           </div>
 
@@ -582,7 +684,10 @@
                 <div class="contact-icon">📍</div>
                 <div class="contact-info">
                   <p>Dirección</p>
-                  <p>Campus UPTP, San Lorenzo, Paraguay</p>
+                  <p>
+                    Independencia Nacional 1159 entre Av. Rodríguez de Francia y Rca. de Colombia,
+                    Asunción
+                  </p>
                 </div>
               </div>
 
@@ -590,7 +695,7 @@
                 <div class="contact-icon">📞</div>
                 <div class="contact-info">
                   <p>Teléfono</p>
-                  <p>+595 21 585-492</p>
+                  <p>+595 985 350550</p>
                 </div>
               </div>
 
@@ -598,7 +703,7 @@
                 <div class="contact-icon">📧</div>
                 <div class="contact-info">
                   <p>Email</p>
-                  <p>cursillostewart@uptp.edu.py</p>
+                  <p>cursillostewart@gmail.com</p>
                 </div>
               </div>
 
@@ -606,18 +711,23 @@
                 <div class="contact-icon">🕒</div>
                 <div class="contact-info">
                   <p>Horarios</p>
-                  <p>Lun - Vie: 8:00 - 18:00</p>
+                  <p>Lun - Sáb: 8:00 - 12:00 y 14:00 - 18:00</p>
                 </div>
               </div>
             </div>
 
-            <!-- Mapa Placeholder -->
-            <div class="map-placeholder">
-              <div>
-                <div class="map-icon">📍</div>
-                <p style="font-weight: 600">Mapa de Ubicación</p>
-                <p style="font-size: 0.875rem">Campus UPTP, San Lorenzo</p>
-              </div>
+            <!-- Google Maps -->
+            <div class="map-container">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14290.629488811443!2d-57.63289752233832!3d-25.288506144782207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945da78778a93781%3A0xa7c23edfe28540ce!2sCursillo%20STEWART!5e0!3m2!1sen!2spy!4v1758971873336!5m2!1sen!2spy"
+                width="600"
+                height="450"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              >
+              </iframe>
             </div>
           </div>
         </div>
@@ -708,12 +818,93 @@
         });
       });
 
+      // EmailJS initialization
+      (function () {
+        emailjs.init('xW-mdqdZ0aTjeEmGS'); // Clave pública de EmailJS
+      })();
+
       // Form submission handlers
       document.querySelectorAll('form').forEach(form => {
-        form.addEventListener('submit', function (e) {
+        // Solo aplicar a formularios que NO sean el de contacto o inscripción
+        if (form.id !== 'contact-form' && form.id !== 'inscription-form') {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+          });
+        }
+      });
+
+      // Manejo específico del formulario de inscripción
+      const inscriptionForm = document.getElementById('inscription-form');
+      if (inscriptionForm) {
+        inscriptionForm.addEventListener('submit', function (e) {
           e.preventDefault();
-          alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+
+          // Validar cédula (solo números)
+          const cedula = document.querySelector('input[name="cedula"]').value;
+          if (!/^\d+$/.test(cedula)) {
+            alert('El número de cédula debe contener solo números.');
+            return;
+          }
+
+          // Validar que el checkbox de términos esté marcado
+          const terminosCheckbox = document.querySelector('input[name="acepto_terminos"]');
+          if (!terminosCheckbox.checked) {
+            alert('Debes aceptar los términos y condiciones para continuar.');
+            return;
+          }
+
+          // Obtener datos del formulario
+          const nombreApellido = document.querySelector('input[name="nombre_apellido"]').value;
+          const telefono = document.querySelector('input[name="telefono"]').value;
+
+          // Si todo está bien, mostrar mensaje de éxito
+          alert(
+            `¡Inscripción enviada exitosamente!\n\nGracias ${nombreApellido}, hemos recibido tu solicitud de inscripción.\nTe contactaremos pronto al número ${telefono} con más información sobre el proceso.\n\n📞 También puedes llamarnos al +595 985 350550`
+          );
+
+          // Limpiar formulario
+          this.reset();
         });
+      }
+
+      // Manejo del formulario de contacto con EmailJS
+      document.getElementById('contact-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById('submit-btn');
+        const originalText = submitBtn.textContent;
+
+        // Cambiar estado del botón
+        submitBtn.textContent = 'Enviando...';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.7';
+
+        // Enviar email usando EmailJS
+        emailjs
+          .sendForm('service_t7mw6ob', 'template_x4d3xyy', this)
+          .then(
+            function (response) {
+              console.log('SUCCESS!', response.status, response.text);
+              alert(
+                '¡Mensaje enviado exitosamente! Te contactaremos pronto a ' +
+                  document.querySelector('input[name="from_email"]').value
+              );
+              document.getElementById('contact-form').reset();
+            },
+            function (error) {
+              console.log('FAILED...', error);
+              alert(
+                'Error al enviar el mensaje. Por favor, inténtalo nuevamente o contáctanos directamente al +595 985 350550.'
+              );
+            }
+          )
+          .finally(function () {
+            // Restaurar estado del botón
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+          });
       });
 
       // ===== CAROUSEL DE IMÁGENES DE FONDO =====
