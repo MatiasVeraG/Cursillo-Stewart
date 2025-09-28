@@ -421,270 +421,112 @@
           <p>Completa tu registro para formar parte del Cursillo Stewart</p>
         </div>
         <div class="form-container">
+          <p style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem; color: var(--navy)">
+            ¡Bienvenido a Cursillo Stewart! Por favor completar el formulario para finalizar el
+            proceso de inscripción
+          </p>
           <form id="inscription-form" class="form">
-            <!-- Datos Personales -->
-            <h3 class="form-section-title">📋 Datos Personales</h3>
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="form-label">Nombre *</label>
-                <input
-                  type="text"
-                  name="nombre"
-                  class="form-input"
-                  placeholder="Tu nombre"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Apellido *</label>
-                <input
-                  type="text"
-                  name="apellido"
-                  class="form-input"
-                  placeholder="Tu apellido"
-                  required
-                />
-              </div>
-            </div>
-
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="form-label">Número de Cédula *</label>
-                <input
-                  type="text"
-                  name="cedula"
-                  class="form-input"
-                  placeholder="12345678"
-                  pattern="[0-9]+"
-                  title="Solo se permiten números"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Fecha de Nacimiento *</label>
-                <input
-                  type="date"
-                  name="fecha_nacimiento"
-                  class="form-input"
-                  required
-                  onchange="checkAge()"
-                />
-              </div>
-            </div>
-
-            <!-- Información de Contacto -->
-            <h3 class="form-section-title">📞 Información de Contacto</h3>
+            <!-- Nombre y apellido -->
             <div class="form-group">
-              <label class="form-label">Correo Electrónico *</label>
+              <label class="form-label">Nombre y Apellido</label>
               <input
-                type="email"
-                name="email"
+                type="text"
+                name="nombre_apellido"
                 class="form-input"
-                placeholder="tu@email.com"
+                placeholder="Nombre y apellido completo"
                 required
               />
             </div>
 
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="form-label">Número de Celular *</label>
-                <input
-                  type="tel"
-                  name="celular"
-                  class="form-input"
-                  placeholder="0987654321"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Contacto Extra</label>
-                <input
-                  type="tel"
-                  name="contacto_extra"
-                  class="form-input"
-                  placeholder="Número adicional (opcional)"
-                />
-              </div>
-            </div>
-
-            <!-- Información Académica -->
-            <h3 class="form-section-title">🎓 Información Académica</h3>
-            <div class="form-grid">
-              <div class="form-group">
-                <label class="form-label">Colegio de Procedencia *</label>
-                <input
-                  type="text"
-                  name="colegio"
-                  class="form-input"
-                  placeholder="Nombre de tu colegio"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Carrera de Interés</label>
-                <select name="carrera" class="form-input">
-                  <option value="">Selecciona una carrera</option>
-                  <option value="civil">Ingeniería Civil</option>
-                  <option value="electromecanica">Ingeniería Electromecánica</option>
-                  <option value="industrial">Ingeniería Industrial</option>
-                  <option value="informatica">Ingeniería Informática</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- Datos del Responsable (para menores de 18) -->
-            <div id="guardian-section" class="guardian-section">
-              <h3 class="form-section-title">
-                👨‍👩‍👧‍👦 Datos del Responsable
-                <span class="age-requirement">(Obligatorio para menores de 18 años)</span>
-              </h3>
-              <div class="form-grid">
-                <div class="form-group">
-                  <label class="form-label">Nombre del Responsable *</label>
-                  <input
-                    type="text"
-                    name="responsable_nombre"
-                    class="form-input"
-                    placeholder="Nombre completo"
-                  />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Apellido del Responsable *</label>
-                  <input
-                    type="text"
-                    name="responsable_apellido"
-                    class="form-input"
-                    placeholder="Apellido"
-                  />
-                </div>
-              </div>
-              <div class="form-grid">
-                <div class="form-group">
-                  <label class="form-label">Relación *</label>
-                  <select name="responsable_relacion" class="form-input">
-                    <option value="">Seleccionar</option>
-                    <option value="padre">Padre</option>
-                    <option value="madre">Madre</option>
-                    <option value="tutor">Tutor/Encargado</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Contacto del Responsable *</label>
-                  <input
-                    type="tel"
-                    name="responsable_contacto"
-                    class="form-input"
-                    placeholder="Número de contacto"
-                  />
-                </div>
-              </div>
-            </div>
-
-            <!-- Contacto de Padres (para menores de 18) -->
-            <div id="parents-contact-section" class="guardian-section">
-              <h3 class="form-section-title">
-                👨‍👩‍👧‍👦 Contacto de Padres
-                <span class="age-requirement">(Obligatorio para menores de 18 años)</span>
-              </h3>
-              <div class="form-grid">
-                <div class="form-group">
-                  <label class="form-label">Nombre del Padre *</label>
-                  <input
-                    type="text"
-                    name="padre_nombre"
-                    class="form-input"
-                    placeholder="Nombre completo del padre"
-                  />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Apellido del Padre *</label>
-                  <input
-                    type="text"
-                    name="padre_apellido"
-                    class="form-input"
-                    placeholder="Apellido del padre"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Celular del Padre *</label>
-                <input
-                  type="tel"
-                  name="padre_celular"
-                  class="form-input"
-                  placeholder="0987654321"
-                />
-              </div>
-
-              <div class="form-grid">
-                <div class="form-group">
-                  <label class="form-label">Nombre de la Madre *</label>
-                  <input
-                    type="text"
-                    name="madre_nombre"
-                    class="form-input"
-                    placeholder="Nombre completo de la madre"
-                  />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Apellido de la Madre *</label>
-                  <input
-                    type="text"
-                    name="madre_apellido"
-                    class="form-input"
-                    placeholder="Apellido de la madre"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Celular de la Madre *</label>
-                <input
-                  type="tel"
-                  name="madre_celular"
-                  class="form-input"
-                  placeholder="0987654321"
-                />
-              </div>
-
-              <div class="form-grid">
-                <div class="form-group">
-                  <label class="form-label">Nombre del Encargado</label>
-                  <input
-                    type="text"
-                    name="encargado_nombre"
-                    class="form-input"
-                    placeholder="Nombre completo (si aplica)"
-                  />
-                </div>
-                <div class="form-group">
-                  <label class="form-label">Apellido del Encargado</label>
-                  <input
-                    type="text"
-                    name="encargado_apellido"
-                    class="form-input"
-                    placeholder="Apellido (si aplica)"
-                  />
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="form-label">Celular del Encargado</label>
-                <input
-                  type="tel"
-                  name="encargado_celular"
-                  class="form-input"
-                  placeholder="0987654321 (si aplica)"
-                />
-              </div>
-            </div>
-
-            <!-- Comentarios -->
+            <!-- Número de cédula -->
             <div class="form-group">
-              <label class="form-label">Comentarios o Expectativas</label>
-              <textarea
-                name="comentarios"
+              <label class="form-label">Número de cédula </label>
+              <input
+                type="text"
+                name="cedula"
                 class="form-input"
-                placeholder="Cuéntanos sobre tus expectativas o consultas adicionales"
-              ></textarea>
+                placeholder="12345678"
+                pattern="[0-9]+"
+                title="Solo se permiten números"
+                required
+              />
+            </div>
+
+            <!-- Número de teléfono -->
+            <div class="form-group">
+              <label class="form-label">Número de teléfono </label>
+              <input
+                type="tel"
+                name="telefono"
+                class="form-input"
+                placeholder="0987654321"
+                required
+              />
+            </div>
+
+            <!-- Colegio o institución -->
+            <div class="form-group">
+              <label class="form-label">Colegio o institución de estudios secundarios </label>
+              <input
+                type="text"
+                name="colegio"
+                class="form-input"
+                placeholder="Nombre de tu colegio o institución"
+                required
+              />
+            </div>
+
+            <!-- Nombre y apellido de familiar -->
+            <div class="form-group">
+              <label class="form-label">Nombre y apellido de un familiar o encargado</label>
+              <input
+                type="text"
+                name="familiar_nombre"
+                class="form-input"
+                placeholder="Nombre y apellido del familiar o encargado"
+                required
+              />
+            </div>
+
+            <!-- Teléfono de familiar -->
+            <div class="form-group">
+              <label class="form-label">Número de teléfono de un familiar o encargado</label>
+              <input
+                type="tel"
+                name="familiar_telefono"
+                class="form-input"
+                placeholder="0987654321"
+                required
+              />
+            </div>
+
+            <!-- Términos y condiciones con enlace -->
+            <div class="form-group">
+              <div style="margin-bottom: 1rem">
+                <p style="margin-bottom: 0.5rem; color: var(--navy)">
+                  He leído los términos y condiciones del curso extensivo, y me comprometo a
+                  seguirlos.
+                  <a
+                    href="documents/terminos_y_condiciones.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="color: var(--primary); text-decoration: underline"
+                    >Haga click aquí.</a
+                  >
+                  *
+                </p>
+              </div>
+              <div class="form-group">
+                <label class="form-label">
+                  <input
+                    type="checkbox"
+                    name="acepto_terminos"
+                    required
+                    style="margin-right: 0.5rem"
+                  />
+                  Acepto los términos y condiciones (Luego te paso los términos y condiciones) *
+                </label>
+              </div>
             </div>
 
             <button type="submit" class="btn-primary" style="width: 100%">
@@ -842,7 +684,10 @@
                 <div class="contact-icon">📍</div>
                 <div class="contact-info">
                   <p>Dirección</p>
-                  <p>Independencia Nacional, Asunción 001102</p>
+                  <p>
+                    Independencia Nacional 1159 entre Av. Rodríguez de Francia y Rca. de Colombia,
+                    Asunción
+                  </p>
                 </div>
               </div>
 
@@ -943,80 +788,6 @@
     </footer>
 
     <script>
-      // Check age and set field requirements
-      function checkAge() {
-        const birthDate = document.querySelector('input[name="fecha_nacimiento"]').value;
-        const guardianSection = document.getElementById('guardian-section');
-        const parentsContactSection = document.getElementById('parents-contact-section');
-        const guardianInputs = guardianSection.querySelectorAll('input, select');
-        const parentsInputs = parentsContactSection.querySelectorAll('input');
-        const ageRequirements = document.querySelectorAll('.age-requirement');
-
-        if (birthDate) {
-          const today = new Date();
-          const birth = new Date(birthDate);
-          const age = today.getFullYear() - birth.getFullYear();
-          const monthDiff = today.getMonth() - birth.getMonth();
-
-          // Ajustar edad si no ha cumplido años este año
-          const finalAge =
-            monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate()) ? age - 1 : age;
-
-          if (finalAge < 18) {
-            // Hacer campos del responsable requeridos
-            guardianInputs.forEach(input => {
-              if (input.name.includes('responsable')) {
-                input.required = true;
-              }
-            });
-
-            // Hacer campos de padres requeridos (padre y madre)
-            parentsInputs.forEach(input => {
-              if (input.name.includes('padre_') || input.name.includes('madre_')) {
-                input.required = true;
-              }
-              // Encargado es opcional
-            });
-
-            // Destacar visualmente que es obligatorio
-            ageRequirements.forEach(span => {
-              span.style.color = '#e74c3c';
-              span.style.fontWeight = 'bold';
-            });
-          } else {
-            // Quitar requerimiento de campos del responsable y padres
-            guardianInputs.forEach(input => {
-              input.required = false;
-            });
-
-            parentsInputs.forEach(input => {
-              input.required = false;
-            });
-
-            // Cambiar estilo visual para indicar que es opcional
-            ageRequirements.forEach(span => {
-              span.style.color = '#7f8c8d';
-              span.style.fontWeight = 'normal';
-            });
-          }
-        } else {
-          // Si no hay fecha de nacimiento, hacer todos los campos opcionales
-          guardianInputs.forEach(input => {
-            input.required = false;
-          });
-
-          parentsInputs.forEach(input => {
-            input.required = false;
-          });
-
-          // Estilo neutral
-          ageRequirements.forEach(span => {
-            span.style.color = '#7f8c8d';
-            span.style.fontWeight = 'normal';
-          });
-        }
-      }
-
       // Toggle mobile menu
       function toggleMenu() {
         const mobileMenu = document.getElementById('mobile-menu');
@@ -1076,81 +847,24 @@
             return;
           }
 
-          // Validar fecha de nacimiento
-          const birthDate = document.querySelector('input[name="fecha_nacimiento"]').value;
-          if (!birthDate) {
-            alert('Por favor, selecciona tu fecha de nacimiento.');
+          // Validar que el checkbox de términos esté marcado
+          const terminosCheckbox = document.querySelector('input[name="acepto_terminos"]');
+          if (!terminosCheckbox.checked) {
+            alert('Debes aceptar los términos y condiciones para continuar.');
             return;
           }
 
-          // Validar si es menor de edad y verificar campos obligatorios
-          const guardianSection = document.getElementById('guardian-section');
-          const parentsContactSection = document.getElementById('parents-contact-section');
-
-          // Calcular edad nuevamente para validación
-          const today = new Date();
-          const birth = new Date(birthDate);
-          const age = today.getFullYear() - birth.getFullYear();
-          const monthDiff = today.getMonth() - birth.getMonth();
-          const finalAge =
-            monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate()) ? age - 1 : age;
-
-          if (finalAge < 18) {
-            // Validar datos del responsable
-            const responsableNombre = document.querySelector(
-              'input[name="responsable_nombre"]'
-            ).value;
-            const responsableContacto = document.querySelector(
-              'input[name="responsable_contacto"]'
-            ).value;
-            const responsableRelacion = document.querySelector(
-              'select[name="responsable_relacion"]'
-            ).value;
-
-            if (!responsableNombre || !responsableContacto || !responsableRelacion) {
-              alert('Por favor, completa todos los datos del responsable (eres menor de 18 años).');
-              return;
-            }
-
-            // Validar contacto de padres
-            const padreNombre = document.querySelector('input[name="padre_nombre"]').value;
-            const padreApellido = document.querySelector('input[name="padre_apellido"]').value;
-            const padreCelular = document.querySelector('input[name="padre_celular"]').value;
-            const madreNombre = document.querySelector('input[name="madre_nombre"]').value;
-            const madreApellido = document.querySelector('input[name="madre_apellido"]').value;
-            const madreCelular = document.querySelector('input[name="madre_celular"]').value;
-
-            if (
-              !padreNombre ||
-              !padreApellido ||
-              !padreCelular ||
-              !madreNombre ||
-              !madreApellido ||
-              !madreCelular
-            ) {
-              alert(
-                'Por favor, completa todos los datos de contacto del padre y la madre (eres menor de 18 años).'
-              );
-              return;
-            }
-          }
+          // Obtener datos del formulario
+          const nombreApellido = document.querySelector('input[name="nombre_apellido"]').value;
+          const telefono = document.querySelector('input[name="telefono"]').value;
 
           // Si todo está bien, mostrar mensaje de éxito
-          const nombre = document.querySelector('input[name="nombre"]').value;
-          const email = document.querySelector('input[name="email"]').value;
-
           alert(
-            `¡Inscripción enviada exitosamente!\n\nGracias ${nombre}, hemos recibido tu solicitud de inscripción.\nTe contactaremos pronto a ${email} con más información sobre el proceso.\n\n📞 También puedes llamarnos al +595 985 350550`
+            `¡Inscripción enviada exitosamente!\n\nGracias ${nombreApellido}, hemos recibido tu solicitud de inscripción.\nTe contactaremos pronto al número ${telefono} con más información sobre el proceso.\n\n📞 También puedes llamarnos al +595 985 350550`
           );
 
           // Limpiar formulario
           this.reset();
-          // Reiniciar estilos de los indicadores de edad
-          const ageRequirements = document.querySelectorAll('.age-requirement');
-          ageRequirements.forEach(span => {
-            span.style.color = '#7f8c8d';
-            span.style.fontWeight = 'normal';
-          });
         });
       }
 
