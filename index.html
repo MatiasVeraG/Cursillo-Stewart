@@ -15,7 +15,13 @@
     <meta name="robots" content="index, follow" />
 
     <!-- Open Graph / Facebook -->
-    <meta property="og:type" content="website" />
+    <meta
+      property="og:type"
+      content="web      // EmailJS initialization
+      (function() {
+        emailjs.init('xW-mdqdZ0aTjeEmGS'); // Clave pública de EmailJS
+      })();"
+    />
     <meta property="og:url" content="https://cursillo-stewart.uptp.edu.py/" />
     <meta
       property="og:title"
@@ -54,6 +60,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- EmailJS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
 
     <!-- Structured Data -->
     <script type="application/ld+json">
@@ -409,49 +421,272 @@
           <p>Completa tu registro para formar parte del Cursillo Stewart</p>
         </div>
         <div class="form-container">
-          <form class="form">
+          <form id="inscription-form" class="form">
+            <!-- Datos Personales -->
+            <h3 class="form-section-title">📋 Datos Personales</h3>
             <div class="form-grid">
               <div class="form-group">
-                <label class="form-label">Nombre</label>
-                <input type="text" class="form-input" placeholder="Tu nombre" />
+                <label class="form-label">Nombre *</label>
+                <input
+                  type="text"
+                  name="nombre"
+                  class="form-input"
+                  placeholder="Tu nombre"
+                  required
+                />
               </div>
               <div class="form-group">
-                <label class="form-label">Apellido</label>
-                <input type="text" class="form-input" placeholder="Tu apellido" />
+                <label class="form-label">Apellido *</label>
+                <input
+                  type="text"
+                  name="apellido"
+                  class="form-input"
+                  placeholder="Tu apellido"
+                  required
+                />
               </div>
             </div>
+
             <div class="form-grid">
               <div class="form-group">
-                <label class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-input" placeholder="tu@email.com" />
+                <label class="form-label">Número de Cédula *</label>
+                <input
+                  type="text"
+                  name="cedula"
+                  class="form-input"
+                  placeholder="12345678"
+                  pattern="[0-9]+"
+                  title="Solo se permiten números"
+                  required
+                />
               </div>
               <div class="form-group">
-                <label class="form-label">Teléfono</label>
-                <input type="tel" class="form-input" placeholder="Tu teléfono" />
+                <label class="form-label">Fecha de Nacimiento *</label>
+                <input
+                  type="date"
+                  name="fecha_nacimiento"
+                  class="form-input"
+                  required
+                  onchange="checkAge()"
+                />
               </div>
             </div>
+
+            <!-- Información de Contacto -->
+            <h3 class="form-section-title">📞 Información de Contacto</h3>
             <div class="form-group">
-              <label class="form-label">Colegio de Procedencia</label>
-              <input type="text" class="form-input" placeholder="Nombre de tu colegio" />
-            </div>
-            <div class="form-group">
-              <label class="form-label">Carrera de Interés</label>
-              <select class="form-input">
-                <option>Selecciona una carrera</option>
-                <option>Ingeniería en Sistemas</option>
-                <option>Ingeniería Industrial</option>
-                <option>Ingeniería Civil</option>
-                <option>Administración de Empresas</option>
-                <option>Contabilidad</option>
-              </select>
-            </div>
-            <div class="form-group">
-              <label class="form-label">Mensaje (Opcional)</label>
-              <textarea
+              <label class="form-label">Correo Electrónico *</label>
+              <input
+                type="email"
+                name="email"
                 class="form-input"
-                placeholder="Cuéntanos sobre tus expectativas"
+                placeholder="tu@email.com"
+                required
+              />
+            </div>
+
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Número de Celular *</label>
+                <input
+                  type="tel"
+                  name="celular"
+                  class="form-input"
+                  placeholder="0987654321"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Contacto Extra</label>
+                <input
+                  type="tel"
+                  name="contacto_extra"
+                  class="form-input"
+                  placeholder="Número adicional (opcional)"
+                />
+              </div>
+            </div>
+
+            <!-- Información Académica -->
+            <h3 class="form-section-title">🎓 Información Académica</h3>
+            <div class="form-grid">
+              <div class="form-group">
+                <label class="form-label">Colegio de Procedencia *</label>
+                <input
+                  type="text"
+                  name="colegio"
+                  class="form-input"
+                  placeholder="Nombre de tu colegio"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Carrera de Interés</label>
+                <select name="carrera" class="form-input">
+                  <option value="">Selecciona una carrera</option>
+                  <option value="civil">Ingeniería Civil</option>
+                  <option value="electromecanica">Ingeniería Electromecánica</option>
+                  <option value="industrial">Ingeniería Industrial</option>
+                  <option value="informatica">Ingeniería Informática</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Datos del Responsable (para menores de 18) -->
+            <div id="guardian-section" class="guardian-section">
+              <h3 class="form-section-title">
+                👨‍👩‍👧‍👦 Datos del Responsable
+                <span class="age-requirement">(Obligatorio para menores de 18 años)</span>
+              </h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Nombre del Responsable *</label>
+                  <input
+                    type="text"
+                    name="responsable_nombre"
+                    class="form-input"
+                    placeholder="Nombre completo"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Apellido del Responsable *</label>
+                  <input
+                    type="text"
+                    name="responsable_apellido"
+                    class="form-input"
+                    placeholder="Apellido"
+                  />
+                </div>
+              </div>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Relación *</label>
+                  <select name="responsable_relacion" class="form-input">
+                    <option value="">Seleccionar</option>
+                    <option value="padre">Padre</option>
+                    <option value="madre">Madre</option>
+                    <option value="tutor">Tutor/Encargado</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Contacto del Responsable *</label>
+                  <input
+                    type="tel"
+                    name="responsable_contacto"
+                    class="form-input"
+                    placeholder="Número de contacto"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Contacto de Padres (para menores de 18) -->
+            <div id="parents-contact-section" class="guardian-section">
+              <h3 class="form-section-title">
+                👨‍👩‍👧‍👦 Contacto de Padres
+                <span class="age-requirement">(Obligatorio para menores de 18 años)</span>
+              </h3>
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Nombre del Padre *</label>
+                  <input
+                    type="text"
+                    name="padre_nombre"
+                    class="form-input"
+                    placeholder="Nombre completo del padre"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Apellido del Padre *</label>
+                  <input
+                    type="text"
+                    name="padre_apellido"
+                    class="form-input"
+                    placeholder="Apellido del padre"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Celular del Padre *</label>
+                <input
+                  type="tel"
+                  name="padre_celular"
+                  class="form-input"
+                  placeholder="0987654321"
+                />
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Nombre de la Madre *</label>
+                  <input
+                    type="text"
+                    name="madre_nombre"
+                    class="form-input"
+                    placeholder="Nombre completo de la madre"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Apellido de la Madre *</label>
+                  <input
+                    type="text"
+                    name="madre_apellido"
+                    class="form-input"
+                    placeholder="Apellido de la madre"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Celular de la Madre *</label>
+                <input
+                  type="tel"
+                  name="madre_celular"
+                  class="form-input"
+                  placeholder="0987654321"
+                />
+              </div>
+
+              <div class="form-grid">
+                <div class="form-group">
+                  <label class="form-label">Nombre del Encargado</label>
+                  <input
+                    type="text"
+                    name="encargado_nombre"
+                    class="form-input"
+                    placeholder="Nombre completo (si aplica)"
+                  />
+                </div>
+                <div class="form-group">
+                  <label class="form-label">Apellido del Encargado</label>
+                  <input
+                    type="text"
+                    name="encargado_apellido"
+                    class="form-input"
+                    placeholder="Apellido (si aplica)"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="form-label">Celular del Encargado</label>
+                <input
+                  type="tel"
+                  name="encargado_celular"
+                  class="form-input"
+                  placeholder="0987654321 (si aplica)"
+                />
+              </div>
+            </div>
+
+            <!-- Comentarios -->
+            <div class="form-group">
+              <label class="form-label">Comentarios o Expectativas</label>
+              <textarea
+                name="comentarios"
+                class="form-input"
+                placeholder="Cuéntanos sobre tus expectativas o consultas adicionales"
               ></textarea>
             </div>
+
             <button type="submit" class="btn-primary" style="width: 100%">
               Enviar Inscripción
             </button>
@@ -544,24 +779,49 @@
             >
               Envíanos un Mensaje
             </h3>
-            <form style="display: flex; flex-direction: column; gap: 1.5rem">
+            <form id="contact-form" style="display: flex; flex-direction: column; gap: 1.5rem">
               <div class="form-group">
                 <label class="form-label">Nombre Completo</label>
-                <input type="text" class="form-input" placeholder="Tu nombre completo" />
+                <input
+                  type="text"
+                  name="from_name"
+                  class="form-input"
+                  placeholder="Tu nombre completo"
+                  required
+                />
               </div>
               <div class="form-group">
                 <label class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-input" placeholder="tu@email.com" />
+                <input
+                  type="email"
+                  name="from_email"
+                  class="form-input"
+                  placeholder="tu@email.com"
+                  required
+                />
               </div>
               <div class="form-group">
                 <label class="form-label">Asunto</label>
-                <input type="text" class="form-input" placeholder="Asunto de tu consulta" />
+                <input
+                  type="text"
+                  name="subject"
+                  class="form-input"
+                  placeholder="Asunto de tu consulta"
+                  required
+                />
               </div>
               <div class="form-group">
                 <label class="form-label">Mensaje</label>
-                <textarea class="form-input" placeholder="Escribe tu mensaje aquí"></textarea>
+                <textarea
+                  name="message"
+                  class="form-input"
+                  placeholder="Escribe tu mensaje aquí"
+                  required
+                ></textarea>
               </div>
-              <button type="submit" class="btn-primary" style="width: 100%">Enviar Mensaje</button>
+              <button type="submit" id="submit-btn" class="btn-primary" style="width: 100%">
+                Enviar Mensaje
+              </button>
             </form>
           </div>
 
@@ -582,7 +842,7 @@
                 <div class="contact-icon">📍</div>
                 <div class="contact-info">
                   <p>Dirección</p>
-                  <p>Campus UPTP, San Lorenzo, Paraguay</p>
+                  <p>Independencia Nacional, Asunción 001102</p>
                 </div>
               </div>
 
@@ -590,7 +850,7 @@
                 <div class="contact-icon">📞</div>
                 <div class="contact-info">
                   <p>Teléfono</p>
-                  <p>+595 21 585-492</p>
+                  <p>+595 985 350550</p>
                 </div>
               </div>
 
@@ -598,7 +858,7 @@
                 <div class="contact-icon">📧</div>
                 <div class="contact-info">
                   <p>Email</p>
-                  <p>cursillostewart@uptp.edu.py</p>
+                  <p>cursillostewart@gmail.com</p>
                 </div>
               </div>
 
@@ -606,18 +866,23 @@
                 <div class="contact-icon">🕒</div>
                 <div class="contact-info">
                   <p>Horarios</p>
-                  <p>Lun - Vie: 8:00 - 18:00</p>
+                  <p>Lun - Sáb: 8:00 - 12:00 y 14:00 - 18:00</p>
                 </div>
               </div>
             </div>
 
-            <!-- Mapa Placeholder -->
-            <div class="map-placeholder">
-              <div>
-                <div class="map-icon">📍</div>
-                <p style="font-weight: 600">Mapa de Ubicación</p>
-                <p style="font-size: 0.875rem">Campus UPTP, San Lorenzo</p>
-              </div>
+            <!-- Google Maps -->
+            <div class="map-container">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14290.629488811443!2d-57.63289752233832!3d-25.288506144782207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945da78778a93781%3A0xa7c23edfe28540ce!2sCursillo%20STEWART!5e0!3m2!1sen!2spy!4v1758971873336!5m2!1sen!2spy"
+                width="600"
+                height="450"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              >
+              </iframe>
             </div>
           </div>
         </div>
@@ -678,6 +943,80 @@
     </footer>
 
     <script>
+      // Check age and set field requirements
+      function checkAge() {
+        const birthDate = document.querySelector('input[name="fecha_nacimiento"]').value;
+        const guardianSection = document.getElementById('guardian-section');
+        const parentsContactSection = document.getElementById('parents-contact-section');
+        const guardianInputs = guardianSection.querySelectorAll('input, select');
+        const parentsInputs = parentsContactSection.querySelectorAll('input');
+        const ageRequirements = document.querySelectorAll('.age-requirement');
+
+        if (birthDate) {
+          const today = new Date();
+          const birth = new Date(birthDate);
+          const age = today.getFullYear() - birth.getFullYear();
+          const monthDiff = today.getMonth() - birth.getMonth();
+
+          // Ajustar edad si no ha cumplido años este año
+          const finalAge =
+            monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate()) ? age - 1 : age;
+
+          if (finalAge < 18) {
+            // Hacer campos del responsable requeridos
+            guardianInputs.forEach(input => {
+              if (input.name.includes('responsable')) {
+                input.required = true;
+              }
+            });
+
+            // Hacer campos de padres requeridos (padre y madre)
+            parentsInputs.forEach(input => {
+              if (input.name.includes('padre_') || input.name.includes('madre_')) {
+                input.required = true;
+              }
+              // Encargado es opcional
+            });
+
+            // Destacar visualmente que es obligatorio
+            ageRequirements.forEach(span => {
+              span.style.color = '#e74c3c';
+              span.style.fontWeight = 'bold';
+            });
+          } else {
+            // Quitar requerimiento de campos del responsable y padres
+            guardianInputs.forEach(input => {
+              input.required = false;
+            });
+
+            parentsInputs.forEach(input => {
+              input.required = false;
+            });
+
+            // Cambiar estilo visual para indicar que es opcional
+            ageRequirements.forEach(span => {
+              span.style.color = '#7f8c8d';
+              span.style.fontWeight = 'normal';
+            });
+          }
+        } else {
+          // Si no hay fecha de nacimiento, hacer todos los campos opcionales
+          guardianInputs.forEach(input => {
+            input.required = false;
+          });
+
+          parentsInputs.forEach(input => {
+            input.required = false;
+          });
+
+          // Estilo neutral
+          ageRequirements.forEach(span => {
+            span.style.color = '#7f8c8d';
+            span.style.fontWeight = 'normal';
+          });
+        }
+      }
+
       // Toggle mobile menu
       function toggleMenu() {
         const mobileMenu = document.getElementById('mobile-menu');
@@ -708,12 +1047,150 @@
         });
       });
 
+      // EmailJS initialization
+      (function () {
+        emailjs.init('xW-mdqdZ0aTjeEmGS'); // Clave pública de EmailJS
+      })();
+
       // Form submission handlers
       document.querySelectorAll('form').forEach(form => {
-        form.addEventListener('submit', function (e) {
+        // Solo aplicar a formularios que NO sean el de contacto o inscripción
+        if (form.id !== 'contact-form' && form.id !== 'inscription-form') {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+          });
+        }
+      });
+
+      // Manejo específico del formulario de inscripción
+      const inscriptionForm = document.getElementById('inscription-form');
+      if (inscriptionForm) {
+        inscriptionForm.addEventListener('submit', function (e) {
           e.preventDefault();
-          alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+
+          // Validar cédula (solo números)
+          const cedula = document.querySelector('input[name="cedula"]').value;
+          if (!/^\d+$/.test(cedula)) {
+            alert('El número de cédula debe contener solo números.');
+            return;
+          }
+
+          // Validar fecha de nacimiento
+          const birthDate = document.querySelector('input[name="fecha_nacimiento"]').value;
+          if (!birthDate) {
+            alert('Por favor, selecciona tu fecha de nacimiento.');
+            return;
+          }
+
+          // Validar si es menor de edad y verificar campos obligatorios
+          const guardianSection = document.getElementById('guardian-section');
+          const parentsContactSection = document.getElementById('parents-contact-section');
+
+          // Calcular edad nuevamente para validación
+          const today = new Date();
+          const birth = new Date(birthDate);
+          const age = today.getFullYear() - birth.getFullYear();
+          const monthDiff = today.getMonth() - birth.getMonth();
+          const finalAge =
+            monthDiff < 0 || (monthDiff === 0 && today.getDate() < birth.getDate()) ? age - 1 : age;
+
+          if (finalAge < 18) {
+            // Validar datos del responsable
+            const responsableNombre = document.querySelector(
+              'input[name="responsable_nombre"]'
+            ).value;
+            const responsableContacto = document.querySelector(
+              'input[name="responsable_contacto"]'
+            ).value;
+            const responsableRelacion = document.querySelector(
+              'select[name="responsable_relacion"]'
+            ).value;
+
+            if (!responsableNombre || !responsableContacto || !responsableRelacion) {
+              alert('Por favor, completa todos los datos del responsable (eres menor de 18 años).');
+              return;
+            }
+
+            // Validar contacto de padres
+            const padreNombre = document.querySelector('input[name="padre_nombre"]').value;
+            const padreApellido = document.querySelector('input[name="padre_apellido"]').value;
+            const padreCelular = document.querySelector('input[name="padre_celular"]').value;
+            const madreNombre = document.querySelector('input[name="madre_nombre"]').value;
+            const madreApellido = document.querySelector('input[name="madre_apellido"]').value;
+            const madreCelular = document.querySelector('input[name="madre_celular"]').value;
+
+            if (
+              !padreNombre ||
+              !padreApellido ||
+              !padreCelular ||
+              !madreNombre ||
+              !madreApellido ||
+              !madreCelular
+            ) {
+              alert(
+                'Por favor, completa todos los datos de contacto del padre y la madre (eres menor de 18 años).'
+              );
+              return;
+            }
+          }
+
+          // Si todo está bien, mostrar mensaje de éxito
+          const nombre = document.querySelector('input[name="nombre"]').value;
+          const email = document.querySelector('input[name="email"]').value;
+
+          alert(
+            `¡Inscripción enviada exitosamente!\n\nGracias ${nombre}, hemos recibido tu solicitud de inscripción.\nTe contactaremos pronto a ${email} con más información sobre el proceso.\n\n📞 También puedes llamarnos al +595 985 350550`
+          );
+
+          // Limpiar formulario
+          this.reset();
+          // Reiniciar estilos de los indicadores de edad
+          const ageRequirements = document.querySelectorAll('.age-requirement');
+          ageRequirements.forEach(span => {
+            span.style.color = '#7f8c8d';
+            span.style.fontWeight = 'normal';
+          });
         });
+      }
+
+      // Manejo del formulario de contacto con EmailJS
+      document.getElementById('contact-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById('submit-btn');
+        const originalText = submitBtn.textContent;
+
+        // Cambiar estado del botón
+        submitBtn.textContent = 'Enviando...';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.7';
+
+        // Enviar email usando EmailJS
+        emailjs
+          .sendForm('service_t7mw6ob', 'template_x4d3xyy', this)
+          .then(
+            function (response) {
+              console.log('SUCCESS!', response.status, response.text);
+              alert(
+                '¡Mensaje enviado exitosamente! Te contactaremos pronto a ' +
+                  document.querySelector('input[name="from_email"]').value
+              );
+              document.getElementById('contact-form').reset();
+            },
+            function (error) {
+              console.log('FAILED...', error);
+              alert(
+                'Error al enviar el mensaje. Por favor, inténtalo nuevamente o contáctanos directamente al +595 985 350550.'
+              );
+            }
+          )
+          .finally(function () {
+            // Restaurar estado del botón
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+          });
       });
 
       // ===== CAROUSEL DE IMÁGENES DE FONDO =====
