@@ -42,6 +42,8 @@ body {
   --light-blue: #93c5fd;
   --red: #dc2626;
   --light-red: #fca5a5;
+  --green: #16a34a;
+  --light-green: #4ade80;
   --white: #ffffff;
   --gray-50: #f9fafb;
   --gray-100: #f3f4f6;
@@ -724,6 +726,44 @@ select.form-input {
 
 .form-section-title:first-child {
   margin-top: 0;
+}
+
+/* Form help text and validation */
+.form-help {
+  display: block;
+  font-size: 0.8rem;
+  color: var(--gray-600);
+  margin-top: 0.25rem;
+  font-style: italic;
+}
+
+.field-error {
+  display: block;
+  font-size: 0.85rem;
+  color: var(--red);
+  margin-top: 0.25rem;
+  font-weight: 500;
+}
+
+/* Input validation states */
+.form-input:invalid {
+  border-color: var(--red);
+  box-shadow: 0 0 0 2px rgba(231, 76, 60, 0.1);
+}
+
+.form-input:valid {
+  border-color: var(--green);
+  box-shadow: 0 0 0 2px rgba(46, 204, 113, 0.1);
+}
+
+.form-input:focus:invalid {
+  border-color: var(--red);
+  box-shadow: 0 0 0 3px rgba(231, 76, 60, 0.2);
+}
+
+.form-input:focus:valid {
+  border-color: var(--green);
+  box-shadow: 0 0 0 3px rgba(46, 204, 113, 0.2);
 }
 
 /* Checkbox styling for terms and conditions */

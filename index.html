@@ -428,76 +428,107 @@
           <form id="inscription-form" class="form">
             <!-- Nombre y apellido -->
             <div class="form-group">
-              <label class="form-label">Nombre y Apellido</label>
+              <label class="form-label">Nombre y Apellido *</label>
               <input
                 type="text"
                 name="nombre_apellido"
                 class="form-input"
-                placeholder="Nombre y apellido completo"
+                placeholder="Ejemplo: Juan Carlos Pérez López"
+                pattern="[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{3,50}"
+                title="Solo se permiten letras, espacios y acentos. Mínimo 3 caracteres, máximo 50."
+                minlength="3"
+                maxlength="50"
                 required
               />
+              <small class="form-help">Solo letras, espacios y acentos</small>
             </div>
 
             <!-- Número de cédula -->
             <div class="form-group">
-              <label class="form-label">Número de cédula </label>
+              <label class="form-label">Número de cédula *</label>
               <input
                 type="text"
                 name="cedula"
                 class="form-input"
-                placeholder="12345678"
-                pattern="[0-9]+"
-                title="Solo se permiten números"
+                placeholder="1234567 (7-8 dígitos)"
+                pattern="[0-9]{7,8}"
+                title="Solo números. Debe tener entre 7 y 8 dígitos."
+                minlength="7"
+                maxlength="8"
+                inputmode="numeric"
                 required
               />
+              <small class="form-help">Entre 7 y 8 dígitos solamente</small>
             </div>
 
             <!-- Número de teléfono -->
             <div class="form-group">
-              <label class="form-label">Número de teléfono </label>
+              <label class="form-label">Número de teléfono *</label>
               <input
                 type="tel"
                 name="telefono"
                 class="form-input"
-                placeholder="0987654321"
+                placeholder="0981123456 (10 dígitos)"
+                pattern="(09[0-9]{8}|[0-9]{9})"
+                title="Formato válido: 0981123456 (celular) o 021123456 (fijo)"
+                minlength="9"
+                maxlength="10"
+                inputmode="numeric"
                 required
               />
+              <small class="form-help">Celular: 09xxxxxxxx | Fijo: 021xxxxxx</small>
             </div>
 
             <!-- Colegio o institución -->
             <div class="form-group">
-              <label class="form-label">Colegio o institución de estudios secundarios </label>
+              <label class="form-label">Colegio o institución de estudios secundarios *</label>
               <input
                 type="text"
                 name="colegio"
                 class="form-input"
-                placeholder="Nombre de tu colegio o institución"
+                placeholder="Ejemplo: Colegio Nacional de la Capital"
+                pattern="[a-zA-ZÀ-ÿ\u00f1\u00d1\s\.,\-0-9]{5,100}"
+                title="Nombre del colegio. Mínimo 5 caracteres, máximo 100."
+                minlength="5"
+                maxlength="100"
                 required
               />
+              <small class="form-help">Nombre completo del colegio o institución</small>
             </div>
 
             <!-- Nombre y apellido de familiar -->
             <div class="form-group">
-              <label class="form-label">Nombre y apellido de un familiar o encargado</label>
+              <label class="form-label">Nombre y apellido de un familiar o encargado *</label>
               <input
                 type="text"
                 name="familiar_nombre"
                 class="form-input"
-                placeholder="Nombre y apellido del familiar o encargado"
+                placeholder="Ejemplo: María González Rodríguez"
+                pattern="[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{3,50}"
+                title="Solo se permiten letras, espacios y acentos. Mínimo 3 caracteres, máximo 50."
+                minlength="3"
+                maxlength="50"
                 required
               />
+              <small class="form-help">Solo letras, espacios y acentos</small>
             </div>
 
             <!-- Teléfono de familiar -->
             <div class="form-group">
-              <label class="form-label">Número de teléfono de un familiar o encargado</label>
+              <label class="form-label">Número de teléfono de un familiar o encargado *</label>
               <input
                 type="tel"
                 name="familiar_telefono"
                 class="form-input"
-                placeholder="0987654321"
+                placeholder="0981123456 (10 dígitos)"
+                pattern="(09[0-9]{8}|[0-9]{9})"
+                title="Formato válido: 0981123456 (celular) o 021123456 (fijo)"
+                minlength="9"
+                maxlength="10"
+                inputmode="numeric"
                 required
               />
+              <small class="form-help">Celular: 09xxxxxxxx | Fijo: 021xxxxxx</small>
             </div>
 
             <!-- Términos y condiciones con enlace -->
@@ -834,37 +865,177 @@
         }
       });
 
-      // Manejo específico del formulario de inscripción
+      // Funciones de validación QA
+      function validateName(name) {
+        const nameRegex = /^[a-zA-ZÀ-ÿñÑ\s]{3,50}$/;
+        return nameRegex.test(name.trim());
+      }
+
+      function validateCedula(cedula) {
+        const cedulaRegex = /^[0-9]{7,8}$/;
+        return cedulaRegex.test(cedula.trim());
+      }
+
+      function validatePhone(phone) {
+        const phoneRegex = /^(09[0-9]{8}|[0-9]{9})$/;
+        return phoneRegex.test(phone.trim());
+      }
+
+      function validateCollege(college) {
+        const collegeRegex = /^[a-zA-ZÀ-ÿñÑ\s\.,\-0-9]{5,100}$/;
+        return collegeRegex.test(college.trim());
+      }
+
+      function showFieldError(fieldName, message) {
+        const field = document.querySelector(`input[name="${fieldName}"]`);
+        field.style.borderColor = '#e74c3c';
+        field.style.backgroundColor = '#fdf2f2';
+
+        // Remover error anterior si existe
+        const existingError = field.parentNode.querySelector('.field-error');
+        if (existingError) {
+          existingError.remove();
+        }
+
+        // Agregar nuevo mensaje de error
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'field-error';
+        errorDiv.style.color = '#e74c3c';
+        errorDiv.style.fontSize = '0.85rem';
+        errorDiv.style.marginTop = '0.25rem';
+        errorDiv.textContent = message;
+        field.parentNode.appendChild(errorDiv);
+
+        // Quitar error al escribir
+        field.addEventListener(
+          'input',
+          function () {
+            field.style.borderColor = '';
+            field.style.backgroundColor = '';
+            const errorMsg = field.parentNode.querySelector('.field-error');
+            if (errorMsg) {
+              errorMsg.remove();
+            }
+          },
+          { once: true }
+        );
+      }
+
+      // Manejo específico del formulario de inscripción con validaciones QA
       const inscriptionForm = document.getElementById('inscription-form');
       if (inscriptionForm) {
         inscriptionForm.addEventListener('submit', function (e) {
           e.preventDefault();
 
-          // Validar cédula (solo números)
-          const cedula = document.querySelector('input[name="cedula"]').value;
-          if (!/^\d+$/.test(cedula)) {
-            alert('El número de cédula debe contener solo números.');
-            return;
-          }
-
-          // Validar que el checkbox de términos esté marcado
+          // Obtener todos los valores
+          const nombreApellido = document
+            .querySelector('input[name="nombre_apellido"]')
+            .value.trim();
+          const cedula = document.querySelector('input[name="cedula"]').value.trim();
+          const telefono = document.querySelector('input[name="telefono"]').value.trim();
+          const colegio = document.querySelector('input[name="colegio"]').value.trim();
+          const familiarNombre = document
+            .querySelector('input[name="familiar_nombre"]')
+            .value.trim();
+          const familiarTelefono = document
+            .querySelector('input[name="familiar_telefono"]')
+            .value.trim();
           const terminosCheckbox = document.querySelector('input[name="acepto_terminos"]');
+
+          let hasErrors = false;
+
+          // Validar nombre y apellido
+          if (!validateName(nombreApellido)) {
+            showFieldError(
+              'nombre_apellido',
+              'Nombre inválido. Solo letras, espacios y acentos (3-50 caracteres).'
+            );
+            hasErrors = true;
+          }
+
+          // Validar cédula
+          if (!validateCedula(cedula)) {
+            showFieldError('cedula', 'Cédula inválida. Debe tener entre 7 y 8 dígitos solamente.');
+            hasErrors = true;
+          }
+
+          // Validar teléfono
+          if (!validatePhone(telefono)) {
+            showFieldError(
+              'telefono',
+              'Teléfono inválido. Formato: 0981123456 (celular) o 021123456 (fijo).'
+            );
+            hasErrors = true;
+          }
+
+          // Validar colegio
+          if (!validateCollege(colegio)) {
+            showFieldError('colegio', 'Nombre del colegio inválido (5-100 caracteres).');
+            hasErrors = true;
+          }
+
+          // Validar nombre familiar
+          if (!validateName(familiarNombre)) {
+            showFieldError(
+              'familiar_nombre',
+              'Nombre del familiar inválido. Solo letras, espacios y acentos (3-50 caracteres).'
+            );
+            hasErrors = true;
+          }
+
+          // Validar teléfono familiar
+          if (!validatePhone(familiarTelefono)) {
+            showFieldError(
+              'familiar_telefono',
+              'Teléfono del familiar inválido. Formato: 0981123456 (celular) o 021123456 (fijo).'
+            );
+            hasErrors = true;
+          }
+
+          // Validar términos y condiciones
           if (!terminosCheckbox.checked) {
-            alert('Debes aceptar los términos y condiciones para continuar.');
+            alert('⚠️ Debes aceptar los términos y condiciones para continuar.');
+            hasErrors = true;
+          }
+
+          // Si hay errores, no enviar
+          if (hasErrors) {
+            alert('❌ Por favor, corrige los errores en el formulario antes de continuar.');
             return;
           }
 
-          // Obtener datos del formulario
-          const nombreApellido = document.querySelector('input[name="nombre_apellido"]').value;
-          const telefono = document.querySelector('input[name="telefono"]').value;
+          // Cambiar estado del botón
+          const submitBtn = this.querySelector('button[type="submit"]');
+          const originalText = submitBtn.textContent;
+          submitBtn.textContent = '⏳ Enviando inscripción...';
+          submitBtn.disabled = true;
+          submitBtn.style.opacity = '0.7';
 
-          // Si todo está bien, mostrar mensaje de éxito
-          alert(
-            `¡Inscripción enviada exitosamente!\n\nGracias ${nombreApellido}, hemos recibido tu solicitud de inscripción.\nTe contactaremos pronto al número ${telefono} con más información sobre el proceso.\n\n📞 También puedes llamarnos al +595 985 350550`
-          );
-
-          // Limpiar formulario
-          this.reset();
+          // Enviar inscripción usando EmailJS
+          emailjs
+            .sendForm('service_t7mw6ob', 'template_g65oru4', this)
+            .then(
+              function (response) {
+                console.log('INSCRIPTION SUCCESS!', response.status, response.text);
+                alert(
+                  `✅ ¡Inscripción enviada exitosamente!\n\n👤 Gracias ${nombreApellido}, hemos recibido tu solicitud de inscripción.\n📞 Te contactaremos pronto al número ${telefono} con más información sobre el proceso.\n\n� También puedes llamarnos al +595 985 350550`
+                );
+                // Limpiar formulario
+                inscriptionForm.reset();
+              },
+              function (error) {
+                console.log('INSCRIPTION FAILED...', error);
+                alert(
+                  '❌ Error al enviar la inscripción.\n\n🔄 Por favor, inténtalo nuevamente en unos minutos.\n📞 Si el problema persiste, llámanos al +595 985 350550.'
+                );
+              }
+            )
+            .finally(function () {
+              // Restaurar estado del botón
+              submitBtn.textContent = originalText;
+              submitBtn.disabled = false;
+              submitBtn.style.opacity = '1';
+            });
         });
       }
 

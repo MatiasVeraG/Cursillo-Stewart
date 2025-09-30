@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test EmailJS - Formulario de Inscripción</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1e40af;
+            text-align: center;
+            margin-bottom: 10px;
+        }
+        .subtitle {
+            text-align: center;
+            color: #666;
+            margin-bottom: 30px;
+        }
+        .form-group {
+            margin-bottom: 20px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #333;
+        }
+        input[type="text"],
+        input[type="tel"],
+        input[type="email"] {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        input[type="text"]:focus,
+        input[type="tel"]:focus,
+        input[type="email"]:focus {
+            border-color: #1e40af;
+            outline: none;
+        }
+        .checkbox-group {
+            display: flex;
+            align-items: flex-start;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        input[type="checkbox"] {
+            margin-top: 3px;
+            transform: scale(1.2);
+        }
+        .btn {
+            background-color: #1e40af;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #1d4ed8;
+        }
+        .btn:disabled {
+            background-color: #9ca3af;
+            cursor: not-allowed;
+        }
+        .info-box {
+            background-color: #e0f2fe;
+            border: 1px solid #0284c7;
+            border-radius: 5px;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+        .info-box h3 {
+            margin-top: 0;
+            color: #0284c7;
+        }
+        .required {
+            color: #dc2626;
+        }
+        .field-names {
+            background-color: #f3f4f6;
+            border: 1px solid #d1d5db;
+            border-radius: 5px;
+            padding: 15px;
+            margin: 20px 0;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+    <!-- EmailJS -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>🎓 Test EmailJS - Cursillo Stewart</h1>
+        <p class="subtitle">Formulario de prueba para configurar EmailJS</p>
+        
+        <div class="info-box">
+            <h3>📋 Instrucciones:</h3>
+            <p><strong>1.</strong> Configura tu template en EmailJS con ID: <code>template_inscription</code></p>
+            <p><strong>2.</strong> Usa los nombres de campo mostrados abajo</p>
+            <p><strong>3.</strong> Prueba el formulario para verificar que funciona</p>
+            <p><strong>4.</strong> Los emails llegarán a: <strong>cursillostewart@gmail.com</strong></p>
+        </div>
+
+        <div class="field-names">
+            <strong>Nombres de campos para el template EmailJS:</strong><br>
+            • {{nombre_apellido}} - Nombre y apellido<br>
+            • {{cedula}} - Número de cédula<br>
+            • {{telefono}} - Número de teléfono<br>
+            • {{colegio}} - Colegio o institución<br>
+            • {{familiar_nombre}} - Nombre del familiar<br>
+            • {{familiar_telefono}} - Teléfono del familiar<br>
+            • {{acepto_terminos}} - Términos aceptados (Yes/No)
+        </div>
+
+        <form id="inscription-form">
+            <!-- Nombre y apellido -->
+            <div class="form-group">
+                <label for="nombre_apellido">Nombre y Apellido <span class="required">*</span></label>
+                <input type="text" id="nombre_apellido" name="nombre_apellido" required 
+                       placeholder="Ej: Juan Pérez González">
+            </div>
+
+            <!-- Número de cédula -->
+            <div class="form-group">
+                <label for="cedula">Número de cédula <span class="required">*</span></label>
+                <input type="text" id="cedula" name="cedula" required 
+                       pattern="[0-9]+" title="Solo números"
+                       placeholder="Ej: 12345678">
+            </div>
+
+            <!-- Número de teléfono -->
+            <div class="form-group">
+                <label for="telefono">Número de teléfono <span class="required">*</span></label>
+                <input type="tel" id="telefono" name="telefono" required 
+                       placeholder="Ej: 0987654321">
+            </div>
+
+            <!-- Colegio o institución -->
+            <div class="form-group">
+                <label for="colegio">Colegio o institución de estudios secundarios <span class="required">*</span></label>
+                <input type="text" id="colegio" name="colegio" required 
+                       placeholder="Ej: Colegio Nacional de la Capital">
+            </div>
+
+            <!-- Nombre y apellido de familiar -->
+            <div class="form-group">
+                <label for="familiar_nombre">Nombre y apellido de un familiar o encargado <span class="required">*</span></label>
+                <input type="text" id="familiar_nombre" name="familiar_nombre" required 
+                       placeholder="Ej: María González">
+            </div>
+
+            <!-- Teléfono de familiar -->
+            <div class="form-group">
+                <label for="familiar_telefono">Número de teléfono de un familiar o encargado <span class="required">*</span></label>
+                <input type="tel" id="familiar_telefono" name="familiar_telefono" required 
+                       placeholder="Ej: 0971123456">
+            </div>
+
+            <!-- Términos y condiciones -->
+            <div class="checkbox-group">
+                <input type="checkbox" id="acepto_terminos" name="acepto_terminos" required value="Yes">
+                <label for="acepto_terminos">
+                    Acepto los términos y condiciones del Cursillo Stewart <span class="required">*</span>
+                </label>
+            </div>
+
+            <!-- Campo oculto para fecha (se llena automáticamente) -->
+            <input type="hidden" name="fecha_inscripcion" id="fecha_inscripcion">
+
+            <button type="submit" class="btn" id="submit-btn">
+                📨 Enviar Inscripción de Prueba
+            </button>
+        </form>
+    </div>
+
+    <script>
+        // EmailJS initialization
+        (function() {
+            emailjs.init('xW-mdqdZ0aTjeEmGS'); // Tu clave pública de EmailJS
+        })();
+
+        // Llenar fecha automáticamente
+        document.getElementById('fecha_inscripcion').value = new Date().toLocaleString('es-PY');
+
+        // Manejo del formulario
+        document.getElementById('inscription-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            // Validar cédula (solo números)
+            const cedula = document.getElementById('cedula').value;
+            if (!/^\d+$/.test(cedula)) {
+                alert('El número de cédula debe contener solo números.');
+                return;
+            }
+
+            // Validar términos
+            const terminos = document.getElementById('acepto_terminos');
+            if (!terminos.checked) {
+                alert('Debes aceptar los términos y condiciones.');
+                return;
+            }
+
+            // Cambiar estado del botón
+            const submitBtn = document.getElementById('submit-btn');
+            const originalText = submitBtn.textContent;
+            submitBtn.textContent = '⏳ Enviando...';
+            submitBtn.disabled = true;
+
+            // Preparar datos adicionales
+            const formData = new FormData(this);
+            formData.set('acepto_terminos', terminos.checked ? 'Sí' : 'No');
+            
+            // Enviar con EmailJS
+            emailjs.sendForm('service_t7mw6ob', 'template_inscription', this)
+                .then(function(response) {
+                    console.log('✅ SUCCESS!', response.status, response.text);
+                    
+                    const nombre = document.getElementById('nombre_apellido').value;
+                    alert(`🎉 ¡Inscripción de prueba enviada exitosamente!\n\nGracias ${nombre}, el email de prueba ha sido enviado.\n\n✅ Si recibiste el email, la configuración está correcta.`);
+                    
+                    // Limpiar formulario
+                    document.getElementById('inscription-form').reset();
+                    document.getElementById('fecha_inscripcion').value = new Date().toLocaleString('es-PY');
+                }, function(error) {
+                    console.log('❌ FAILED...', error);
+                    alert(`❌ Error al enviar: ${error.text || error}\n\n🔧 Verifica:\n• Template ID: template_inscription\n• Service ID: service_t7mw6ob\n• Nombres de campos en el template`);
+                })
+                .finally(function() {
+                    // Restaurar botón
+                    submitBtn.textContent = originalText;
+                    submitBtn.disabled = false;
+                });
+        });
+    </script>
+</body>
+</html>
