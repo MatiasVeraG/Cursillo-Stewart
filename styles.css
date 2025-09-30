@@ -966,7 +966,7 @@ footer {
   font-weight: 600;
   font-size: 1.125rem;
   margin-bottom: 1rem;
-  color: var(--gray-300);
+  color: var(--white);
 }
 
 .footer ul {
@@ -978,14 +978,14 @@ footer {
 }
 
 .footer ul li a {
-  color: var(--gray-300);
+  color: var(--white);
   text-decoration: none;
   font-size: 0.875rem;
   transition: color 0.3s ease;
 }
 
 .footer ul li a:hover {
-  color: var(--gold);
+  color: var(--red);
 }
 
 .social-links {
