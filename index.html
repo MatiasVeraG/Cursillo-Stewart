@@ -316,6 +316,46 @@
       </div>
     </section>
 
+    <!-- Contador Regresivo -->
+    <section class="countdown-section">
+      <div class="container">
+        <div class="countdown-header">
+          <h2>Próximo Cursillo Intensivo</h2>
+          <p>¡No te pierdas nuestro próximo cursillo intensivo!</p>
+          <div class="countdown-date">
+            <strong>9 de Diciembre 2025 - 8:00 AM</strong>
+          </div>
+        </div>
+
+        <div class="countdown-timer" id="countdown">
+          <div class="countdown-item">
+            <div class="countdown-number" id="days">0</div>
+            <div class="countdown-label">Días</div>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-item">
+            <div class="countdown-number" id="hours">0</div>
+            <div class="countdown-label">Horas</div>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-item">
+            <div class="countdown-number" id="minutes">0</div>
+            <div class="countdown-label">Minutos</div>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-item">
+            <div class="countdown-number" id="seconds">0</div>
+            <div class="countdown-label">Segundos</div>
+          </div>
+        </div>
+
+        <div class="countdown-cta">
+          <p>¡Inscríbete ahora y asegura tu cupo!</p>
+          <a href="#inscripcion" class="btn-countdown">Inscribirme Ahora</a>
+        </div>
+      </div>
+    </section>
+
     <!-- Programa -->
     <section id="programa">
       <div class="container">
@@ -1244,6 +1284,77 @@
       // Inicializar el carousel cuando el DOM esté listo
       document.addEventListener('DOMContentLoaded', () => {
         new BackgroundCarousel();
+      });
+    </script>
+
+    <!-- Contador Regresivo Script -->
+    <script>
+      // Contador regresivo
+      function initCountdown() {
+        // Fecha objetivo: 9 de Diciembre 2025, 8:00 AM (UTC-3 Argentina)
+        const targetDate = new Date('2025-12-09T08:00:00-03:00').getTime();
+
+        const daysElement = document.getElementById('days');
+        const hoursElement = document.getElementById('hours');
+        const minutesElement = document.getElementById('minutes');
+        const secondsElement = document.getElementById('seconds');
+
+        // Verificar que todos los elementos existen
+        if (!daysElement || !hoursElement || !minutesElement || !secondsElement) {
+          console.error('No se encontraron todos los elementos del contador');
+          return;
+        }
+
+        console.log('Contador inicializado. Fecha objetivo:', new Date(targetDate));
+
+        function updateCountdown() {
+          const now = new Date().getTime();
+          const distance = targetDate - now;
+
+          if (distance < 0) {
+            // Si la fecha ya pasó
+            daysElement.textContent = '0';
+            hoursElement.textContent = '0';
+            minutesElement.textContent = '0';
+            secondsElement.textContent = '0';
+            return;
+          }
+
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          // Actualizar con animación de pulso cuando cambia
+          updateWithPulse(daysElement, days);
+          updateWithPulse(hoursElement, hours);
+          updateWithPulse(minutesElement, minutes);
+          updateWithPulse(secondsElement, seconds);
+        }
+
+        function updateWithPulse(element, newValue) {
+          if (!element) return;
+
+          const currentValue = element.textContent;
+          if (currentValue !== newValue.toString()) {
+            element.textContent = newValue;
+            element.classList.add('pulse');
+            setTimeout(() => {
+              element.classList.remove('pulse');
+            }, 500);
+          }
+        }
+
+        // Actualizar inmediatamente
+        updateCountdown();
+
+        // Actualizar cada segundo
+        setInterval(updateCountdown, 1000);
+      }
+
+      // Inicializar cuando el DOM esté listo
+      document.addEventListener('DOMContentLoaded', function () {
+        initCountdown();
       });
     </script>
   </body>
