@@ -317,7 +317,7 @@ section {
 }
 
 .card-icon {
-  background-color: var(--gold);
+  background-color: var(--red);
   border-radius: 50%;
   width: 4rem;
   height: 4rem;
@@ -325,7 +325,12 @@ section {
   align-items: center;
   justify-content: center;
   margin: 0 auto 1rem;
-  color: var(--navy);
+  color: var(--white);
+}
+
+.card-icon svg {
+  color: var(--white);
+  stroke: var(--white);
 }
 
 .card h3 {
@@ -337,6 +342,120 @@ section {
 
 .card p {
   color: var(--gray-600);
+}
+
+/* Timeline Styles */
+.timeline-container {
+  max-width: 800px;
+  margin: 3rem auto;
+  position: relative;
+}
+
+.timeline-container::before {
+  content: '';
+  position: absolute;
+  left: 2rem;
+  top: 0;
+  bottom: 0;
+  width: 2px;
+  background: linear-gradient(to bottom, var(--red), var(--navy));
+}
+
+.timeline-item {
+  position: relative;
+  margin-bottom: 3rem;
+  padding-left: 5rem;
+}
+
+.timeline-marker {
+  position: absolute;
+  left: 1.25rem;
+  top: 0.5rem;
+  width: 1.5rem;
+  height: 1.5rem;
+  background-color: var(--red);
+  border-radius: 50%;
+  border: 3px solid var(--white);
+  box-shadow: 0 0 0 3px var(--red);
+  z-index: 2;
+}
+
+.timeline-content {
+  background-color: var(--white);
+  padding: 2rem;
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-left: 4px solid var(--red);
+  transition: all 0.3s ease;
+}
+
+.timeline-content:hover {
+  transform: translateX(10px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.timeline-content h3 {
+  color: var(--navy);
+  font-size: 1.3rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.timeline-content p {
+  color: var(--gray-700);
+  line-height: 1.7;
+  margin: 0;
+}
+
+/* Values Section */
+.values-section {
+  margin-top: 4rem;
+  padding-top: 3rem;
+  border-top: 2px solid var(--gray-200);
+}
+
+.value-card {
+  background: linear-gradient(135deg, var(--white) 0%, var(--gray-50) 100%);
+  border-radius: 1rem;
+  padding: 2rem;
+  text-align: center;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+  border-top: 4px solid var(--red);
+}
+
+.value-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.15);
+  border-top-color: var(--navy);
+}
+
+.value-icon {
+  background: linear-gradient(135deg, var(--red) 0%, #b91c1c 100%);
+  border-radius: 50%;
+  width: 4rem;
+  height: 4rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  color: var(--white);
+  box-shadow: 0 4px 15px rgba(220, 38, 38, 0.3);
+}
+
+.value-card h3 {
+  color: var(--navy);
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.value-card p {
+  color: var(--gray-600);
+  line-height: 1.6;
 }
 
 /* Table */
@@ -616,7 +735,7 @@ tbody td:first-child {
 }
 
 .date-circle {
-  background-color: var(--gold);
+  background-color: var(--red);
   border-radius: 50%;
   width: 2.5rem;
   height: 2.5rem;
@@ -624,7 +743,7 @@ tbody td:first-child {
   align-items: center;
   justify-content: center;
   margin-right: 0.75rem;
-  color: var(--navy);
+  color: var(--white);
   font-weight: bold;
   font-size: 0.875rem;
 }
@@ -796,48 +915,89 @@ select.form-input {
 
 /* Teacher cards */
 .teacher-card {
-  background-color: var(--white);
-  border-radius: 0.5rem;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  background: linear-gradient(135deg, var(--white) 0%, var(--gray-50) 100%);
+  border-radius: 1rem;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
   overflow: hidden;
-  transition: transform 0.3s ease;
+  transition: all 0.3s ease;
+  border-left: 4px solid var(--red);
+  position: relative;
 }
 
 .teacher-card:hover {
-  transform: scale(1.05);
+  transform: translateY(-8px);
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.15);
+  border-left-color: var(--navy);
 }
 
 .teacher-header {
-  background-color: var(--gold);
-  height: 8rem;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  height: 6rem;
   display: flex;
   align-items: center;
   justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.teacher-header::before {
+  content: '';
+  position: absolute;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
+  background: linear-gradient(
+    45deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.1) 50%,
+    transparent 70%
+  );
+  transform: rotate(45deg);
+  transition: all 0.5s ease;
+}
+
+.teacher-card:hover .teacher-header::before {
+  animation: shine 0.5s ease-in-out;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-100%) rotate(45deg);
+  }
+  100% {
+    transform: translateX(100%) rotate(45deg);
+  }
 }
 
 .teacher-avatar {
-  background-color: var(--navy);
+  background-color: var(--red);
   border-radius: 50%;
-  width: 5rem;
-  height: 5rem;
+  width: 4rem;
+  height: 4rem;
   display: flex;
   align-items: center;
   justify-content: center;
   color: var(--white);
   font-weight: bold;
-  font-size: 1.5rem;
+  font-size: 1.2rem;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  z-index: 1;
+  position: relative;
 }
 
 .teacher-info {
   padding: 1.5rem;
   text-align: center;
+  position: relative;
 }
 
 .teacher-info h3 {
-  font-weight: bold;
+  font-weight: 600;
   color: var(--navy);
-  font-size: 1.25rem;
-  margin-bottom: 0.5rem;
+  font-size: 1.1rem;
+  margin-bottom: 0;
+  line-height: 1.4;
 }
 
 .teacher-subject {
@@ -966,7 +1126,7 @@ footer {
   font-weight: 600;
   font-size: 1.125rem;
   margin-bottom: 1rem;
-  color: var(--gray-300);
+  color: var(--white);
 }
 
 .footer ul {
@@ -978,14 +1138,14 @@ footer {
 }
 
 .footer ul li a {
-  color: var(--gray-300);
+  color: var(--white);
   text-decoration: none;
   font-size: 0.875rem;
   transition: color 0.3s ease;
 }
 
 .footer ul li a:hover {
-  color: var(--gold);
+  color: var(--red);
 }
 
 .social-links {
@@ -1076,6 +1236,27 @@ footer {
   .program-info {
     grid-template-columns: 1fr;
     gap: 1rem;
+  }
+
+  /* Timeline responsive */
+  .timeline-container::before {
+    left: 1rem;
+  }
+
+  .timeline-item {
+    padding-left: 3rem;
+  }
+
+  .timeline-marker {
+    left: 0.25rem;
+  }
+
+  .timeline-content {
+    padding: 1.5rem;
+  }
+
+  .timeline-content:hover {
+    transform: translateX(5px);
   }
 }
 
