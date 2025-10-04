@@ -238,83 +238,6 @@
             </div>
           </div>
         </div>
-
-        <!-- Valores y Misión -->
-        <div class="values-section">
-          <div class="grid grid-3">
-            <div class="value-card">
-              <div class="value-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path
-                    d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
-                  ></path>
-                </svg>
-              </div>
-              <h3>Excelencia Académica</h3>
-              <p>
-                Comprometidos con los más altos estándares educativos y metodologías probadas
-                internacionalmente.
-              </p>
-            </div>
-            <div class="value-card">
-              <div class="value-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-              </div>
-              <h3>Atención Personalizada</h3>
-              <p>
-                Cada estudiante recibe el apoyo individual necesario para alcanzar sus objetivos
-                académicos.
-              </p>
-            </div>
-            <div class="value-card">
-              <div class="value-icon">
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="32"
-                  height="32"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  stroke-width="2"
-                  stroke-linecap="round"
-                  stroke-linejoin="round"
-                >
-                  <polyline points="22,12 18,12 15,21 9,3 6,12 2,12"></polyline>
-                </svg>
-              </div>
-              <h3>Innovación Continua</h3>
-              <p>
-                Constantemente actualizamos nuestros métodos y recursos para brindar la mejor
-                experiencia educativa.
-              </p>
-            </div>
-          </div>
-        </div>
       </div>
     </section>
 
@@ -368,7 +291,7 @@
 
         <!-- Tabs para años -->
         <div class="years-tabs">
-          <button class="year-tab active" data-year="2025" onclick="showYear('2025')">2025</button>
+          <button class="year-tab" data-year="2025" onclick="showYear('2025')">2025</button>
           <button class="year-tab" data-year="2024" onclick="showYear('2024')">2024</button>
           <button class="year-tab" data-year="2023" onclick="showYear('2023')">2023</button>
         </div>
@@ -376,7 +299,7 @@
         <!-- Contenido por año -->
         <div class="years-content">
           <!-- Ingresantes 2025 -->
-          <div id="year-2025" class="year-content active">
+          <div id="year-2025" class="year-content">
             <div class="ingresantes-list">
               <div class="ingresante-item top-10">
                 <span class="medal">🥇</span>
@@ -1781,28 +1704,36 @@
 
       // Función para cambiar entre años en la sección de ingresantes
       function showYear(year) {
-        // Ocultar todos los contenidos de años
-        const allYearContents = document.querySelectorAll('.year-content');
-        allYearContents.forEach(content => {
-          content.classList.remove('active');
-        });
-
-        // Remover clase active de todos los tabs
-        const allTabs = document.querySelectorAll('.year-tab');
-        allTabs.forEach(tab => {
-          tab.classList.remove('active');
-        });
-
-        // Mostrar el contenido del año seleccionado
         const selectedYearContent = document.getElementById(`year-${year}`);
-        if (selectedYearContent) {
-          selectedYearContent.classList.add('active');
-        }
-
-        // Activar el tab seleccionado
         const selectedTab = document.querySelector(`[data-year="${year}"]`);
-        if (selectedTab) {
-          selectedTab.classList.add('active');
+
+        // Verificar si el año ya está activo para cerrarlo
+        if (selectedYearContent && selectedYearContent.classList.contains('active')) {
+          // Si ya está activo, ocultarlo
+          selectedYearContent.classList.remove('active');
+          selectedTab.classList.remove('active');
+        } else {
+          // Ocultar todos los contenidos de años
+          const allYearContents = document.querySelectorAll('.year-content');
+          allYearContents.forEach(content => {
+            content.classList.remove('active');
+          });
+
+          // Remover clase active de todos los tabs
+          const allTabs = document.querySelectorAll('.year-tab');
+          allTabs.forEach(tab => {
+            tab.classList.remove('active');
+          });
+
+          // Mostrar el contenido del año seleccionado
+          if (selectedYearContent) {
+            selectedYearContent.classList.add('active');
+          }
+
+          // Activar el tab seleccionado
+          if (selectedTab) {
+            selectedTab.classList.add('active');
+          }
         }
       }
     </script>
