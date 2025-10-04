@@ -99,7 +99,7 @@
             <a href="#inicio">Inicio</a>
             <a href="#conocenos">Conócenos</a>
             <a href="#ingresantes">Ingresantes</a>
-            <a href="#programa">Programa</a>
+            <a href="#programa">Cursos</a>
             <a href="#calendario">Calendario</a>
             <a href="#inscripcion">Inscripción</a>
             <a href="#contacto">Contacto</a>
@@ -114,7 +114,7 @@
           <a href="#inicio">Inicio</a>
           <a href="#conocenos">Conócenos</a>
           <a href="#ingresantes">Ingresantes</a>
-          <a href="#programa">Programa</a>
+          <a href="#programa">Cursos</a>
           <a href="#calendario">Calendario</a>
           <a href="#inscripcion">Inscripción</a>
           <a href="#contacto">Contacto</a>
@@ -776,148 +776,349 @@
     <section id="programa">
       <div class="container">
         <div class="section-header">
-          <h2>Programa de Estudios</h2>
-          <p>Basado en "Precalculus - Mathematics for Calculus" de James Stewart</p>
-          <p class="subtitle-secondary">Horarios Extensivos - Elige el que mejor se adapte a ti</p>
+          <h2>Cursos</h2>
         </div>
 
-        <!-- Horarios Extensivos -->
-        <div class="schedule-grid">
-          <!-- Grupo 1: Turno Mañana -->
-          <div class="schedule-card presencial">
-            <div class="schedule-header">
-              <h3>Grupo 1 - Turno Mañana</h3>
-              <span class="schedule-type presencial">Semanal Presencial</span>
+        <!-- Toggle Navigation -->
+        <div class="course-toggle-nav">
+          <button class="toggle-btn active" data-course="intensivo">Intensivo</button>
+          <button class="toggle-btn" data-course="extensivo">Extensivo</button>
+          <button class="toggle-btn" data-course="mofa">MOFA</button>
+        </div>
+
+        <!-- Course Content Containers -->
+        <!-- Intensivo Course -->
+        <div id="intensivo-content" class="course-content active">
+          <div class="schedule-grid">
+            <!-- Grupo 1: Turno Mañana -->
+            <div class="schedule-card presencial">
+              <div class="schedule-header">
+                <h3>Grupo 1 - Turno Mañana</h3>
+                <span class="schedule-type presencial">Semanal Presencial</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 8:00 - 12:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Lunes a Viernes</div>
+                <div class="schedule-dates">
+                  <strong>Período:</strong> 4 de Agosto - 31 de Octubre
+                </div>
+              </div>
             </div>
-            <div class="schedule-info">
-              <div class="schedule-time"><strong>Horario:</strong> 8:00 - 12:00</div>
-              <div class="schedule-days"><strong>Días:</strong> Lunes a Viernes</div>
-              <div class="schedule-dates">
-                <strong>Período:</strong> 4 de Agosto - 31 de Octubre
+
+            <!-- Grupo 2: Turno Tarde -->
+            <div class="schedule-card presencial">
+              <div class="schedule-header">
+                <h3>Grupo 2 - Turno Tarde</h3>
+                <span class="schedule-type presencial">Semanal Presencial</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 14:00 - 18:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Lunes a Viernes</div>
+                <div class="schedule-dates">
+                  <strong>Período:</strong> 4 de Agosto - 31 de Octubre
+                </div>
+              </div>
+            </div>
+
+            <!-- Grupo 3: Sábados (Inicio Marzo) -->
+            <div class="schedule-card sabados">
+              <div class="schedule-header">
+                <h3>Grupo 3 - Sábados</h3>
+                <span class="schedule-type sabados">Sabados Presencial</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 8:00 - 18:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Todos los Sábados</div>
+                <div class="schedule-dates">
+                  <strong>Período:</strong> 29 de Marzo - 25 de Octubre
+                </div>
+              </div>
+            </div>
+
+            <!-- Grupo 4: Sábados (Inicio Abril) -->
+            <div class="schedule-card sabados">
+              <div class="schedule-header">
+                <h3>Grupo 4 - Sábados</h3>
+                <span class="schedule-type sabados">Sabados Presencial</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 8:00 - 18:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Todos los Sábados</div>
+                <div class="schedule-dates">
+                  <strong>Período:</strong> 12 de Abril - 25 de Octubre
+                </div>
+              </div>
+            </div>
+
+            <!-- Grupo 5: Sábados (Inicio Julio) -->
+            <div class="schedule-card sabados">
+              <div class="schedule-header">
+                <h3>Grupo 5 - Sábados</h3>
+                <span class="schedule-type sabados">Sabados Presencial</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 8:00 - 18:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Todos los Sábados</div>
+                <div class="schedule-dates">
+                  <strong>Período:</strong> 12 de Julio - 25 de Octubre
+                </div>
+              </div>
+            </div>
+
+            <!-- Grupo 6: Virtual Nocturno -->
+            <div class="schedule-card virtual">
+              <div class="schedule-header">
+                <h3>Grupo 6 - Virtual Nocturno</h3>
+                <span class="schedule-type virtual">Sabados Virtual</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 19:00 - 22:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Sábados</div>
+                <div class="schedule-dates">
+                  <strong>Período:</strong> 5 de Julio - 25 de Octubre
+                </div>
               </div>
             </div>
           </div>
 
-          <!-- Grupo 2: Turno Tarde -->
-          <div class="schedule-card presencial">
-            <div class="schedule-header">
-              <h3>Grupo 2 - Turno Tarde</h3>
-              <span class="schedule-type presencial">Semanal Presencial</span>
-            </div>
-            <div class="schedule-info">
-              <div class="schedule-time"><strong>Horario:</strong> 14:00 - 18:00</div>
-              <div class="schedule-days"><strong>Días:</strong> Lunes a Viernes</div>
-              <div class="schedule-dates">
-                <strong>Período:</strong> 4 de Agosto - 31 de Octubre
+          <!-- Información del Curso Intensivo -->
+          <div class="program-info">
+            <div class="info-card">
+              <h4>📚 Contenido del Cursillo</h4>
+              <div class="book-info">
+                <h5>"Precalculus - Mathematics for Calculus"</h5>
+                <p class="author">por <strong>James Stewart</strong></p>
+                <p class="book-description">
+                  Reconocido mundialmente como uno de los mejores textos de Precálculo, este libro
+                  proporciona una base sólida para el estudio del Cálculo y las matemáticas
+                  superiores. <strong>Materiales en inglés.</strong>
+                </p>
               </div>
+              <ul>
+                <li>Chapter 1: Fundamentals</li>
+                <li>Chapter 2: Functions</li>
+                <li>Chapter 3: Polynomial and Rational Functions</li>
+                <li>Chapter 4: Exponential and Logarithmic Functions</li>
+                <li>Chapter 5: Trigonometric Functions: Unit Circle Approach</li>
+                <li>Chapter 6: Trigonometric Functions: Right Triangle Approach</li>
+                <li>Chapter 7: Analytic Trigonometry</li>
+                <li>Chapter 8: Polar Coordinates and Parametric Equations</li>
+                <li>Chapter 9: Vectors in Two and Three Dimensions</li>
+                <li>Chapter 10: Systems of Equations and Inequalities</li>
+                <li>Chapter 11: Conic Sections</li>
+                <li>Chapter 12: Sequences and Series</li>
+                <li>Chapter 13: Limits: A Preview of Calculus</li>
+              </ul>
+            </div>
+            <div class="info-card">
+              <h4>✅ Modalidades Disponibles</h4>
+              <ul>
+                <li><span class="badge presencial">Semanal Presencial</span> Lunes a Viernes</li>
+                <li><span class="badge sabados">Sábados Presencial</span> Solo Sábados</li>
+                <li><span class="badge virtual">Sábados Virtual</span> Sábados Nocturnos</li>
+              </ul>
+
+              <h4>📝 Materiales y Actividades Incluidas</h4>
+              <ul>
+                <li>📋 Ejercitarios por capítulo</li>
+                <li>📊 Exámenes parciales y totales</li>
+                <li>📚 Weekly Problems (ejercicios del libro)</li>
+                <li>🎯 Actividades de práctica dirigida</li>
+                <li>📖 Material de apoyo complementario</li>
+                <li>💻 Recursos digitales interactivos</li>
+              </ul>
             </div>
           </div>
 
-          <!-- Grupo 3: Sábados (Inicio Marzo) -->
-          <div class="schedule-card sabados">
-            <div class="schedule-header">
-              <h3>Grupo 3 - Sábados</h3>
-              <span class="schedule-type sabados">Sabados Presencial</span>
-            </div>
-            <div class="schedule-info">
-              <div class="schedule-time"><strong>Horario:</strong> 8:00 - 18:00</div>
-              <div class="schedule-days"><strong>Días:</strong> Todos los Sábados</div>
-              <div class="schedule-dates">
-                <strong>Período:</strong> 29 de Marzo - 25 de Octubre
-              </div>
-            </div>
-          </div>
-
-          <!-- Grupo 4: Sábados (Inicio Abril) -->
-          <div class="schedule-card sabados">
-            <div class="schedule-header">
-              <h3>Grupo 4 - Sábados</h3>
-              <span class="schedule-type sabados">Sabados Presencial</span>
-            </div>
-            <div class="schedule-info">
-              <div class="schedule-time"><strong>Horario:</strong> 8:00 - 18:00</div>
-              <div class="schedule-days"><strong>Días:</strong> Todos los Sábados</div>
-              <div class="schedule-dates">
-                <strong>Período:</strong> 12 de Abril - 25 de Octubre
-              </div>
-            </div>
-          </div>
-
-          <!-- Grupo 5: Sábados (Inicio Julio) -->
-          <div class="schedule-card sabados">
-            <div class="schedule-header">
-              <h3>Grupo 5 - Sábados</h3>
-              <span class="schedule-type sabados">Sabados Presencial</span>
-            </div>
-            <div class="schedule-info">
-              <div class="schedule-time"><strong>Horario:</strong> 8:00 - 18:00</div>
-              <div class="schedule-days"><strong>Días:</strong> Todos los Sábados</div>
-              <div class="schedule-dates">
-                <strong>Período:</strong> 12 de Julio - 25 de Octubre
-              </div>
-            </div>
-          </div>
-
-          <!-- Grupo 6: Virtual Nocturno -->
-          <div class="schedule-card virtual">
-            <div class="schedule-header">
-              <h3>Grupo 6 - Virtual Nocturno</h3>
-              <span class="schedule-type virtual">Sabados Virtual</span>
-            </div>
-            <div class="schedule-info">
-              <div class="schedule-time"><strong>Horario:</strong> 19:00 - 22:00</div>
-              <div class="schedule-days"><strong>Días:</strong> Sábados</div>
-              <div class="schedule-dates"><strong>Período:</strong> 5 de Julio - 25 de Octubre</div>
-            </div>
+          <div class="course-inscription-btn">
+            <a href="#inscripcion" class="btn-inscripcion" data-course="intensivo"
+              >Inscribirse a Curso Intensivo</a
+            >
           </div>
         </div>
 
-        <!-- Información adicional -->
-        <div class="program-info">
-          <div class="info-card">
-            <h4>📚 Contenido del Cursillo</h4>
-            <div class="book-info">
-              <h5>"Precalculus - Mathematics for Calculus"</h5>
-              <p class="author">por <strong>James Stewart</strong></p>
-              <p class="book-description">
-                Reconocido mundialmente como uno de los mejores textos de Precálculo, este libro
-                proporciona una base sólida para el estudio del Cálculo y las matemáticas
-                superiores. <strong>Materiales en inglés.</strong>
-              </p>
+        <!-- Extensivo Course -->
+        <div id="extensivo-content" class="course-content">
+          <div class="schedule-grid">
+            <!-- Grupo 1: Extensivo Mañana -->
+            <div class="schedule-card presencial">
+              <div class="schedule-header">
+                <h3>Grupo 1 - Extensivo Mañana</h3>
+                <span class="schedule-type presencial">Presencial</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 9:00 - 12:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Martes y Jueves</div>
+                <div class="schedule-dates"><strong>Período:</strong> Marzo - Noviembre</div>
+              </div>
             </div>
-            <ul>
-              <li>Chapter 1: Fundamentals</li>
-              <li>Chapter 2: Functions</li>
-              <li>Chapter 3: Polynomial and Rational Functions</li>
-              <li>Chapter 4: Exponential and Logarithmic Functions</li>
-              <li>Chapter 5: Trigonometric Functions: Unit Circle Approach</li>
-              <li>Chapter 6: Trigonometric Functions: Right Triangle Approach</li>
-              <li>Chapter 7: Analytic Trigonometry</li>
-              <li>Chapter 8: Polar Coordinates and Parametric Equations</li>
-              <li>Chapter 9: Vectors in Two and Three Dimensions</li>
-              <li>Chapter 10: Systems of Equations and Inequalities</li>
-              <li>Chapter 11: Conic Sections</li>
-              <li>Chapter 12: Sequences and Series</li>
-              <li>Chapter 13: Limits: A Preview of Calculus</li>
-            </ul>
-          </div>
-          <div class="info-card">
-            <h4>✅ Modalidades Disponibles</h4>
-            <ul>
-              <li><span class="badge presencial">Semanal Presencial</span> Lunes a Viernes</li>
-              <li><span class="badge sabados">Sabados Presencial</span> Solo Sábados</li>
-              <li><span class="badge virtual">Sabados Virtual</span> Sábados Nocturnos</li>
-            </ul>
 
-            <h4>📝 Materiales y Actividades Incluidas</h4>
-            <ul>
-              <li>📋 Ejercitarios por capítulo</li>
-              <li>📊 Exámenes parciales y totales</li>
-              <li>📚 Weekly Problems (ejercicios del libro)</li>
-              <li>🎯 Actividades de práctica dirigida</li>
-              <li>📖 Material de apoyo complementario</li>
-              <li>💻 Recursos digitales interactivos</li>
-            </ul>
+            <!-- Grupo 2: Extensivo Tarde -->
+            <div class="schedule-card presencial">
+              <div class="schedule-header">
+                <h3>Grupo 2 - Extensivo Tarde</h3>
+                <span class="schedule-type presencial">Presencial</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 15:00 - 18:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Martes y Jueves</div>
+                <div class="schedule-dates"><strong>Período:</strong> Marzo - Noviembre</div>
+              </div>
+            </div>
+
+            <!-- Grupo 3: Extensivo Virtual -->
+            <div class="schedule-card virtual">
+              <div class="schedule-header">
+                <h3>Grupo 3 - Extensivo Virtual</h3>
+                <span class="schedule-type virtual">Virtual</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 19:00 - 22:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Miércoles y Viernes</div>
+                <div class="schedule-dates"><strong>Período:</strong> Marzo - Noviembre</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Información del Curso Extensivo -->
+          <div class="program-info">
+            <div class="info-card">
+              <h4>📚 Contenido del Cursillo</h4>
+              <div class="book-info">
+                <h5>"Precalculus - Mathematics for Calculus"</h5>
+                <p class="author">por <strong>James Stewart</strong></p>
+                <p class="book-description">
+                  Reconocido mundialmente como uno de los mejores textos de Precálculo, este libro
+                  proporciona una base sólida para el estudio del Cálculo y las matemáticas
+                  superiores. <strong>Materiales en inglés.</strong>
+                </p>
+              </div>
+              <ul>
+                <li>Chapter 1: Fundamentals</li>
+                <li>Chapter 2: Functions</li>
+                <li>Chapter 3: Polynomial and Rational Functions</li>
+                <li>Chapter 4: Exponential and Logarithmic Functions</li>
+                <li>Chapter 5: Trigonometric Functions: Unit Circle Approach</li>
+                <li>Chapter 6: Trigonometric Functions: Right Triangle Approach</li>
+                <li>Chapter 7: Analytic Trigonometry</li>
+                <li>Chapter 8: Polar Coordinates and Parametric Equations</li>
+                <li>Chapter 9: Vectors in Two and Three Dimensions</li>
+                <li>Chapter 10: Systems of Equations and Inequalities</li>
+                <li>Chapter 11: Conic Sections</li>
+                <li>Chapter 12: Sequences and Series</li>
+                <li>Chapter 13: Limits: A Preview of Calculus</li>
+              </ul>
+            </div>
+            <div class="info-card">
+              <h4>✅ Modalidades Disponibles</h4>
+              <ul>
+                <li><span class="badge presencial">Presencial</span> Martes y Jueves</li>
+                <li><span class="badge virtual">Virtual</span> Miércoles y Viernes</li>
+              </ul>
+
+              <h4>📝 Materiales y Actividades Incluidas</h4>
+              <ul>
+                <li>📋 Ejercitarios por capítulo</li>
+                <li>📊 Exámenes parciales y totales</li>
+                <li>📚 Weekly Problems (ejercicios del libro)</li>
+                <li>🎯 Actividades de práctica dirigida</li>
+                <li>📖 Material de apoyo complementario</li>
+                <li>💻 Recursos digitales interactivos</li>
+                <li>⏰ Horarios flexibles para estudiantes y trabajadores</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="course-inscription-btn">
+            <a href="#inscripcion" class="btn-inscripcion" data-course="extensivo"
+              >Inscribirse a Curso Extensivo</a
+            >
+          </div>
+        </div>
+
+        <!-- MOFA Course -->
+        <div id="mofa-content" class="course-content">
+          <div class="schedule-grid">
+            <!-- MOFA Group 1 -->
+            <div class="schedule-card mofa">
+              <div class="schedule-header">
+                <h3>MOFA - Modalidad Especial</h3>
+                <span class="schedule-type mofa">MOFA Program</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 14:00 - 17:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Lunes a Viernes</div>
+                <div class="schedule-dates"><strong>Período:</strong> Febrero - Mayo</div>
+              </div>
+            </div>
+
+            <!-- MOFA Group 2 -->
+            <div class="schedule-card mofa">
+              <div class="schedule-header">
+                <h3>MOFA - Virtual</h3>
+                <span class="schedule-type mofa">MOFA Virtual</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 18:00 - 21:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Lunes, Miércoles, Viernes</div>
+                <div class="schedule-dates"><strong>Período:</strong> Febrero - Mayo</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Información del Curso MOFA -->
+          <div class="program-info">
+            <div class="info-card">
+              <h4>📚 Contenido del Cursillo</h4>
+              <div class="book-info">
+                <h5>"Precalculus - Mathematics for Calculus"</h5>
+                <p class="author">por <strong>James Stewart</strong></p>
+                <p class="book-description">
+                  Reconocido mundialmente como uno de los mejores textos de Precálculo, este libro
+                  proporciona una base sólida para el estudio del Cálculo y las matemáticas
+                  superiores. <strong>Materiales en inglés.</strong>
+                </p>
+              </div>
+              <ul>
+                <li>Chapter 1: Fundamentals</li>
+                <li>Chapter 2: Functions</li>
+                <li>Chapter 3: Polynomial and Rational Functions</li>
+                <li>Chapter 4: Exponential and Logarithmic Functions</li>
+                <li>Chapter 5: Trigonometric Functions: Unit Circle Approach</li>
+                <li>Chapter 6: Trigonometric Functions: Right Triangle Approach</li>
+                <li>Chapter 7: Analytic Trigonometry</li>
+                <li>Chapter 8: Polar Coordinates and Parametric Equations</li>
+                <li>Chapter 9: Vectors in Two and Three Dimensions</li>
+                <li>Chapter 10: Systems of Equations and Inequalities</li>
+                <li>Chapter 11: Conic Sections</li>
+                <li>Chapter 12: Sequences and Series</li>
+                <li>Chapter 13: Limits: A Preview of Calculus</li>
+              </ul>
+            </div>
+            <div class="info-card">
+              <h4>✅ Modalidades Disponibles</h4>
+              <ul>
+                <li><span class="badge mofa">MOFA Presencial</span> Lunes a Viernes</li>
+                <li><span class="badge mofa">MOFA Virtual</span> Lunes, Miércoles, Viernes</li>
+              </ul>
+
+              <h4>📝 Materiales y Actividades Incluidas</h4>
+              <ul>
+                <li>📋 Ejercitarios especializados por capítulo</li>
+                <li>📊 Exámenes adaptados al sistema MOFA</li>
+                <li>📚 Weekly Problems (ejercicios del libro)</li>
+                <li>🎯 Actividades de práctica intensiva</li>
+                <li>📖 Material de apoyo especializado</li>
+                <li>💻 Plataforma digital exclusiva MOFA</li>
+                <li>🎆 Preparación especializada para exámenes MOFA</li>
+              </ul>
+            </div>
+          </div>
+
+          <div class="course-inscription-btn">
+            <a href="#inscripcion" class="btn-inscripcion" data-course="mofa"
+              >Inscribirse a Curso MOFA</a
+            >
           </div>
         </div>
       </div>
@@ -1070,6 +1271,20 @@
                 required
               />
               <small class="form-help">Celular: 09xxxxxxxx | Fijo: 021xxxxxx</small>
+            </div>
+
+            <!-- Curso seleccionado -->
+            <div class="form-group">
+              <label class="form-label">Curso a inscribirse</label>
+              <select name="curso_seleccionado" class="form-input">
+                <option value="">Selecciona un curso (opcional)</option>
+                <option value="intensivo">Curso Intensivo</option>
+                <option value="extensivo">Curso Extensivo</option>
+                <option value="mofa">Curso MOFA</option>
+              </select>
+              <small class="form-help"
+                >En caso de necesitar más información, no marcar ningún curso</small
+              >
             </div>
 
             <!-- Colegio o institución -->
@@ -1317,7 +1532,7 @@
             <ul>
               <li><a href="#inicio" style="color: #fff">Inicio</a></li>
               <li><a href="#conocenos" style="color: #fff">Conócenos</a></li>
-              <li><a href="#programa" style="color: #fff">Programa</a></li>
+              <li><a href="#programa" style="color: #fff">Cursos</a></li>
               <li><a href="#inscripcion" style="color: #fff">Inscripción</a></li>
             </ul>
           </div>
@@ -1375,6 +1590,49 @@
           mobileMenu.classList.add('hidden');
           mobileMenu.classList.remove('show');
         });
+      });
+
+      // Course toggle functionality
+      document.addEventListener('DOMContentLoaded', function () {
+        const toggleButtons = document.querySelectorAll('.toggle-btn');
+        const courseContents = document.querySelectorAll('.course-content');
+
+        toggleButtons.forEach(button => {
+          button.addEventListener('click', function () {
+            const targetCourse = this.getAttribute('data-course');
+
+            // Remove active class from all buttons and contents
+            toggleButtons.forEach(btn => btn.classList.remove('active'));
+            courseContents.forEach(content => content.classList.remove('active'));
+
+            // Add active class to clicked button and corresponding content
+            this.classList.add('active');
+            document.getElementById(targetCourse + '-content').classList.add('active');
+          });
+        });
+
+        // Handle inscription button clicks
+        const inscriptionButtons = document.querySelectorAll('.btn-inscripcion');
+        inscriptionButtons.forEach(button => {
+          button.addEventListener('click', function (e) {
+            const courseType = this.getAttribute('data-course');
+            // Store selected course type for form pre-filling
+            localStorage.setItem('selectedCourse', courseType);
+
+            // Optional: Add smooth scroll behavior is already handled by existing code
+            console.log('Inscripción seleccionada para curso:', courseType);
+          });
+        });
+
+        // Pre-fill course selection if coming from course inscription button
+        const courseSelect = document.querySelector('select[name="curso_seleccionado"]');
+        const selectedCourse = localStorage.getItem('selectedCourse');
+
+        if (courseSelect && selectedCourse) {
+          courseSelect.value = selectedCourse;
+          // Clear the stored value after using it
+          localStorage.removeItem('selectedCourse');
+        }
       });
 
       // EmailJS initialization
@@ -1461,6 +1719,9 @@
             .value.trim();
           const cedula = document.querySelector('input[name="cedula"]').value.trim();
           const telefono = document.querySelector('input[name="telefono"]').value.trim();
+          const cursoSeleccionado = document.querySelector(
+            'select[name="curso_seleccionado"]'
+          ).value;
           const colegio = document.querySelector('input[name="colegio"]').value.trim();
           const familiarNombre = document
             .querySelector('input[name="familiar_nombre"]')
@@ -1545,9 +1806,23 @@
             .then(
               function (response) {
                 console.log('INSCRIPTION SUCCESS!', response.status, response.text);
-                alert(
-                  `✅ ¡Inscripción enviada exitosamente!\n\n👤 Gracias ${nombreApellido}, hemos recibido tu solicitud de inscripción.\n📞 Te contactaremos pronto al número ${telefono} con más información sobre el proceso.\n\n� También puedes llamarnos al +595 985 350550`
-                );
+
+                // Map course values to readable names
+                const courseNames = {
+                  intensivo: 'Curso Intensivo',
+                  extensivo: 'Curso Extensivo',
+                  mofa: 'Curso MOFA',
+                };
+
+                let message;
+                if (cursoSeleccionado) {
+                  const courseName = courseNames[cursoSeleccionado] || cursoSeleccionado;
+                  message = `✅ ¡Inscripción enviada exitosamente!\n\n👤 Gracias ${nombreApellido}, hemos recibido tu solicitud de inscripción para el ${courseName}.\n📞 Te contactaremos pronto al número ${telefono} con más información sobre el proceso.\n\n💬 También puedes llamarnos al +595 985 350550`;
+                } else {
+                  message = `✅ ¡Inscripción enviada exitosamente!\n\n👤 Gracias ${nombreApellido}, hemos recibido tu solicitud de inscripción.\n📞 Te contactaremos pronto al número ${telefono} para brindarte más información sobre nuestros cursos disponibles.\n\n💬 También puedes llamarnos al +595 985 350550`;
+                }
+
+                alert(message);
                 // Limpiar formulario
                 inscriptionForm.reset();
               },
