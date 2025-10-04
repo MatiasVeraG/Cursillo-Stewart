@@ -1817,6 +1817,11 @@ html {
   }
 }
 
+/* Scroll offset para compensar header fijo */
+section:not(#inicio) {
+  scroll-margin-top: 2rem;
+}
+
 .card,
 .calendar-card,
 .teacher-card {
