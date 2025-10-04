@@ -1,0 +1,9 @@
+# Profesor Placeholder
+
+This is a placeholder for professor images. Replace with actual professor photos when available.
+
+Recommended image specifications:
+- Size: 400x250px minimum
+- Format: JPG or PNG
+- Professional headshot or upper body photo
+- Good lighting and clear background

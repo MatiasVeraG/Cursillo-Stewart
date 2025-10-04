@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Conoce a nuestro equipo de profesores altamente calificados del Cursillo Stewart. Expertos en matemáticas y preparación universitaria para la Universidad Politécnica Taiwan Paraguay (UPTP)."
+    />
+    <meta
+      name="keywords"
+      content="profesores, cursillo stewart, matemáticas, UPTP, universidad, paraguay, taiwan, educación, preparación universitaria, docentes"
+    />
+    <meta name="author" content="Universidad Politécnica Taiwan Paraguay" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cursillo-stewart.uptp.edu.py/profesores.html" />
+    <meta
+      property="og:title"
+      content="Profesores - Cursillo Stewart | Universidad Politécnica Taiwan Paraguay"
+    />
+    <meta
+      property="og:description"
+      content="Conoce a nuestro equipo de profesores expertos en matemáticas y preparación universitaria. Profesionales comprometidos con tu éxito académico."
+    />
+    <meta property="og:image" content="images/logo-cursillo-stewart.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://cursillo-stewart.uptp.edu.py/profesores.html" />
+    <meta
+      property="twitter:title"
+      content="Profesores - Cursillo Stewart | Universidad Politécnica Taiwan Paraguay"
+    />
+    <meta
+      property="twitter:description"
+      content="Conoce a nuestro equipo de profesores expertos en matemáticas y preparación universitaria. Profesionales comprometidos con tu éxito académico."
+    />
+    <meta property="twitter:image" content="images/logo-cursillo-stewart.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/1-1-logo-cursillo-stewart.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/1-1-logo-cursillo-stewart.png" />
+    <link rel="apple-touch-icon" href="images/1-1-logo-cursillo-stewart.png" />
+
+    <title>
+      Profesores - Cursillo Stewart | Universidad Politécnica Taiwan Paraguay | Equipo Docente
+    </title>
+
+    <!-- Preconnect para mejorar rendimiento -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- EmailJS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "Cursillo Stewart - UPTP",
+        "description": "Equipo de profesores especializados en preparación universitaria para la Universidad Politécnica Taiwan Paraguay",
+        "url": "https://cursillo-stewart.uptp.edu.py/profesores.html",
+        "logo": "images/logo-cursillo-stewart.png",
+        "sameAs": ["https://www.facebook.com/uptp", "https://www.instagram.com/uptp"],
+        "employee": [
+          {
+            "@type": "Person",
+            "name": "Profesor de Matemáticas",
+            "jobTitle": "Especialista en Precálculo"
+          },
+          {
+            "@type": "Person",
+            "name": "Profesora de Álgebra",
+            "jobTitle": "Especialista en Álgebra y Funciones"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <!-- Logo -->
+          <div class="logo">
+            <img
+              src="images/logo-cursillo-stewart.png"
+              alt="Cursillo Stewart Logo"
+              class="logo-image"
+            />
+          </div>
+
+          <!-- Navigation Menu -->
+          <nav>
+            <a href="index.html">Inicio</a>
+            <a href="index.html#conocenos">Conócenos</a>
+            <a href="index.html#ingresantes">Ingresantes</a>
+            <a href="index.html#programa">Cursos</a>
+            <a href="profesores.html" class="active">Profesores</a>
+            <a href="index.html#contacto">Contacto</a>
+          </nav>
+
+          <!-- Mobile Menu Button -->
+          <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+          <a href="index.html">Inicio</a>
+          <a href="index.html#conocenos">Conócenos</a>
+          <a href="index.html#ingresantes">Ingresantes</a>
+          <a href="index.html#programa">Cursos</a>
+          <a href="profesores.html" class="active">Profesores</a>
+          <a href="index.html#contacto">Contacto</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Banner -->
+    <section class="banner">
+      <div class="container">
+        <h1>Nuestros Profesores</h1>
+        <p class="subtitle">Conoce al equipo de expertos que te guiarán hacia el éxito académico</p>
+        <p class="description">
+          Profesionales altamente calificados con amplia experiencia en matemáticas y preparación
+          universitaria
+        </p>
+      </div>
+    </section>
+
+    <!-- Profesores Section -->
+    <section class="profesores-section">
+      <div class="container">
+        <div class="section-header">
+          <h2>Equipo Docente</h2>
+          <p>Profesionales comprometidos con tu éxito académico</p>
+        </div>
+
+        <div class="profesores-grid">
+          <!-- Profesor 1 -->
+          <div class="profesor-card">
+            <div class="profesor-image">
+              <img src="images/profesor-placeholder.jpg" alt="Profesor de Matemáticas" />
+              <div class="profesor-overlay">
+                <span class="profesor-specialty">Matemáticas</span>
+              </div>
+            </div>
+            <div class="profesor-info">
+              <h3>Prof. [Nombre del Profesor]</h3>
+              <p class="profesor-title">Especialista en Precálculo</p>
+              <p class="profesor-description">
+                Licenciado en Matemáticas con más de 10 años de experiencia en preparación
+                universitaria. Especializado en funciones y trigonometría.
+              </p>
+              <div class="profesor-credentials">
+                <span class="credential">📚 MSc. Matemáticas</span>
+                <span class="credential">🎓 10+ años experiencia</span>
+                <span class="credential">⭐ 95% tasa de éxito</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profesor 2 -->
+          <div class="profesor-card">
+            <div class="profesor-image">
+              <img src="images/profesor-placeholder.jpg" alt="Profesora de Álgebra" />
+              <div class="profesor-overlay">
+                <span class="profesor-specialty">Álgebra</span>
+              </div>
+            </div>
+            <div class="profesor-info">
+              <h3>Prof. [Nombre de la Profesora]</h3>
+              <p class="profesor-title">Especialista en Álgebra y Funciones</p>
+              <p class="profesor-description">
+                Ingeniera con amplia experiencia docente. Experta en metodologías innovadoras para
+                el aprendizaje de matemáticas fundamentales.
+              </p>
+              <div class="profesor-credentials">
+                <span class="credential">🔬 Ing. Matemática</span>
+                <span class="credential">🎓 8+ años experiencia</span>
+                <span class="credential">⭐ 92% tasa de éxito</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profesor 3 -->
+          <div class="profesor-card">
+            <div class="profesor-image">
+              <img src="images/profesor-placeholder.jpg" alt="Profesor de Trigonometría" />
+              <div class="profesor-overlay">
+                <span class="profesor-specialty">Trigonometría</span>
+              </div>
+            </div>
+            <div class="profesor-info">
+              <h3>Prof. [Nombre del Profesor]</h3>
+              <p class="profesor-title">Especialista en Trigonometría y Geometría</p>
+              <p class="profesor-description">
+                Doctor en Ciencias Matemáticas con enfoque en geometría analítica. Reconocido por su
+                metodología práctica y resultados excepcionales.
+              </p>
+              <div class="profesor-credentials">
+                <span class="credential">🎓 PhD. Matemáticas</span>
+                <span class="credential">🎓 12+ años experiencia</span>
+                <span class="credential">⭐ 98% tasa de éxito</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profesor 4 -->
+          <div class="profesor-card">
+            <div class="profesor-image">
+              <img src="images/profesor-placeholder.jpg" alt="Coordinador Académico" />
+              <div class="profesor-overlay">
+                <span class="profesor-specialty">Coordinación</span>
+              </div>
+            </div>
+            <div class="profesor-info">
+              <h3>Prof. [Nombre del Coordinador]</h3>
+              <p class="profesor-title">Coordinador Académico</p>
+              <p class="profesor-description">
+                Magíster en Educación Matemática. Coordina el programa académico y supervisa la
+                calidad educativa del cursillo.
+              </p>
+              <div class="profesor-credentials">
+                <span class="credential">📋 MSc. Educación</span>
+                <span class="credential">🎓 15+ años experiencia</span>
+                <span class="credential">⭐ Coordinador</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Metodología Section -->
+        <div class="metodologia-section">
+          <div class="section-header">
+            <h2>Nuestra Metodología</h2>
+            <p>Enfoque pedagógico probado para maximizar tu aprendizaje</p>
+          </div>
+
+          <div class="metodologia-grid">
+            <div class="metodologia-card">
+              <div class="metodologia-icon">🎯</div>
+              <h3>Enseñanza Personalizada</h3>
+              <p>Adaptamos nuestro enfoque a las necesidades específicas de cada estudiante</p>
+            </div>
+
+            <div class="metodologia-card">
+              <div class="metodologia-icon">📊</div>
+              <h3>Seguimiento Continuo</h3>
+              <p>Evaluaciones regulares para monitorear el progreso y ajustar estrategias</p>
+            </div>
+
+            <div class="metodologia-card">
+              <div class="metodologia-icon">💡</div>
+              <h3>Métodos Innovadores</h3>
+              <p>Combinamos técnicas tradicionales con herramientas digitales modernas</p>
+            </div>
+
+            <div class="metodologia-card">
+              <div class="metodologia-icon">🤝</div>
+              <h3>Apoyo Integral</h3>
+              <p>Acompañamiento académico y emocional durante todo el proceso</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+      <div class="container">
+        <div class="cta-content">
+          <h2>¿Listo para empezar tu preparación?</h2>
+          <p>
+            Únete a cientos de estudiantes que han logrado sus objetivos académicos con nosotros
+          </p>
+          <a href="index.html#inscripcion" class="btn-primary">Inscríbete Ahora</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">
+              <img
+                src="images/logo-cursillo-stewart.png"
+                alt="Cursillo Stewart Logo"
+                class="footer-logo-image"
+              />
+            </div>
+            <p style="color: var(--gray-300); font-size: 0.875rem">
+              Preparándote para un futuro universitario exitoso en la Universidad Politécnica Taiwan
+              Paraguay.
+            </p>
+          </div>
+
+          <div>
+            <h4>Enlaces Rápidos</h4>
+            <ul>
+              <li><a href="index.html" style="color: #fff">Inicio</a></li>
+              <li><a href="index.html#conocenos" style="color: #fff">Conócenos</a></li>
+              <li><a href="index.html#programa" style="color: #fff">Cursos</a></li>
+              <li><a href="profesores.html" style="color: #fff">Profesores</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Información</h4>
+            <ul>
+              <li><a href="index.html#contacto" style="color: #fff">Contacto</a></li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Síguenos</h4>
+            <div class="social-links">
+              <a href="#" style="color: #fff" class="social-link">f</a>
+              <a href="#" style="color: #fff" class="social-link">t</a>
+              <a href="#" style="color: #fff" class="social-link">i</a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p>&copy; 2024 Cursillo Stewart - UPTP. Todos los derechos reservados.</p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Toggle mobile menu
+      function toggleMenu() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.remove('hidden');
+          mobileMenu.classList.add('show');
+        } else {
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('show');
+        }
+      }
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }
+          // Close mobile menu if open
+          const mobileMenu = document.getElementById('mobile-menu');
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('show');
+        });
+      });
+
+      // EmailJS initialization (same as homepage)
+      (function () {
+        emailjs.init('xW-mdqdZ0aTjeEmGS'); // Clave pública de EmailJS
+      })();
+    </script>
+  </body>
+</html>

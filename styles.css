@@ -2021,3 +2021,204 @@ section:not(#inicio) {
 .indicator:hover {
   background-color: rgba(255, 255, 255, 0.8);
 }
+
+/* ===== PROFESORES PAGE STYLES ===== */
+.profesores-section {
+  padding: 4rem 0;
+  background-color: var(--bg-light);
+}
+
+.profesores-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 2rem;
+  margin-bottom: 4rem;
+}
+
+.profesor-card {
+  background-color: var(--white);
+  border-radius: 1rem;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.profesor-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+}
+
+.profesor-image {
+  position: relative;
+  height: 250px;
+  overflow: hidden;
+}
+
+.profesor-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.profesor-card:hover .profesor-image img {
+  transform: scale(1.1);
+}
+
+.profesor-overlay {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: linear-gradient(135deg, var(--primary), var(--blue));
+  color: var(--white);
+  padding: 0.5rem 1rem;
+  border-radius: 2rem;
+  font-size: 0.875rem;
+  font-weight: 600;
+}
+
+.profesor-info {
+  padding: 1.5rem;
+}
+
+.profesor-info h3 {
+  color: var(--navy);
+  font-size: 1.375rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.profesor-title {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+.profesor-description {
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin-bottom: 1.5rem;
+}
+
+.profesor-credentials {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.credential {
+  display: inline-flex;
+  align-items: center;
+  font-size: 0.875rem;
+  color: var(--navy);
+  font-weight: 500;
+}
+
+/* Metodología Section */
+.metodologia-section {
+  margin-top: 4rem;
+  padding-top: 4rem;
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.metodologia-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+}
+
+.metodologia-card {
+  text-align: center;
+  padding: 2rem 1rem;
+  background-color: var(--white);
+  border-radius: 1rem;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  transition: all 0.3s ease;
+}
+
+.metodologia-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+}
+
+.metodologia-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+}
+
+.metodologia-card h3 {
+  color: var(--navy);
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
+}
+
+.metodologia-card p {
+  color: var(--text-secondary);
+  line-height: 1.6;
+}
+
+/* CTA Section */
+.cta-section {
+  padding: 4rem 0;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--primary) 100%);
+  color: var(--white);
+  text-align: center;
+}
+
+.cta-content h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+.cta-content p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+/* Active navigation link */
+nav a.active {
+  color: var(--primary);
+  font-weight: 600;
+  position: relative;
+}
+
+nav a.active::after {
+  content: '';
+  position: absolute;
+  bottom: -5px;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background-color: var(--primary);
+  border-radius: 1px;
+}
+
+/* Mobile responsiveness for profesores */
+@media (max-width: 768px) {
+  .profesores-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .profesor-card {
+    margin: 0 1rem;
+  }
+
+  .metodologia-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+
+  .cta-content h2 {
+    font-size: 2rem;
+  }
+
+  .cta-content p {
+    font-size: 1.125rem;
+  }
+}
