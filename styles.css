@@ -171,7 +171,7 @@ nav a:hover {
 
 /* ===== BANNER CON CAROUSEL DE FONDO ===== */
 .banner {
-  background: linear-gradient(135deg, rgba(30, 64, 175, 0.8) 0%, rgba(30, 64, 175, 0.6) 100%);
+  background: linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(30, 64, 175, 0.15) 100%);
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -193,7 +193,7 @@ nav a:hover {
   left: 0;
   right: 0;
   bottom: 0;
-  background: linear-gradient(135deg, rgba(30, 64, 175, 0.7) 0%, rgba(30, 64, 175, 0.5) 100%);
+  background: linear-gradient(135deg, rgba(30, 64, 175, 0.15) 0%, rgba(30, 64, 175, 0.1) 100%);
   z-index: 1;
 }
 
