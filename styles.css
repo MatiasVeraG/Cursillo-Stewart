@@ -641,6 +641,249 @@ section {
   animation: pulse 0.5s ease-in-out;
 }
 
+/* Nuestros Ingresantes Section */
+#ingresantes {
+  padding: 5rem 0;
+}
+
+#ingresantes .section-header h2 {
+  color: var(--navy);
+  margin-bottom: 1rem;
+}
+
+#ingresantes .section-header p {
+  color: var(--gray-600);
+  margin-bottom: 3rem;
+}
+
+/* Tabs para años */
+.years-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 3rem;
+}
+
+.year-tab {
+  background: var(--white);
+  border: 2px solid var(--red);
+  color: var(--red);
+  padding: 0.8rem 2rem;
+  border-radius: 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.year-tab::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: var(--red);
+  transition: left 0.3s ease;
+  z-index: -1;
+}
+
+.year-tab:hover::before,
+.year-tab.active::before {
+  left: 0;
+}
+
+.year-tab:hover,
+.year-tab.active {
+  color: var(--white) !important;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
+}
+
+/* Contenido por año */
+.years-content {
+  position: relative;
+}
+
+.year-content {
+  display: none;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 0.3s ease;
+}
+
+.year-content.active {
+  display: block;
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Lista de ingresantes */
+.ingresantes-list {
+  background: var(--white);
+  border-radius: 1rem;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  margin-bottom: 4rem;
+}
+
+.ingresante-item {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--gray-200);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.ingresante-item:last-child {
+  border-bottom: none;
+}
+
+.ingresante-item:hover {
+  background: var(--gray-50);
+  transform: translateX(5px);
+}
+
+.ingresante-item.top-10 {
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(255, 255, 255, 0.1));
+  border-left: 4px solid #ffd700;
+}
+
+.ingresante-item.top-10:hover {
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), rgba(255, 255, 255, 0.1));
+}
+
+.ingresante-item.special {
+  background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(255, 255, 255, 0.1));
+  border-left: 4px solid var(--blue);
+}
+
+.medal {
+  font-size: 1.5rem;
+  margin-right: 1rem;
+  min-width: 2rem;
+}
+
+.nombre {
+  flex: 1;
+  font-weight: 600;
+  color: var(--navy);
+  font-size: 1.1rem;
+}
+
+.puntaje {
+  font-weight: 700;
+  color: var(--red);
+  font-size: 1.1rem;
+  min-width: 80px;
+  text-align: center;
+  margin-right: 1rem;
+}
+
+.posicion {
+  font-weight: 600;
+  color: var(--gray-600);
+  font-size: 0.95rem;
+  min-width: 60px;
+  text-align: center;
+}
+
+.carrera {
+  font-weight: 600;
+  color: var(--red);
+  font-size: 0.95rem;
+  flex: 1;
+  text-align: center;
+}
+
+.universidad {
+  color: var(--gray-600);
+  font-size: 0.9rem;
+  font-style: italic;
+  flex: 1;
+  text-align: right;
+}
+
+.carrera,
+.puntaje {
+  color: var(--red);
+  font-weight: 600;
+  font-size: 1.1rem;
+  margin-bottom: 0.3rem;
+}
+
+.universidad,
+.posicion {
+  color: var(--gray-600);
+  font-size: 0.95rem;
+  font-style: italic;
+  margin-bottom: 0.2rem;
+}
+
+.modalidad {
+  color: var(--blue);
+  font-size: 0.9rem;
+  font-weight: 500;
+  font-style: italic;
+  background: rgba(59, 130, 246, 0.1);
+  padding: 0.2rem 0.5rem;
+  border-radius: 0.3rem;
+  margin-top: 0.3rem;
+  display: inline-block;
+}
+
+/* Estadísticas resumidas */
+.ingresantes-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 2rem;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  padding: 3rem;
+  border-radius: 1.5rem;
+  margin-top: 3rem;
+}
+
+.stat-item {
+  text-align: center;
+  color: var(--white);
+}
+
+.stat-item .stat-number {
+  display: block;
+  font-size: 3rem;
+  font-weight: bold;
+  font-family: 'Montserrat', sans-serif;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+  margin-bottom: 0.5rem;
+}
+
+.stat-item .stat-label {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.9;
+}
+
+/* Animaciones */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.ingresante-card {
+  animation: fadeIn 0.6s ease-out;
+}
+
 /* Table */
 .table-container {
   overflow-x: auto;
@@ -1511,6 +1754,49 @@ footer {
   .btn-countdown {
     padding: 0.8rem 2rem;
     font-size: 1rem;
+  }
+
+  /* Ingresantes Responsive */
+  .years-tabs {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.5rem;
+  }
+
+  .year-tab {
+    width: 100%;
+    max-width: 200px;
+    padding: 0.6rem 1.5rem;
+    font-size: 1rem;
+  }
+
+  .ingresante-item {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 1rem;
+    gap: 0.5rem;
+  }
+
+  .ingresante-item .nombre,
+  .ingresante-item .puntaje,
+  .ingresante-item .posicion {
+    min-width: auto;
+    text-align: left;
+  }
+
+  .medal {
+    font-size: 1.2rem;
+    margin-right: 0.5rem;
+  }
+
+  .ingresantes-stats {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 2rem;
+    gap: 1.5rem;
+  }
+
+  .stat-item .stat-number {
+    font-size: 2rem;
   }
 }
 
