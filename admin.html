@@ -2,7 +2,15 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=
+    <p class="card-description">
+      Gestiona las imágenes que se mostrarán en el carousel del banner principal. Puedes agregar
+      nuevas imágenes, eliminar las existentes y reordenar arrastrándolas.
+      <br /><strong>Características:</strong>
+      • Cambio automático cada 10 segundos • Navegación con puntos indicadores (clickeables) •
+      Arrastrar y soltar para reordenar • Cambios guardados automáticamente
+    </p>
+    ce-width, initial-scale=1.0" />
     <title>Panel de Administración - Cursillo Stewart</title>
     <link rel="stylesheet" href="admin.css" />
 
@@ -114,12 +122,40 @@
 
             <div class="content-card">
               <h3>🖼️ Imágenes de Fondo del Banner</h3>
+              <p class="card-description">
+                Gestiona las imágenes que se mostrarán en el carousel del banner principal. Puedes
+                agregar, eliminar y reordenar las imágenes arrastrándolas.
+              </p>
               <div class="image-upload-area" id="background-images">
-                <p>Arrastra y suelta imágenes aquí o</p>
+                <div class="upload-icon">📁</div>
+                <p><strong>Arrastra y suelta imágenes aquí</strong></p>
+                <p>o haz clic para seleccionar archivos</p>
                 <input type="file" id="bg-upload" accept="image/*" multiple />
                 <label for="bg-upload" class="btn-upload">Seleccionar Imágenes</label>
+                <small class="upload-info">
+                  Formatos soportados: JPG, PNG, WebP. Tamaño máximo: 5MB por imagen.
+                </small>
               </div>
-              <div id="background-preview" class="image-preview-grid"></div>
+              <div class="background-manager">
+                <div class="manager-header">
+                  <div class="header-title">
+                    <h4>Imágenes del Carousel</h4>
+                    <span class="image-count" id="background-count">0 imágenes</span>
+                  </div>
+                  <div class="manager-actions">
+                    <small>Arrastra para reordenar • Los cambios se guardan automáticamente</small>
+                    <button
+                      type="button"
+                      class="btn-reset"
+                      onclick="adminPanel.resetToDefaultImages()"
+                      title="Restaurar imágenes por defecto"
+                    >
+                      🔄 Restaurar por defecto
+                    </button>
+                  </div>
+                </div>
+                <div id="background-preview" class="image-preview-grid"></div>
+              </div>
             </div>
 
             <div class="content-card">

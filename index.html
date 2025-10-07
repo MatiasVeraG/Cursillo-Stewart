@@ -1953,21 +1953,26 @@
       // ===== CAROUSEL DE IMÁGENES DE FONDO =====
       class BackgroundCarousel {
         constructor() {
-          this.images = [
-            'images/Imagen de Fondo 1.jpeg',
-            'images/Imagen de Fondo 3.jpeg',
-            'images/Imagen de Fondo 4.jpeg',
-            'images/Imagen de Fondo 5.jpeg',
-          ];
+          // Cargar imágenes desde localStorage o usar las por defecto
+          const savedImages = JSON.parse(localStorage.getItem('carousel_images') || '[]');
+          this.images =
+            savedImages.length > 0
+              ? savedImages
+              : [
+                  'images/Imagen de Fondo 1.jpeg',
+                  'images/Imagen de Fondo 3.jpeg',
+                  'images/Imagen de Fondo 4.jpeg',
+                  'images/Imagen de Fondo 5.jpeg',
+                ];
           this.currentIndex = 0;
           this.banner = document.querySelector('.banner');
-          this.indicators = document.querySelectorAll('.indicator');
           this.intervalTime = 10000; // 10 segundos
           this.interval = null;
           this.init();
         }
 
         init() {
+          this.updateIndicators();
           this.preloadImages();
           this.setInitialBackground();
           this.setupIndicators();
@@ -1990,6 +1995,28 @@
           }
         }
 
+        updateIndicators() {
+          const indicatorsContainer = document.querySelector('.carousel-indicators');
+          if (!indicatorsContainer) return;
+
+          // Limpiar indicadores existentes
+          indicatorsContainer.innerHTML = '';
+
+          // Crear nuevos indicadores basados en el número de imágenes
+          for (let i = 0; i < this.images.length; i++) {
+            const indicator = document.createElement('div');
+            indicator.className = 'indicator';
+            if (i === this.currentIndex) {
+              indicator.classList.add('active');
+            }
+            indicatorsContainer.appendChild(indicator);
+          }
+
+          // Actualizar referencia a indicadores
+          this.indicators = document.querySelectorAll('.indicator');
+          this.setupIndicators();
+        }
+
         setupIndicators() {
           this.indicators.forEach((indicator, index) => {
             indicator.addEventListener('click', () => {
@@ -1998,17 +2025,19 @@
           });
         }
 
-        updateIndicators() {
+        updateIndicatorsState() {
           this.indicators.forEach((indicator, index) => {
             indicator.classList.toggle('active', index === this.currentIndex);
           });
         }
 
         goToSlide(index) {
-          this.currentIndex = index;
-          this.changeBackground();
-          this.updateIndicators();
-          this.restartCarousel();
+          if (index >= 0 && index < this.images.length) {
+            this.currentIndex = index;
+            this.changeBackground();
+            this.updateIndicatorsState();
+            this.restartCarousel();
+          }
         }
 
         changeBackground() {
@@ -2022,9 +2051,11 @@
         }
 
         nextSlide() {
-          this.currentIndex = (this.currentIndex + 1) % this.images.length;
-          this.changeBackground();
-          this.updateIndicators();
+          if (this.images.length > 0) {
+            this.currentIndex = (this.currentIndex + 1) % this.images.length;
+            this.changeBackground();
+            this.updateIndicatorsState();
+          }
         }
 
         startCarousel() {
@@ -2039,11 +2070,23 @@
           }
           this.startCarousel();
         }
+
+        // Método para actualizar las imágenes dinámicamente desde el admin
+        updateImages(newImages) {
+          if (Array.isArray(newImages) && newImages.length > 0) {
+            this.images = newImages;
+            this.currentIndex = 0;
+            this.preloadImages();
+            this.updateIndicators();
+            this.setInitialBackground();
+            this.restartCarousel();
+          }
+        }
       }
 
       // Inicializar el carousel cuando el DOM esté listo
       document.addEventListener('DOMContentLoaded', () => {
-        new BackgroundCarousel();
+        window.backgroundCarousel = new BackgroundCarousel();
       });
 
       // Función para cambiar entre años en la sección de ingresantes

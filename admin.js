@@ -73,6 +73,8 @@ class AdminPanel {
     setTimeout(() => {
       this.enhanceImageBlocks();
       this.loadBlockImages();
+      this.loadBackgroundImages();
+      this.initBackgroundImagesDragDrop();
     }, 100);
   }
 
@@ -210,6 +212,19 @@ class AdminPanel {
     // Logo upload
     document.getElementById('logo-upload').addEventListener('change', e => {
       this.handleImageUpload(e.target.files, 'logo');
+    });
+  }
+
+  initBackgroundImagesDragDrop() {
+    const previewGrid = document.getElementById('background-preview');
+
+    previewGrid.addEventListener('dragover', e => {
+      e.preventDefault();
+    });
+
+    previewGrid.addEventListener('drop', e => {
+      e.preventDefault();
+      // El reordenamiento se maneja en los elementos individuales
     });
   }
 
@@ -395,13 +410,287 @@ class AdminPanel {
     const previewGrid = document.getElementById('background-preview');
     const item = document.createElement('div');
     item.className = 'image-preview-item';
+    item.draggable = true;
+
+    // Generar ID único para la imagen
+    const imageId = 'bg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+    item.dataset.imageId = imageId;
+
     item.innerHTML = `
-            <img src="${src}" alt="${name}">
-            <button class="remove-btn" onclick="this.parentElement.remove()">&times;</button>
-        `;
+        <img src="${src}" alt="${name}">
+        <div class="image-controls">
+            <button class="move-btn" title="Arrastra para reordenar">≡</button>
+            <button class="remove-btn" onclick="adminPanel.removeBackgroundImage('${imageId}')" title="Eliminar">&times;</button>
+        </div>
+        <div class="image-name">${name}</div>
+    `;
+
     previewGrid.appendChild(item);
 
+    // Agregar eventos de drag and drop
+    this.addDragAndDropToItem(item);
+
+    // Guardar imagen en el array de imágenes de fondo
+    this.saveBackgroundImage(imageId, src, name);
+
+    // Actualizar el carousel en tiempo real
+    this.updateCarouselImages();
+    this.updateImageCount();
+
     this.showMessage('Imagen de fondo agregada', 'success');
+  }
+
+  removeBackgroundImage(imageId) {
+    const item = document.querySelector(`[data-image-id="${imageId}"]`);
+    if (item) {
+      item.remove();
+
+      // Remover del almacenamiento
+      this.removeBackgroundImageFromStorage(imageId);
+
+      // Actualizar el carousel
+      this.updateCarouselImages();
+      this.updateImageCount();
+
+      this.showMessage('Imagen eliminada', 'success');
+    }
+  }
+
+  saveBackgroundImage(imageId, src, name) {
+    let backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
+    backgroundImages.push({
+      id: imageId,
+      src: src,
+      name: name,
+      order: backgroundImages.length,
+    });
+    localStorage.setItem('background_images', JSON.stringify(backgroundImages));
+  }
+
+  removeBackgroundImageFromStorage(imageId) {
+    let backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
+    backgroundImages = backgroundImages.filter(img => img.id !== imageId);
+
+    // Reordenar los índices
+    backgroundImages.forEach((img, index) => {
+      img.order = index;
+    });
+
+    localStorage.setItem('background_images', JSON.stringify(backgroundImages));
+  }
+
+  loadBackgroundImages() {
+    let backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
+    const previewGrid = document.getElementById('background-preview');
+
+    // Si no hay imágenes guardadas, cargar las por defecto
+    if (backgroundImages.length === 0) {
+      this.initializeDefaultBackgroundImages();
+      backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
+    }
+
+    // Limpiar grid actual
+    previewGrid.innerHTML = '';
+
+    // Ordenar por el campo order
+    backgroundImages.sort((a, b) => a.order - b.order);
+
+    backgroundImages.forEach(imageData => {
+      const item = document.createElement('div');
+      item.className = 'image-preview-item';
+      item.draggable = true;
+      item.dataset.imageId = imageData.id;
+
+      item.innerHTML = `
+          <img src="${imageData.src}" alt="${imageData.name}">
+          <div class="image-controls">
+              <button class="move-btn" title="Arrastra para reordenar">≡</button>
+              <button class="remove-btn" onclick="adminPanel.removeBackgroundImage('${imageData.id}')" title="Eliminar">&times;</button>
+          </div>
+          <div class="image-name">${imageData.name}</div>
+      `;
+
+      previewGrid.appendChild(item);
+      this.addDragAndDropToItem(item);
+    });
+
+    // Actualizar carousel después de cargar
+    this.updateCarouselImages();
+    this.updateImageCount();
+  }
+
+  initializeDefaultBackgroundImages() {
+    const defaultImages = [
+      'images/Imagen de Fondo 1.jpeg',
+      'images/Imagen de Fondo 3.jpeg',
+      'images/Imagen de Fondo 4.jpeg',
+      'images/Imagen de Fondo 5.jpeg',
+    ];
+
+    const backgroundImages = defaultImages.map((imagePath, index) => ({
+      id: 'default_' + index,
+      src: imagePath,
+      name: `Imagen de Fondo ${index + 1}`,
+      order: index,
+    }));
+
+    localStorage.setItem('background_images', JSON.stringify(backgroundImages));
+  }
+
+  resetToDefaultImages() {
+    if (
+      confirm(
+        '¿Estás seguro de que quieres restaurar las imágenes por defecto? Esto eliminará todas las imágenes personalizadas.'
+      )
+    ) {
+      // Limpiar localStorage
+      localStorage.removeItem('background_images');
+      localStorage.removeItem('carousel_images');
+
+      // Inicializar con imágenes por defecto
+      this.initializeDefaultBackgroundImages();
+
+      // Recargar la vista
+      this.loadBackgroundImages();
+
+      this.showMessage('Imágenes restauradas por defecto', 'success');
+    }
+  }
+
+  updateImageCount() {
+    const backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
+    const count = backgroundImages.length;
+    const countElement = document.getElementById('background-count');
+
+    if (countElement) {
+      countElement.textContent = `${count} imagen${count !== 1 ? 'es' : ''}`;
+    }
+  }
+
+  addDragAndDropToItem(item) {
+    item.addEventListener('dragstart', e => {
+      e.dataTransfer.setData('text/plain', item.dataset.imageId);
+      item.classList.add('dragging');
+    });
+
+    item.addEventListener('dragend', () => {
+      item.classList.remove('dragging');
+    });
+
+    item.addEventListener('dragover', e => {
+      e.preventDefault();
+      const afterElement = this.getDragAfterElement(item.parentElement, e.clientY);
+      const draggedElement = document.querySelector('.dragging');
+
+      if (afterElement == null) {
+        item.parentElement.appendChild(draggedElement);
+      } else {
+        item.parentElement.insertBefore(draggedElement, afterElement);
+      }
+    });
+
+    item.addEventListener('drop', e => {
+      e.preventDefault();
+      this.updateImageOrder();
+    });
+  }
+
+  getDragAfterElement(container, y) {
+    const draggableElements = [...container.querySelectorAll('.image-preview-item:not(.dragging)')];
+
+    return draggableElements.reduce(
+      (closest, child) => {
+        const box = child.getBoundingClientRect();
+        const offset = y - box.top - box.height / 2;
+
+        if (offset < 0 && offset > closest.offset) {
+          return { offset: offset, element: child };
+        } else {
+          return closest;
+        }
+      },
+      { offset: Number.NEGATIVE_INFINITY }
+    ).element;
+  }
+
+  updateImageOrder() {
+    const items = document.querySelectorAll('.image-preview-item');
+    let backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
+
+    items.forEach((item, index) => {
+      const imageId = item.dataset.imageId;
+      const imageData = backgroundImages.find(img => img.id === imageId);
+      if (imageData) {
+        imageData.order = index;
+      }
+    });
+
+    localStorage.setItem('background_images', JSON.stringify(backgroundImages));
+    this.updateCarouselImages();
+    this.updateImageCount();
+    this.showMessage('Orden actualizado', 'success');
+  }
+
+  updateCarouselImages() {
+    const backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
+
+    // Ordenar por order
+    backgroundImages.sort((a, b) => a.order - b.order);
+
+    // Crear array de URLs
+    const imageUrls = backgroundImages.map(img => img.src);
+
+    // Actualizar localStorage para que el carousel principal lo use
+    localStorage.setItem('carousel_images', JSON.stringify(imageUrls));
+
+    // Intentar actualizar el carousel en tiempo real si estamos en preview
+    this.updateHomepageCarousel(imageUrls);
+
+    // Actualizar indicadores
+    this.updateCarouselIndicators(imageUrls.length);
+  }
+
+  updateHomepageCarousel(imageUrls) {
+    try {
+      // Intentar actualizar en ventana de preview
+      if (this.previewWindow && !this.previewWindow.closed) {
+        if (this.previewWindow.backgroundCarousel) {
+          this.previewWindow.backgroundCarousel.updateImages(imageUrls);
+        }
+      }
+
+      // Intentar actualizar en ventana padre/opener
+      const targetWindow = window.opener || window.parent;
+      if (targetWindow && targetWindow !== window) {
+        if (targetWindow.backgroundCarousel) {
+          targetWindow.backgroundCarousel.updateImages(imageUrls);
+        }
+      }
+    } catch (error) {
+      console.log('No se pudo actualizar el carousel en tiempo real:', error);
+    }
+  }
+
+  updateCarouselIndicators(count) {
+    try {
+      const windows = [this.previewWindow, window.opener, window.parent];
+
+      windows.forEach(targetWindow => {
+        if (targetWindow && targetWindow !== window && !targetWindow.closed) {
+          const indicators = targetWindow.document.querySelector('.carousel-indicators');
+          if (indicators) {
+            indicators.innerHTML = '';
+            for (let i = 0; i < count; i++) {
+              const indicator = targetWindow.document.createElement('div');
+              indicator.className = 'indicator' + (i === 0 ? ' active' : '');
+              indicators.appendChild(indicator);
+            }
+          }
+        }
+      });
+    } catch (error) {
+      console.log('No se pudieron actualizar los indicadores:', error);
+    }
   }
 
   updateLogo(src) {
