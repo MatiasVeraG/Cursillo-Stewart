@@ -1552,17 +1552,33 @@
           <div>
             <h4>Enlaces Rápidos</h4>
             <ul>
-              <li><a href="#inicio" style="color: #fff">Inicio</a></li>
-              <li><a href="#conocenos" style="color: #fff">Conócenos</a></li>
-              <li><a href="#programa" style="color: #fff">Cursos</a></li>
-              <li><a href="profesores.html" style="color: #fff">Profesores</a></li>
+              <li>
+                <a href="#inicio" style="color: #fff; text-decoration: none !important">Inicio</a>
+              </li>
+              <li>
+                <a href="#conocenos" style="color: #fff; text-decoration: none !important"
+                  >Conócenos</a
+                >
+              </li>
+              <li>
+                <a href="#programa" style="color: #fff; text-decoration: none !important">Cursos</a>
+              </li>
+              <li>
+                <a href="profesores.html" style="color: #fff; text-decoration: none !important"
+                  >Profesores</a
+                >
+              </li>
             </ul>
           </div>
 
           <div>
             <h4>Información</h4>
             <ul>
-              <li><a href="#contacto" style="color: #fff">Contacto</a></li>
+              <li>
+                <a href="#contacto" style="color: #fff; text-decoration: none !important"
+                  >Contacto</a
+                >
+              </li>
             </ul>
           </div>
 
@@ -2134,6 +2150,164 @@
       // Inicializar cuando el DOM esté listo
       document.addEventListener('DOMContentLoaded', function () {
         initCountdown();
+        // Load admin panel changes if available
+        loadAdminChanges();
+      });
+
+      // Load changes from admin panel
+      function loadAdminChanges() {
+        try {
+          const savedContent = localStorage.getItem('website_content');
+          const pendingUpdates = localStorage.getItem('pending_homepage_updates');
+          const savedLogo = localStorage.getItem('website_logo');
+          const timelineData = localStorage.getItem('timeline_data');
+
+          const content = savedContent
+            ? JSON.parse(savedContent)
+            : pendingUpdates
+            ? JSON.parse(pendingUpdates)
+            : null;
+
+          if (content) {
+            applyContentChanges(content);
+            // Clear pending updates after applying
+            localStorage.removeItem('pending_homepage_updates');
+          }
+
+          // Apply timeline data specifically
+          if (timelineData) {
+            try {
+              const parsedTimelineData = JSON.parse(timelineData);
+              updateTimelineContent(parsedTimelineData);
+            } catch (error) {
+              console.log('Error parsing timeline data:', error);
+            }
+          }
+
+          // Apply saved logo
+          if (savedLogo) {
+            applyLogoChanges(savedLogo);
+          }
+        } catch (error) {
+          console.log('Error loading admin changes:', error);
+        }
+      }
+
+      // Apply logo changes
+      function applyLogoChanges(logoSrc) {
+        const logoElements = document.querySelectorAll('.logo img, .login-logo, .admin-logo img');
+        logoElements.forEach(img => {
+          img.src = logoSrc;
+        });
+      }
+
+      // Apply content changes to homepage
+      function applyContentChanges(content) {
+        const mappings = {
+          'banner-title': 'h2',
+          'banner-subtitle': '.subtitle',
+          'banner-description': '.description',
+          'about-title': '#conocenos h2',
+          'about-description': '#conocenos .section-header p',
+          'contact-phone': '[href^="tel:"]',
+          'contact-email': '[href^="mailto:"]',
+        };
+
+        Object.keys(content).forEach(key => {
+          const selector = mappings[key];
+          if (selector && content[key] && content[key].trim() !== '') {
+            const elements = document.querySelectorAll(selector);
+            elements.forEach(element => {
+              if (element.tagName === 'A' && key === 'contact-phone') {
+                element.href = `tel:${content[key]}`;
+                element.textContent = content[key];
+              } else if (element.tagName === 'A' && key === 'contact-email') {
+                element.href = `mailto:${content[key]}`;
+                element.textContent = content[key];
+              } else {
+                element.textContent = content[key];
+              }
+            });
+          }
+        });
+
+        // Apply dynamic timeline changes
+        if (content.timeline_data && Array.isArray(content.timeline_data)) {
+          updateTimelineContent(content.timeline_data);
+        }
+
+        console.log('Admin panel changes applied to homepage');
+      }
+
+      // Update timeline content on homepage
+      function updateTimelineContent(timelineData) {
+        const timelineContainer = document.querySelector('.timeline-container');
+        if (!timelineContainer || !timelineData) return;
+
+        // Sort timeline data by year
+        const sortedData = timelineData.sort((a, b) => {
+          const yearA = a.year === 'Presente' ? new Date().getFullYear() + 1 : parseInt(a.year);
+          const yearB = b.year === 'Presente' ? new Date().getFullYear() + 1 : parseInt(b.year);
+          return yearA - yearB;
+        });
+
+        // Generate new timeline HTML
+        let timelineHTML = '';
+        sortedData.forEach(entry => {
+          const title = entry.title ? ` - ${entry.title}` : '';
+          timelineHTML += `
+            <div class="timeline-item">
+              <div class="timeline-marker"></div>
+              <div class="timeline-content">
+                <h3>${entry.year}${title}</h3>
+                <p>${entry.description || ''}</p>
+                ${
+                  entry.image
+                    ? `
+                  <div class="timeline-image" style="text-align: center; margin-top: 1.5rem">
+                    <img
+                      src="${entry.image}"
+                      alt="${entry.title || entry.year}"
+                      style="
+                        width: 100%;
+                        max-width: 400px;
+                        border-radius: 8px;
+                        margin: 0 auto;
+                        display: block;
+                        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                      "
+                    />
+                    <small style="
+                      color: var(--gray-600);
+                      font-style: italic;
+                      display: block;
+                      margin-top: 0.5rem;
+                    ">
+                      ${entry.imageName || `Imagen de ${entry.year}`}
+                    </small>
+                  </div>
+                `
+                    : ''
+                }
+              </div>
+            </div>
+          `;
+        });
+
+        // Update timeline container
+        timelineContainer.innerHTML = timelineHTML;
+        console.log('Timeline updated with admin panel data');
+      }
+
+      // Listen for storage changes (when admin panel saves changes)
+      window.addEventListener('storage', function (e) {
+        if (
+          e.key === 'website_content' ||
+          e.key === 'pending_homepage_updates' ||
+          e.key === 'timeline_data'
+        ) {
+          loadAdminChanges();
+        }
       });
     </script>
   </body>

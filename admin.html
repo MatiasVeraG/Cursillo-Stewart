@@ -1,0 +1,673 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Administración - Cursillo Stewart</title>
+    <link rel="stylesheet" href="admin.css" />
+
+    <!-- Favicon - Mismo que homepage -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/1-1-logo-cursillo-stewart.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/1-1-logo-cursillo-stewart.png" />
+    <link rel="apple-touch-icon" href="images/1-1-logo-cursillo-stewart.png" />
+  </head>
+  <body>
+    <!-- Login Screen -->
+    <div id="login-screen" class="login-container">
+      <div class="login-card">
+        <div class="login-header">
+          <img
+            src="images/1-1-logo-cursillo-stewart.png"
+            alt="Cursillo Stewart"
+            class="login-logo"
+          />
+          <h2>Panel de Administración</h2>
+          <p>Cursillo Stewart - UPTP</p>
+        </div>
+        <form id="login-form" class="login-form">
+          <div class="form-group">
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" required />
+          </div>
+          <div class="form-group">
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required />
+          </div>
+          <button type="submit" class="btn-login">Ingresar</button>
+          <div id="login-error" class="error-message" style="display: none"></div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Admin Panel -->
+    <div id="admin-panel" class="admin-container" style="display: none">
+      <!-- Header -->
+      <header class="admin-header">
+        <div class="admin-header-content">
+          <div class="admin-logo">
+            <img src="images/1-1-logo-cursillo-stewart.png" alt="Cursillo Stewart" />
+            <h1>Panel de Administración</h1>
+          </div>
+          <div class="admin-actions">
+            <button
+              id="homepage-btn"
+              class="btn-secondary"
+              onclick="window.open('index.html', '_blank')"
+            >
+              🏠 Sitio Web
+            </button>
+            <button id="preview-btn" class="btn-preview">👁️ Vista Previa</button>
+            <button id="save-all-btn" class="btn-save">💾 Guardar Cambios</button>
+            <button id="logout-btn" class="btn-logout">🚪 Cerrar Sesión</button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Navigation Tabs -->
+      <nav class="admin-nav">
+        <button class="nav-tab active" data-section="inicio">🏠 Inicio</button>
+        <button class="nav-tab" data-section="conocenos">ℹ️ Conócenos</button>
+        <button class="nav-tab" data-section="agregado">� Contadores & Info</button>
+        <button class="nav-tab" data-section="ingresantes">🎓 Ingresantes</button>
+        <button class="nav-tab" data-section="cursos">📚 Cursos</button>
+        <button class="nav-tab" data-section="calendario">📅 Calendario</button>
+        <button class="nav-tab" data-section="contacto">📞 Contacto</button>
+        <button class="nav-tab" data-section="settings">⚙️ Configuración</button>
+      </nav>
+
+      <!-- Content Sections -->
+      <main class="admin-main">
+        <!-- Inicio Section -->
+        <section id="inicio-section" class="admin-section active">
+          <h2>🏠 Sección Inicio - Banner Principal</h2>
+          <div class="content-grid">
+            <div class="content-card">
+              <h3>🎯 Banner Principal</h3>
+              <div class="form-group">
+                <label>Título Principal:</label>
+                <input
+                  type="text"
+                  id="banner-title"
+                  data-target="banner-title"
+                  placeholder="Cursillo Stewart"
+                />
+              </div>
+              <div class="form-group">
+                <label>Subtítulo:</label>
+                <input
+                  type="text"
+                  id="banner-subtitle"
+                  data-target="banner-subtitle"
+                  placeholder="Universidad Politécnica Taiwan Paraguay"
+                />
+              </div>
+              <div class="form-group">
+                <label>Descripción:</label>
+                <textarea
+                  id="banner-description"
+                  data-target="banner-description"
+                  rows="3"
+                  placeholder="Somos el cursillo #1 para la Universidad Politécnica Taiwan-Paraguay..."
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>🖼️ Imágenes de Fondo del Banner</h3>
+              <div class="image-upload-area" id="background-images">
+                <p>Arrastra y suelta imágenes aquí o</p>
+                <input type="file" id="bg-upload" accept="image/*" multiple />
+                <label for="bg-upload" class="btn-upload">Seleccionar Imágenes</label>
+              </div>
+              <div id="background-preview" class="image-preview-grid"></div>
+            </div>
+
+            <div class="content-card">
+              <h3>🏷️ Logo</h3>
+              <div class="image-upload-area" id="logo-area">
+                <img
+                  id="current-logo"
+                  src="images/1-1-logo-cursillo-stewart.png"
+                  alt="Logo actual"
+                />
+                <input type="file" id="logo-upload" accept="image/*" />
+                <label for="logo-upload" class="btn-upload">Cambiar Logo</label>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Conocenos Section -->
+        <section id="conocenos-section" class="admin-section">
+          <h2>ℹ️ Sección Conócenos</h2>
+          <div class="content-grid conocenos-grid">
+            <div class="content-card">
+              <h3>📋 Información General</h3>
+              <div class="form-group">
+                <label>Título de la Sección:</label>
+                <input
+                  type="text"
+                  id="about-title"
+                  data-target="about-title"
+                  placeholder="Conócenos"
+                />
+              </div>
+              <div class="form-group">
+                <label>Descripción Principal:</label>
+                <textarea
+                  id="about-description"
+                  data-target="about-description"
+                  rows="4"
+                  placeholder="Descubre la historia y evolución del Cursillo Stewart..."
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>📅 Historia - Timeline</h3>
+              <div class="timeline-manager">
+                <div class="timeline-controls">
+                  <button
+                    type="button"
+                    class="btn-add-timeline"
+                    onclick="adminPanel.addTimelineEntry()"
+                  >
+                    ➕ Agregar Nuevo Año
+                  </button>
+                </div>
+                <div id="timeline-entries" class="timeline-entries">
+                  <!-- Timeline entries will be dynamically generated here -->
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Agregado Section -->
+        <section id="agregado-section" class="admin-section">
+          <h2>📊 Contadores & Información Adicional</h2>
+          <div class="content-grid">
+            <div class="content-card">
+              <h3>⏰ Contador Regresivo</h3>
+              <div class="form-group">
+                <label>Título del Evento:</label>
+                <input type="text" id="countdown-title" placeholder="Próximo Cursillo Intensivo" />
+              </div>
+              <div class="form-group">
+                <label>Descripción:</label>
+                <input
+                  type="text"
+                  id="countdown-description"
+                  placeholder="¡No te pierdas nuestro próximo cursillo intensivo!"
+                />
+              </div>
+              <div class="form-group">
+                <label>Fecha y Hora del Evento:</label>
+                <input type="datetime-local" id="countdown-date" />
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>📊 Estadísticas de Ingresantes</h3>
+              <div class="stats-grid">
+                <div class="stat-item">
+                  <label>Ingresantes 2025:</label>
+                  <input type="number" id="students-2025-input" min="0" value="35" />
+                  <span id="students-2025-count">35</span>
+                </div>
+                <div class="stat-item">
+                  <label>Ingresantes 2024:</label>
+                  <input type="number" id="students-2024-input" min="0" value="37" />
+                  <span id="students-2024-count">37</span>
+                </div>
+                <div class="stat-item">
+                  <label>Ingresantes 2023:</label>
+                  <input type="number" id="students-2023-input" min="0" value="14" />
+                  <span id="students-2023-count">14</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>🎯 Llamadas a la Acción</h3>
+              <div class="form-group">
+                <label>Texto Botón Principal:</label>
+                <input type="text" id="cta-primary" placeholder="Inscríbete Ahora" />
+              </div>
+              <div class="form-group">
+                <label>Texto Botón Secundario:</label>
+                <input type="text" id="cta-secondary" placeholder="Inscribirme Ahora" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Ingresantes Section -->
+        <section id="ingresantes-section" class="admin-section">
+          <h2>🎓 Gestión de Ingresantes</h2>
+          <div class="content-grid">
+            <div class="content-card">
+              <h3>📋 Información de la Sección</h3>
+              <div class="form-group">
+                <label>Título de la Sección:</label>
+                <input type="text" id="ingresantes-title" placeholder="🎓 Nuestros Ingresantes" />
+              </div>
+              <div class="form-group">
+                <label>Descripción:</label>
+                <input
+                  type="text"
+                  id="ingresantes-description"
+                  placeholder="Conoce a los estudiantes que han confiado en nosotros..."
+                />
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>👨‍🎓 Agregar Nuevo Ingresante</h3>
+              <div class="form-group">
+                <label>Año:</label>
+                <select id="new-student-year">
+                  <option value="2025">2025</option>
+                  <option value="2024">2024</option>
+                  <option value="2023">2023</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Nombre Completo:</label>
+                <input type="text" id="new-student-name" placeholder="Juan Pérez López" />
+              </div>
+              <div class="form-group">
+                <label>Puntaje:</label>
+                <input type="number" id="new-student-score" placeholder="85.5" step="0.01" />
+              </div>
+              <div class="form-group">
+                <label>Carrera:</label>
+                <select id="new-student-career">
+                  <option value="">Seleccionar carrera</option>
+                  <option value="Ing. Informática">Ing. Informática</option>
+                  <option value="Ing. Electromecánica">Ing. Electromecánica</option>
+                  <option value="Ing. Civil">Ing. Civil</option>
+                  <option value="Ing. Industrial">Ing. Industrial</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label>Posición:</label>
+                <input type="text" id="new-student-position" placeholder="#25" />
+              </div>
+              <button id="add-student-btn" class="btn-primary">Agregar Ingresante</button>
+            </div>
+
+            <div class="content-card">
+              <h3>📊 Herramientas de Gestión</h3>
+              <button id="export-students-btn" class="btn-secondary">Exportar Lista</button>
+              <button id="import-students-btn" class="btn-secondary">Importar Lista</button>
+              <input
+                type="file"
+                id="import-students-input"
+                accept=".json,.csv"
+                style="display: none"
+              />
+            </div>
+          </div>
+        </section>
+
+        <!-- Cursos Section -->
+        <section id="cursos-section" class="admin-section">
+          <h2>📚 Gestión de Cursos</h2>
+          <div class="content-grid">
+            <div class="content-card">
+              <h3>📘 Curso Intensivo</h3>
+              <div class="form-group">
+                <label>Descripción General:</label>
+                <textarea
+                  id="intensive-description"
+                  rows="3"
+                  placeholder="Curso intensivo de preparación universitaria..."
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label>Modalidades Disponibles:</label>
+                <textarea
+                  id="intensive-modalities"
+                  rows="2"
+                  placeholder="Semanal Presencial, Sábados Presencial, Sábados Virtual"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label>Precio (opcional):</label>
+                <input type="text" id="intensive-price" placeholder="Gs. 500.000" />
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>📗 Curso Extensivo</h3>
+              <div class="form-group">
+                <label>Descripción General:</label>
+                <textarea
+                  id="extensive-description"
+                  rows="3"
+                  placeholder="Curso extensivo para estudiantes y trabajadores..."
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label>Modalidades Disponibles:</label>
+                <textarea
+                  id="extensive-modalities"
+                  rows="2"
+                  placeholder="Presencial, Virtual"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label>Precio (opcional):</label>
+                <input type="text" id="extensive-price" placeholder="Gs. 300.000" />
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>📙 Curso MOFA</h3>
+              <div class="form-group">
+                <label>Descripción General:</label>
+                <textarea
+                  id="mofa-description"
+                  rows="3"
+                  placeholder="Preparación especializada para exámenes MOFA..."
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label>Modalidades Disponibles:</label>
+                <textarea
+                  id="mofa-modalities"
+                  rows="2"
+                  placeholder="MOFA Presencial, MOFA Virtual"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label>Precio (opcional):</label>
+                <input type="text" id="mofa-price" placeholder="Gs. 400.000" />
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>📖 Contenido del Libro</h3>
+              <div class="form-group">
+                <label>Título del Libro:</label>
+                <input
+                  type="text"
+                  id="book-title"
+                  placeholder="Precalculus - Mathematics for Calculus"
+                />
+              </div>
+              <div class="form-group">
+                <label>Autor:</label>
+                <input type="text" id="book-author" placeholder="James Stewart" />
+              </div>
+              <div class="form-group">
+                <label>Descripción del Libro:</label>
+                <textarea
+                  id="book-description"
+                  rows="3"
+                  placeholder="Reconocido mundialmente como uno de los mejores textos de Precálculo..."
+                ></textarea>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Calendario Section -->
+        <section id="calendario-section" class="admin-section">
+          <h2>📅 Gestión de Calendario</h2>
+          <div class="content-grid">
+            <div class="content-card">
+              <h3>📋 Información de la Sección</h3>
+              <div class="form-group">
+                <label>Título de la Sección:</label>
+                <input type="text" id="calendar-title" placeholder="Calendario de Eventos" />
+              </div>
+              <div class="form-group">
+                <label>Descripción:</label>
+                <input
+                  type="text"
+                  id="calendar-description"
+                  placeholder="Mantente informado sobre fechas importantes"
+                />
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>📅 Eventos del Calendario</h3>
+              <div class="calendar-event">
+                <h4>Evento 1</h4>
+                <div class="form-group">
+                  <label>Día:</label>
+                  <input type="number" id="event1-day" min="1" max="31" placeholder="15" />
+                </div>
+                <div class="form-group">
+                  <label>Mes:</label>
+                  <input type="text" id="event1-month" placeholder="Enero" />
+                </div>
+                <div class="form-group">
+                  <label>Año:</label>
+                  <input type="number" id="event1-year" placeholder="2024" />
+                </div>
+                <div class="form-group">
+                  <label>Título del Evento:</label>
+                  <input type="text" id="event1-title" placeholder="Inicio de Inscripciones" />
+                </div>
+                <div class="form-group">
+                  <label>Descripción:</label>
+                  <textarea
+                    id="event1-description"
+                    rows="2"
+                    placeholder="Apertura del período de inscripciones..."
+                  ></textarea>
+                </div>
+              </div>
+
+              <div class="calendar-event">
+                <h4>Evento 2</h4>
+                <div class="form-group">
+                  <label>Día:</label>
+                  <input type="number" id="event2-day" min="1" max="31" placeholder="01" />
+                </div>
+                <div class="form-group">
+                  <label>Mes:</label>
+                  <input type="text" id="event2-month" placeholder="Febrero" />
+                </div>
+                <div class="form-group">
+                  <label>Año:</label>
+                  <input type="number" id="event2-year" placeholder="2024" />
+                </div>
+                <div class="form-group">
+                  <label>Título del Evento:</label>
+                  <input type="text" id="event2-title" placeholder="Inicio de Clases" />
+                </div>
+                <div class="form-group">
+                  <label>Descripción:</label>
+                  <textarea
+                    id="event2-description"
+                    rows="2"
+                    placeholder="Comienzo oficial del programa académico"
+                  ></textarea>
+                </div>
+              </div>
+
+              <button id="add-calendar-event-btn" class="btn-primary">Agregar Nuevo Evento</button>
+            </div>
+          </div>
+        </section>
+
+        <!-- Contacto Section -->
+        <section id="contacto-section" class="admin-section">
+          <h2>📞 Gestión de Contacto</h2>
+          <div class="content-grid">
+            <div class="content-card">
+              <h3>📋 Información de la Sección</h3>
+              <div class="form-group">
+                <label>Título de la Sección:</label>
+                <input type="text" id="contact-section-title" placeholder="Contacto" />
+              </div>
+              <div class="form-group">
+                <label>Descripción:</label>
+                <input
+                  type="text"
+                  id="contact-section-description"
+                  placeholder="Estamos aquí para resolver todas tus dudas"
+                />
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>📞 Información de Contacto</h3>
+              <div class="form-group">
+                <label>Teléfono:</label>
+                <input
+                  type="text"
+                  id="contact-phone"
+                  data-target="contact-phone"
+                  placeholder="+595 985 350550"
+                />
+              </div>
+              <div class="form-group">
+                <label>Email:</label>
+                <input
+                  type="email"
+                  id="contact-email"
+                  data-target="contact-email"
+                  placeholder="cursillostewart@gmail.com"
+                />
+              </div>
+              <div class="form-group">
+                <label>Dirección:</label>
+                <textarea
+                  id="contact-address"
+                  data-target="contact-address"
+                  rows="2"
+                  placeholder="Independencia Nacional 1159 entre Av. Rodríguez de Francia y Rca. de Colombia, Asunción"
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label>Horarios de Atención:</label>
+                <input
+                  type="text"
+                  id="contact-hours"
+                  data-target="contact-hours"
+                  placeholder="Lun - Sáb: 8:00 - 12:00 y 14:00 - 18:00"
+                />
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>🗺️ Mapa y Ubicación</h3>
+              <div class="form-group">
+                <label>URL del Mapa (Google Maps):</label>
+                <input type="url" id="map-url" placeholder="https://maps.google.com/..." />
+              </div>
+              <div class="form-group">
+                <label>Coordenadas de Latitud:</label>
+                <input type="text" id="map-lat" placeholder="-25.2637" />
+              </div>
+              <div class="form-group">
+                <label>Coordenadas de Longitud:</label>
+                <input type="text" id="map-lng" placeholder="-57.5759" />
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>📧 Configuración de EmailJS</h3>
+              <div class="form-group">
+                <label>Service ID:</label>
+                <input type="text" id="emailjs-service-id" placeholder="service_xxxxxxx" />
+              </div>
+              <div class="form-group">
+                <label>Template ID:</label>
+                <input type="text" id="emailjs-template-id" placeholder="template_xxxxxxx" />
+              </div>
+              <div class="form-group">
+                <label>Public Key:</label>
+                <input type="text" id="emailjs-public-key" placeholder="xW-mdqdZ0aTjeEmGS" />
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Settings Section -->
+        <section id="settings-section" class="admin-section">
+          <h2>⚙️ Configuración General</h2>
+          <div class="content-grid">
+            <div class="content-card">
+              <h3>🌐 Redes Sociales</h3>
+              <div class="form-group">
+                <label>Facebook URL:</label>
+                <input
+                  type="url"
+                  id="facebook-url"
+                  placeholder="https://facebook.com/cursillostewart"
+                />
+              </div>
+              <div class="form-group">
+                <label>Instagram URL:</label>
+                <input
+                  type="url"
+                  id="instagram-url"
+                  placeholder="https://instagram.com/cursillostewart"
+                />
+              </div>
+              <div class="form-group">
+                <label>WhatsApp:</label>
+                <input type="text" id="whatsapp-number" placeholder="595985350550" />
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>💾 Respaldo y Restauración</h3>
+              <div class="backup-tools">
+                <button id="backup-btn" class="btn-secondary">Crear Respaldo</button>
+                <input type="file" id="restore-input" accept=".json" style="display: none" />
+                <button id="restore-btn" class="btn-secondary">Restaurar Respaldo</button>
+              </div>
+              <div class="form-group">
+                <label>Último respaldo:</label>
+                <span id="last-backup">Nunca</span>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>🔒 Cambiar Contraseña</h3>
+              <div class="form-group">
+                <label>Contraseña Actual:</label>
+                <input type="password" id="current-password" />
+              </div>
+              <div class="form-group">
+                <label>Nueva Contraseña:</label>
+                <input type="password" id="new-password" />
+              </div>
+              <div class="form-group">
+                <label>Confirmar Nueva Contraseña:</label>
+                <input type="password" id="confirm-password" />
+              </div>
+              <button id="change-password-btn" class="btn-primary">Cambiar Contraseña</button>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- Preview Modal -->
+    <div id="preview-modal" class="modal" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>Vista Previa</h3>
+          <button id="close-preview" class="btn-close">&times;</button>
+        </div>
+        <div class="modal-body">
+          <iframe id="preview-frame" src="index.html" width="100%" height="600"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <!-- Success/Error Messages -->
+    <div id="message-container" class="message-container"></div>
+
+    <script src="admin.js"></script>
+  </body>
+</html>
