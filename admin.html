@@ -2,15 +2,7 @@
 <html lang="es">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=
-    <p class="card-description">
-      Gestiona las imágenes que se mostrarán en el carousel del banner principal. Puedes agregar
-      nuevas imágenes, eliminar las existentes y reordenar arrastrándolas.
-      <br /><strong>Características:</strong>
-      • Cambio automático cada 10 segundos • Navegación con puntos indicadores (clickeables) •
-      Arrastrar y soltar para reordenar • Cambios guardados automáticamente
-    </p>
-    ce-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Panel de Administración - Cursillo Stewart</title>
     <link rel="stylesheet" href="admin.css" />
 
@@ -64,7 +56,6 @@
             >
               🏠 Sitio Web
             </button>
-            <button id="preview-btn" class="btn-preview">👁️ Vista Previa</button>
             <button id="save-all-btn" class="btn-save">💾 Guardar Cambios</button>
             <button id="logout-btn" class="btn-logout">🚪 Cerrar Sesión</button>
           </div>
@@ -91,41 +82,227 @@
           <div class="content-grid">
             <div class="content-card">
               <h3>🎯 Banner Principal</h3>
-              <div class="form-group">
+              <div class="form-group with-color">
                 <label>Título Principal:</label>
-                <input
-                  type="text"
-                  id="banner-title"
-                  data-target="banner-title"
-                  placeholder="Cursillo Stewart"
-                />
+                <div class="input-with-color">
+                  <input
+                    type="text"
+                    id="banner-title"
+                    data-target="banner-title"
+                    placeholder="Cursillo Stewart"
+                  />
+                  <input
+                    type="color"
+                    id="banner-title-color"
+                    value="#ffffff"
+                    class="color-picker-small"
+                    title="Color del título"
+                    onchange="adminPanel.updateBannerTextColor('title')"
+                  />
+                </div>
               </div>
-              <div class="form-group">
+              <div class="form-group with-color">
                 <label>Subtítulo:</label>
-                <input
-                  type="text"
-                  id="banner-subtitle"
-                  data-target="banner-subtitle"
-                  placeholder="Universidad Politécnica Taiwan Paraguay"
-                />
+                <div class="input-with-color">
+                  <input
+                    type="text"
+                    id="banner-subtitle"
+                    data-target="banner-subtitle"
+                    placeholder="Universidad Politécnica Taiwan Paraguay"
+                  />
+                  <input
+                    type="color"
+                    id="banner-subtitle-color"
+                    value="#ffffff"
+                    class="color-picker-small"
+                    title="Color del subtítulo"
+                    onchange="adminPanel.updateBannerTextColor('subtitle')"
+                  />
+                </div>
               </div>
-              <div class="form-group">
+              <div class="form-group with-color">
                 <label>Descripción:</label>
-                <textarea
-                  id="banner-description"
-                  data-target="banner-description"
-                  rows="3"
-                  placeholder="Somos el cursillo #1 para la Universidad Politécnica Taiwan-Paraguay..."
-                ></textarea>
+                <div class="input-with-color">
+                  <textarea
+                    id="banner-description"
+                    data-target="banner-description"
+                    rows="3"
+                    placeholder="Somos el cursillo #1 para la Universidad Politécnica Taiwan-Paraguay..."
+                  ></textarea>
+                  <input
+                    type="color"
+                    id="banner-description-color"
+                    value="#ffffff"
+                    class="color-picker-small"
+                    title="Color de la descripción"
+                    onchange="adminPanel.updateBannerTextColor('description')"
+                  />
+                </div>
               </div>
+
+              <!-- Filtro de color del banner -->
+              <div class="banner-overlay-section">
+                <div class="section-header-enhanced">
+                  <h4>🎨 Filtro de color sobre las imágenes</h4>
+                </div>
+
+                <div class="overlay-controls-grid">
+                  <!-- Color del filtro -->
+                  <div class="control-group">
+                    <label class="control-label">
+                      <div class="label-content">
+                        <span class="label-icon">🎨</span>
+                        <span class="label-text">Color del filtro</span>
+                      </div>
+                    </label>
+                    <div class="color-picker-container">
+                      <input
+                        type="color"
+                        id="banner-overlay-color"
+                        value="#1e40af"
+                        class="color-picker"
+                        onchange="adminPanel.updateBannerOverlay()"
+                      />
+                      <div class="color-info">
+                        <span class="color-value" id="overlay-color-value">#1e40af</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Opacidad del filtro -->
+                  <div class="control-group">
+                    <label class="control-label">
+                      <div class="label-content">
+                        <span class="label-icon">🔳</span>
+                        <span class="label-text">Opacidad del filtro</span>
+                      </div>
+                    </label>
+                    <div class="range-container">
+                      <input
+                        type="range"
+                        id="banner-overlay-opacity"
+                        min="0"
+                        max="100"
+                        value="15"
+                        class="range-slider opacity-slider"
+                        onchange="adminPanel.updateBannerOverlay()"
+                      />
+                      <div class="range-labels">
+                        <span class="range-min">0%</span>
+                        <span class="range-value" id="overlay-opacity-value">15%</span>
+                        <span class="range-max">100%</span>
+                      </div>
+                      <div class="opacity-demo">
+                        <div class="opacity-bar">
+                          <div class="opacity-indicator" id="opacity-indicator"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Brillo de la imagen -->
+                  <div class="control-group">
+                    <label class="control-label">
+                      <div class="label-content">
+                        <span class="label-icon">☀️</span>
+                        <span class="label-text">Brillo de la imagen</span>
+                      </div>
+                    </label>
+                    <div class="range-container">
+                      <input
+                        type="range"
+                        id="banner-image-brightness"
+                        min="50"
+                        max="150"
+                        value="100"
+                        class="range-slider brightness-slider"
+                        onchange="adminPanel.updateBannerOverlay()"
+                      />
+                      <div class="range-labels">
+                        <span class="range-min">50%</span>
+                        <span class="range-value" id="brightness-value">100%</span>
+                        <span class="range-max">150%</span>
+                      </div>
+                      <div class="brightness-demo">
+                        <div class="brightness-bar">
+                          <div class="brightness-indicator" id="brightness-indicator"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Acciones del filtro -->
+                <div class="overlay-actions">
+                  <button
+                    type="button"
+                    class="btn-action btn-reset"
+                    onclick="adminPanel.resetBannerOverlay()"
+                    title="Restaurar valores por defecto"
+                  >
+                    <span class="btn-icon">🔄</span>
+                    <span class="btn-text">Restaurar por defecto</span>
+                  </button>
+                </div>
+              </div>
+
+              <!-- Hidden inputs for compatibility -->
+              <input type="hidden" id="banner-overlay-gradient" value="135deg" />
+              <select id="banner-overlay-gradient-hidden" style="display: none">
+                <option value="135deg">Diagonal (Predeterminado)</option>
+                <option value="90deg">Vertical</option>
+                <option value="0deg">Horizontal</option>
+                <option value="45deg">Diagonal Suave</option>
+                <option value="radial">Radial (desde el centro)</option>
+              </select>
             </div>
 
             <div class="content-card">
               <h3>🖼️ Imágenes de Fondo del Banner</h3>
-              <p class="card-description">
-                Gestiona las imágenes que se mostrarán en el carousel del banner principal. Puedes
-                agregar, eliminar y reordenar las imágenes arrastrándolas.
-              </p>
+
+              <!-- Tiempo de cambio automático -->
+              <h4
+                style="
+                  margin-top: 1.5rem;
+                  margin-bottom: 1rem;
+                  color: var(--navy);
+                  font-size: 1.1rem;
+                "
+              >
+                ⏱️ Tiempo de cambio automático de imágenes (segundos):
+              </h4>
+              <div class="form-group">
+                <label for="carousel-interval">Intervalo de cambio:</label>
+                <div style="display: flex; align-items: center; gap: 10px">
+                  <input
+                    type="number"
+                    id="carousel-interval"
+                    min="3"
+                    max="30"
+                    value="10"
+                    style="width: 80px"
+                    onchange="adminPanel.updateCarouselInterval(this.value)"
+                  />
+                  <span style="color: #64748b; font-size: 0.875rem">
+                    Actual: <span id="current-interval">10</span>s
+                  </span>
+                </div>
+                <small style="color: #64748b">
+                  Rango permitido: 3-30 segundos. Los cambios se aplican inmediatamente.
+                </small>
+              </div>
+
+              <!-- Subir imágenes -->
+              <h4
+                style="
+                  margin-top: 1.5rem;
+                  margin-bottom: 1rem;
+                  color: var(--navy);
+                  font-size: 1.1rem;
+                "
+              >
+                📁 Agregar nuevas imágenes:
+              </h4>
               <div class="image-upload-area" id="background-images">
                 <div class="upload-icon">📁</div>
                 <p><strong>Arrastra y suelta imágenes aquí</strong></p>
@@ -136,6 +313,18 @@
                   Formatos soportados: JPG, PNG, WebP. Tamaño máximo: 5MB por imagen.
                 </small>
               </div>
+
+              <!-- Gestión de imágenes del banner -->
+              <h4
+                style="
+                  margin-top: 1.5rem;
+                  margin-bottom: 1rem;
+                  color: var(--navy);
+                  font-size: 1.1rem;
+                "
+              >
+                🖼️ Imágenes del Banner:
+              </h4>
               <div class="background-manager">
                 <div class="manager-header">
                   <div class="header-title">
@@ -154,7 +343,33 @@
                     </button>
                   </div>
                 </div>
-                <div id="background-preview" class="image-preview-grid"></div>
+
+                <!-- Contenedor para mostrar las imágenes -->
+                <div class="background-images-container" id="background-images-container">
+                  <!-- Las imágenes se cargarán aquí dinámicamente -->
+                </div>
+
+                <!-- Área de subida de imágenes -->
+                <div class="upload-area" id="background-upload-area">
+                  <div class="upload-zone">
+                    <div class="upload-icon">📁</div>
+                    <p>Arrastra imágenes aquí o haz clic para seleccionar</p>
+                    <input
+                      type="file"
+                      id="background-file-input"
+                      accept="image/*"
+                      multiple
+                      style="display: none"
+                    />
+                    <button
+                      type="button"
+                      class="btn-upload"
+                      onclick="document.getElementById('background-file-input').click()"
+                    >
+                      Seleccionar Imágenes
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
@@ -686,19 +901,6 @@
           </div>
         </section>
       </main>
-    </div>
-
-    <!-- Preview Modal -->
-    <div id="preview-modal" class="modal" style="display: none">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h3>Vista Previa</h3>
-          <button id="close-preview" class="btn-close">&times;</button>
-        </div>
-        <div class="modal-body">
-          <iframe id="preview-frame" src="index.html" width="100%" height="600"></iframe>
-        </div>
-      </div>
     </div>
 
     <!-- Success/Error Messages -->

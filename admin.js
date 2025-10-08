@@ -5,6 +5,7 @@ class AdminPanel {
     this.currentSection = 'content';
     this.config = this.loadConfig();
     this.originalContent = {};
+    this.hasUnsavedChanges = false;
     this.init();
   }
 
@@ -72,8 +73,12 @@ class AdminPanel {
     // Initialize enhanced features after panel is shown
     setTimeout(() => {
       this.enhanceImageBlocks();
-      this.loadBlockImages();
+      // this.loadBlockImages(); // Disabled - removed block images feature
       this.loadBackgroundImages();
+      this.loadCarouselSettings();
+      this.loadBannerOverlaySettings();
+      this.loadBannerTextColors();
+      this.initEnhancedOverlayControls();
       this.initBackgroundImagesDragDrop();
     }, 100);
   }
@@ -103,16 +108,6 @@ class AdminPanel {
     // Save button
     document.getElementById('save-all-btn').addEventListener('click', () => {
       this.saveAllChanges();
-    });
-
-    // Preview button
-    document.getElementById('preview-btn').addEventListener('click', () => {
-      this.showPreview();
-    });
-
-    // Close preview
-    document.getElementById('close-preview').addEventListener('click', () => {
-      document.getElementById('preview-modal').style.display = 'none';
     });
 
     // Content inputs - real-time updates
@@ -148,7 +143,6 @@ class AdminPanel {
       );
       inputs.forEach(input => {
         input.addEventListener('input', () => {
-          this.updatePreviewContent(input);
           // Auto-save after 2 seconds of no typing
           clearTimeout(this.autoSaveTimeout);
           this.autoSaveTimeout = setTimeout(() => {
@@ -186,46 +180,44 @@ class AdminPanel {
 
   bindImageUploads() {
     // Background images upload
-    const bgUpload = document.getElementById('bg-upload');
-    const bgArea = document.getElementById('background-images');
+    const bgFileInput = document.getElementById('background-file-input');
+    const bgUploadArea = document.getElementById('background-upload-area');
 
-    bgUpload.addEventListener('change', e => {
-      this.handleImageUpload(e.target.files, 'background');
-    });
+    if (bgFileInput) {
+      bgFileInput.addEventListener('change', e => {
+        this.handleImageUpload(e.target.files, 'background');
+      });
+    }
 
     // Drag and drop for background images
-    bgArea.addEventListener('dragover', e => {
-      e.preventDefault();
-      bgArea.classList.add('drag-over');
-    });
+    if (bgUploadArea) {
+      bgUploadArea.addEventListener('dragover', e => {
+        e.preventDefault();
+        bgUploadArea.classList.add('drag-over');
+      });
 
-    bgArea.addEventListener('dragleave', () => {
-      bgArea.classList.remove('drag-over');
-    });
+      bgUploadArea.addEventListener('dragleave', () => {
+        bgUploadArea.classList.remove('drag-over');
+      });
 
-    bgArea.addEventListener('drop', e => {
-      e.preventDefault();
-      bgArea.classList.remove('drag-over');
-      this.handleImageUpload(e.dataTransfer.files, 'background');
-    });
+      bgUploadArea.addEventListener('drop', e => {
+        e.preventDefault();
+        bgUploadArea.classList.remove('drag-over');
+        this.handleImageUpload(e.dataTransfer.files, 'background');
+      });
+    }
 
     // Logo upload
-    document.getElementById('logo-upload').addEventListener('change', e => {
-      this.handleImageUpload(e.target.files, 'logo');
-    });
+    const logoUpload = document.getElementById('logo-upload');
+    if (logoUpload) {
+      logoUpload.addEventListener('change', e => {
+        this.handleImageUpload(e.target.files, 'logo');
+      });
+    }
   }
 
   initBackgroundImagesDragDrop() {
-    const previewGrid = document.getElementById('background-preview');
-
-    previewGrid.addEventListener('dragover', e => {
-      e.preventDefault();
-    });
-
-    previewGrid.addEventListener('drop', e => {
-      e.preventDefault();
-      // El reordenamiento se maneja en los elementos individuales
-    });
+    // Background image drag and drop functionality removed
   }
 
   bindStudentsStats() {
@@ -376,14 +368,6 @@ class AdminPanel {
     });
   }
 
-  updatePreviewContent(input) {
-    // Store changes for preview
-    const target = input.dataset.target || input.id;
-    if (!this.originalContent[target]) {
-      this.originalContent[target] = input.value;
-    }
-  }
-
   // Image Management
   handleImageUpload(files, type) {
     if (!files || files.length === 0) return;
@@ -407,53 +391,37 @@ class AdminPanel {
   }
 
   addBackgroundImage(src, name) {
-    const previewGrid = document.getElementById('background-preview');
-    const item = document.createElement('div');
-    item.className = 'image-preview-item';
-    item.draggable = true;
-
-    // Generar ID único para la imagen
-    const imageId = 'bg_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
-    item.dataset.imageId = imageId;
-
-    item.innerHTML = `
-        <img src="${src}" alt="${name}">
-        <div class="image-controls">
-            <button class="move-btn" title="Arrastra para reordenar">≡</button>
-            <button class="remove-btn" onclick="adminPanel.removeBackgroundImage('${imageId}')" title="Eliminar">&times;</button>
-        </div>
-        <div class="image-name">${name}</div>
-    `;
-
-    previewGrid.appendChild(item);
-
-    // Agregar eventos de drag and drop
-    this.addDragAndDropToItem(item);
+    const imageId = 'bg_' + Date.now();
 
     // Guardar imagen en el array de imágenes de fondo
     this.saveBackgroundImage(imageId, src, name);
+
+    // Recargar y renderizar todas las imágenes
+    const backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
+    this.renderBackgroundImages(backgroundImages);
 
     // Actualizar el carousel en tiempo real
     this.updateCarouselImages();
     this.updateImageCount();
 
-    this.showMessage('Imagen de fondo agregada', 'success');
+    // Marcar que hay cambios pendientes
+    this.markAsUnsaved();
   }
 
   removeBackgroundImage(imageId) {
-    const item = document.querySelector(`[data-image-id="${imageId}"]`);
-    if (item) {
-      item.remove();
+    // Remover del almacenamiento
+    this.removeBackgroundImageFromStorage(imageId);
 
-      // Remover del almacenamiento
-      this.removeBackgroundImageFromStorage(imageId);
+    // Recargar y renderizar todas las imágenes
+    const backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
+    this.renderBackgroundImages(backgroundImages);
 
-      // Actualizar el carousel
-      this.updateCarouselImages();
-      this.updateImageCount();
+    // Actualizar el carousel
+    this.updateCarouselImages();
+    this.updateImageCount();
 
-      this.showMessage('Imagen eliminada', 'success');
-    }
+    // Marcar que hay cambios pendientes
+    this.markAsUnsaved();
   }
 
   saveBackgroundImage(imageId, src, name) {
@@ -481,7 +449,6 @@ class AdminPanel {
 
   loadBackgroundImages() {
     let backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
-    const previewGrid = document.getElementById('background-preview');
 
     // Si no hay imágenes guardadas, cargar las por defecto
     if (backgroundImages.length === 0) {
@@ -489,30 +456,8 @@ class AdminPanel {
       backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
     }
 
-    // Limpiar grid actual
-    previewGrid.innerHTML = '';
-
-    // Ordenar por el campo order
-    backgroundImages.sort((a, b) => a.order - b.order);
-
-    backgroundImages.forEach(imageData => {
-      const item = document.createElement('div');
-      item.className = 'image-preview-item';
-      item.draggable = true;
-      item.dataset.imageId = imageData.id;
-
-      item.innerHTML = `
-          <img src="${imageData.src}" alt="${imageData.name}">
-          <div class="image-controls">
-              <button class="move-btn" title="Arrastra para reordenar">≡</button>
-              <button class="remove-btn" onclick="adminPanel.removeBackgroundImage('${imageData.id}')" title="Eliminar">&times;</button>
-          </div>
-          <div class="image-name">${imageData.name}</div>
-      `;
-
-      previewGrid.appendChild(item);
-      this.addDragAndDropToItem(item);
-    });
+    // Renderizar imágenes en la interfaz
+    this.renderBackgroundImages(backgroundImages);
 
     // Actualizar carousel después de cargar
     this.updateCarouselImages();
@@ -535,6 +480,41 @@ class AdminPanel {
     }));
 
     localStorage.setItem('background_images', JSON.stringify(backgroundImages));
+  }
+
+  // Renderizar imágenes de fondo en la interfaz
+  renderBackgroundImages(backgroundImages) {
+    const container = document.getElementById('background-images-container');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    backgroundImages.forEach((image, index) => {
+      const imageItem = document.createElement('div');
+      imageItem.className = 'background-image-item';
+      imageItem.setAttribute('data-image-id', image.id);
+      imageItem.draggable = true;
+
+      imageItem.innerHTML = `
+        <div class="image-preview">
+          <img src="${image.src}" alt="${image.name}" loading="lazy">
+        </div>
+        <div class="image-info">
+          <span class="image-name">${image.name}</span>
+          <div class="image-actions">
+            <button type="button" class="btn-remove" onclick="adminPanel.removeBackgroundImage('${image.id}')" title="Eliminar imagen">
+              ❌
+            </button>
+          </div>
+        </div>
+        <div class="drag-handle">⋮⋮</div>
+      `;
+
+      container.appendChild(imageItem);
+    });
+
+    // Reinicializar drag and drop
+    this.initBackgroundImagesDragDrop();
   }
 
   resetToDefaultImages() {
@@ -628,7 +608,8 @@ class AdminPanel {
     localStorage.setItem('background_images', JSON.stringify(backgroundImages));
     this.updateCarouselImages();
     this.updateImageCount();
-    this.showMessage('Orden actualizado', 'success');
+    // Marcar que hay cambios pendientes
+    this.markAsUnsaved();
   }
 
   updateCarouselImages() {
@@ -693,6 +674,404 @@ class AdminPanel {
     }
   }
 
+  // Actualizar intervalo del carousel
+  updateCarouselInterval(seconds) {
+    const intervalSeconds = parseInt(seconds);
+
+    // Validar rango
+    if (intervalSeconds < 3 || intervalSeconds > 30) {
+      this.showMessage('El intervalo debe estar entre 3 y 30 segundos', 'error');
+      document.getElementById('carousel-interval').value =
+        localStorage.getItem('carousel_interval') || '10';
+      return;
+    }
+
+    // Guardar en localStorage
+    localStorage.setItem('carousel_interval', intervalSeconds.toString());
+
+    // Actualizar display
+    const currentIntervalSpan = document.getElementById('current-interval');
+    if (currentIntervalSpan) {
+      currentIntervalSpan.textContent = intervalSeconds;
+    }
+
+    // Actualizar carousel en tiempo real
+    try {
+      // Intentar actualizar en ventana de preview
+      if (this.previewWindow && !this.previewWindow.closed) {
+        if (this.previewWindow.backgroundCarousel) {
+          this.previewWindow.backgroundCarousel.updateInterval(intervalSeconds);
+        }
+      }
+
+      // Intentar actualizar en ventana padre/opener
+      const targetWindow = window.opener || window.parent;
+      if (targetWindow && targetWindow !== window) {
+        if (targetWindow.backgroundCarousel) {
+          targetWindow.backgroundCarousel.updateInterval(intervalSeconds);
+        }
+      }
+    } catch (error) {
+      console.log('No se pudo actualizar el intervalo en tiempo real:', error);
+    }
+
+    // Marcar que hay cambios pendientes
+    this.markAsUnsaved();
+  }
+
+  // Cargar configuración del carousel
+  loadCarouselSettings() {
+    const savedInterval = localStorage.getItem('carousel_interval') || '10';
+    const intervalInput = document.getElementById('carousel-interval');
+    const currentIntervalSpan = document.getElementById('current-interval');
+
+    if (intervalInput) {
+      intervalInput.value = savedInterval;
+    }
+
+    if (currentIntervalSpan) {
+      currentIntervalSpan.textContent = savedInterval;
+    }
+  }
+
+  // ========== GESTIÓN DEL FILTRO DEL BANNER ==========
+
+  // Actualizar filtro del banner
+  updateBannerOverlay() {
+    const color = document.getElementById('banner-overlay-color')?.value || '#1e40af';
+    const opacity = document.getElementById('banner-overlay-opacity')?.value || '15';
+    const gradient = document.getElementById('banner-overlay-gradient')?.value || '135deg';
+    const brightness = document.getElementById('banner-image-brightness')?.value || '100';
+
+    // Actualizar displays
+    const colorValueSpan = document.getElementById('overlay-color-value');
+    const opacityValueSpan = document.getElementById('overlay-opacity-value');
+    const brightnessValueSpan = document.getElementById('brightness-value');
+
+    if (colorValueSpan) colorValueSpan.textContent = color;
+    if (opacityValueSpan) opacityValueSpan.textContent = opacity + '%';
+    if (brightnessValueSpan) brightnessValueSpan.textContent = brightness + '%';
+
+    // Guardar configuración
+    const overlaySettings = {
+      color: color,
+      opacity: opacity,
+      gradient: gradient,
+      brightness: brightness,
+    };
+    localStorage.setItem('banner_overlay_settings', JSON.stringify(overlaySettings));
+
+    // Aplicar cambios en tiempo real
+    this.applyBannerOverlay(overlaySettings);
+    // Marcar que hay cambios pendientes
+    this.markAsUnsaved();
+  }
+
+  // Aplicar filtro del banner
+  applyBannerOverlay(settings) {
+    try {
+      // Convertir hex a rgba
+      const hexToRgba = (hex, alpha) => {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${alpha / 100})`;
+      };
+
+      const rgba = hexToRgba(settings.color, settings.opacity);
+      let gradientStyle;
+
+      if (settings.gradient === 'radial') {
+        gradientStyle = `radial-gradient(circle, ${rgba} 0%, ${rgba} 100%)`;
+      } else {
+        gradientStyle = `linear-gradient(${settings.gradient}, ${rgba} 0%, ${rgba} 100%)`;
+      }
+
+      // Intentar actualizar en ventana de preview
+      if (this.previewWindow && !this.previewWindow.closed) {
+        this.updateBannerInWindow(this.previewWindow, gradientStyle, settings.brightness);
+      }
+
+      // Intentar actualizar en ventana padre/opener
+      const targetWindow = window.opener || window.parent;
+      if (targetWindow && targetWindow !== window) {
+        this.updateBannerInWindow(targetWindow, gradientStyle, settings.brightness);
+      }
+    } catch (error) {
+      console.log('No se pudo actualizar el filtro del banner en tiempo real:', error);
+    }
+  }
+
+  // Actualizar banner en ventana específica
+  updateBannerInWindow(targetWindow, gradientStyle, brightness) {
+    const banner = targetWindow.document.querySelector('.banner');
+    if (banner) {
+      const beforeElement = banner.querySelector('::before') || banner;
+
+      // Crear o actualizar el estilo del overlay
+      let styleElement = targetWindow.document.getElementById('banner-overlay-style');
+      if (!styleElement) {
+        styleElement = targetWindow.document.createElement('style');
+        styleElement.id = 'banner-overlay-style';
+        targetWindow.document.head.appendChild(styleElement);
+      }
+
+      styleElement.textContent = `
+        .banner::before {
+          content: '';
+          position: absolute;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          background: ${gradientStyle};
+          z-index: 1;
+        }
+        .banner {
+          filter: brightness(${brightness}%);
+        }
+        .banner .container {
+          position: relative;
+          z-index: 2;
+        }
+      `;
+    }
+  }
+
+  // Cargar configuración del filtro del banner
+  loadBannerOverlaySettings() {
+    const savedSettings = localStorage.getItem('banner_overlay_settings');
+    const settings = savedSettings
+      ? JSON.parse(savedSettings)
+      : {
+          color: '#1e40af',
+          opacity: '15',
+          gradient: '135deg',
+          brightness: '100',
+        };
+
+    // Cargar valores en los controles
+    const colorInput = document.getElementById('banner-overlay-color');
+    const opacityInput = document.getElementById('banner-overlay-opacity');
+    const gradientSelect = document.getElementById('banner-overlay-gradient');
+    const brightnessInput = document.getElementById('banner-image-brightness');
+
+    if (colorInput) colorInput.value = settings.color;
+    if (opacityInput) opacityInput.value = settings.opacity;
+    if (gradientSelect) gradientSelect.value = settings.gradient;
+    if (brightnessInput) brightnessInput.value = settings.brightness;
+
+    // Cargar colores del texto
+    const savedTextColors = localStorage.getItem('banner_text_colors');
+    const colors = savedTextColors
+      ? JSON.parse(savedTextColors)
+      : {
+          title: '#ffffff',
+          subtitle: '#ffffff',
+          description: '#ffffff',
+        };
+
+    const titleColorInput = document.getElementById('banner-title-color');
+    const subtitleColorInput = document.getElementById('banner-subtitle-color');
+    const descriptionColorInput = document.getElementById('banner-description-color');
+
+    if (titleColorInput) titleColorInput.value = colors.title;
+    if (subtitleColorInput) subtitleColorInput.value = colors.subtitle;
+    if (descriptionColorInput) descriptionColorInput.value = colors.description;
+
+    // Actualizar displays
+    this.updateBannerOverlay();
+    this.applyBannerTextColors(colors);
+  }
+
+  // Restaurar valores por defecto del filtro
+  resetBannerOverlay() {
+    if (
+      confirm(
+        '¿Estás seguro de que quieres restaurar los valores por defecto del filtro y texto del banner?'
+      )
+    ) {
+      const defaultSettings = {
+        color: '#1e40af',
+        opacity: '15',
+        gradient: '135deg',
+        brightness: '100',
+      };
+      const defaultTextColor = '#ffffff';
+
+      // Actualizar controles del filtro
+      const colorInput = document.getElementById('banner-overlay-color');
+      const opacityInput = document.getElementById('banner-overlay-opacity');
+      const gradientSelect = document.getElementById('banner-overlay-gradient');
+      const brightnessInput = document.getElementById('banner-image-brightness');
+
+      if (colorInput) colorInput.value = defaultSettings.color;
+      if (opacityInput) opacityInput.value = defaultSettings.opacity;
+      if (gradientSelect) gradientSelect.value = defaultSettings.gradient;
+      if (brightnessInput) brightnessInput.value = defaultSettings.brightness;
+
+      // Actualizar controles del texto
+      const titleColorInput = document.getElementById('banner-title-color');
+      const subtitleColorInput = document.getElementById('banner-subtitle-color');
+      const descriptionColorInput = document.getElementById('banner-description-color');
+
+      if (titleColorInput) titleColorInput.value = defaultTextColor;
+      if (subtitleColorInput) subtitleColorInput.value = defaultTextColor;
+      if (descriptionColorInput) descriptionColorInput.value = defaultTextColor;
+
+      // Guardar colores por defecto en localStorage
+      const defaultTextColors = {
+        title: defaultTextColor,
+        subtitle: defaultTextColor,
+        description: defaultTextColor,
+      };
+      localStorage.setItem('banner_text_colors', JSON.stringify(defaultTextColors));
+
+      // Aplicar cambios
+      this.updateBannerOverlay();
+      this.applyBannerTextColors(defaultTextColors);
+      this.showMessage('Filtro del banner restaurado por defecto', 'success');
+    }
+  }
+
+  // Cargar colores del texto del banner
+  loadBannerTextColors() {
+    const savedTextColors = localStorage.getItem('banner_text_colors');
+    const colors = savedTextColors
+      ? JSON.parse(savedTextColors)
+      : {
+          title: '#ffffff',
+          subtitle: '#ffffff',
+          description: '#ffffff',
+        };
+
+    const titleColorInput = document.getElementById('banner-title-color');
+    const subtitleColorInput = document.getElementById('banner-subtitle-color');
+    const descriptionColorInput = document.getElementById('banner-description-color');
+
+    if (titleColorInput) titleColorInput.value = colors.title;
+    if (subtitleColorInput) subtitleColorInput.value = colors.subtitle;
+    if (descriptionColorInput) descriptionColorInput.value = colors.description;
+
+    // Aplicar colores al banner
+    this.applyBannerTextColors(colors);
+  }
+
+  // ========== ENHANCED OVERLAY CONTROLS ==========
+
+  // Inicializar controles mejorados del overlay
+  initEnhancedOverlayControls() {
+    // Color presets functionality removed
+  }
+
+  // ========== BANNER TEXT COLOR ==========
+
+  // Actualizar color del texto del banner
+  updateBannerTextColor(element) {
+    const colors = {
+      title: document.getElementById('banner-title-color')?.value || '#ffffff',
+      subtitle: document.getElementById('banner-subtitle-color')?.value || '#ffffff',
+      description: document.getElementById('banner-description-color')?.value || '#ffffff',
+    };
+
+    // Guardar configuración
+    localStorage.setItem('banner_text_colors', JSON.stringify(colors));
+
+    // Aplicar cambios al banner
+    this.applyBannerTextColors(colors);
+
+    // Marcar que hay cambios pendientes
+    this.markAsUnsaved();
+  }
+
+  // Aplicar colores del texto al banner
+  applyBannerTextColors(colors) {
+    try {
+      // Aplicar mediante CSS global
+      let styleElement = document.getElementById('banner-text-color-style');
+      if (!styleElement) {
+        styleElement = document.createElement('style');
+        styleElement.id = 'banner-text-color-style';
+        document.head.appendChild(styleElement);
+      }
+
+      styleElement.textContent = `
+        section.banner .container h2,
+        section#inicio.banner .container h2 {
+          color: ${colors.title} !important;
+        }
+        section.banner .container .subtitle,
+        section#inicio.banner .container .subtitle,
+        section.banner .container p.subtitle,
+        section#inicio.banner .container p.subtitle {
+          color: ${colors.subtitle} !important;
+        }
+        section.banner .container .description,
+        section#inicio.banner .container .description,
+        section.banner .container p.description,
+        section#inicio.banner .container p.description {
+          color: ${colors.description} !important;
+        }
+      `;
+
+      // Intentar actualizar en ventana padre/opener (sitio web principal)
+      const targetWindow = window.opener || window.parent;
+      if (targetWindow && targetWindow !== window) {
+        this.updateBannerTextInWindow(targetWindow, colors);
+      }
+    } catch (error) {
+      console.log('No se pudo actualizar el color del texto del banner en tiempo real:', error);
+    }
+  }
+
+  // Actualizar color del texto en ventana específica
+  updateBannerTextInWindow(targetWindow, colors) {
+    try {
+      let styleElement = targetWindow.document.getElementById('banner-text-color-style');
+      if (!styleElement) {
+        styleElement = targetWindow.document.createElement('style');
+        styleElement.id = 'banner-text-color-style';
+        targetWindow.document.head.appendChild(styleElement);
+      }
+
+      styleElement.textContent = `
+        section.banner .container h2,
+        section#inicio.banner .container h2 {
+          color: ${colors.title} !important;
+        }
+        section.banner .container .subtitle,
+        section#inicio.banner .container .subtitle,
+        section.banner .container p.subtitle,
+        section#inicio.banner .container p.subtitle {
+          color: ${colors.subtitle} !important;
+        }
+        section.banner .container .description,
+        section#inicio.banner .container .description,
+        section.banner .container p.description,
+        section#inicio.banner .container p.description {
+          color: ${colors.description} !important;
+        }
+      `;
+    } catch (error) {
+      console.log('Error al actualizar color del texto en ventana:', error);
+    }
+  }
+
+  // Actualizar indicadores de demostración
+  updateDemoIndicators(opacity, brightness) {
+    const opacityIndicator = document.getElementById('opacity-indicator');
+    const brightnessIndicator = document.getElementById('brightness-indicator');
+
+    if (opacityIndicator) {
+      opacityIndicator.style.left = `${opacity}%`;
+    }
+
+    if (brightnessIndicator) {
+      const brightnessPercent = ((brightness - 50) / 100) * 100; // Convert 50-150 to 0-100
+      brightnessIndicator.style.left = `${brightnessPercent}%`;
+    }
+  }
+
   updateLogo(src) {
     document.getElementById('current-logo').src = src;
 
@@ -702,7 +1081,8 @@ class AdminPanel {
     // Update logo in homepage if possible
     this.updateHomepageLogo(src);
 
-    this.showMessage('Logo actualizado', 'success');
+    // Marcar que hay cambios pendientes
+    this.markAsUnsaved();
   }
 
   // Update logo in homepage
@@ -746,7 +1126,8 @@ class AdminPanel {
     document.getElementById('students-2024-count').textContent = stats[2024];
     document.getElementById('students-2023-count').textContent = stats[2023];
 
-    this.showMessage('Estadísticas actualizadas', 'success');
+    // Marcar que hay cambios pendientes
+    this.markAsUnsaved();
   }
 
   // Social Media
@@ -761,7 +1142,8 @@ class AdminPanel {
     this.config.social = social;
     this.saveConfig();
 
-    this.showMessage('Redes sociales actualizadas', 'success');
+    // Marcar que hay cambios pendientes
+    this.markAsUnsaved();
   }
 
   // Password Management
@@ -836,6 +1218,18 @@ class AdminPanel {
         // Restore content
         this.populateForm(backup.content);
 
+        // Restore carousel settings if available
+        if (backup.content.carousel_interval) {
+          localStorage.setItem('carousel_interval', backup.content.carousel_interval);
+          this.loadCarouselSettings();
+        }
+
+        // Restore banner overlay settings if available
+        if (backup.content.banner_overlay_settings) {
+          localStorage.setItem('banner_overlay_settings', backup.content.banner_overlay_settings);
+          this.loadBannerOverlaySettings();
+        }
+
         // Restore config
         this.config = backup.config || {};
         this.saveConfig();
@@ -860,6 +1254,37 @@ class AdminPanel {
 
     // Show success message
     this.showMessage('Todos los cambios guardados exitosamente', 'success');
+
+    // Marcar como guardado
+    this.markAsSaved();
+  }
+
+  // Marcar que hay cambios pendientes
+  markAsUnsaved() {
+    this.hasUnsavedChanges = true;
+    this.updateSaveButton();
+  }
+
+  // Marcar como guardado
+  markAsSaved() {
+    this.hasUnsavedChanges = false;
+    this.updateSaveButton();
+  }
+
+  // Actualizar el botón de guardar
+  updateSaveButton() {
+    const saveBtn = document.getElementById('save-all-btn');
+    if (saveBtn) {
+      if (this.hasUnsavedChanges) {
+        saveBtn.innerHTML = '💾 Guardar Cambios *';
+        saveBtn.classList.add('has-changes');
+        saveBtn.title = 'Hay cambios pendientes por guardar';
+      } else {
+        saveBtn.innerHTML = '💾 Guardar Cambios';
+        saveBtn.classList.remove('has-changes');
+        saveBtn.title = 'Todos los cambios están guardados';
+      }
+    }
   }
 
   // Apply changes to homepage
@@ -879,13 +1304,11 @@ class AdminPanel {
 
       // Store changes for the next homepage load
       localStorage.setItem('pending_homepage_updates', JSON.stringify(content));
-      this.showMessage(
-        'Cambios guardados. Actualiza la página principal para ver los cambios.',
-        'info'
-      );
+      // Los cambios se aplicarán cuando se recargue la página principal
     } catch (error) {
       console.log('Could not directly update homepage:', error);
       localStorage.setItem('pending_homepage_updates', JSON.stringify(content));
+      // Los cambios se aplicarán cuando se recargue la página principal
     }
   }
 
@@ -926,7 +1349,7 @@ class AdminPanel {
       this.updateTimelineInHomepage(doc, content.timeline_data);
     }
 
-    this.showMessage('Página principal actualizada en tiempo real', 'success');
+    // No mostrar mensaje aquí - se mostrará en saveAllChanges
   }
 
   // Update timeline in homepage
@@ -1027,41 +1450,24 @@ class AdminPanel {
     const timelineData = this.getTimelineData();
     content.timeline_data = timelineData;
 
-    // Include block images data
-    const blockImages = JSON.parse(localStorage.getItem('block_images') || '{}');
-    content.block_images = blockImages;
+    // Include carousel settings
+    content.carousel_interval = localStorage.getItem('carousel_interval') || '10';
+
+    // Include banner overlay settings
+    content.banner_overlay_settings =
+      localStorage.getItem('banner_overlay_settings') ||
+      JSON.stringify({ color: '#1e40af', opacity: '15', gradient: '135deg', brightness: '100' });
+
+    // Include banner text colors
+    content.banner_text_colors =
+      localStorage.getItem('banner_text_colors') ||
+      JSON.stringify({ title: '#ffffff', subtitle: '#ffffff', description: '#ffffff' });
+
+    // Block images feature removed - no longer included in content
+    // const blockImages = JSON.parse(localStorage.getItem('block_images') || '{}');
+    // content.block_images = blockImages;
 
     return content;
-  }
-
-  // Preview
-  showPreview() {
-    // Save current changes first
-    const allContent = this.getAllContent();
-    localStorage.setItem('website_content', JSON.stringify(allContent));
-
-    // Open homepage in new window/tab
-    const previewWindow = window.open(
-      'index.html',
-      'preview',
-      'width=1200,height=800,scrollbars=yes,resizable=yes'
-    );
-
-    if (previewWindow) {
-      this.showMessage('Vista previa abierta en nueva ventana', 'success');
-
-      // Store reference to preview window for real-time updates
-      this.previewWindow = previewWindow;
-
-      // Apply changes when window loads
-      previewWindow.addEventListener('load', () => {
-        setTimeout(() => {
-          this.updateHomepageContent(previewWindow.document, allContent);
-        }, 500);
-      });
-    } else {
-      this.showMessage('Por favor permite ventanas emergentes para la vista previa', 'error');
-    }
   }
 
   // Configuration
@@ -1262,8 +1668,8 @@ class AdminPanel {
     this.saveTimelineData(timelineData);
     this.renderTimeline(timelineData);
 
-    this.showMessage('Nueva entrada de timeline agregada', 'success');
-    this.autoSave();
+    // Marcar que hay cambios pendientes
+    this.markAsUnsaved();
   }
 
   deleteTimelineEntry(entryId) {
@@ -1276,8 +1682,8 @@ class AdminPanel {
     this.saveTimelineData(filteredData);
     this.renderTimeline(filteredData);
 
-    this.showMessage('Entrada del timeline eliminada', 'success');
-    this.autoSave();
+    // Marcar que hay cambios pendientes
+    this.markAsUnsaved();
   }
 
   updateTimelineYear(entryId, newYear) {
@@ -1335,8 +1741,8 @@ class AdminPanel {
         entry.imageName = file.name;
         this.saveTimelineData(timelineData);
         this.renderTimeline(timelineData);
-        this.autoSave();
-        this.showMessage('Imagen del timeline actualizada', 'success');
+        // Marcar que hay cambios pendientes
+        this.markAsUnsaved();
       }
     };
     reader.readAsDataURL(file);
@@ -1354,104 +1760,24 @@ class AdminPanel {
   // ============= ENHANCED IMAGE MANAGEMENT FOR ALL BLOCKS =============
 
   enhanceImageBlocks() {
-    // This function can be called to add image upload capability to other content blocks
-    const imageBlocks = document.querySelectorAll('.content-card');
-
-    imageBlocks.forEach(block => {
-      // Check if this block doesn't already have image upload
-      if (!block.querySelector('.image-upload-area') && !block.querySelector('.timeline-manager')) {
-        this.addImageUploadToBlock(block);
-      }
-    });
+    // This function has been disabled to remove "Imagen del Bloque (opcional)" fields
+    // The functionality was removed as requested
+    return;
   }
 
   addImageUploadToBlock(block) {
-    const blockId = block.id || this.generateId();
-    block.id = blockId;
-
-    const imageSection = document.createElement('div');
-    imageSection.className = 'form-group';
-    imageSection.innerHTML = `
-      <label>Imagen del Bloque (opcional):</label>
-      <div class="image-upload-area" onclick="document.getElementById('block-file-${blockId}').click()">
-        <input type="file" 
-               id="block-file-${blockId}" 
-               accept="image/*" 
-               onchange="adminPanel.updateBlockImage('${blockId}', this.files[0])">
-        <div class="upload-placeholder">
-          <div style="font-size: 2rem; margin-bottom: 0.5rem;">📷</div>
-          <div>Haz clic para subir imagen</div>
-          <div class="upload-text">JPG, PNG, GIF (máx. 5MB)</div>
-        </div>
-      </div>
-    `;
-
-    block.appendChild(imageSection);
+    // Function disabled - "Imagen del Bloque (opcional)" feature removed
+    return;
   }
 
   updateBlockImage(blockId, file) {
-    if (!file) return;
-
-    // Validate file
-    if (file.size > 5 * 1024 * 1024) {
-      this.showMessage('La imagen no puede superar los 5MB', 'error');
-      return;
-    }
-
-    if (!file.type.startsWith('image/')) {
-      this.showMessage('Solo se permiten archivos de imagen', 'error');
-      return;
-    }
-
-    const reader = new FileReader();
-    reader.onload = e => {
-      const uploadArea = document.querySelector(`#block-file-${blockId}`).parentElement;
-      uploadArea.innerHTML = `
-        <input type="file" 
-               id="block-file-${blockId}" 
-               accept="image/*" 
-               onchange="adminPanel.updateBlockImage('${blockId}', this.files[0])">
-        <img src="${e.target.result}" alt="Block image" class="block-image-preview" 
-             style="width: 100%; height: 120px; object-fit: cover; border-radius: 6px; margin-bottom: 0.5rem;">
-        <div style="color: var(--admin-success); font-size: 0.75rem; font-weight: 500;">${file.name}</div>
-      `;
-      uploadArea.classList.add('has-image');
-
-      // Save image data
-      const blockImages = JSON.parse(localStorage.getItem('block_images') || '{}');
-      blockImages[blockId] = {
-        src: e.target.result,
-        name: file.name,
-      };
-      localStorage.setItem('block_images', JSON.stringify(blockImages));
-
-      this.showMessage('Imagen del bloque actualizada', 'success');
-      this.autoSave();
-    };
-    reader.readAsDataURL(file);
+    // Function disabled - "Imagen del Bloque (opcional)" feature removed
+    return;
   }
 
   loadBlockImages() {
-    // Load saved block images
-    const blockImages = JSON.parse(localStorage.getItem('block_images') || '{}');
-
-    Object.keys(blockImages).forEach(blockId => {
-      const imageData = blockImages[blockId];
-      const uploadArea = document.querySelector(`#block-file-${blockId}`)?.parentElement;
-
-      if (uploadArea && imageData) {
-        uploadArea.innerHTML = `
-          <input type="file" 
-                 id="block-file-${blockId}" 
-                 accept="image/*" 
-                 onchange="adminPanel.updateBlockImage('${blockId}', this.files[0])">
-          <img src="${imageData.src}" alt="Block image" class="block-image-preview" 
-               style="width: 100%; height: 120px; object-fit: cover; border-radius: 6px; margin-bottom: 0.5rem;">
-          <div style="color: var(--admin-success); font-size: 0.75rem; font-weight: 500;">${imageData.name}</div>
-        `;
-        uploadArea.classList.add('has-image');
-      }
-    });
+    // Function disabled - "Imagen del Bloque (opcional)" feature removed
+    return;
   }
 }
 
