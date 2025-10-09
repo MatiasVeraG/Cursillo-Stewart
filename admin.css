@@ -721,6 +721,60 @@ body {
   transform: translateY(-1px);
 }
 
+/* Default Configuration Section */
+.default-config-section {
+  margin-top: 2rem;
+  padding-top: 2rem;
+  border-top: 2px solid var(--admin-border);
+}
+
+.config-description {
+  margin-bottom: 1.5rem;
+  color: var(--admin-text-light);
+  font-size: 0.9rem;
+  line-height: 1.6;
+  background: #f8fafc;
+  padding: 1rem;
+  border-radius: 6px;
+  border-left: 4px solid var(--admin-primary);
+}
+
+.btn-default-config {
+  background: linear-gradient(135deg, var(--admin-success) 0%, #10b981 100%);
+  color: white;
+  border: none;
+  border-radius: 8px;
+  padding: 0.875rem 1.5rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  box-shadow: 0 2px 4px rgba(5, 150, 105, 0.2);
+}
+
+.btn-default-config:hover {
+  background: linear-gradient(135deg, #047857 0%, var(--admin-success) 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(5, 150, 105, 0.3);
+}
+
+.btn-default-config:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(5, 150, 105, 0.2);
+}
+
+.btn-default-config .btn-icon {
+  font-size: 1rem;
+}
+
+.btn-default-config .btn-text {
+  font-size: 0.9rem;
+  letter-spacing: 0.025em;
+}
+
 .card-description {
   margin: 0 0 1rem 0;
   color: var(--admin-text-light);

@@ -367,6 +367,27 @@
               </div>
             </div>
           </div>
+
+          <!-- Botón Establecer como Predeterminado -->
+          <div class="default-config-section">
+            <div class="content-card">
+              <h3>⚙️ Configuración por Defecto</h3>
+              <p class="config-description">
+                Establece la configuración actual como predeterminada. Esta será la configuración
+                que se restaurará cuando uses la opción "Restaurar por defecto" en cualquier
+                sección.
+              </p>
+              <button
+                type="button"
+                class="btn-default-config"
+                onclick="adminPanel.setAsDefaultConfiguration()"
+                title="Guardar configuración actual como predeterminada"
+              >
+                <span class="btn-icon">💾</span>
+                <span class="btn-text">Establecer como predeterminado</span>
+              </button>
+            </div>
+          </div>
         </section>
 
         <!-- Conocenos Section -->
@@ -878,6 +899,32 @@
                 <input type="password" id="confirm-password" />
               </div>
               <button id="change-password-btn" class="btn-primary">Cambiar Contraseña</button>
+            </div>
+
+            <div class="content-card">
+              <h3>🔧 Configuración por Defecto</h3>
+              <p class="card-description">
+                Gestiona la configuración predeterminada del sistema. Puedes restaurar toda la
+                configuración a los valores por defecto establecidos.
+              </p>
+              <div class="backup-tools">
+                <button
+                  type="button"
+                  class="btn-secondary"
+                  onclick="adminPanel.restoreDefaultConfiguration()"
+                  title="Restaurar configuración por defecto"
+                >
+                  🔄 Restaurar Configuración por Defecto
+                </button>
+              </div>
+              <div class="form-group">
+                <label>Configuración por defecto creada:</label>
+                <span id="default-config-date">No disponible</span>
+              </div>
+              <small style="color: var(--admin-text-light); font-size: 0.8rem">
+                💡 Para establecer una nueva configuración por defecto, ve a la pestaña "Inicio" y
+                usa el botón "Establecer como predeterminado" al final de la sección.
+              </small>
             </div>
           </div>
         </section>

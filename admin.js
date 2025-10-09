@@ -1561,6 +1561,25 @@ class AdminPanel {
     }
   }
 
+  // Initialize default config display
+  initDefaultConfigDate() {
+    const defaultConfigTimestamp = localStorage.getItem('default_config_timestamp');
+    const defaultConfigDateElement = document.getElementById('default-config-date');
+
+    if (defaultConfigTimestamp && defaultConfigDateElement) {
+      const date = new Date(parseInt(defaultConfigTimestamp));
+      defaultConfigDateElement.textContent = date.toLocaleString('es-ES', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+      });
+    } else if (defaultConfigDateElement) {
+      defaultConfigDateElement.textContent = 'No disponible';
+    }
+  }
+
   // ============= TIMELINE DYNAMIC MANAGEMENT =============
 
   initializeTimeline() {
@@ -1835,6 +1854,152 @@ class AdminPanel {
     // Function disabled - "Imagen del Bloque (opcional)" feature removed
     return;
   }
+
+  // ============= DEFAULT CONFIGURATION MANAGEMENT =============
+
+  setAsDefaultConfiguration() {
+    // Mostrar diálogo de confirmación
+    if (
+      confirm(
+        '¿Está seguro de establecer esta configuración como predeterminada? Será la configuración de restauración por defecto.'
+      )
+    ) {
+      try {
+        // Recopilar toda la configuración actual
+        const currentConfig = this.getCurrentConfiguration();
+
+        // Guardar como configuración por defecto
+        localStorage.setItem('default_configuration', JSON.stringify(currentConfig));
+
+        // Guardar timestamp de cuando se estableció como default
+        localStorage.setItem('default_config_timestamp', Date.now().toString());
+
+        // Mostrar mensaje de éxito
+        this.showMessage('Configuración establecida como predeterminada exitosamente', 'success');
+
+        // Actualizar la fecha mostrada
+        this.initDefaultConfigDate();
+
+        console.log('Configuración por defecto guardada:', currentConfig);
+      } catch (error) {
+        console.error('Error al guardar configuración por defecto:', error);
+        this.showMessage('Error al establecer la configuración por defecto', 'error');
+      }
+    }
+  }
+
+  getCurrentConfiguration() {
+    const config = {
+      // Configuración del banner
+      banner: {
+        title: document.getElementById('banner-title')?.value || '',
+        titleColor: document.getElementById('banner-title-color')?.value || '#ffffff',
+        subtitle: document.getElementById('banner-subtitle')?.value || '',
+        subtitleColor: document.getElementById('banner-subtitle-color')?.value || '#ffffff',
+        description: document.getElementById('banner-description')?.value || '',
+        descriptionColor: document.getElementById('banner-description-color')?.value || '#ffffff',
+        overlayColor: document.getElementById('banner-overlay-color')?.value || '#1e40af',
+        overlayOpacity: document.getElementById('banner-overlay-opacity')?.value || '15',
+        imageBrightness: document.getElementById('banner-image-brightness')?.value || '100',
+        carouselInterval: document.getElementById('carousel-interval')?.value || '10',
+      },
+
+      // Imágenes de fondo del banner
+      backgroundImages: JSON.parse(localStorage.getItem('background_images') || '[]'),
+
+      // Configuración de secciones (Conócenos, etc.)
+      about: {
+        title: document.getElementById('about-title')?.value || '',
+        description: document.getElementById('about-description')?.value || '',
+      },
+
+      // Timeline data
+      timeline: this.getTimelineData(),
+
+      // Configuración adicional del localStorage
+      adminConfig: this.config,
+
+      // Timestamp de creación
+      createdAt: Date.now(),
+      version: '1.0',
+    };
+
+    return config;
+  }
+
+  restoreDefaultConfiguration() {
+    const defaultConfig = localStorage.getItem('default_configuration');
+
+    if (!defaultConfig) {
+      this.showMessage('No hay configuración por defecto guardada', 'warning');
+      return;
+    }
+
+    if (
+      confirm(
+        '¿Desea restaurar la configuración por defecto? Se perderán los cambios actuales no guardados.'
+      )
+    ) {
+      try {
+        const config = JSON.parse(defaultConfig);
+
+        // Restaurar configuración del banner
+        if (config.banner) {
+          document.getElementById('banner-title').value = config.banner.title || '';
+          document.getElementById('banner-title-color').value =
+            config.banner.titleColor || '#ffffff';
+          document.getElementById('banner-subtitle').value = config.banner.subtitle || '';
+          document.getElementById('banner-subtitle-color').value =
+            config.banner.subtitleColor || '#ffffff';
+          document.getElementById('banner-description').value = config.banner.description || '';
+          document.getElementById('banner-description-color').value =
+            config.banner.descriptionColor || '#ffffff';
+          document.getElementById('banner-overlay-color').value =
+            config.banner.overlayColor || '#1e40af';
+          document.getElementById('banner-overlay-opacity').value =
+            config.banner.overlayOpacity || '15';
+          document.getElementById('banner-image-brightness').value =
+            config.banner.imageBrightness || '100';
+          document.getElementById('carousel-interval').value =
+            config.banner.carouselInterval || '10';
+        }
+
+        // Restaurar imágenes de fondo
+        if (config.backgroundImages) {
+          localStorage.setItem('background_images', JSON.stringify(config.backgroundImages));
+          this.loadBackgroundImages();
+        }
+
+        // Restaurar configuración de secciones
+        if (config.about) {
+          document.getElementById('about-title').value = config.about.title || '';
+          document.getElementById('about-description').value = config.about.description || '';
+        }
+
+        // Restaurar timeline
+        if (config.timeline) {
+          this.saveTimelineData(config.timeline);
+          this.loadTimelineFromData();
+        }
+
+        // Restaurar configuración adicional
+        if (config.adminConfig) {
+          this.config = config.adminConfig;
+          this.saveConfig();
+        }
+
+        // Actualizar interfaz
+        this.updateBannerOverlay();
+        this.updateCarouselInterval(config.banner?.carouselInterval || '10');
+
+        this.showMessage('Configuración por defecto restaurada exitosamente', 'success');
+        this.markAsUnsaved();
+      } catch (error) {
+        console.error('Error al restaurar configuración por defecto:', error);
+        this.showMessage('Error al restaurar la configuración por defecto', 'error');
+      }
+    }
+  }
 }
 
 // Initialize when DOM is loaded
@@ -1843,6 +2008,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Initialize last backup display
   admin.initLastBackup();
+
+  // Initialize default config date display
+  admin.initDefaultConfigDate();
 
   // Global admin instance for debugging
   window.adminPanel = admin;
