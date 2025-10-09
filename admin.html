@@ -292,28 +292,6 @@
                 </small>
               </div>
 
-              <!-- Subir imágenes -->
-              <h4
-                style="
-                  margin-top: 1.5rem;
-                  margin-bottom: 1rem;
-                  color: var(--navy);
-                  font-size: 1.1rem;
-                "
-              >
-                📁 Agregar nuevas imágenes:
-              </h4>
-              <div class="image-upload-area" id="background-images">
-                <div class="upload-icon">📁</div>
-                <p><strong>Arrastra y suelta imágenes aquí</strong></p>
-                <p>o haz clic para seleccionar archivos</p>
-                <input type="file" id="bg-upload" accept="image/*" multiple />
-                <label for="bg-upload" class="btn-upload">Seleccionar Imágenes</label>
-                <small class="upload-info">
-                  Formatos soportados: JPG, PNG, WebP. Tamaño máximo: 5MB por imagen.
-                </small>
-              </div>
-
               <!-- Gestión de imágenes del banner -->
               <h4
                 style="
@@ -332,7 +310,10 @@
                     <span class="image-count" id="background-count">0 imágenes</span>
                   </div>
                   <div class="manager-actions">
-                    <small>Arrastra para reordenar • Los cambios se guardan automáticamente</small>
+                    <small
+                      >🔄 Arrastra las miniaturas para reordenarlas • Los cambios se guardan
+                      automáticamente</small
+                    >
                     <button
                       type="button"
                       class="btn-reset"

@@ -217,7 +217,128 @@ class AdminPanel {
   }
 
   initBackgroundImagesDragDrop() {
-    // Background image drag and drop functionality removed
+    const container = document.getElementById('background-images-container');
+    if (!container) return;
+
+    // Limpiar eventos anteriores
+    container.removeAttribute('data-drag-initialized');
+
+    // Remover eventos anteriores de todos los items
+    const existingItems = container.querySelectorAll('.background-image-item');
+    existingItems.forEach(item => {
+      item.removeAttribute('data-drag-events-added');
+    });
+
+    let draggedElement = null;
+
+    // Agregar eventos a cada imagen
+    const items = container.querySelectorAll('.background-image-item');
+    items.forEach(item => {
+      // Agregar eventos de drag
+      item.addEventListener('dragstart', e => {
+        e.dataTransfer.setData('text/plain', item.dataset.imageId);
+        e.dataTransfer.effectAllowed = 'move';
+        item.classList.add('dragging');
+        draggedElement = item;
+
+        // Hacer el elemento semi-transparente
+        setTimeout(() => {
+          item.style.opacity = '0.5';
+        }, 0);
+      });
+
+      item.addEventListener('dragend', e => {
+        item.classList.remove('dragging');
+        item.style.opacity = '';
+        container.classList.remove('drag-over');
+
+        // Limpiar efectos visuales
+        const allItems = container.querySelectorAll('.background-image-item');
+        allItems.forEach(el => {
+          el.classList.remove('drag-over-item');
+        });
+
+        draggedElement = null;
+      });
+
+      // Agregar eventos de drop para cada item
+      item.addEventListener('dragover', e => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+
+        if (draggedElement && draggedElement !== item) {
+          item.classList.add('drag-over-item');
+
+          // Determinar si insertar antes o después basado en la posición del mouse
+          const rect = item.getBoundingClientRect();
+          const midpoint = rect.left + rect.width / 2;
+
+          if (e.clientX < midpoint) {
+            // Insertar antes de este elemento
+            container.insertBefore(draggedElement, item);
+          } else {
+            // Insertar después de este elemento
+            if (item.nextSibling) {
+              container.insertBefore(draggedElement, item.nextSibling);
+            } else {
+              container.appendChild(draggedElement);
+            }
+          }
+        }
+      });
+
+      item.addEventListener('dragleave', e => {
+        item.classList.remove('drag-over-item');
+      });
+
+      item.addEventListener('drop', e => {
+        e.preventDefault();
+        item.classList.remove('drag-over-item');
+
+        // Actualizar el orden en localStorage
+        this.updateBackgroundImageOrder();
+      });
+    });
+
+    // Eventos del contenedor para casos edge
+    container.addEventListener('dragover', e => {
+      e.preventDefault();
+      container.classList.add('drag-over');
+    });
+
+    container.addEventListener('drop', e => {
+      e.preventDefault();
+      container.classList.remove('drag-over');
+
+      // Si se suelta en un área vacía, actualizar orden
+      this.updateBackgroundImageOrder();
+    });
+
+    container.addEventListener('dragleave', e => {
+      if (!container.contains(e.relatedTarget)) {
+        container.classList.remove('drag-over');
+      }
+    });
+  }
+
+  updateBackgroundImageOrder() {
+    const items = document.querySelectorAll('.background-image-item');
+    let backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
+
+    items.forEach((item, index) => {
+      const imageId = item.dataset.imageId;
+      const imageData = backgroundImages.find(img => img.id === imageId);
+      if (imageData) {
+        imageData.order = index;
+      }
+    });
+
+    // Ordenar por order
+    backgroundImages.sort((a, b) => a.order - b.order);
+
+    localStorage.setItem('background_images', JSON.stringify(backgroundImages));
+    this.updateCarouselImages();
+    this.markAsUnsaved();
   }
 
   bindStudentsStats() {
@@ -513,7 +634,7 @@ class AdminPanel {
       container.appendChild(imageItem);
     });
 
-    // Reinicializar drag and drop
+    // Inicializar drag and drop del contenedor (incluye eventos de imágenes)
     this.initBackgroundImagesDragDrop();
   }
 
@@ -545,71 +666,6 @@ class AdminPanel {
     if (countElement) {
       countElement.textContent = `${count} imagen${count !== 1 ? 'es' : ''}`;
     }
-  }
-
-  addDragAndDropToItem(item) {
-    item.addEventListener('dragstart', e => {
-      e.dataTransfer.setData('text/plain', item.dataset.imageId);
-      item.classList.add('dragging');
-    });
-
-    item.addEventListener('dragend', () => {
-      item.classList.remove('dragging');
-    });
-
-    item.addEventListener('dragover', e => {
-      e.preventDefault();
-      const afterElement = this.getDragAfterElement(item.parentElement, e.clientY);
-      const draggedElement = document.querySelector('.dragging');
-
-      if (afterElement == null) {
-        item.parentElement.appendChild(draggedElement);
-      } else {
-        item.parentElement.insertBefore(draggedElement, afterElement);
-      }
-    });
-
-    item.addEventListener('drop', e => {
-      e.preventDefault();
-      this.updateImageOrder();
-    });
-  }
-
-  getDragAfterElement(container, y) {
-    const draggableElements = [...container.querySelectorAll('.image-preview-item:not(.dragging)')];
-
-    return draggableElements.reduce(
-      (closest, child) => {
-        const box = child.getBoundingClientRect();
-        const offset = y - box.top - box.height / 2;
-
-        if (offset < 0 && offset > closest.offset) {
-          return { offset: offset, element: child };
-        } else {
-          return closest;
-        }
-      },
-      { offset: Number.NEGATIVE_INFINITY }
-    ).element;
-  }
-
-  updateImageOrder() {
-    const items = document.querySelectorAll('.image-preview-item');
-    let backgroundImages = JSON.parse(localStorage.getItem('background_images') || '[]');
-
-    items.forEach((item, index) => {
-      const imageId = item.dataset.imageId;
-      const imageData = backgroundImages.find(img => img.id === imageId);
-      if (imageData) {
-        imageData.order = index;
-      }
-    });
-
-    localStorage.setItem('background_images', JSON.stringify(backgroundImages));
-    this.updateCarouselImages();
-    this.updateImageCount();
-    // Marcar que hay cambios pendientes
-    this.markAsUnsaved();
   }
 
   updateCarouselImages() {
