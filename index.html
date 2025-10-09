@@ -2249,10 +2249,24 @@
 
     <!-- Contador Regresivo Script -->
     <script>
+      // Variable global para mantener el intervalo del contador
+      let countdownInterval = null;
+
       // Contador regresivo
       function initCountdown() {
-        // Fecha objetivo: 9 de Diciembre 2025, 8:00 AM (UTC-3 Argentina)
-        const targetDate = new Date('2025-12-09T08:00:00-03:00').getTime();
+        // Fecha objetivo por defecto: 9 de Diciembre 2025, 8:00 AM (UTC-3 Argentina)
+        const targetDate = new Date('2025-12-09T08:00:00-03:00');
+        initCountdownWithDate(targetDate);
+      }
+
+      // Inicializar contador con fecha específica
+      function initCountdownWithDate(targetDate) {
+        // Limpiar contador anterior si existe
+        if (countdownInterval) {
+          clearInterval(countdownInterval);
+        }
+
+        const targetDateTime = targetDate.getTime();
 
         const daysElement = document.getElementById('days');
         const hoursElement = document.getElementById('hours');
@@ -2265,11 +2279,11 @@
           return;
         }
 
-        console.log('Contador inicializado. Fecha objetivo:', new Date(targetDate));
+        console.log('Contador inicializado. Fecha objetivo:', targetDate);
 
         function updateCountdown() {
           const now = new Date().getTime();
-          const distance = targetDate - now;
+          const distance = targetDateTime - now;
 
           if (distance < 0) {
             // Si la fecha ya pasó
@@ -2309,7 +2323,7 @@
         updateCountdown();
 
         // Actualizar cada segundo
-        setInterval(updateCountdown, 1000);
+        countdownInterval = setInterval(updateCountdown, 1000);
       }
 
       // Inicializar cuando el DOM esté listo
@@ -2396,12 +2410,160 @@
           }
         });
 
+        // Handle countdown section visibility and updates
+        updateCountdownSection(content);
+
         // Apply dynamic timeline changes
         if (content.timeline_data && Array.isArray(content.timeline_data)) {
           updateTimelineContent(content.timeline_data);
         }
 
         console.log('Admin panel changes applied to homepage');
+      }
+
+      // Update countdown section in homepage
+      function updateCountdownSection(content) {
+        const countdownSection = document.querySelector('.countdown-section');
+        if (!countdownSection) return;
+
+        // Check if countdown should be shown
+        const showCountdown = content['enable-countdown'];
+
+        if (!showCountdown) {
+          countdownSection.style.display = 'none';
+          return;
+        }
+
+        countdownSection.style.display = 'block';
+
+        // Update countdown title and subtitle with colors
+        const countdownHeader = countdownSection.querySelector('.countdown-header');
+        if (countdownHeader) {
+          const titleElement = countdownHeader.querySelector('h2');
+          const subtitleElement = countdownHeader.querySelector('p');
+
+          if (titleElement && content['counters-title']) {
+            titleElement.textContent = content['counters-title'];
+            if (content['counters-title-color']) {
+              titleElement.style.color = content['counters-title-color'];
+            }
+          }
+
+          if (subtitleElement && content['counters-subtitle']) {
+            subtitleElement.textContent = content['counters-subtitle'];
+            if (content['counters-subtitle-color']) {
+              subtitleElement.style.color = content['counters-subtitle-color'];
+            }
+          }
+        }
+
+        // Apply background color to section
+        if (content['counters-background-color']) {
+          console.log('Applying section background color:', content['counters-background-color']);
+          countdownSection.style.setProperty(
+            'background',
+            content['counters-background-color'],
+            'important'
+          );
+          countdownSection.style.setProperty('background-image', 'none', 'important');
+
+          // Also hide the ::before pseudo-element that might interfere
+          const style = document.createElement('style');
+          style.textContent = `.countdown-section::before { display: none !important; }`;
+          if (!document.querySelector('#countdown-override-style')) {
+            style.id = 'countdown-override-style';
+            document.head.appendChild(style);
+          }
+        }
+
+        // Apply countdown timer colors
+        const countdownTimer = countdownSection.querySelector('.countdown-timer');
+        if (countdownTimer) {
+          if (content['countdown-timer-background']) {
+            console.log(
+              'Applying countdown background color:',
+              content['countdown-timer-background']
+            );
+            const countdownItems = countdownTimer.querySelectorAll('.countdown-item');
+            console.log('Found countdown items:', countdownItems.length);
+            countdownItems.forEach(item => {
+              item.style.backgroundColor = content['countdown-timer-background'];
+              console.log('Applied color to item:', item);
+            });
+          }
+
+          if (content['countdown-numbers-color']) {
+            const countdownNumbers = countdownTimer.querySelectorAll(
+              '.countdown-number, .countdown-label'
+            );
+            countdownNumbers.forEach(number => {
+              number.style.color = content['countdown-numbers-color'];
+            });
+          }
+        }
+
+        // Update countdown date if provided
+        if (content['countdown-date']) {
+          const countdownDate = content['countdown-date'];
+          const formattedDate = new Date(countdownDate).toLocaleDateString('es-ES', {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+            hour: '2-digit',
+            minute: '2-digit',
+          });
+
+          const dateElement = countdownSection.querySelector('.countdown-date strong');
+          if (dateElement) {
+            dateElement.textContent = formattedDate;
+          }
+
+          // Update the actual countdown timer and restart it
+          window.countdownDate = new Date(countdownDate);
+          // Restart the countdown timer with new date
+          initCountdownWithDate(new Date(countdownDate));
+        }
+
+        // Update CTA section
+        const ctaSection = countdownSection.querySelector('.countdown-cta');
+        const showCTA = content['enable-cta'];
+
+        if (ctaSection) {
+          if (!showCTA) {
+            ctaSection.style.display = 'none';
+          } else {
+            ctaSection.style.display = 'block';
+
+            // Update CTA text and button color
+            if (content['cta-text']) {
+              const ctaButton = ctaSection.querySelector('.btn-countdown');
+              if (ctaButton) {
+                ctaButton.textContent = content['cta-text'];
+
+                // Apply button color if specified
+                if (content['cta-button-color']) {
+                  console.log('Applying CTA button color:', content['cta-button-color']);
+                  ctaButton.style.setProperty(
+                    'background-color',
+                    content['cta-button-color'],
+                    'important'
+                  );
+                  ctaButton.style.setProperty(
+                    'border-color',
+                    content['cta-button-color'],
+                    'important'
+                  );
+                }
+
+                // Apply text color if specified
+                if (content['cta-text-color']) {
+                  console.log('Applying CTA text color:', content['cta-text-color']);
+                  ctaButton.style.setProperty('color', content['cta-text-color'], 'important');
+                }
+              }
+            }
+          }
+        }
       }
 
       // Update timeline content on homepage
@@ -2469,11 +2631,56 @@
         if (
           e.key === 'website_content' ||
           e.key === 'pending_homepage_updates' ||
-          e.key === 'timeline_data'
+          e.key === 'timeline_data' ||
+          e.key === 'admin_update_timestamp'
         ) {
           loadAdminChanges();
         }
       });
+
+      // Listen for custom admin content change events
+      window.addEventListener('adminContentChange', function (e) {
+        updateCountdownSection(e.detail);
+      });
+
+      // Polling fallback for same-tab updates
+      let lastUpdateTimestamp = localStorage.getItem('admin_update_timestamp') || '0';
+      setInterval(() => {
+        const currentTimestamp = localStorage.getItem('admin_update_timestamp') || '0';
+        if (currentTimestamp !== lastUpdateTimestamp) {
+          lastUpdateTimestamp = currentTimestamp;
+          loadAdminChanges();
+        }
+      }, 500); // Check every 500ms
+
+      // Listen for direct messages from admin panel
+      window.addEventListener('message', function (e) {
+        if (e.data && e.data.type === 'updateCountdown') {
+          console.log('Received update message from admin:', e.data.content);
+          updateCountdownSection(e.data.content);
+        }
+      });
+
+      // Test function - can be called from console
+      window.testCountdownColor = function (color) {
+        const testContent = {
+          'enable-countdown': true,
+          'countdown-timer-background': color || '#ff0000',
+          'countdown-numbers-color': '#ffffff',
+        };
+        console.log('Testing countdown color with:', testContent);
+        updateCountdownSection(testContent);
+      };
+
+      // Test function for section background
+      window.testSectionBackground = function (color) {
+        const testContent = {
+          'enable-countdown': true,
+          'counters-background-color': color || '#00ff00',
+        };
+        console.log('Testing section background with:', testContent);
+        updateCountdownSection(testContent);
+      };
     </script>
   </body>
 </html>

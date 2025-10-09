@@ -66,7 +66,7 @@
       <nav class="admin-nav">
         <button class="nav-tab active" data-section="inicio">🏠 Inicio</button>
         <button class="nav-tab" data-section="conocenos">ℹ️ Conócenos</button>
-        <button class="nav-tab" data-section="agregado">� Contadores & Info</button>
+        <button class="nav-tab" data-section="agregado">⏰ Contador Regresivo</button>
         <button class="nav-tab" data-section="ingresantes">🎓 Ingresantes</button>
         <button class="nav-tab" data-section="cursos">📚 Cursos</button>
         <button class="nav-tab" data-section="calendario">📅 Calendario</button>
@@ -438,58 +438,218 @@
 
         <!-- Agregado Section -->
         <section id="agregado-section" class="admin-section">
-          <h2>📊 Contadores & Información Adicional</h2>
+          <h2>⏰ Contador Regresivo</h2>
           <div class="content-grid">
-            <div class="content-card">
-              <h3>⏰ Contador Regresivo</h3>
-              <div class="form-group">
-                <label>Título del Evento:</label>
-                <input type="text" id="countdown-title" placeholder="Próximo Cursillo Intensivo" />
+            <div class="content-card countdown-config-card">
+              <div class="card-header">
+                <h3>⏰ Configuración del Contador</h3>
+                <p class="card-description">
+                  Personaliza tu contador regresivo con colores, textos y fecha del evento
+                </p>
               </div>
-              <div class="form-group">
-                <label>Descripción:</label>
-                <input
-                  type="text"
-                  id="countdown-description"
-                  placeholder="¡No te pierdas nuestro próximo cursillo intensivo!"
-                />
-              </div>
-              <div class="form-group">
-                <label>Fecha y Hora del Evento:</label>
-                <input type="datetime-local" id="countdown-date" />
-              </div>
-            </div>
 
-            <div class="content-card">
-              <h3>📊 Estadísticas de Ingresantes</h3>
-              <div class="stats-grid">
-                <div class="stat-item">
-                  <label>Ingresantes 2025:</label>
-                  <input type="number" id="students-2025-input" min="0" value="35" />
-                  <span id="students-2025-count">35</span>
-                </div>
-                <div class="stat-item">
-                  <label>Ingresantes 2024:</label>
-                  <input type="number" id="students-2024-input" min="0" value="37" />
-                  <span id="students-2024-count">37</span>
-                </div>
-                <div class="stat-item">
-                  <label>Ingresantes 2023:</label>
-                  <input type="number" id="students-2023-input" min="0" value="14" />
-                  <span id="students-2023-count">14</span>
-                </div>
+              <!-- Opción principal para mostrar contador -->
+              <div class="form-group toggle-group">
+                <label class="toggle-label">
+                  <input type="checkbox" id="enable-countdown" class="toggle-checkbox" />
+                  <span class="toggle-switch"></span>
+                  <span class="toggle-text">
+                    <strong>Mostrar contador regresivo</strong>
+                    <small>Activa esta opción para mostrar el contador en tu sitio web</small>
+                  </span>
+                </label>
               </div>
-            </div>
 
-            <div class="content-card">
-              <h3>🎯 Llamadas a la Acción</h3>
-              <div class="form-group">
-                <label>Texto Botón Principal:</label>
-                <input type="text" id="cta-primary" placeholder="Inscríbete Ahora" />
-              </div>
-              <div class="form-group">
-                <label>Texto Botón Secundario:</label>
-                <input type="text" id="cta-secondary" placeholder="Inscribirme Ahora" />
+              <div id="countdown-options" class="countdown-options" style="display: none">
+                <!-- Sección de Textos -->
+                <div class="config-section">
+                  <h4 class="section-title">📝 Textos del Contador</h4>
+
+                  <div class="form-group with-color">
+                    <label>Título del Contador:</label>
+                    <div class="input-with-color">
+                      <input
+                        type="text"
+                        id="counters-title"
+                        placeholder="Próximo Cursillo Intensivo"
+                        class="enhanced-input"
+                      />
+                      <input
+                        type="color"
+                        id="counters-title-color"
+                        value="#ffffff"
+                        class="color-picker-small"
+                        title="Color del título"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="form-group with-color">
+                    <label>Subtítulo:</label>
+                    <div class="input-with-color">
+                      <input
+                        type="text"
+                        id="counters-subtitle"
+                        placeholder="¡No te pierdas nuestro próximo cursillo intensivo!"
+                        class="enhanced-input"
+                      />
+                      <input
+                        type="color"
+                        id="counters-subtitle-color"
+                        value="#ffffff"
+                        class="color-picker-small"
+                        title="Color del subtítulo"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sección de Colores -->
+                <div class="config-section">
+                  <h4 class="section-title">🎨 Colores del Contador</h4>
+
+                  <div class="color-grid">
+                    <div class="color-control">
+                      <label>Fondo de la Sección:</label>
+                      <div class="color-picker-container">
+                        <input
+                          type="color"
+                          id="counters-background-color"
+                          value="#dc2626"
+                          class="color-picker enhanced-color-picker"
+                          title="Color de fondo de la sección"
+                        />
+                        <span class="color-label" id="background-color-label">#dc2626</span>
+                      </div>
+                    </div>
+
+                    <div class="color-control">
+                      <label>Fondo del Contador:</label>
+                      <div class="color-picker-container">
+                        <input
+                          type="color"
+                          id="countdown-timer-background"
+                          value="#1e40af"
+                          class="color-picker enhanced-color-picker"
+                          title="Color de fondo de los números del contador"
+                        />
+                        <span class="color-label" id="timer-background-label">#1e40af</span>
+                      </div>
+                    </div>
+
+                    <div class="color-control">
+                      <label>Color de los Números:</label>
+                      <div class="color-picker-container">
+                        <input
+                          type="color"
+                          id="countdown-numbers-color"
+                          value="#ffffff"
+                          class="color-picker enhanced-color-picker"
+                          title="Color de los números del contador"
+                        />
+                        <span class="color-label" id="numbers-color-label">#ffffff</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Sección de Fecha -->
+                <div class="config-section">
+                  <h4 class="section-title">📅 Fecha del Evento</h4>
+
+                  <div class="form-group">
+                    <label>Fecha y Hora del Evento:</label>
+                    <input
+                      type="datetime-local"
+                      id="countdown-date"
+                      class="enhanced-input date-input"
+                    />
+                    <small class="input-help">Selecciona la fecha y hora exacta de tu evento</small>
+                  </div>
+                </div>
+
+                <!-- Sección de Llamada a la Acción -->
+                <div class="config-section">
+                  <h4 class="section-title">🎯 Llamada a la Acción</h4>
+
+                  <div class="form-group toggle-group">
+                    <label class="toggle-label">
+                      <input type="checkbox" id="enable-cta" class="toggle-checkbox" />
+                      <span class="toggle-switch small"></span>
+                      <span class="toggle-text">
+                        <strong>Mostrar botón de acción</strong>
+                        <small>Agrega un botón para que los usuarios puedan inscribirse</small>
+                      </span>
+                    </label>
+                  </div>
+
+                  <div id="cta-options" class="cta-options" style="display: none">
+                    <div class="form-group">
+                      <label>Texto del botón:</label>
+                      <input
+                        type="text"
+                        id="cta-text"
+                        placeholder="Inscribirme Ahora"
+                        class="enhanced-input"
+                      />
+                    </div>
+
+                    <div class="color-grid">
+                      <div class="color-control">
+                        <label>Color del botón:</label>
+                        <div class="color-picker-container">
+                          <input
+                            type="color"
+                            id="cta-button-color"
+                            value="#dc2626"
+                            class="color-picker enhanced-color-picker"
+                            title="Color del botón de llamada a la acción"
+                          />
+                          <span class="color-label" id="cta-color-label">#dc2626</span>
+                        </div>
+                      </div>
+
+                      <div class="color-control">
+                        <label>Color del texto:</label>
+                        <div class="color-picker-container">
+                          <input
+                            type="color"
+                            id="cta-text-color"
+                            value="#ffffff"
+                            class="color-picker enhanced-color-picker"
+                            title="Color del texto del botón de llamada a la acción"
+                          />
+                          <span class="color-label" id="cta-text-color-label">#ffffff</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Botones de Acción -->
+                  <div class="config-section">
+                    <div class="countdown-actions">
+                      <button
+                        type="button"
+                        class="btn-action btn-restore"
+                        onclick="adminPanel.restoreCountdownDefaults()"
+                        title="Restaurar valores por defecto del sistema"
+                      >
+                        <span class="btn-icon">🔄</span>
+                        <span class="btn-text">Restaurar por Defecto</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        class="btn-action btn-save-default"
+                        onclick="adminPanel.saveAsCountdownDefaults()"
+                        title="Guardar configuración actual como predeterminada"
+                      >
+                        <span class="btn-icon">💾</span>
+                        <span class="btn-text">Establecer como Predeterminado</span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
               </div>
             </div>
           </div>

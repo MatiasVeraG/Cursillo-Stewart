@@ -532,6 +532,12 @@ section {
   overflow: hidden;
 }
 
+/* Admin customizable countdown styles */
+.countdown-item[style*='background-color'] {
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  backdrop-filter: none;
+}
+
 .countdown-item::before {
   content: '';
   position: absolute;
