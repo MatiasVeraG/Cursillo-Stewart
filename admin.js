@@ -2726,3 +2726,7 @@ function deleteExamSection(examId) {
     }
   }
 }
+
+// ===== DARK MODE - PERMANENT CONFIGURATION =====
+// Dark mode is now permanently enabled via data-theme="dark" attribute in HTML
+// No toggle functionality needed

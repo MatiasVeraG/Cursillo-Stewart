@@ -16,6 +16,35 @@
   --admin-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
 }
 
+/* ===== DARK MODE THEME VARIABLES ===== */
+html[data-theme='dark'] {
+  --admin-primary: #3b82f6;
+  --admin-secondary: #60a5fa;
+  --admin-success: #10b981;
+  --admin-warning: #f59e0b;
+  --admin-danger: #ef4444;
+  --admin-dark: #f1f5f9;
+  --admin-light: #1e293b;
+  --admin-bg: #0f172a;
+  --admin-border: #334155;
+  --admin-text: #e2e8f0;
+  --admin-text-light: #cbd5e1;
+  --admin-text-muted: #94a3b8;
+  --admin-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.4), 0 2px 4px -1px rgba(0, 0, 0, 0.3);
+  --admin-shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.5), 0 4px 6px -2px rgba(0, 0, 0, 0.4);
+
+  /* Dark Mode Specific Variables */
+  --admin-card-bg: #334155;
+  --admin-input-bg: #475569;
+  --admin-input-border: #64748b;
+  --admin-input-focus: #3b82f6;
+  --admin-hover-bg: #475569;
+  --admin-zebra-bg: #2d3748;
+  --admin-scrollbar-track: #334155;
+  --admin-scrollbar-thumb: #64748b;
+  --admin-scrollbar-hover: #94a3b8;
+}
+
 * {
   box-sizing: border-box;
   margin: 0;
@@ -2615,4 +2644,364 @@ p {
 .delete-exam-btn:hover {
   background: #dc2626;
   transform: translateY(-1px);
+}
+
+/* ===== INGRESANTES LAYOUT GRID - RESPONSIVE DESIGN ===== */
+.ingresantes-layout-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    'plantilla upload'
+    'preview preview';
+  gap: 1.5rem;
+  width: 100%;
+}
+
+/* Grid Areas */
+.ingresantes-card-plantilla {
+  grid-area: plantilla;
+}
+
+.ingresantes-card-upload {
+  grid-area: upload;
+}
+
+.ingresantes-card-preview {
+  grid-area: preview;
+}
+
+/* Ensure cards maintain consistent height in the top row */
+.ingresantes-card-plantilla,
+.ingresantes-card-upload {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+/* Auto-grow content within cards */
+.ingresantes-card-plantilla > *:last-child,
+.ingresantes-card-upload > *:last-child {
+  margin-top: auto;
+}
+
+/* ===== RESPONSIVE BREAKPOINTS ===== */
+/* Mobile: ≤768px - Single Column Layout */
+@media (max-width: 768px) {
+  .ingresantes-layout-grid {
+    grid-template-columns: 1fr;
+    grid-template-areas:
+      'plantilla'
+      'upload'
+      'preview';
+    gap: 1rem;
+  }
+
+  /* Reset height constraints on mobile */
+  .ingresantes-card-plantilla,
+  .ingresantes-card-upload {
+    height: auto;
+  }
+
+  /* Reduce padding on smaller screens */
+  .ingresantes-card-plantilla,
+  .ingresantes-card-upload,
+  .ingresantes-card-preview {
+    padding: 1rem;
+  }
+}
+
+/* Tablet: 769px - 1024px - Maintain grid but adjust spacing */
+@media (min-width: 769px) and (max-width: 1024px) {
+  .ingresantes-layout-grid {
+    gap: 1.25rem;
+  }
+}
+
+/* Desktop: >1024px - Full layout with optimal spacing */
+@media (min-width: 1025px) {
+  .ingresantes-layout-grid {
+    gap: 2rem;
+  }
+}
+
+/* ===== DARK MODE STYLES ===== */
+html[data-theme='dark'] {
+  color-scheme: dark;
+}
+
+/* ===== DARK MODE: GENERAL LAYOUT ===== */
+html[data-theme='dark'] body {
+  background: var(--admin-bg);
+  color: var(--admin-text);
+}
+
+/* ===== DARK MODE: CARDS & CONTAINERS ===== */
+html[data-theme='dark'] .content-card,
+html[data-theme='dark'] .admin-header,
+html[data-theme='dark'] .admin-nav,
+html[data-theme='dark'] .login-card {
+  background: var(--admin-card-bg);
+  border-color: var(--admin-border);
+}
+
+html[data-theme='dark'] .content-card:hover {
+  background: var(--admin-hover-bg);
+}
+
+html[data-theme='dark'] .upload-area {
+  background: var(--admin-input-bg);
+  border-color: var(--admin-border);
+}
+
+html[data-theme='dark'] .upload-area:hover {
+  background: var(--admin-hover-bg);
+  border-color: var(--admin-primary);
+}
+
+/* ===== DARK MODE: INPUTS & FORM ELEMENTS ===== */
+html[data-theme='dark'] input[type='text'],
+html[data-theme='dark'] input[type='password'],
+html[data-theme='dark'] input[type='email'],
+html[data-theme='dark'] input[type='number'],
+html[data-theme='dark'] input[type='file'],
+html[data-theme='dark'] select,
+html[data-theme='dark'] textarea {
+  background: var(--admin-input-bg);
+  border-color: var(--admin-input-border);
+  color: var(--admin-text);
+}
+
+html[data-theme='dark'] input:focus,
+html[data-theme='dark'] select:focus,
+html[data-theme='dark'] textarea:focus {
+  background: var(--admin-input-bg);
+  border-color: var(--admin-input-focus);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+  outline: 2px solid var(--admin-input-focus);
+  outline-offset: 2px;
+}
+
+html[data-theme='dark'] input::placeholder,
+html[data-theme='dark'] textarea::placeholder {
+  color: var(--admin-text-muted);
+}
+
+/* ===== DARK MODE: TABLES ===== */
+html[data-theme='dark'] .preview-table,
+html[data-theme='dark'] .ingresantes-table {
+  background: var(--admin-card-bg);
+  border-color: var(--admin-border);
+}
+
+html[data-theme='dark'] .preview-table th,
+html[data-theme='dark'] .ingresantes-table th {
+  background: var(--admin-input-bg);
+  color: var(--admin-text);
+  border-color: var(--admin-border);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+html[data-theme='dark'] .preview-table td,
+html[data-theme='dark'] .ingresantes-table td {
+  border-color: var(--admin-border);
+  color: var(--admin-text);
+}
+
+/* Zebra Striping for Tables */
+html[data-theme='dark'] .preview-table tbody tr:nth-child(even),
+html[data-theme='dark'] .ingresantes-table tbody tr:nth-child(even) {
+  background: var(--admin-zebra-bg);
+}
+
+html[data-theme='dark'] .preview-table tbody tr:hover,
+html[data-theme='dark'] .ingresantes-table tbody tr:hover {
+  background: var(--admin-hover-bg);
+}
+
+/* ===== DARK MODE: NAVIGATION ===== */
+html[data-theme='dark'] .nav-tab {
+  background: transparent;
+  color: var(--admin-text-light);
+  border-color: var(--admin-border);
+}
+
+html[data-theme='dark'] .nav-tab:hover {
+  background: var(--admin-hover-bg);
+  color: var(--admin-text);
+}
+
+html[data-theme='dark'] .nav-tab.active {
+  background: var(--admin-primary);
+  color: white;
+  border-color: var(--admin-primary);
+}
+
+/* ===== DARK MODE: BUTTONS ===== */
+/* Primary Buttons */
+html[data-theme='dark'] .btn-primary {
+  background: var(--admin-primary);
+  color: white;
+  border-color: var(--admin-primary);
+}
+
+html[data-theme='dark'] .btn-primary:hover {
+  background: #1d4ed8;
+  border-color: #1d4ed8;
+}
+
+html[data-theme='dark'] .btn-primary:focus {
+  outline: 2px solid var(--admin-primary);
+  outline-offset: 2px;
+}
+
+/* Secondary Buttons */
+html[data-theme='dark'] .btn-secondary {
+  background: var(--admin-card-bg);
+  color: var(--admin-text);
+  border-color: var(--admin-border);
+}
+
+html[data-theme='dark'] .btn-secondary:hover {
+  background: var(--admin-hover-bg);
+  border-color: var(--admin-primary);
+}
+
+/* Success Buttons */
+html[data-theme='dark'] .btn-save,
+html[data-theme='dark'] .btn-download-template {
+  background: linear-gradient(135deg, var(--admin-success) 0%, #047857 100%);
+  box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);
+}
+
+html[data-theme='dark'] .btn-save:hover,
+html[data-theme='dark'] .btn-download-template:hover {
+  background: linear-gradient(135deg, #047857 0%, #065f46 100%);
+  box-shadow: 0 8px 15px -3px rgba(16, 185, 129, 0.3);
+}
+
+/* Warning/Danger Buttons */
+html[data-theme='dark'] .btn-logout,
+html[data-theme='dark'] .delete-exam-btn {
+  background: var(--admin-danger);
+}
+
+html[data-theme='dark'] .btn-logout:hover,
+html[data-theme='dark'] .delete-exam-btn:hover {
+  background: #dc2626;
+}
+
+/* Upload Button */
+html[data-theme='dark'] .btn-upload-excel {
+  background: var(--admin-primary);
+  color: white;
+}
+
+html[data-theme='dark'] .btn-upload-excel:hover {
+  background: #1d4ed8;
+}
+
+/* ===== DARK MODE: SCROLLBARS ===== */
+html[data-theme='dark'] *::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+html[data-theme='dark'] *::-webkit-scrollbar-track {
+  background: var(--admin-scrollbar-track);
+  border-radius: 4px;
+}
+
+html[data-theme='dark'] *::-webkit-scrollbar-thumb {
+  background: var(--admin-scrollbar-thumb);
+  border-radius: 4px;
+}
+
+html[data-theme='dark'] *::-webkit-scrollbar-thumb:hover {
+  background: var(--admin-scrollbar-hover);
+}
+
+/* ===== DARK MODE: EXCEL PREVIEW SPECIFIC ===== */
+html[data-theme='dark'] .excel-info {
+  background: var(--admin-input-bg);
+  border-color: var(--admin-primary);
+  color: var(--admin-text);
+}
+
+html[data-theme='dark'] .excel-preview {
+  background: var(--admin-card-bg);
+  border-color: var(--admin-border);
+}
+
+/* ===== DARK MODE: BADGES & LABELS ===== */
+html[data-theme='dark'] .preferencial-badge {
+  background: var(--admin-success);
+  color: white;
+}
+
+html[data-theme='dark'] .exam-year {
+  background: var(--admin-primary);
+  color: white;
+}
+
+/* ===== DARK MODE: EXAM SECTIONS ===== */
+html[data-theme='dark'] .exam-section {
+  background: var(--admin-card-bg);
+  border-color: var(--admin-border);
+}
+
+html[data-theme='dark'] .exam-header {
+  border-color: var(--admin-border);
+}
+
+html[data-theme='dark'] .exam-title {
+  color: var(--admin-text);
+}
+
+/* ===== DARK MODE: SMALL TEXT & INFO ===== */
+html[data-theme='dark'] .upload-info,
+html[data-theme='dark'] small {
+  color: var(--admin-text-muted);
+}
+
+/* ===== DARK MODE: FOCUS ACCESSIBILITY ===== */
+html[data-theme='dark'] button:focus-visible,
+html[data-theme='dark'] input:focus-visible,
+html[data-theme='dark'] select:focus-visible,
+html[data-theme='dark'] textarea:focus-visible {
+  outline: 2px solid var(--admin-primary);
+  outline-offset: 2px;
+}
+
+/* ===== DARK MODE: MESSAGE CONTAINERS ===== */
+html[data-theme='dark'] .message-container .message {
+  background: var(--admin-card-bg);
+  border-color: var(--admin-border);
+  color: var(--admin-text);
+}
+
+html[data-theme='dark'] .message-container .message.success {
+  background: rgba(16, 185, 129, 0.1);
+  border-color: var(--admin-success);
+  color: var(--admin-success);
+}
+
+html[data-theme='dark'] .message-container .message.error {
+  background: rgba(239, 68, 68, 0.1);
+  border-color: var(--admin-danger);
+  color: var(--admin-danger);
+}
+
+/* ===== SMOOTH TRANSITIONS FOR INTERACTIVE ELEMENTS ===== */
+button,
+input,
+select,
+textarea {
+  transition: all 0.2s ease;
+}
+
+/* General smooth transitions */
+* {
+  transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }

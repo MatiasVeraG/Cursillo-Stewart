@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -658,8 +658,11 @@
         <!-- Ingresantes Section -->
         <section id="ingresantes-section" class="admin-section">
           <h2>🎓 Gestión de Ingresantes</h2>
-          <div class="content-grid">
-            <div class="content-card">
+
+          <!-- Grid Container for Responsive Layout -->
+          <div class="ingresantes-layout-grid">
+            <!-- Plantilla Card - Grid Area: plantilla -->
+            <div class="content-card ingresantes-card-plantilla">
               <h3>📋 Plantilla de Ingresantes</h3>
               <p>Descarga la plantilla oficial para el registro de ingresantes:</p>
               <button
@@ -672,7 +675,8 @@
               </button>
             </div>
 
-            <div class="content-card">
+            <!-- Upload Card - Grid Area: upload -->
+            <div class="content-card ingresantes-card-upload">
               <h3>📤 Cargar Lista de Ingresantes</h3>
               <p>Selecciona un archivo Excel (.xlsx) con la lista de ingresantes:</p>
               <div class="upload-area" id="excel-upload-area">
@@ -695,7 +699,12 @@
               </div>
             </div>
 
-            <div class="content-card" id="excel-preview-card" style="display: none">
+            <!-- Preview Card - Grid Area: preview -->
+            <div
+              class="content-card ingresantes-card-preview"
+              id="excel-preview-card"
+              style="display: none"
+            >
               <h3>👀 Vista Previa del Archivo</h3>
               <div id="excel-info" class="excel-info"></div>
               <div id="excel-preview" class="excel-preview"></div>
