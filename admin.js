@@ -2439,3 +2439,290 @@ document.addEventListener('keydown', e => {
     }
   }
 });
+
+// Function to download the ingresantes template
+function downloadTemplate() {
+  try {
+    // Create a link element to trigger the download
+    const link = document.createElement('a');
+    link.href = 'documents/Plantilla _de_Ingresantes.xlsx';
+    link.download = 'Plantilla_de_Ingresantes.xlsx';
+
+    // Append to body, click, and remove
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    // Show success message
+    if (window.adminPanel) {
+      adminPanel.showMessage('Plantilla descargada exitosamente', 'success');
+    }
+  } catch (error) {
+    console.error('Error downloading template:', error);
+    if (window.adminPanel) {
+      adminPanel.showMessage('Error al descargar la plantilla', 'error');
+    }
+  }
+}
+
+// Global variables for Excel processing
+let currentExcelData = null;
+let currentExamInfo = null;
+
+// Function to handle Excel file selection
+function handleExcelFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  const reader = new FileReader();
+  reader.onload = function (e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+
+      // Get the first worksheet
+      const firstSheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[firstSheetName];
+
+      // Process the Excel data
+      processExcelWorksheet(worksheet, file.name);
+    } catch (error) {
+      console.error('Error reading Excel file:', error);
+      if (window.adminPanel) {
+        adminPanel.showMessage('Error al leer el archivo Excel', 'error');
+      }
+    }
+  };
+
+  reader.readAsArrayBuffer(file);
+}
+
+// Function to process Excel worksheet
+function processExcelWorksheet(worksheet, fileName) {
+  try {
+    // Extract exam info from H2 and H3
+    const examName = worksheet['H2'] ? worksheet['H2'].v : 'Examen Sin Nombre';
+    const examYear = worksheet['H3'] ? worksheet['H3'].v : new Date().getFullYear();
+
+    // Store exam info
+    currentExamInfo = {
+      name: examName,
+      year: examYear,
+      fileName: fileName,
+    };
+
+    // Extract student data starting from row 3
+    const students = [];
+    let row = 3;
+
+    while (true) {
+      const nameCell = `A${row}`;
+      const puntajeCell = `B${row}`;
+      const carreraCell = `C${row}`;
+      const puestoCell = `D${row}`;
+      const preferencialCell = `E${row}`;
+
+      // Check if name exists (required field)
+      if (!worksheet[nameCell] || !worksheet[nameCell].v) {
+        break;
+      }
+
+      const student = {
+        nombre: worksheet[nameCell].v,
+        puntaje: worksheet[puntajeCell] ? worksheet[puntajeCell].v : '',
+        carrera: worksheet[carreraCell] ? worksheet[carreraCell].v : '',
+        puesto: worksheet[puestoCell] ? worksheet[puestoCell].v : '',
+        preferencial: worksheet[preferencialCell] ? worksheet[preferencialCell].v : '',
+      };
+
+      students.push(student);
+      row++;
+    }
+
+    currentExcelData = students;
+
+    // Show preview
+    showExcelPreview();
+  } catch (error) {
+    console.error('Error processing Excel worksheet:', error);
+    if (window.adminPanel) {
+      adminPanel.showMessage('Error al procesar el archivo Excel', 'error');
+    }
+  }
+}
+
+// Function to show Excel preview
+function showExcelPreview() {
+  const previewCard = document.getElementById('excel-preview-card');
+  const excelInfo = document.getElementById('excel-info');
+  const excelPreview = document.getElementById('excel-preview');
+
+  // Show exam info
+  excelInfo.innerHTML = `
+    <h4>📋 Información del Examen</h4>
+    <p><strong>Nombre:</strong> ${currentExamInfo.name}</p>
+    <p><strong>Año:</strong> ${currentExamInfo.year}</p>
+    <p><strong>Archivo:</strong> ${currentExamInfo.fileName}</p>
+    <p><strong>Total de Ingresantes:</strong> ${currentExcelData.length}</p>
+  `;
+
+  // Create preview table
+  let tableHTML = `
+    <table class="preview-table">
+      <thead>
+        <tr>
+          <th>Nombre y Apellido</th>
+          <th>Puntaje</th>
+          <th>Carrera</th>
+          <th>Puesto</th>
+          <th>Preferencial</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  // Show first 10 rows as preview
+  const previewData = currentExcelData.slice(0, 10);
+  previewData.forEach(student => {
+    tableHTML += `
+      <tr>
+        <td>${student.nombre}</td>
+        <td>${student.puntaje}</td>
+        <td>${student.carrera}</td>
+        <td>${student.puesto}</td>
+        <td>${student.preferencial}</td>
+      </tr>
+    `;
+  });
+
+  if (currentExcelData.length > 10) {
+    tableHTML += `
+      <tr>
+        <td colspan="5" style="text-align: center; font-style: italic; color: #666;">
+          ... y ${currentExcelData.length - 10} registros más
+        </td>
+      </tr>
+    `;
+  }
+
+  tableHTML += `
+      </tbody>
+    </table>
+  `;
+
+  excelPreview.innerHTML = tableHTML;
+  previewCard.style.display = 'block';
+}
+
+// Function to process and save Excel data
+function processExcelData() {
+  try {
+    // Generate exam section
+    generateExamSection(currentExamInfo, currentExcelData);
+
+    // Show success message
+    if (window.adminPanel) {
+      adminPanel.showMessage(`Examen "${currentExamInfo.name}" procesado exitosamente`, 'success');
+    }
+
+    // Clear the upload
+    cancelExcelUpload();
+  } catch (error) {
+    console.error('Error processing Excel data:', error);
+    if (window.adminPanel) {
+      adminPanel.showMessage('Error al procesar los datos del examen', 'error');
+    }
+  }
+}
+
+// Function to cancel Excel upload
+function cancelExcelUpload() {
+  document.getElementById('excel-file-input').value = '';
+  document.getElementById('excel-preview-card').style.display = 'none';
+  currentExcelData = null;
+  currentExamInfo = null;
+}
+
+// Function to generate exam section
+function generateExamSection(examInfo, students) {
+  const container = document.getElementById('exam-sections-container');
+
+  // Create unique ID for the exam
+  const examId = `exam-${examInfo.year}-${examInfo.name.replace(/[^a-zA-Z0-9]/g, '')}`;
+
+  // Check if section already exists
+  const existingSection = document.getElementById(examId);
+  if (existingSection) {
+    if (confirm('Ya existe una sección para este examen. ¿Desea reemplazarla?')) {
+      existingSection.remove();
+    } else {
+      return;
+    }
+  }
+
+  // Create exam section HTML
+  const sectionHTML = `
+    <div class="exam-section" id="${examId}">
+      <div class="exam-header">
+        <h3 class="exam-title">🎓 ${examInfo.name}</h3>
+        <div style="display: flex; align-items: center; gap: 1rem;">
+          <span class="exam-year">${examInfo.year}</span>
+          <button class="delete-exam-btn" onclick="deleteExamSection('${examId}')">
+            🗑️ Eliminar
+          </button>
+        </div>
+      </div>
+      <div class="exam-content">
+        <p><strong>Total de Ingresantes:</strong> ${students.length}</p>
+        <table class="ingresantes-table">
+          <thead>
+            <tr>
+              <th class="puesto-col">Puesto</th>
+              <th>Nombre y Apellido</th>
+              <th class="puntaje-col">Puntaje</th>
+              <th>Carrera</th>
+              <th class="preferencial-col">Preferencial</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${generateStudentRows(students)}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  `;
+
+  container.insertAdjacentHTML('beforeend', sectionHTML);
+}
+
+// Function to generate student rows
+function generateStudentRows(students) {
+  return students
+    .map(
+      student => `
+    <tr>
+      <td class="puesto-col">${student.puesto}</td>
+      <td>${student.nombre}</td>
+      <td class="puntaje-col">${student.puntaje}</td>
+      <td>${student.carrera}</td>
+      <td class="preferencial-col">
+        ${student.preferencial ? `<span class="preferencial-badge">Preferencial</span>` : ''}
+      </td>
+    </tr>
+  `
+    )
+    .join('');
+}
+
+// Function to delete exam section
+function deleteExamSection(examId) {
+  if (confirm('¿Está seguro de que desea eliminar esta sección del examen?')) {
+    const section = document.getElementById(examId);
+    if (section) {
+      section.remove();
+      if (window.adminPanel) {
+        adminPanel.showMessage('Sección del examen eliminada', 'success');
+      }
+    }
+  }
+}

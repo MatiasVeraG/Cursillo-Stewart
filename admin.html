@@ -660,70 +660,61 @@
           <h2>🎓 Gestión de Ingresantes</h2>
           <div class="content-grid">
             <div class="content-card">
-              <h3>📋 Información de la Sección</h3>
-              <div class="form-group">
-                <label>Título de la Sección:</label>
-                <input type="text" id="ingresantes-title" placeholder="🎓 Nuestros Ingresantes" />
-              </div>
-              <div class="form-group">
-                <label>Descripción:</label>
+              <h3>📋 Plantilla de Ingresantes</h3>
+              <p>Descarga la plantilla oficial para el registro de ingresantes:</p>
+              <button
+                id="download-template-btn"
+                class="btn-download-template"
+                onclick="downloadTemplate()"
+                title="Descargar Plantilla de Ingresantes"
+              >
+                📥 Descargar Plantilla
+              </button>
+            </div>
+
+            <div class="content-card">
+              <h3>📤 Cargar Lista de Ingresantes</h3>
+              <p>Selecciona un archivo Excel (.xlsx) con la lista de ingresantes:</p>
+              <div class="upload-area" id="excel-upload-area">
                 <input
-                  type="text"
-                  id="ingresantes-description"
-                  placeholder="Conoce a los estudiantes que han confiado en nosotros..."
+                  type="file"
+                  id="excel-file-input"
+                  accept=".xlsx,.xls"
+                  style="display: none"
+                  onchange="handleExcelFile(event)"
                 />
+                <button
+                  class="btn-upload-excel"
+                  onclick="document.getElementById('excel-file-input').click()"
+                >
+                  📁 Seleccionar Archivo Excel
+                </button>
+                <div class="upload-info">
+                  <small>Formatos soportados: .xlsx, .xls</small>
+                </div>
               </div>
             </div>
 
-            <div class="content-card">
-              <h3>👨‍🎓 Agregar Nuevo Ingresante</h3>
-              <div class="form-group">
-                <label>Año:</label>
-                <select id="new-student-year">
-                  <option value="2025">2025</option>
-                  <option value="2024">2024</option>
-                  <option value="2023">2023</option>
-                </select>
+            <div class="content-card" id="excel-preview-card" style="display: none">
+              <h3>👀 Vista Previa del Archivo</h3>
+              <div id="excel-info" class="excel-info"></div>
+              <div id="excel-preview" class="excel-preview"></div>
+              <div class="preview-actions">
+                <button id="process-excel-btn" class="btn-primary" onclick="processExcelData()">
+                  ✅ Procesar y Guardar Lista
+                </button>
+                <button id="cancel-excel-btn" class="btn-secondary" onclick="cancelExcelUpload()">
+                  ❌ Cancelar
+                </button>
               </div>
-              <div class="form-group">
-                <label>Nombre Completo:</label>
-                <input type="text" id="new-student-name" placeholder="Juan Pérez López" />
-              </div>
-              <div class="form-group">
-                <label>Puntaje:</label>
-                <input type="number" id="new-student-score" placeholder="85.5" step="0.01" />
-              </div>
-              <div class="form-group">
-                <label>Carrera:</label>
-                <select id="new-student-career">
-                  <option value="">Seleccionar carrera</option>
-                  <option value="Ing. Informática">Ing. Informática</option>
-                  <option value="Ing. Electromecánica">Ing. Electromecánica</option>
-                  <option value="Ing. Civil">Ing. Civil</option>
-                  <option value="Ing. Industrial">Ing. Industrial</option>
-                </select>
-              </div>
-              <div class="form-group">
-                <label>Posición:</label>
-                <input type="text" id="new-student-position" placeholder="#25" />
-              </div>
-              <button id="add-student-btn" class="btn-primary">Agregar Ingresante</button>
-            </div>
-
-            <div class="content-card">
-              <h3>📊 Herramientas de Gestión</h3>
-              <button id="export-students-btn" class="btn-secondary">Exportar Lista</button>
-              <button id="import-students-btn" class="btn-secondary">Importar Lista</button>
-              <input
-                type="file"
-                id="import-students-input"
-                accept=".json,.csv"
-                style="display: none"
-              />
             </div>
           </div>
-        </section>
 
+          <!-- Generated Exam Sections -->
+          <div id="exam-sections-container" class="exam-sections-container">
+            <!-- Dynamic exam sections will be generated here -->
+          </div>
+        </section>
         <!-- Cursos Section -->
         <section id="cursos-section" class="admin-section">
           <h2>📚 Gestión de Cursos</h2>
@@ -1094,6 +1085,8 @@
     <!-- Success/Error Messages -->
     <div id="message-container" class="message-container"></div>
 
+    <!-- SheetJS library for Excel reading -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
     <script src="admin.js"></script>
   </body>
 </html>
