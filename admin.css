@@ -3005,3 +3005,161 @@ textarea {
 * {
   transition: background-color 0.2s ease, color 0.2s ease, border-color 0.2s ease;
 }
+
+/* ===== EXCEL V3 SPECIFIC STYLES ===== */
+.template-options {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.btn-download-sample {
+  background: linear-gradient(135deg, #f59e0b, #fbbf24);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 6px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.btn-download-sample:hover {
+  background: linear-gradient(135deg, #d97706, #f59e0b);
+  transform: translateY(-1px);
+  box-shadow: var(--admin-shadow);
+}
+
+.template-info {
+  padding: 0.5rem;
+  background: rgba(59, 130, 246, 0.1);
+  border-left: 3px solid var(--admin-primary);
+  border-radius: 0 4px 4px 0;
+  margin-top: 0.75rem;
+}
+
+.template-info small {
+  color: var(--admin-text-light);
+  font-size: 0.75rem;
+  line-height: 1.4;
+}
+
+/* Manual metadata input */
+.manual-metadata {
+  margin-top: 1rem;
+  padding: 1rem;
+  background: rgba(245, 158, 11, 0.1);
+  border: 1px solid #fbbf24;
+  border-radius: 8px;
+  animation: slideDown 0.3s ease-out;
+}
+
+.manual-metadata h4 {
+  color: var(--admin-warning);
+  margin-bottom: 0.75rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.metadata-inputs {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.metadata-inputs input {
+  flex: 1;
+  min-width: 140px;
+  padding: 0.5rem;
+  border: 1px solid var(--admin-border);
+  border-radius: 4px;
+  background: var(--admin-light);
+  color: var(--admin-text);
+  font-size: 0.875rem;
+}
+
+.metadata-inputs input:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+.btn-process {
+  background: var(--admin-success);
+  color: white;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+
+.btn-process:hover {
+  background: #047857;
+  transform: translateY(-1px);
+}
+
+/* Upload area improvements */
+.upload-info {
+  margin-top: 0.75rem;
+}
+
+.upload-info small {
+  display: block;
+  color: var(--admin-text-muted);
+  font-size: 0.75rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Animation for manual metadata */
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Dark mode adjustments */
+html[data-theme='dark'] .manual-metadata {
+  background: rgba(245, 158, 11, 0.15);
+  border-color: #d97706;
+}
+
+html[data-theme='dark'] .metadata-inputs input {
+  background: var(--admin-input-bg);
+  border-color: var(--admin-input-border);
+  color: var(--admin-text);
+}
+
+html[data-theme='dark'] .metadata-inputs input:focus {
+  border-color: var(--admin-input-focus);
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .template-options {
+    flex-direction: column;
+  }
+
+  .metadata-inputs {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .metadata-inputs input {
+    min-width: auto;
+  }
+}

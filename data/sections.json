@@ -1,0 +1,44 @@
+[
+  {
+    "id": "uptp2025001",
+    "slug": "uptp-2025",
+    "exam": "UPTP",
+    "year": 2025,
+    "title": "UPTP-2025",
+    "description": "Ingresantes UPTP 2025",
+    "order": 3,
+    "is_public": true,
+    "rows_count": 5,
+    "excel_path": "uptp-2025.xlsx",
+    "created_at": "2025-10-12T20:00:00Z",
+    "updated_at": "2025-10-12T20:00:00Z"
+  },
+  {
+    "id": "mofa2026001",
+    "slug": "mofa-2026",
+    "exam": "MOFA",
+    "year": 2026,
+    "title": "MOFA-2026",
+    "description": "Ingresantes MOFA 2026",
+    "order": 4,
+    "is_public": true,
+    "rows_count": 3,
+    "excel_path": "mofa-2026.xlsx",
+    "created_at": "2025-10-12T21:00:00Z",
+    "updated_at": "2025-10-12T21:00:00Z"
+  },
+  {
+    "id": "uptp2024001",
+    "slug": "uptp-2024",
+    "exam": "UPTP",
+    "year": 2024,
+    "title": "UPTP-2024",
+    "description": "Ingresantes UPTP 2024",
+    "order": 2,
+    "is_public": true,
+    "rows_count": 10,
+    "excel_path": "uptp-2024.xlsx",
+    "created_at": "2024-12-15T18:00:00Z",
+    "updated_at": "2024-12-15T18:00:00Z"
+  }
+]

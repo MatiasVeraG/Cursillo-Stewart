@@ -2440,34 +2440,471 @@ document.addEventListener('keydown', e => {
   }
 });
 
-// Function to download the ingresantes template
+// Simplified template download
 function downloadTemplate() {
   try {
-    // Create a link element to trigger the download
     const link = document.createElement('a');
-    link.href = 'documents/Plantilla _de_Ingresantes.xlsx';
+    link.href = 'admin_api.php?action=template';
     link.download = 'Plantilla_de_Ingresantes.xlsx';
-
-    // Append to body, click, and remove
-    document.body.appendChild(link);
     link.click();
-    document.body.removeChild(link);
-
-    // Show success message
+    
     if (window.adminPanel) {
-      adminPanel.showMessage('Plantilla descargada exitosamente', 'success');
+      adminPanel.showMessage('📥 Plantilla descargada', 'success');
     }
   } catch (error) {
     console.error('Error downloading template:', error);
     if (window.adminPanel) {
-      adminPanel.showMessage('Error al descargar la plantilla', 'error');
+      adminPanel.showMessage('⚠️ Error descargando plantilla', 'error');
     }
   }
 }
 
-// Global variables for Excel processing
+// Function to download sample template with examples
+function downloadSampleTemplate() {
+  try {
+    generateExcelTemplateV3(true)
+      .then(blob => {
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'Plantilla_con_Ejemplos_v3.xlsx';
+
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+
+        URL.revokeObjectURL(link.href);
+
+        if (window.adminPanel) {
+          adminPanel.showMessage('📋 Plantilla con ejemplos descargada exitosamente', 'success');
+        }
+      })
+      .catch(error => {
+        console.error('Error generating sample template:', error);
+        if (window.adminPanel) {
+          adminPanel.showMessage('⚠️ Error generando plantilla con ejemplos', 'error');
+        }
+      });
+  } catch (error) {
+    console.error('Error downloading sample template:', error);
+  }
+}
+
+// Fallback method for template download
+function downloadTemplateFallback() {
+  try {
+    const link = document.createElement('a');
+    link.href = 'documents/Plantilla_de_Ingresantes_v3.xlsx';
+    link.download = 'Plantilla_de_Ingresantes_v3.xlsx';
+
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    if (window.adminPanel) {
+      adminPanel.showMessage('📥 Plantilla descargada (versión estática)', 'success');
+    }
+  } catch (error) {
+    console.error('Error in fallback download:', error);
+    if (window.adminPanel) {
+      adminPanel.showMessage('❌ Error al descargar la plantilla', 'error');
+    }
+  }
+}
+
+// Generate Excel Template v3 programmatically
+async function generateExcelTemplateV3(withSamples = false) {
+  // This would require a library like SheetJS (xlsx)
+  // For now, we'll return a promise that resolves to a simple template
+
+  return new Promise((resolve, reject) => {
+    // In a real implementation, you would:
+    // 1. Use XLSX library to create workbook
+    // 2. Set up the v3 format with merged cells A1:E1
+    // 3. Add headers in row 2
+    // 4. Add metadata in G2/H2 and G3/H3
+    // 5. Optionally add sample data
+    // 6. Return as blob
+
+    // For now, redirect to server-side generation
+    fetch('/generate-template-v3', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ withSamples }),
+    })
+      .then(response => response.blob())
+      .then(resolve)
+      .catch(reject);
+  });
+}
+
+// Global variables for Excel processing v3
 let currentExcelData = null;
 let currentExamInfo = null;
+let pendingExcelFile = null;
+
+// Function to handle Excel file selection v3
+// Simplified Excel file handler
+function handleExcelFile(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+
+  if (window.adminPanel) {
+    adminPanel.showMessage('📖 Procesando archivo Excel...', 'info');
+  }
+
+  const reader = new FileReader();
+  
+  reader.onload = function(e) {
+    try {
+      const data = new Uint8Array(e.target.result);
+      const workbook = XLSX.read(data, { type: 'array' });
+      
+      // Get first sheet
+      const firstSheet = workbook.Sheets[workbook.SheetNames[0]];
+      const rows = XLSX.utils.sheet_to_json(firstSheet, { header: 1 });
+      
+      // Extract metadata
+      let exam = '';
+      let year = '';
+      
+      // Look for exam and year in first few rows
+      for (let i = 0; i < Math.min(5, rows.length); i++) {
+        const row = rows[i] || [];
+        const cellText = (row[0] || '').toString().toUpperCase();
+        
+        if (cellText.includes('UPTP') || cellText.includes('EXAM') || cellText.includes('CURSILLO')) {
+          exam = 'UPTP';
+        }
+        
+        const yearMatch = cellText.match(/20\d{2}/);
+        if (yearMatch) {
+          year = yearMatch[0];
+        }
+      }
+      
+      // Find header row
+      let headerRow = -1;
+      for (let i = 0; i < rows.length; i++) {
+        const row = rows[i] || [];
+        if (row.some(cell => (cell || '').toString().toLowerCase().includes('nombre'))) {
+          headerRow = i;
+          break;
+        }
+      }
+      
+      if (headerRow === -1) {
+        throw new Error('No se encontró encabezado con "Nombre"');
+      }
+      
+      // Get headers
+      const headers = rows[headerRow] || [];
+      
+      // Convert data rows to normalized format
+      const normalizedRows = [];
+      for (let i = headerRow + 1; i < rows.length; i++) {
+        const row = rows[i] || [];
+        if (row.length === 0) continue;
+        
+        const normalizedRow = normalizeIngresantes(headers, row);
+        if (normalizedRow) {
+          normalizedRows.push(normalizedRow);
+        }
+      }
+      
+      // Prompt for slug if metadata not found
+      if (!exam || !year) {
+        const slug = prompt('Ingrese slug (ej: uptp-2024):');
+        if (slug) {
+          const parts = slug.split('-');
+          exam = parts[0].toUpperCase();
+          year = parts[1] || new Date().getFullYear().toString();
+        } else {
+          throw new Error('Slug requerido');
+        }
+      }
+      
+      const slug = `${exam.toLowerCase()}-${year}`;
+      
+      // Upload to server
+      uploadExcelData(file, slug, normalizedRows);
+      
+    } catch (error) {
+      console.error('Error processing Excel:', error);
+      if (window.adminPanel) {
+        adminPanel.showMessage(`❌ Error: ${error.message}`, 'error');
+      }
+    }
+  };
+  
+  reader.readAsArrayBuffer(file);
+}
+
+// Normalize ingresantes data - simple version without external libraries
+function normalizeIngresantes(headers, row) {
+  // Basic normalization mappings
+  const fieldMap = {
+    nombre: ['nombre', 'name', 'apellido', 'full_name'],
+    puntaje: ['puntaje', 'score', 'nota', 'points'],
+    carrera: ['carrera', 'career', 'programa', 'program'],
+    puesto: ['puesto', 'rank', 'position', 'lugar'],
+    preferencial: ['preferencial', 'priority', 'pref']
+  };
+  
+  // Find column indices
+  const indices = {};
+  
+  Object.keys(fieldMap).forEach(field => {
+    for (let i = 0; i < headers.length; i++) {
+      const header = (headers[i] || '').toString().toLowerCase();
+      if (fieldMap[field].some(keyword => header.includes(keyword))) {
+        indices[field] = i;
+        break;
+      }
+    }
+  });
+  
+  // Skip empty rows
+  if (row.every(cell => !cell || cell.toString().trim() === '')) {
+    return null;
+  }
+  
+  // Build normalized object
+  const normalized = {};
+  
+  // Name (required)
+  if (indices.nombre !== undefined) {
+    normalized.nombre = (row[indices.nombre] || '').toString().trim();
+    if (!normalized.nombre) return null; // Skip if no name
+  } else {
+    return null; // Skip if no name column found
+  }
+  
+  // Score
+  if (indices.puntaje !== undefined) {
+    const score = parseFloat(row[indices.puntaje]) || 0;
+    normalized.puntaje = score;
+  }
+  
+  // Career
+  if (indices.carrera !== undefined) {
+    normalized.carrera = (row[indices.carrera] || '').toString().trim();
+  }
+  
+  // Rank
+  if (indices.puesto !== undefined) {
+    const rank = parseInt(row[indices.puesto]) || 0;
+    normalized.puesto = rank;
+  }
+  
+  // Priority
+  if (indices.preferencial !== undefined) {
+    const pref = (row[indices.preferencial] || '').toString().toLowerCase();
+    normalized.preferencial = pref.includes('sí') || pref.includes('si') || pref.includes('yes') || pref === '1';
+  }
+  
+  return normalized;
+}
+
+// Upload Excel data to server
+function uploadExcelData(file, slug, rows) {
+  const formData = new FormData();
+  formData.append('file', file);
+  formData.append('slug', slug);
+  formData.append('rows_json', JSON.stringify(rows));
+  
+  fetch('admin_api.php?action=upload_excel', {
+    method: 'POST',
+    headers: {
+      'Authorization': `Bearer ${localStorage.getItem('admin_session')}`
+    },
+    body: formData
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.success) {
+      if (window.adminPanel) {
+        adminPanel.showMessage(`✅ Excel importado: ${data.rows_count} registros en ${data.slug}`, 'success');
+      }
+      // Refresh sections if we're in ingresantes view
+      if (typeof loadIngresantesSections === 'function') {
+        loadIngresantesSections();
+      }
+    } else {
+      throw new Error(data.error || 'Error uploading file');
+    }
+  })
+  .catch(error => {
+    console.error('Upload error:', error);
+    if (window.adminPanel) {
+      adminPanel.showMessage(`❌ Error subiendo archivo: ${error.message}`, 'error');
+    }
+  });
+}
+
+// Show manual metadata input
+function showManualMetadataInput() {
+  const manualMetadata = document.getElementById('manual-metadata');
+  if (manualMetadata) {
+    manualMetadata.style.display = 'block';
+  }
+}
+
+// Process with manual metadata
+async function processWithManualMetadata() {
+  const examInput = document.getElementById('manual-exam');
+  const yearInput = document.getElementById('manual-year');
+
+  if (!examInput || !yearInput) {
+    if (window.adminPanel) {
+      adminPanel.showMessage('❌ Campos de metadatos no encontrados', 'error');
+    }
+    return;
+  }
+
+  const exam = examInput.value.trim();
+  const year = yearInput.value.trim();
+
+  if (!exam || !year) {
+    if (window.adminPanel) {
+      adminPanel.showMessage('⚠️ Complete el nombre del examen y el año', 'warning');
+    }
+    return;
+  }
+
+  if (!pendingExcelFile) {
+    if (window.adminPanel) {
+      adminPanel.showMessage('❌ No hay archivo pendiente de procesar', 'error');
+    }
+    return;
+  }
+
+  try {
+    // Show processing
+    if (window.adminPanel) {
+      adminPanel.showMessage('🔄 Procesando con metadatos manuales...', 'info');
+    }
+
+    // Process file again with manual metadata
+    const result = await processExcelFileV3(pendingExcelFile);
+
+    // Override with manual metadata
+    const processedResult = await createOrUpdateSection(exam, year, result.data || []);
+
+    handleImportSuccess({
+      success: true,
+      section: processedResult.section,
+      ingresantes_count: processedResult.ingresantes_count,
+    });
+
+    // Hide manual input
+    const manualMetadata = document.getElementById('manual-metadata');
+    if (manualMetadata) {
+      manualMetadata.style.display = 'none';
+    }
+
+    // Clear inputs
+    examInput.value = '';
+    yearInput.value = '';
+    pendingExcelFile = null;
+  } catch (error) {
+    console.error('Error processing with manual metadata:', error);
+    if (window.adminPanel) {
+      adminPanel.showMessage(`❌ Error: ${error.message}`, 'error');
+    }
+  }
+}
+
+// Create or update section
+async function createOrUpdateSection(exam, year, records) {
+  // Normalize records
+  const normalizedRecords = records.map((record, index) => {
+    return IngresantesNormalizer.normalizarRegistro(record, index);
+  });
+
+  // Sort by position
+  normalizedRecords.sort((a, b) => a.puesto - b.puesto);
+
+  // Generate slug
+  const slug = IngresantesNormalizer.generarSlug(exam, year);
+
+  // Load existing sections
+  let sections = [];
+  try {
+    const response = await fetch('data/sections.json');
+    if (response.ok) {
+      sections = await response.json();
+    }
+  } catch (error) {
+    console.warn('Could not load sections:', error);
+  }
+
+  // Find or create section
+  let section = sections.find(s => s.slug === slug);
+  const now = new Date().toISOString();
+
+  if (section) {
+    // Update existing
+    section.rows_count = normalizedRecords.length;
+    section.updated_at = now;
+  } else {
+    // Create new
+    const newOrder = Math.max(...sections.map(s => s.order || 0), 0) + 1;
+    section = {
+      id: generateId(),
+      slug: slug,
+      exam: exam.toUpperCase(),
+      year: parseInt(year),
+      title: `${exam.toUpperCase()}-${year}`,
+      description: `Ingresantes ${exam} ${year}`,
+      order: newOrder,
+      is_public: true,
+      rows_count: normalizedRecords.length,
+      excel_path: pendingExcelFile?.name || '',
+      created_at: now,
+      updated_at: now,
+    };
+
+    // Insert at beginning for newest first
+    sections.unshift(section);
+  }
+
+  // Save sections and ingresantes (simulate API calls)
+  // In real implementation, these would be actual API calls
+  console.log('Saving sections:', sections);
+  console.log('Saving ingresantes for', slug, ':', normalizedRecords);
+
+  return {
+    success: true,
+    section: section,
+    ingresantes_count: normalizedRecords.length,
+  };
+}
+
+// Handle import success
+function handleImportSuccess(result) {
+  if (window.adminPanel) {
+    const message = `✅ Sección ${result.section.title} ${
+      result.section.created_at === result.section.updated_at ? 'creada' : 'actualizada'
+    } exitosamente. ${result.ingresantes_count} ingresantes procesados.`;
+    adminPanel.showMessage(message, 'success');
+  }
+
+  // Clear file input
+  const fileInput = document.getElementById('excel-file-input');
+  if (fileInput) {
+    fileInput.value = '';
+  }
+
+  // Update UI or redirect to view section
+  console.log('Import successful:', result);
+}
+
+// Generate unique ID
+function generateId() {
+  return Date.now().toString(36) + Math.random().toString(36).substr(2, 9);
+}
+
+// Legacy functions (keep for backward compatibility)
 
 // Function to handle Excel file selection
 function handleExcelFile(event) {

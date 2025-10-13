@@ -287,16 +287,14 @@
           <p>Conoce a los estudiantes que han confiado en nosotros para su preparación.</p>
         </div>
 
-        <!-- Tabs para años -->
-        <div class="years-tabs">
-          <button class="year-tab" data-year="2025" onclick="showYear('2025')">2025</button>
-          <button class="year-tab" data-year="2024" onclick="showYear('2024')">2024</button>
-          <button class="year-tab" data-year="2023" onclick="showYear('2023')">2023</button>
+        <!-- Chips dinámicos para secciones -->
+        <div class="years-tabs" id="dynamic-chips">
+          <div class="loading-message">Cargando secciones disponibles...</div>
         </div>
 
-        <!-- Contenido por año -->
-        <div class="years-content">
-          <!-- Ingresantes 2025 -->
+        <!-- Contenido dinámico por sección -->
+        <div class="years-content" id="dynamic-content">
+          <!-- El contenido se carga dinámicamente -->
           <div id="year-2025" class="year-content">
             <div class="ingresantes-list">
               <div class="ingresante-item top-10">
@@ -2682,5 +2680,10 @@
         updateCountdownSection(testContent);
       };
     </script>
+
+    <!-- Scripts para funcionalidad dinámica -->
+    <script src="js/normalizer.js"></script>
+    <script src="js/section-manager.js"></script>
+    <script src="js/dynamic-ingresantes.js"></script>
   </body>
 </html>

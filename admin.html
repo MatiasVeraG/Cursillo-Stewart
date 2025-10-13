@@ -663,22 +663,43 @@
           <div class="ingresantes-layout-grid">
             <!-- Plantilla Card - Grid Area: plantilla -->
             <div class="content-card ingresantes-card-plantilla">
-              <h3>📋 Plantilla de Ingresantes</h3>
-              <p>Descarga la plantilla oficial para el registro de ingresantes:</p>
-              <button
-                id="download-template-btn"
-                class="btn-download-template"
-                onclick="downloadTemplate()"
-                title="Descargar Plantilla de Ingresantes"
-              >
-                📥 Descargar Plantilla
-              </button>
+              <h3>📋 Plantilla Excel v3</h3>
+              <p>
+                Descarga la plantilla oficial con formato Excel v3 que incluye metadatos de examen y
+                año:
+              </p>
+              <div class="template-options">
+                <button
+                  id="download-template-btn"
+                  class="btn-download-template"
+                  onclick="downloadTemplate()"
+                  title="Descargar Plantilla Excel"
+                >
+                  📥 Descargar Plantilla
+                </button>
+                <button
+                  id="download-sample-btn"
+                  class="btn-download-sample"
+                  onclick="downloadSampleTemplate()"
+                  title="Descargar con datos de ejemplo"
+                >
+                  📋 Con Ejemplos
+                </button>
+              </div>
+              <div class="template-info">
+                <small
+                  >✅ Formato: A1:E1 título | Fila 2: cabeceras | G2/H2: examen | G3/H3: año</small
+                >
+              </div>
             </div>
 
             <!-- Upload Card - Grid Area: upload -->
             <div class="content-card ingresantes-card-upload">
-              <h3>📤 Cargar Lista de Ingresantes</h3>
-              <p>Selecciona un archivo Excel (.xlsx) con la lista de ingresantes:</p>
+              <h3>📤 Importar Excel v3</h3>
+              <p>
+                Importa un archivo Excel v3 con metadatos y crea/actualiza secciones
+                automáticamente:
+              </p>
               <div class="upload-area" id="excel-upload-area">
                 <input
                   type="file"
@@ -691,10 +712,33 @@
                   class="btn-upload-excel"
                   onclick="document.getElementById('excel-file-input').click()"
                 >
-                  📁 Seleccionar Archivo Excel
+                  📁 Seleccionar Excel
                 </button>
                 <div class="upload-info">
-                  <small>Formatos soportados: .xlsx, .xls</small>
+                  <small>📋 Detecta automáticamente: examen (H2) y año (H3)</small>
+                  <small>🔄 Crea slug: exam-year | Normaliza datos | Actualiza homepage</small>
+                </div>
+              </div>
+
+              <!-- Fallback manual para archivos sin metadatos -->
+              <div class="manual-metadata" id="manual-metadata" style="display: none">
+                <h4>📝 Metadatos Manuales</h4>
+                <div class="metadata-inputs">
+                  <input
+                    type="text"
+                    id="manual-exam"
+                    placeholder="Nombre del examen (ej: UPTP, MOFA)"
+                  />
+                  <input
+                    type="number"
+                    id="manual-year"
+                    placeholder="Año (ej: 2025)"
+                    min="2020"
+                    max="2030"
+                  />
+                  <button onclick="processWithManualMetadata()" class="btn-process">
+                    ✅ Procesar con Metadatos
+                  </button>
                 </div>
               </div>
             </div>
