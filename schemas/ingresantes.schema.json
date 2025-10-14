@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Ingresantes por sección",
+  "type": "object",
+  "required": ["slug", "exam", "year", "updated_at", "records"],
+  "properties": {
+    "slug": { "type": "string" },
+    "exam": { "type": "string" },
+    "year": { "type": "integer" },
+    "updated_at": { "type": "string" },
+    "records": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["nombre_completo", "puntaje", "carrera", "puesto", "preferencial"],
+        "properties": {
+          "nombre_completo": { "type": "string" },
+          "nombre": { "type": "string" },
+          "apellido": { "type": "string" },
+          "puntaje": { "type": "number", "minimum": 0, "maximum": 100 },
+          "carrera": { "type": "string" },
+          "puesto": { "type": "integer", "minimum": 1 },
+          "preferencial": { "type": "boolean" }
+        }
+      }
+    }
+  }
+}

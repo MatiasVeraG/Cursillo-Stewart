@@ -1,0 +1,29 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Sections",
+  "type": "object",
+  "required": ["version", "sections"],
+  "properties": {
+    "version": { "type": "integer" },
+    "sections": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "slug", "exam", "year", "title", "order", "is_public"],
+        "properties": {
+          "id": { "type": "string" },
+          "slug": { "type": "string", "pattern": "^[a-z0-9-]+$" },
+          "exam": { "type": "string" },
+          "year": { "type": "integer", "minimum": 2000 },
+          "title": { "type": "string" },
+          "description": { "type": "string" },
+          "order": { "type": "integer", "minimum": 1 },
+          "is_public": { "type": "boolean" },
+          "rows_count": { "type": "integer", "minimum": 0 },
+          "excel_path": { "type": ["string", "null"] },
+          "updated_at": { "type": "string" }
+        }
+      }
+    }
+  }
+}

@@ -2445,7 +2445,7 @@ function downloadTemplate() {
   try {
     // Create a link element to trigger the download
     const link = document.createElement('a');
-    link.href = 'documents/Plantilla _de_Ingresantes.xlsx';
+    link.href = 'documents/Plantilla_de_Ingresantes.xlsx';
     link.download = 'Plantilla_de_Ingresantes.xlsx';
 
     // Append to body, click, and remove
@@ -2468,6 +2468,286 @@ function downloadTemplate() {
 // Global variables for Excel processing
 let currentExcelData = null;
 let currentExamInfo = null;
+
+// ===== FUNCIONES PARA GESTIÓN DE INGRESANTES =====
+
+// Configuración del API
+const INGRESANTES_API = {
+  BASE_URL: '/api/admin_api.php',
+
+  // Hacer petición al API
+  async request(params = {}, options = {}) {
+    // Verificar si estamos en modo de desarrollo/testing
+    const isLocalhost =
+      window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+    if (isLocalhost) {
+      // Usar mock para desarrollo local
+      return this.mockRequest(params, options);
+    }
+
+    // Petición real al servidor
+    const url = new URL(this.BASE_URL, window.location.origin);
+    Object.keys(params).forEach(key => url.searchParams.set(key, params[key]));
+
+    const config = {
+      credentials: 'same-origin',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      ...options,
+    };
+
+    try {
+      const response = await fetch(url, config);
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || `HTTP ${response.status}`);
+      }
+
+      return data;
+    } catch (error) {
+      console.error('API Request Error:', error);
+      // Fallback a mock en caso de error
+      console.log('Falling back to mock API...');
+      return this.mockRequest(params, options);
+    }
+  },
+
+  // Mock request para desarrollo
+  async mockRequest(params = {}, options = {}) {
+    const action = params.action;
+
+    try {
+      switch (action) {
+        case 'list_exams':
+          return this.mockListExams();
+        case 'get_ingresantes':
+          return this.mockGetIngresantes(params.key);
+        case 'import_ingresantes':
+          return this.mockImportIngresantes(JSON.parse(options.body));
+        default:
+          throw new Error('Acción no válida');
+      }
+    } catch (error) {
+      console.error('Mock API Error:', error);
+      throw error;
+    }
+  },
+
+  // Mock functions
+  mockListExams() {
+    const index = JSON.parse(localStorage.getItem('ingresantes_index') || '[]');
+    return index.sort((a, b) => {
+      const [examA, yearA] = a.split('-');
+      const [examB, yearB] = b.split('-');
+      const yearDiff = parseInt(yearB) - parseInt(yearA);
+      return yearDiff !== 0 ? yearDiff : examA.localeCompare(examB);
+    });
+  },
+
+  mockGetIngresantes(key) {
+    const data = localStorage.getItem(`ingresantes_${key}`);
+    if (!data) {
+      throw new Error('Lista no encontrada');
+    }
+    return JSON.parse(data);
+  },
+
+  mockImportIngresantes(payload) {
+    const key = `${payload.exam}-${payload.year}`;
+    const data = {
+      key,
+      exam: payload.exam,
+      year: payload.year,
+      meta: {
+        archivo: payload.meta.archivo,
+        total: payload.items.length,
+        fecha: new Date().toISOString(),
+      },
+      items: payload.items,
+    };
+
+    // Guardar datos
+    localStorage.setItem(`ingresantes_${key}`, JSON.stringify(data));
+
+    // Actualizar índice
+    const index = JSON.parse(localStorage.getItem('ingresantes_index') || '[]');
+    if (!index.includes(key)) {
+      index.push(key);
+      localStorage.setItem('ingresantes_index', JSON.stringify(index));
+    }
+
+    return { ok: true, key };
+  },
+
+  // Importar ingresantes
+  async importIngresantes(payload) {
+    return this.request(
+      { action: 'import_ingresantes' },
+      {
+        method: 'POST',
+        body: JSON.stringify(payload),
+      }
+    );
+  },
+
+  // Listar exámenes
+  async listExams() {
+    return this.request({ action: 'list_exams' });
+  },
+
+  // Obtener ingresantes
+  async getIngresantes(key) {
+    return this.request({ action: 'get_ingresantes', key });
+  },
+};
+
+// Mostrar toast de notificación
+function showToast(message, type = 'success') {
+  const toast = document.createElement('div');
+  toast.className = 'toast-notification';
+  toast.textContent = message;
+
+  if (type === 'error') {
+    toast.style.background = 'var(--admin-danger)';
+  }
+
+  document.body.appendChild(toast);
+
+  setTimeout(() => {
+    if (toast.parentNode) {
+      toast.parentNode.removeChild(toast);
+    }
+  }, 3000);
+}
+
+// Normalizar campo preferencial
+function normalizePreferencial(value) {
+  if (typeof value === 'boolean') {
+    return value;
+  }
+
+  if (typeof value === 'number') {
+    return value === 1;
+  }
+
+  if (typeof value === 'string') {
+    const lower = value.toLowerCase().trim();
+    return ['si', 'sí', 'true', '1', 'yes'].includes(lower);
+  }
+
+  return false;
+}
+
+// Formatear fecha para mostrar
+function formatDate(dateString) {
+  try {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('es-PY', {
+      year: 'numeric',
+      month: 'short',
+      day: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  } catch (error) {
+    return dateString;
+  }
+}
+
+// Cargar y mostrar listas guardadas
+async function loadSavedLists() {
+  const container = document.getElementById('gi-saved-list');
+
+  try {
+    container.innerHTML = '<div class="gi-saved-loading">Cargando listas guardadas...</div>';
+
+    const examKeys = await INGRESANTES_API.listExams();
+
+    if (examKeys.length === 0) {
+      container.innerHTML = '<div class="gi-saved-empty">No hay listas guardadas aún.</div>';
+      return;
+    }
+
+    // Cargar detalles de cada examen
+    const examDetails = await Promise.all(
+      examKeys.map(async key => {
+        try {
+          return await INGRESANTES_API.getIngresantes(key);
+        } catch (error) {
+          console.error(`Error loading exam ${key}:`, error);
+          return null;
+        }
+      })
+    );
+
+    // Filtrar exámenes válidos y renderizar
+    const validExams = examDetails.filter(exam => exam !== null);
+    renderSavedLists(validExams);
+  } catch (error) {
+    console.error('Error loading saved lists:', error);
+    container.innerHTML = '<div class="gi-saved-empty">Error al cargar las listas guardadas.</div>';
+  }
+}
+
+// Renderizar listas guardadas
+function renderSavedLists(exams) {
+  const container = document.getElementById('gi-saved-list');
+
+  if (exams.length === 0) {
+    container.innerHTML = '<div class="gi-saved-empty">No hay listas guardadas aún.</div>';
+    return;
+  }
+
+  const html = exams
+    .map(
+      exam => `
+    <div class="gi-saved-item" data-key="${exam.key}">
+      <div class="gi-saved-header">
+        <span class="gi-saved-key">${exam.key}</span>
+        <span class="gi-saved-total">${exam.meta.total} ingresantes</span>
+      </div>
+      <div class="gi-saved-info">
+        <div class="gi-saved-file">📄 ${exam.meta.archivo}</div>
+        <div class="gi-saved-date">📅 ${formatDate(exam.meta.fecha)}</div>
+      </div>
+      <div class="gi-saved-actions">
+        <button class="btn-ver-lista" onclick="loadExamPreview('${exam.key}')">
+          👁️ Ver
+        </button>
+      </div>
+    </div>
+  `
+    )
+    .join('');
+
+  container.innerHTML = html;
+}
+
+// Cargar vista previa de un examen
+async function loadExamPreview(key) {
+  try {
+    const examData = await INGRESANTES_API.getIngresantes(key);
+
+    // Actualizar variables globales para compatibilidad
+    currentExamInfo = {
+      name: examData.exam,
+      year: examData.year,
+      fileName: examData.meta.archivo,
+    };
+    currentExcelData = examData.items;
+
+    // Mostrar vista previa usando la función existente
+    showExcelPreview();
+
+    showToast(`Lista ${key} cargada en vista previa`);
+  } catch (error) {
+    console.error('Error loading exam preview:', error);
+    showToast('Error al cargar la vista previa', 'error');
+  }
+}
 
 // Function to handle Excel file selection
 function handleExcelFile(event) {
@@ -2501,7 +2781,7 @@ function handleExcelFile(event) {
 function processExcelWorksheet(worksheet, fileName) {
   try {
     // Extract exam info from H2 and H3
-    const examName = worksheet['H2'] ? worksheet['H2'].v : 'Examen Sin Nombre';
+    const examName = worksheet['H2'] ? worksheet['H2'].v : 'UPTP';
     const examYear = worksheet['H3'] ? worksheet['H3'].v : new Date().getFullYear();
 
     // Store exam info
@@ -2529,10 +2809,12 @@ function processExcelWorksheet(worksheet, fileName) {
 
       const student = {
         nombre: worksheet[nameCell].v,
-        puntaje: worksheet[puntajeCell] ? worksheet[puntajeCell].v : '',
+        puntaje: parseFloat(worksheet[puntajeCell] ? worksheet[puntajeCell].v : 0) || 0,
         carrera: worksheet[carreraCell] ? worksheet[carreraCell].v : '',
-        puesto: worksheet[puestoCell] ? worksheet[puestoCell].v : '',
-        preferencial: worksheet[preferencialCell] ? worksheet[preferencialCell].v : '',
+        puesto: parseInt(worksheet[puestoCell] ? worksheet[puestoCell].v : 0) || 0,
+        preferencial: normalizePreferencial(
+          worksheet[preferencialCell] ? worksheet[preferencialCell].v : false
+        ),
       };
 
       students.push(student);
@@ -2541,10 +2823,14 @@ function processExcelWorksheet(worksheet, fileName) {
 
     currentExcelData = students;
 
-    // Show preview
+    // Show preview with save button
     showExcelPreview();
+
+    // Add save button if not exists
+    addSaveButton();
   } catch (error) {
     console.error('Error processing Excel worksheet:', error);
+    showToast('Error al procesar el archivo Excel', 'error');
     if (window.adminPanel) {
       adminPanel.showMessage('Error al procesar el archivo Excel', 'error');
     }
@@ -2584,13 +2870,16 @@ function showExcelPreview() {
   // Show first 10 rows as preview
   const previewData = currentExcelData.slice(0, 10);
   previewData.forEach(student => {
+    const nameClass = student.preferencial ? 'class="preferencial-name"' : '';
+    const preferencialText = student.preferencial ? '✅ Sí' : '❌ No';
+
     tableHTML += `
       <tr>
-        <td>${student.nombre}</td>
+        <td><span ${nameClass}>${student.nombre}</span></td>
         <td>${student.puntaje}</td>
         <td>${student.carrera}</td>
         <td>${student.puesto}</td>
-        <td>${student.preferencial}</td>
+        <td>${preferencialText}</td>
       </tr>
     `;
   });
@@ -2635,9 +2924,96 @@ function processExcelData() {
   }
 }
 
+// Agregar botón de guardar a la vista previa
+function addSaveButton() {
+  const previewCard = document.getElementById('excel-preview-card');
+  if (!previewCard) return;
+
+  // Verificar si ya existe el botón
+  if (previewCard.querySelector('.btn-save-excel')) return;
+
+  // Crear contenedor de botones si no existe
+  let actionsContainer = previewCard.querySelector('.preview-actions');
+  if (!actionsContainer) {
+    actionsContainer = document.createElement('div');
+    actionsContainer.className = 'preview-actions';
+    actionsContainer.style.cssText =
+      'margin-top: 1rem; text-align: center; gap: 1rem; display: flex; justify-content: center;';
+    previewCard.appendChild(actionsContainer);
+  }
+
+  // Agregar botón de guardar
+  const saveButton = document.createElement('button');
+  saveButton.className = 'btn-save-excel';
+  saveButton.innerHTML = '💾 Guardar Lista';
+  saveButton.style.cssText =
+    'background: var(--admin-success); color: white; border: none; padding: 0.75rem 1.5rem; border-radius: 0.375rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease;';
+  saveButton.onclick = saveExcelData;
+
+  actionsContainer.insertBefore(saveButton, actionsContainer.firstChild);
+}
+
+// Guardar datos del Excel en el servidor
+async function saveExcelData() {
+  if (!currentExcelData || !currentExamInfo) {
+    showToast('No hay datos para guardar', 'error');
+    return;
+  }
+
+  const saveButton = document.querySelector('.btn-save-excel');
+  if (saveButton) {
+    saveButton.disabled = true;
+    saveButton.innerHTML = '⏳ Guardando...';
+  }
+
+  try {
+    const payload = {
+      exam: currentExamInfo.name,
+      year: currentExamInfo.year,
+      meta: {
+        archivo: currentExamInfo.fileName,
+        total: currentExcelData.length,
+        fecha: new Date().toISOString(),
+      },
+      items: currentExcelData,
+    };
+
+    const result = await INGRESANTES_API.importIngresantes(payload);
+
+    if (result.ok) {
+      showToast(`Guardado como ${result.key}`, 'success');
+
+      // Refrescar la lista de listas guardadas
+      await loadSavedLists();
+
+      // Mantener la vista previa visible pero actualizar el botón
+      if (saveButton) {
+        saveButton.innerHTML = '✅ Guardado';
+        setTimeout(() => {
+          saveButton.innerHTML = '💾 Guardar Lista';
+          saveButton.disabled = false;
+        }, 2000);
+      }
+    } else {
+      throw new Error('Error en la respuesta del servidor');
+    }
+  } catch (error) {
+    console.error('Error saving Excel data:', error);
+    showToast('Error al guardar los datos', 'error');
+
+    if (saveButton) {
+      saveButton.innerHTML = '❌ Error al guardar';
+      setTimeout(() => {
+        saveButton.innerHTML = '💾 Guardar Lista';
+        saveButton.disabled = false;
+      }, 2000);
+    }
+  }
+}
+
 // Function to cancel Excel upload
 function cancelExcelUpload() {
-  document.getElementById('excel-file-input').value = '';
+  document.getElementById('inputExcel').value = '';
   document.getElementById('excel-preview-card').style.display = 'none';
   currentExcelData = null;
   currentExamInfo = null;
@@ -2730,3 +3106,65 @@ function deleteExamSection(examId) {
 // ===== DARK MODE - PERMANENT CONFIGURATION =====
 // Dark mode is now permanently enabled via data-theme="dark" attribute in HTML
 // No toggle functionality needed
+
+// ===== INICIALIZACIÓN DE INGRESANTES =====
+// Inicializar datos de prueba si no existen
+function initTestData() {
+  if (!localStorage.getItem('ingresantes_index')) {
+    const testData = {
+      'UPTP-2025': {
+        key: 'UPTP-2025',
+        exam: 'UPTP',
+        year: 2025,
+        meta: {
+          archivo: 'Lista_Ingresantes_UPTP_2025.xlsx',
+          total: 3,
+          fecha: '2025-10-14T12:00:00Z',
+        },
+        items: [
+          {
+            nombre: 'María García López',
+            puntaje: 95.5,
+            carrera: 'Ingeniería en Sistemas',
+            puesto: 1,
+            preferencial: true,
+          },
+          {
+            nombre: 'Juan Pérez Rodríguez',
+            puntaje: 88.2,
+            carrera: 'Ingeniería Industrial',
+            puesto: 2,
+            preferencial: false,
+          },
+          {
+            nombre: 'Ana Martínez Silva',
+            puntaje: 91.8,
+            carrera: 'Ingeniería Civil',
+            puesto: 3,
+            preferencial: true,
+          },
+        ],
+      },
+    };
+
+    // Guardar índice
+    localStorage.setItem('ingresantes_index', JSON.stringify(['UPTP-2025']));
+
+    // Guardar cada dataset
+    Object.keys(testData).forEach(key => {
+      localStorage.setItem(`ingresantes_${key}`, JSON.stringify(testData[key]));
+    });
+
+    console.log('Datos de prueba inicializados');
+  }
+}
+
+document.addEventListener('DOMContentLoaded', function () {
+  // Inicializar datos de prueba
+  initTestData();
+
+  // Cargar listas guardadas al cargar la página
+  if (document.getElementById('ingresantes-section')) {
+    loadSavedLists();
+  }
+});

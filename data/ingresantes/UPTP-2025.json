@@ -1,0 +1,33 @@
+{
+  "key": "UPTP-2025",
+  "exam": "UPTP",
+  "year": 2025,
+  "meta": {
+    "archivo": "Lista_Ingresantes_UPTP_2025.xlsx",
+    "total": 3,
+    "fecha": "2025-10-14T12:00:00Z"
+  },
+  "items": [
+    {
+      "nombre": "María García López",
+      "puntaje": 95.5,
+      "carrera": "Ingeniería en Sistemas",
+      "puesto": 1,
+      "preferencial": true
+    },
+    {
+      "nombre": "Juan Pérez Rodríguez",
+      "puntaje": 88.2,
+      "carrera": "Ingeniería Civil",
+      "puesto": 2,
+      "preferencial": false
+    },
+    {
+      "nombre": "Ana Martínez Silva",
+      "puntaje": 92.1,
+      "carrera": "Ingeniería Electrónica",
+      "puesto": 3,
+      "preferencial": true
+    }
+  ]
+}

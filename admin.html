@@ -659,6 +659,14 @@
         <section id="ingresantes-section" class="admin-section">
           <h2>🎓 Gestión de Ingresantes</h2>
 
+          <!-- Listas Guardadas -->
+          <section id="gi-saved" class="card">
+            <h3>📚 Listas guardadas</h3>
+            <div id="gi-saved-list">
+              <div class="gi-saved-loading">Cargando listas guardadas...</div>
+            </div>
+          </section>
+
           <!-- Grid Container for Responsive Layout -->
           <div class="ingresantes-layout-grid">
             <!-- Plantilla Card - Grid Area: plantilla -->
@@ -666,7 +674,7 @@
               <h3>📋 Plantilla de Ingresantes</h3>
               <p>Descarga la plantilla oficial para el registro de ingresantes:</p>
               <button
-                id="download-template-btn"
+                id="btnDescargarPlantilla"
                 class="btn-download-template"
                 onclick="downloadTemplate()"
                 title="Descargar Plantilla de Ingresantes"
@@ -682,14 +690,14 @@
               <div class="upload-area" id="excel-upload-area">
                 <input
                   type="file"
-                  id="excel-file-input"
+                  id="inputExcel"
                   accept=".xlsx,.xls"
                   style="display: none"
                   onchange="handleExcelFile(event)"
                 />
                 <button
                   class="btn-upload-excel"
-                  onclick="document.getElementById('excel-file-input').click()"
+                  onclick="document.getElementById('inputExcel').click()"
                 >
                   📁 Seleccionar Archivo Excel
                 </button>
@@ -709,10 +717,10 @@
               <div id="excel-info" class="excel-info"></div>
               <div id="excel-preview" class="excel-preview"></div>
               <div class="preview-actions">
-                <button id="process-excel-btn" class="btn-primary" onclick="processExcelData()">
+                <button id="btnProcesar" class="btn-primary" onclick="processExcelData()">
                   ✅ Procesar y Guardar Lista
                 </button>
-                <button id="cancel-excel-btn" class="btn-secondary" onclick="cancelExcelUpload()">
+                <button id="btnCancelar" class="btn-secondary" onclick="cancelExcelUpload()">
                   ❌ Cancelar
                 </button>
               </div>
