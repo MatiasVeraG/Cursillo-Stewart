@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test de Correcciones - Ingresantes</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        max-width: 1200px;
+        margin: 20px auto;
+        padding: 20px;
+        background: #f5f5f5;
+      }
+      .test-section {
+        background: white;
+        padding: 20px;
+        margin-bottom: 20px;
+        border-radius: 8px;
+        box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+      }
+      .test-section h2 {
+        margin-top: 0;
+        color: #1e40af;
+      }
+      .result {
+        padding: 10px;
+        margin: 10px 0;
+        border-radius: 4px;
+      }
+      .success {
+        background: #d1fae5;
+        color: #065f46;
+        border-left: 4px solid #10b981;
+      }
+      .error {
+        background: #fee2e2;
+        color: #991b1b;
+        border-left: 4px solid #ef4444;
+      }
+      .info {
+        background: #dbeafe;
+        color: #1e40af;
+        border-left: 4px solid #3b82f6;
+      }
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 10px;
+      }
+      th,
+      td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #e5e7eb;
+      }
+      th {
+        background: #f3f4f6;
+        font-weight: 600;
+      }
+      .preferencial {
+        color: #d4af37;
+        font-weight: 600;
+      }
+      .no-preferencial {
+        color: #374151;
+      }
+      button {
+        background: #1e40af;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 4px;
+        cursor: pointer;
+        font-size: 16px;
+        margin-right: 10px;
+      }
+      button:hover {
+        background: #1e3a8a;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🧪 Test de Correcciones - Ingresantes</h1>
+
+    <div class="test-section">
+      <h2>📋 Pruebas Automáticas</h2>
+      <button onclick="runAllTests()">▶️ Ejecutar Todas las Pruebas</button>
+      <button onclick="testUPTP2024()">Test UPTP-2024</button>
+      <button onclick="testUPTP2025()">Test UPTP-2025</button>
+      <div id="testResults"></div>
+    </div>
+
+    <div class="test-section">
+      <h2>📊 Resultados Detallados</h2>
+      <div id="detailedResults"></div>
+    </div>
+
+    <script>
+      const API = 'api/admin_api.php';
+
+      async function fetchData(key) {
+        try {
+          const response = await fetch(
+            `${API}?action=get_ingresantes&key=${encodeURIComponent(key)}`
+          );
+          if (!response.ok) {
+            // Fallback a localStorage
+            const data = localStorage.getItem(`ingresantes_${key}`);
+            if (!data) throw new Error('No se encontraron datos');
+            return JSON.parse(data);
+          }
+          return await response.json();
+        } catch (error) {
+          // Fallback a localStorage
+          const data = localStorage.getItem(`ingresantes_${key}`);
+          if (!data) throw new Error('No se encontraron datos');
+          return JSON.parse(data);
+        }
+      }
+
+      function checkPreferencial(item) {
+        return (
+          item.preferencial === true ||
+          item.preferencial === 'true' ||
+          item.preferencial === 'si' ||
+          item.preferencial === 'sí' ||
+          item.preferencial === 'SI' ||
+          item.preferencial === 'SÍ' ||
+          item.preferencial === 1 ||
+          item.preferencial === '1'
+        );
+      }
+
+      async function testUPTP2024() {
+        const resultsDiv = document.getElementById('testResults');
+        resultsDiv.innerHTML += '<div class="info">⏳ Probando UPTP-2024...</div>';
+
+        try {
+          const data = await fetchData('UPTP-2024');
+          const items = data.items || [];
+          const total = items.length;
+          const preferenciales = items.filter(checkPreferencial).length;
+
+          let html = `<div class="success">✅ UPTP-2024 - ${total} estudiantes cargados</div>`;
+
+          if (preferenciales === 0) {
+            html +=
+              '<div class="success">✅ Correcto: NINGÚN estudiante tiene preferencial=true</div>';
+          } else {
+            html += `<div class="error">❌ Error: ${preferenciales} estudiantes tienen preferencial=true (deberían ser 0)</div>`;
+          }
+
+          resultsDiv.innerHTML += html;
+          return { success: preferenciales === 0, total, preferenciales };
+        } catch (error) {
+          resultsDiv.innerHTML += `<div class="error">❌ Error: ${error.message}</div>`;
+          return { success: false, error: error.message };
+        }
+      }
+
+      async function testUPTP2025() {
+        const resultsDiv = document.getElementById('testResults');
+        resultsDiv.innerHTML += '<div class="info">⏳ Probando UPTP-2025...</div>';
+
+        try {
+          const data = await fetchData('UPTP-2025');
+          const items = data.items || [];
+          const total = items.length;
+          const preferenciales = items.filter(checkPreferencial);
+          const noPreferenciales = items.filter(item => !checkPreferencial(item));
+
+          // Buscar a Alan Gayoso
+          const alanGayoso = items.find(item => item.nombre && item.nombre.includes('Alan Gayoso'));
+
+          let html = `<div class="success">✅ UPTP-2025 - ${total} estudiantes cargados</div>`;
+
+          if (total >= 35) {
+            html +=
+              '<div class="success">✅ Correcto: Se muestran todos los estudiantes (35+)</div>';
+          } else {
+            html += `<div class="error">❌ Error: Solo se muestran ${total} estudiantes (deberían ser 35)</div>`;
+          }
+
+          if (preferenciales.length === 10) {
+            html += `<div class="success">✅ Correcto: ${preferenciales.length} estudiantes preferenciales (esperado: 10)</div>`;
+          } else {
+            html += `<div class="error">❌ Error: ${preferenciales.length} estudiantes preferenciales (esperado: 10)</div>`;
+          }
+
+          if (noPreferenciales.length === 25) {
+            html += `<div class="success">✅ Correcto: ${noPreferenciales.length} estudiantes NO preferenciales (esperado: 25)</div>`;
+          } else {
+            html += `<div class="error">❌ Error: ${noPreferenciales.length} estudiantes NO preferenciales (esperado: 25)</div>`;
+          }
+
+          if (alanGayoso) {
+            html += `<div class="success">✅ Correcto: Alan Gayoso encontrado (Puesto ${
+              alanGayoso.puesto || alanGayoso.posicion
+            })</div>`;
+          } else {
+            html += '<div class="error">❌ Error: Alan Gayoso NO encontrado</div>';
+          }
+
+          resultsDiv.innerHTML += html;
+
+          // Mostrar detalles
+          showDetailedResults('UPTP-2025', preferenciales, noPreferenciales);
+
+          return {
+            success: total >= 35 && preferenciales.length === 10 && alanGayoso !== undefined,
+            total,
+            preferenciales: preferenciales.length,
+            noPreferenciales: noPreferenciales.length,
+            alanGayoso: !!alanGayoso,
+          };
+        } catch (error) {
+          resultsDiv.innerHTML += `<div class="error">❌ Error: ${error.message}</div>`;
+          return { success: false, error: error.message };
+        }
+      }
+
+      function showDetailedResults(key, preferenciales, noPreferenciales) {
+        const detailedDiv = document.getElementById('detailedResults');
+
+        let html = `<h3>${key}</h3>`;
+
+        if (preferenciales.length > 0) {
+          html += '<h4>Estudiantes Preferenciales (Tono Dorado) ✨</h4>';
+          html +=
+            '<table><thead><tr><th>Nombre</th><th>Puesto</th><th>Puntaje</th><th>Preferencial</th></tr></thead><tbody>';
+          preferenciales.forEach(item => {
+            const pos = item.puesto || item.posicion || '?';
+            const puntaje = item.puntaje || '?';
+            html += `<tr>
+                        <td class="preferencial">${item.nombre}</td>
+                        <td>${pos}</td>
+                        <td>${puntaje}</td>
+                        <td>${item.preferencial}</td>
+                    </tr>`;
+          });
+          html += '</tbody></table>';
+        }
+
+        if (noPreferenciales.length > 0 && noPreferenciales.length <= 20) {
+          html += '<h4>Estudiantes NO Preferenciales (Muestra) ⚪</h4>';
+          html +=
+            '<table><thead><tr><th>Nombre</th><th>Puesto</th><th>Puntaje</th><th>Preferencial</th></tr></thead><tbody>';
+          noPreferenciales.slice(0, 10).forEach(item => {
+            const pos = item.puesto || item.posicion || '?';
+            const puntaje = item.puntaje || '?';
+            html += `<tr>
+                        <td class="no-preferencial">${item.nombre}</td>
+                        <td>${pos}</td>
+                        <td>${puntaje}</td>
+                        <td>${item.preferencial}</td>
+                    </tr>`;
+          });
+          html += '</tbody></table>';
+          html += `<p><em>Mostrando 10 de ${noPreferenciales.length} estudiantes no preferenciales</em></p>`;
+        }
+
+        detailedDiv.innerHTML = html;
+      }
+
+      async function runAllTests() {
+        const resultsDiv = document.getElementById('testResults');
+        resultsDiv.innerHTML = '<h3>🧪 Ejecutando Pruebas...</h3>';
+
+        const test1 = await testUPTP2024();
+        const test2 = await testUPTP2025();
+
+        let summary = '<div class="test-section"><h3>📊 Resumen Final</h3>';
+
+        if (test1.success && test2.success) {
+          summary += '<div class="success">✅ TODAS LAS PRUEBAS PASARON</div>';
+        } else {
+          summary += '<div class="error">❌ ALGUNAS PRUEBAS FALLARON</div>';
+        }
+
+        summary += `<ul>
+                <li>UPTP-2024: ${test1.success ? '✅ PASS' : '❌ FAIL'} (${
+          test1.total || 0
+        } estudiantes, ${test1.preferenciales || 0} preferenciales)</li>
+                <li>UPTP-2025: ${test2.success ? '✅ PASS' : '❌ FAIL'} (${
+          test2.total || 0
+        } estudiantes, ${test2.preferenciales || 0} preferenciales)</li>
+            </ul></div>`;
+
+        resultsDiv.innerHTML += summary;
+      }
+
+      // Auto-ejecutar al cargar
+      window.addEventListener('DOMContentLoaded', () => {
+        console.log('🧪 Test de Correcciones - Ingresantes cargado');
+        console.log('Click en "Ejecutar Todas las Pruebas" para comenzar');
+      });
+    </script>
+  </body>
+</html>

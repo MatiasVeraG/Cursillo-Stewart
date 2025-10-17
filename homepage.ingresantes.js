@@ -195,21 +195,18 @@ async function showExamYear(key) {
       return posA - posB;
     });
 
-    // Dividir entre top 10 y resto
-    const top10 = sortedItems.filter(item => {
-      const pos = parseInt(item.posicion) || parseInt(item.puesto) || 999;
-      return pos <= 10;
-    });
-    const others = sortedItems.filter(item => {
-      const pos = parseInt(item.posicion) || parseInt(item.puesto) || 999;
-      return pos > 10;
-    });
+    // Aplicar límite de 500 estudiantes (por si acaso hay muchos en el futuro)
+    const itemsToShow = sortedItems.slice(0, 500);
 
-    // Renderizar contenido
+    console.log(
+      `📊 Mostrando ${itemsToShow.length} de ${sortedItems.length} estudiantes para ${key}`
+    );
+
+    // Renderizar contenido - MOSTRAR TODOS LOS INGRESANTES (máximo 500)
     contentContainer.innerHTML = `
       <div class="year-content active" id="year-${key.replace('-', '')}">
         <div class="ingresantes-list">
-          ${renderIngresantesList([...top10, ...others.slice(0, 20)])}
+          ${renderIngresantesList(itemsToShow)}
         </div>
       </div>
     `;
@@ -225,12 +222,40 @@ async function showExamYear(key) {
 
 // Renderizar lista de ingresantes con formato bonito
 function renderIngresantesList(items) {
+  console.log(`📋 Renderizando ${items.length} estudiantes`);
+
+  // Contar preferenciales para debugging
+  let countPreferencial = 0;
+  let countNoPreferencial = 0;
+
   return items
     .map(item => {
       const position = parseInt(item.posicion) || parseInt(item.puesto) || 999;
       const isTop10 = position <= 10;
+
+      // Verificar si es preferencial de forma estricta - SOLO valores verdaderos
       const isPreferencial =
-        item.preferencial === true || item.preferencial === 'true' || item.preferencial === 1;
+        item.preferencial === true ||
+        item.preferencial === 'true' ||
+        item.preferencial === 'si' ||
+        item.preferencial === 'sí' ||
+        item.preferencial === 'SI' ||
+        item.preferencial === 'SÍ' ||
+        item.preferencial === 1 ||
+        item.preferencial === '1';
+
+      // Contar para estadísticas
+      if (isPreferencial) {
+        countPreferencial++;
+        console.log(
+          `✨ DORADO: ${item.nombre} - Preferencial: ${item.preferencial} (Puesto: ${position})`
+        );
+      } else {
+        countNoPreferencial++;
+        console.log(
+          `⚪ NORMAL: ${item.nombre} - Preferencial: ${item.preferencial} (Puesto: ${position})`
+        );
+      }
 
       let medal = '';
       if (position === 1) medal = '🥇';
@@ -238,6 +263,7 @@ function renderIngresantesList(items) {
       else if (position === 3) medal = '🥉';
       else if (position <= 10) medal = '🏅';
 
+      // Solo agregar clase 'preferencial' si ES preferencial
       const classes = [
         'ingresante-item',
         isTop10 ? 'top-10' : '',
@@ -255,6 +281,15 @@ function renderIngresantesList(items) {
         <span class="posicion">#${position}</span>
       </div>
     `;
+    })
+    .map((html, index, array) => {
+      // Mostrar resumen al final
+      if (index === array.length - 1) {
+        console.log(
+          `\n📊 RESUMEN: ${countPreferencial} preferenciales (DORADO) + ${countNoPreferencial} normales = ${items.length} total\n`
+        );
+      }
+      return html;
     })
     .join('');
 }

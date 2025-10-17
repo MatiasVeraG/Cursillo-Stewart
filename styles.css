@@ -754,14 +754,8 @@ section {
   transform: translateX(5px);
 }
 
-.ingresante-item.top-10 {
-  background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(255, 255, 255, 0.1));
-  border-left: 4px solid #ffd700;
-}
-
-.ingresante-item.top-10:hover {
-  background: linear-gradient(90deg, rgba(255, 215, 0, 0.2), rgba(255, 255, 255, 0.1));
-}
+/* NOTA: El tono dorado SOLO se aplica a estudiantes con preferencial=si */
+/* La clase 'top-10' ya no aplica estilos dorados automáticamente */
 
 .ingresante-item.special {
   background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(255, 255, 255, 0.1));
