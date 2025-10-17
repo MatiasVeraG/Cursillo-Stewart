@@ -244,6 +244,139 @@ try {
             sendResponse($data);
             break;
             
+        case 'delete_ingresantes':
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                sendResponse(['error' => 'Método no permitido'], 405);
+            }
+            
+            $key = $_GET['key'] ?? '';
+            if (empty($key)) {
+                sendResponse(['error' => 'Parámetro key requerido'], 400);
+            }
+            
+            $filename = DATA_DIR . $key . '.json';
+            if (!file_exists($filename)) {
+                sendResponse(['error' => 'Lista no encontrada'], 404);
+            }
+            
+            // Eliminar archivo
+            if (!unlink($filename)) {
+                logError("No se pudo eliminar el archivo: $filename");
+                sendResponse(['error' => 'Error al eliminar el archivo'], 500);
+            }
+            
+            // Actualizar índice
+            $index = readIndex();
+            $index = array_values(array_filter($index, function($item) use ($key) {
+                return $item !== $key;
+            }));
+            
+            if (!writeIndex($index)) {
+                sendResponse(['error' => 'Error al actualizar el índice'], 500);
+            }
+            
+            sendResponse(['ok' => true]);
+            break;
+            
+        case 'update_ingresantes':
+            if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
+                sendResponse(['error' => 'Método no permitido'], 405);
+            }
+            
+            $input = file_get_contents('php://input');
+            if (empty($input)) {
+                sendResponse(['error' => 'No se recibieron datos'], 400);
+            }
+            
+            $data = json_decode($input, true);
+            if (!$data || !isset($data['key'])) {
+                sendResponse(['error' => 'JSON inválido o falta campo key'], 400);
+            }
+            
+            $oldKey = $data['key'];
+            $oldFilename = DATA_DIR . $oldKey . '.json';
+            
+            if (!file_exists($oldFilename)) {
+                sendResponse(['error' => 'Lista no encontrada'], 404);
+            }
+            
+            // Leer datos existentes
+            $existingData = json_decode(file_get_contents($oldFilename), true);
+            if (!$existingData) {
+                sendResponse(['error' => 'Error al leer datos existentes'], 500);
+            }
+            
+            // Actualizar campos proporcionados
+            $updatedExam = $data['exam'] ?? $existingData['exam'];
+            $updatedYear = $data['year'] ?? $existingData['year'];
+            $newKey = $updatedExam . '-' . $updatedYear;
+            
+            // Normalizar items si se proporcionaron
+            $updatedItems = $existingData['items'];
+            if (isset($data['items'])) {
+                $updatedItems = [];
+                foreach ($data['items'] as $item) {
+                    $normalizedItem = [
+                        'nombre' => $item['nombre'] ?? '',
+                        'puntaje' => (float)($item['puntaje'] ?? 0),
+                        'carrera' => $item['carrera'] ?? '',
+                        'puesto' => (int)($item['puesto'] ?? 0),
+                        'preferencial' => normalizePreferencial($item['preferencial'] ?? false)
+                    ];
+                    $updatedItems[] = $normalizedItem;
+                }
+            }
+            
+            // Crear estructura actualizada
+            $updatedData = [
+                'key' => $newKey,
+                'exam' => $updatedExam,
+                'year' => (int)$updatedYear,
+                'meta' => array_merge(
+                    $existingData['meta'] ?? [],
+                    $data['meta'] ?? [],
+                    ['total' => count($updatedItems), 'fecha' => date('c')]
+                ),
+                'items' => $updatedItems
+            ];
+            
+            $newFilename = DATA_DIR . $newKey . '.json';
+            
+            // Guardar archivo actualizado
+            $json = json_encode($updatedData, JSON_PRETTY_PRINT | JSON_UNESCAPED_UNICODE);
+            if (file_put_contents($newFilename, $json, LOCK_EX) === false) {
+                logError("No se pudo escribir el archivo: $newFilename");
+                sendResponse(['error' => 'Error al guardar los datos'], 500);
+            }
+            
+            // Si cambió la clave, eliminar el archivo anterior
+            if ($oldKey !== $newKey && file_exists($oldFilename)) {
+                unlink($oldFilename);
+            }
+            
+            // Actualizar índice
+            $index = readIndex();
+            if ($oldKey !== $newKey) {
+                // Reemplazar clave antigua con nueva
+                $index = array_map(function($item) use ($oldKey, $newKey) {
+                    return $item === $oldKey ? $newKey : $item;
+                }, $index);
+            }
+            
+            // Agregar nueva clave si no existe
+            if (!in_array($newKey, $index)) {
+                $index[] = $newKey;
+            }
+            
+            $index = sortExamKeys(array_unique($index));
+            
+            if (!writeIndex($index)) {
+                sendResponse(['error' => 'Error al actualizar el índice'], 500);
+            }
+            
+            sendResponse(['ok' => true, 'key' => $newKey]);
+            break;
+            
         default:
             sendResponse(['error' => 'Acción no válida'], 400);
     }

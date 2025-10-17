@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test Títulos</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        padding: 20px;
+        max-width: 800px;
+        margin: 0 auto;
+      }
+      .form-group {
+        margin-bottom: 15px;
+      }
+      label {
+        display: block;
+        margin-bottom: 5px;
+        font-weight: bold;
+      }
+      input,
+      textarea {
+        width: 100%;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+      }
+      button {
+        background: #007cba;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        margin: 5px;
+        cursor: pointer;
+      }
+      button:hover {
+        background: #005a87;
+      }
+      .secondary {
+        background: #6c757d;
+      }
+      .secondary:hover {
+        background: #545b62;
+      }
+      .preview {
+        background: #f8f9fa;
+        padding: 20px;
+        border-radius: 5px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🧪 Test - Editor de Títulos</h1>
+
+    <div class="form-group">
+      <label for="ingresantes-title">Título Principal:</label>
+      <input type="text" id="ingresantes-title" value="🎓 Nuestros Ingresantes" />
+    </div>
+
+    <div class="form-group">
+      <label for="ingresantes-subtitle">Subtítulo:</label>
+      <textarea id="ingresantes-subtitle" rows="2">
+Conoce a los estudiantes que han confiado en nosotros para su preparación.</textarea
+      >
+    </div>
+
+    <button onclick="saveIngresantesTitles()">💾 Guardar Títulos</button>
+    <button class="secondary" onclick="resetIngresantesTitles()">🔄 Restaurar por Defecto</button>
+    <button class="secondary" onclick="loadIngresantesTitles()">📂 Cargar Títulos</button>
+
+    <div class="preview">
+      <h2>📋 Vista Previa:</h2>
+      <h3 id="preview-title">🎓 Nuestros Ingresantes</h3>
+      <p id="preview-subtitle">
+        Conoce a los estudiantes que han confiado en nosotros para su preparación.
+      </p>
+    </div>
+
+    <div class="preview">
+      <h2>💾 LocalStorage:</h2>
+      <pre id="localStorage-content">Cargando...</pre>
+    </div>
+
+    <script>
+      // Copiar las funciones del admin.js para prueba
+
+      // Cargar títulos guardados
+      function loadIngresantesTitles() {
+        const titleEl = document.getElementById('ingresantes-title');
+        const subtitleEl = document.getElementById('ingresantes-subtitle');
+
+        if (!titleEl || !subtitleEl) {
+          console.warn('Elementos de títulos no encontrados');
+          return;
+        }
+
+        const savedTitles = JSON.parse(localStorage.getItem('ingresantes_section_titles') || '{}');
+
+        titleEl.value = savedTitles.title || '🎓 Nuestros Ingresantes';
+        subtitleEl.value =
+          savedTitles.subtitle ||
+          'Conoce a los estudiantes que han confiado en nosotros para su preparación.';
+
+        updatePreview();
+        updateLocalStorageDisplay();
+        console.log('Títulos cargados:', savedTitles);
+      }
+
+      // Guardar títulos
+      function saveIngresantesTitles() {
+        const titleEl = document.getElementById('ingresantes-title');
+        const subtitleEl = document.getElementById('ingresantes-subtitle');
+
+        if (!titleEl || !subtitleEl) {
+          alert('❌ Error: Elementos no encontrados');
+          return;
+        }
+
+        const titles = {
+          title: titleEl.value.trim(),
+          subtitle: subtitleEl.value.trim(),
+          lastUpdated: new Date().toISOString(),
+        };
+
+        if (!titles.title || !titles.subtitle) {
+          alert('❌ Por favor completa todos los campos');
+          return;
+        }
+
+        try {
+          localStorage.setItem('ingresantes_section_titles', JSON.stringify(titles));
+          notifyFrontendUpdate();
+          updatePreview();
+          updateLocalStorageDisplay();
+          alert('✅ Títulos guardados exitosamente');
+          console.log('Títulos guardados:', titles);
+        } catch (error) {
+          console.error('Error saving titles:', error);
+          alert('❌ Error al guardar títulos');
+        }
+      }
+
+      // Restaurar títulos por defecto
+      function resetIngresantesTitles() {
+        if (!confirm('¿Restaurar los títulos por defecto?')) return;
+
+        const titleEl = document.getElementById('ingresantes-title');
+        const subtitleEl = document.getElementById('ingresantes-subtitle');
+
+        if (titleEl && subtitleEl) {
+          titleEl.value = '🎓 Nuestros Ingresantes';
+          subtitleEl.value =
+            'Conoce a los estudiantes que han confiado en nosotros para su preparación.';
+
+          localStorage.removeItem('ingresantes_section_titles');
+          notifyFrontendUpdate();
+          updatePreview();
+          updateLocalStorageDisplay();
+          alert('🔄 Títulos restaurados por defecto');
+          console.log('Títulos restaurados a valores por defecto');
+        }
+      }
+
+      // Notificar cambios al frontend
+      function notifyFrontendUpdate() {
+        localStorage.setItem('ingresantes_update_timestamp', Date.now());
+        window.dispatchEvent(new CustomEvent('ingresantesUpdated'));
+      }
+
+      // Actualizar vista previa
+      function updatePreview() {
+        const titleEl = document.getElementById('ingresantes-title');
+        const subtitleEl = document.getElementById('ingresantes-subtitle');
+        const previewTitle = document.getElementById('preview-title');
+        const previewSubtitle = document.getElementById('preview-subtitle');
+
+        if (titleEl && previewTitle) {
+          previewTitle.textContent = titleEl.value;
+        }
+        if (subtitleEl && previewSubtitle) {
+          previewSubtitle.textContent = subtitleEl.value;
+        }
+      }
+
+      // Actualizar display de localStorage
+      function updateLocalStorageDisplay() {
+        const saved = localStorage.getItem('ingresantes_section_titles');
+        const display = document.getElementById('localStorage-content');
+        if (display) {
+          display.textContent = saved
+            ? JSON.stringify(JSON.parse(saved), null, 2)
+            : 'No hay títulos guardados';
+        }
+      }
+
+      // Event listeners
+      document.getElementById('ingresantes-title').addEventListener('input', updatePreview);
+      document.getElementById('ingresantes-subtitle').addEventListener('input', updatePreview);
+
+      // Inicializar al cargar
+      document.addEventListener('DOMContentLoaded', () => {
+        loadIngresantesTitles();
+        updatePreview();
+        updateLocalStorageDisplay();
+      });
+    </script>
+  </body>
+</html>

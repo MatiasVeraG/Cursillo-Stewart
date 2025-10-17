@@ -843,7 +843,8 @@ section {
 }
 
 /* Estadísticas resumidas */
-.ingresantes-stats {
+.ingresantes-stats,
+.stats {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   gap: 2rem;
@@ -851,6 +852,7 @@ section {
   padding: 3rem;
   border-radius: 1.5rem;
   margin-top: 3rem;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
 }
 
 .stat-item {
@@ -872,6 +874,22 @@ section {
   text-transform: uppercase;
   letter-spacing: 1px;
   opacity: 0.9;
+}
+
+/* Estilos especiales para estadísticas */
+.stat-item.total-stat .stat-number {
+  color: #ffd700;
+  text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+}
+
+.stat-item.error-stat .stat-number {
+  color: #ff6b6b;
+}
+
+.stats .stat-item:last-child {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  padding: 1rem;
 }
 
 /* Animaciones */
@@ -2226,5 +2244,215 @@ nav a.active::after {
 
   .cta-content p {
     font-size: 1.125rem;
+  }
+}
+
+/* ===== ESTILOS PARA BOTONES DINÁMICOS DE INGRESANTES ===== */
+
+/* Contenedor de botones de exámenes */
+.exam-tabs {
+  display: flex;
+  gap: 0.75rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-bottom: 2rem;
+}
+
+/* Botones de año/examen */
+.year-pill {
+  padding: 0.5rem 1rem;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  cursor: pointer;
+  background: var(--white);
+  color: var(--navy);
+  font-weight: 500;
+  transition: all 0.3s ease;
+  text-decoration: none;
+}
+
+.year-pill:hover {
+  background: var(--navy);
+  color: var(--white);
+  transform: translateY(-2px);
+}
+
+.year-pill.active {
+  background: var(--navy);
+  color: var(--white);
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+}
+
+/* Lista de ingresantes dinámica */
+.ingresantes {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background: var(--white);
+  border-radius: 0.75rem;
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  margin-bottom: 2rem;
+}
+
+.ingresantes .row {
+  display: flex;
+  align-items: center;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--gray-200);
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.ingresantes .row:last-child {
+  border-bottom: none;
+}
+
+.ingresantes .row:hover {
+  background: var(--gray-50);
+  transform: translateX(5px);
+}
+
+/* Columnas de la fila */
+.ingresantes .col {
+  flex: 1;
+}
+
+.ingresantes .col.nombre {
+  flex: 2;
+  font-weight: 600;
+  color: var(--navy);
+}
+
+.ingresantes .col.puntaje {
+  color: var(--red);
+  font-weight: 600;
+  font-size: 1.1rem;
+  text-align: center;
+}
+
+.ingresantes .col.carrera {
+  color: var(--gray-600);
+  font-size: 0.95rem;
+  flex: 2;
+  text-align: center;
+}
+
+.ingresantes .col.puesto {
+  color: var(--blue);
+  font-weight: 600;
+  text-align: center;
+  min-width: 60px;
+}
+
+/* Nombres preferenciales en dorado */
+.preferencial-name {
+  color: #d4af37 !important;
+  font-weight: 600 !important;
+}
+
+/* Medallas para los primeros lugares */
+.ingresantes .row:nth-child(-n + 3) {
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.1), rgba(255, 255, 255, 0.1));
+  border-left: 4px solid #ffd700;
+}
+
+/* Estilos para ingresantes preferenciales dinámicos */
+.ingresante-item.preferencial {
+  background: linear-gradient(135deg, rgba(212, 175, 55, 0.1), rgba(255, 215, 0, 0.05));
+  border-left: 4px solid #d4af37;
+  position: relative;
+}
+
+.ingresante-item.preferencial .nombre {
+  color: #d4af37;
+  font-weight: 600;
+}
+
+.ingresante-item.preferencial::after {
+  content: '✨';
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9em;
+  opacity: 0.7;
+}
+
+/* Estados de error y carga */
+.no-data,
+.error {
+  text-align: center;
+  padding: 2rem;
+  color: #666;
+  font-style: italic;
+}
+
+.error {
+  color: #dc2626;
+}
+
+/* Botones de tabs dinámicos */
+.year-tab {
+  background: var(--white);
+  border: 2px solid var(--primary);
+  color: var(--primary);
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  margin: 0 5px 10px 0;
+  font-size: 0.95rem;
+}
+
+.year-tab:hover {
+  background: var(--primary);
+  color: var(--white);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 102, 204, 0.2);
+}
+
+.year-tab.active {
+  background: var(--primary);
+  color: var(--white);
+  box-shadow: 0 4px 15px rgba(0, 102, 204, 0.3);
+}
+
+.ingresantes .row:nth-child(-n + 10) {
+  background: linear-gradient(90deg, rgba(255, 215, 0, 0.05), rgba(255, 255, 255, 0.05));
+  border-left: 2px solid #ffd700;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .exam-tabs {
+    gap: 0.5rem;
+  }
+
+  .year-pill {
+    padding: 0.5rem 0.75rem;
+    font-size: 0.875rem;
+  }
+
+  .ingresantes .row {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.25rem;
+    padding: 1rem;
+  }
+
+  .ingresantes .col {
+    width: 100%;
+    text-align: left !important;
+  }
+
+  .ingresantes .col.nombre {
+    font-size: 1.1rem;
+    margin-bottom: 0.25rem;
+  }
+
+  .ingresantes .col.puntaje {
+    font-size: 1rem;
   }
 }

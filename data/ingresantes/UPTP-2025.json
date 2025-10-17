@@ -1,33 +1,257 @@
 {
-  "key": "UPTP-2025",
-  "exam": "UPTP",
-  "year": 2025,
-  "meta": {
-    "archivo": "Lista_Ingresantes_UPTP_2025.xlsx",
-    "total": 3,
-    "fecha": "2025-10-14T12:00:00Z"
-  },
-  "items": [
-    {
-      "nombre": "María García López",
-      "puntaje": 95.5,
-      "carrera": "Ingeniería en Sistemas",
-      "puesto": 1,
-      "preferencial": true
+    "key": "UPTP-2025",
+    "exam": "UPTP",
+    "year": 2025,
+    "meta": {
+        "archivo": "Ingresantes UPTP 2025.xlsx",
+        "total": 35,
+        "fecha": "2025-10-17T13:11:11+00:00"
     },
-    {
-      "nombre": "Juan Pérez Rodríguez",
-      "puntaje": 88.2,
-      "carrera": "Ingeniería Civil",
-      "puesto": 2,
-      "preferencial": false
-    },
-    {
-      "nombre": "Ana Martínez Silva",
-      "puntaje": 92.1,
-      "carrera": "Ingeniería Electrónica",
-      "puesto": 3,
-      "preferencial": true
-    }
-  ]
+    "items": [
+        {
+            "nombre": "Mateo Mongelos",
+            "puntaje": 100,
+            "carrera": "",
+            "puesto": 1,
+            "preferencial": true
+        },
+        {
+            "nombre": "Axel Acosta",
+            "puntaje": 84.62,
+            "carrera": "",
+            "puesto": 6,
+            "preferencial": true
+        },
+        {
+            "nombre": "Thiago Aguilar",
+            "puntaje": 80.77,
+            "carrera": "",
+            "puesto": 10,
+            "preferencial": true
+        },
+        {
+            "nombre": "AndrÃ©s Torres",
+            "puntaje": 80.77,
+            "carrera": "",
+            "puesto": 11,
+            "preferencial": true
+        },
+        {
+            "nombre": "Naomi Reyes",
+            "puntaje": 76.92,
+            "carrera": "",
+            "puesto": 15,
+            "preferencial": true
+        },
+        {
+            "nombre": "Alberto Pukall",
+            "puntaje": 73.08,
+            "carrera": "",
+            "puesto": 22,
+            "preferencial": true
+        },
+        {
+            "nombre": "Samuel Ortiz",
+            "puntaje": 69.23,
+            "carrera": "",
+            "puesto": 26,
+            "preferencial": true
+        },
+        {
+            "nombre": "Fernando Alvarenga",
+            "puntaje": 69.23,
+            "carrera": "",
+            "puesto": 28,
+            "preferencial": true
+        },
+        {
+            "nombre": "Mateo Mendieta",
+            "puntaje": 69.23,
+            "carrera": "",
+            "puesto": 31,
+            "preferencial": true
+        },
+        {
+            "nombre": "Marco Ortigoza",
+            "puntaje": 69.23,
+            "carrera": "",
+            "puesto": 33,
+            "preferencial": true
+        },
+        {
+            "nombre": "Alejandra Ferreira",
+            "puntaje": 71.99,
+            "carrera": "",
+            "puesto": 36,
+            "preferencial": false
+        },
+        {
+            "nombre": "JoaquÃ­n Acosta",
+            "puntaje": 71.05,
+            "carrera": "",
+            "puesto": 37,
+            "preferencial": false
+        },
+        {
+            "nombre": "Analia Alcaraz",
+            "puntaje": 65.48,
+            "carrera": "",
+            "puesto": 49,
+            "preferencial": false
+        },
+        {
+            "nombre": "Camila Valdez",
+            "puntaje": 64.28,
+            "carrera": "",
+            "puesto": 52,
+            "preferencial": false
+        },
+        {
+            "nombre": "Dioggo Pizurno",
+            "puntaje": 63.96,
+            "carrera": "",
+            "puesto": 53,
+            "preferencial": false
+        },
+        {
+            "nombre": "Anibal Sapriza",
+            "puntaje": 63.65,
+            "carrera": "",
+            "puesto": 57,
+            "preferencial": false
+        },
+        {
+            "nombre": "Mateo Ruiz Diaz",
+            "puntaje": 63.61,
+            "carrera": "",
+            "puesto": 58,
+            "preferencial": false
+        },
+        {
+            "nombre": "Alejandro Laconich",
+            "puntaje": 62.14,
+            "carrera": "",
+            "puesto": 60,
+            "preferencial": false
+        },
+        {
+            "nombre": "Alejandro Villalba",
+            "puntaje": 61.83,
+            "carrera": "",
+            "puesto": 61,
+            "preferencial": false
+        },
+        {
+            "nombre": "Alejandro VelÃ¡zquez",
+            "puntaje": 61.78,
+            "carrera": "",
+            "puesto": 62,
+            "preferencial": false
+        },
+        {
+            "nombre": "Elias Telmo PÃ¡ez",
+            "puntaje": 61.52,
+            "carrera": "",
+            "puesto": 63,
+            "preferencial": false
+        },
+        {
+            "nombre": "Mauricio Asfaduroff",
+            "puntaje": 61.15,
+            "carrera": "",
+            "puesto": 70,
+            "preferencial": false
+        },
+        {
+            "nombre": "Magali Melgarejo",
+            "puntaje": 60.89,
+            "carrera": "",
+            "puesto": 71,
+            "preferencial": false
+        },
+        {
+            "nombre": "Franco CÃ¡ceres",
+            "puntaje": 60.89,
+            "carrera": "",
+            "puesto": 72,
+            "preferencial": false
+        },
+        {
+            "nombre": "Hugo Alviso",
+            "puntaje": 60.21,
+            "carrera": "",
+            "puesto": 76,
+            "preferencial": false
+        },
+        {
+            "nombre": "Enzo FernÃ¡ndez",
+            "puntaje": 59.86,
+            "carrera": "",
+            "puesto": 79,
+            "preferencial": false
+        },
+        {
+            "nombre": "Mateo De La Cueva",
+            "puntaje": 59.33,
+            "carrera": "",
+            "puesto": 82,
+            "preferencial": false
+        },
+        {
+            "nombre": "Paloma Frutos",
+            "puntaje": 59.33,
+            "carrera": "",
+            "puesto": 83,
+            "preferencial": false
+        },
+        {
+            "nombre": "Fabian Cartes",
+            "puntaje": 59.23,
+            "carrera": "",
+            "puesto": 85,
+            "preferencial": false
+        },
+        {
+            "nombre": "Gonzalo Doldan",
+            "puntaje": 59.06,
+            "carrera": "",
+            "puesto": 86,
+            "preferencial": false
+        },
+        {
+            "nombre": "Nelly Chen",
+            "puntaje": 58.71,
+            "carrera": "",
+            "puesto": 87,
+            "preferencial": false
+        },
+        {
+            "nombre": "Ignacio Gimenez",
+            "puntaje": 58.71,
+            "carrera": "",
+            "puesto": 89,
+            "preferencial": false
+        },
+        {
+            "nombre": "Santiago Paredes",
+            "puntaje": 57.46,
+            "carrera": "",
+            "puesto": 95,
+            "preferencial": false
+        },
+        {
+            "nombre": "Bernardo Delvalle",
+            "puntaje": 57.4,
+            "carrera": "",
+            "puesto": 96,
+            "preferencial": false
+        },
+        {
+            "nombre": "Alan Gayoso",
+            "puntaje": 59.9,
+            "carrera": "",
+            "puesto": 77,
+            "preferencial": false
+        }
+    ]
 }

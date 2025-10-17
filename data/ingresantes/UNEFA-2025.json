@@ -1,0 +1,94 @@
+{
+  "exam": "UPTP",
+  "year": 2025,
+  "meta": {
+    "total": 12,
+    "importDate": "2024-10-14T18:32:00Z"
+  },
+  "items": [
+    {
+      "nombre": "Mateo Mongelos",
+      "puntaje": 100,
+      "carrera": "Ing. Electromecánica",
+      "posicion": 1,
+      "preferencial": false
+    },
+    {
+      "nombre": "Axel Acosta",
+      "puntaje": 96.8,
+      "carrera": "Ing. Informática",
+      "posicion": 2,
+      "preferencial": true
+    },
+    {
+      "nombre": "Carlos Rodríguez",
+      "puntaje": 94.2,
+      "carrera": "Ing. Electromecánica",
+      "posicion": 3,
+      "preferencial": true
+    },
+    {
+      "nombre": "Thiago Aguilar",
+      "puntaje": 92.5,
+      "carrera": "Ing. Civil",
+      "posicion": 4,
+      "preferencial": false
+    },
+    {
+      "nombre": "Naomi Reyes",
+      "puntaje": 90.7,
+      "carrera": "Ing. Electromecánica",
+      "posicion": 5,
+      "preferencial": true
+    },
+    {
+      "nombre": "Alberto Pukall",
+      "puntaje": 89.1,
+      "carrera": "Ing. Electromecánica",
+      "posicion": 6,
+      "preferencial": false
+    },
+    {
+      "nombre": "Ana López",
+      "puntaje": 87.3,
+      "carrera": "Ing. Informática",
+      "posicion": 7,
+      "preferencial": false
+    },
+    {
+      "nombre": "Samuel Ortiz",
+      "puntaje": 85.8,
+      "carrera": "Ing. Electromecánica",
+      "posicion": 8,
+      "preferencial": true
+    },
+    {
+      "nombre": "Fernando Alvarenga",
+      "puntaje": 84.2,
+      "carrera": "Ing. Informática",
+      "posicion": 9,
+      "preferencial": false
+    },
+    {
+      "nombre": "Marco Ortigoza",
+      "puntaje": 82.6,
+      "carrera": "Ing. Electromecánica",
+      "posicion": 10,
+      "preferencial": true
+    },
+    {
+      "nombre": "Alejandra Ferreira",
+      "puntaje": 80.1,
+      "carrera": "Ing. Civil",
+      "posicion": 11,
+      "preferencial": false
+    },
+    {
+      "nombre": "Joaquín Acosta",
+      "puntaje": 78.9,
+      "carrera": "Ing. Informática",
+      "posicion": 12,
+      "preferencial": false
+    }
+  ]
+}

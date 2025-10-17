@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Panel de Administración - Cursillo Stewart</title>
+
+    <!-- ESTILOS -->
+    <link rel="stylesheet" href="admin.css" />
+
+    <!-- LIBRERÍA XLSX -->
+    <script src="https://cdn.sheetjs.com/xlsx-0.20.0/package/dist/xlsx.full.min.js"></script>
+  </head>
+  <body>
+    <!-- PANTALLA DE LOGIN -->
+    <div id="login-screen" class="login-container">
+      <div class="login-card">
+        <h1>🔐 Panel de Administración</h1>
+        <p>Cursillo Stewart</p>
+        <form id="login-form">
+          <div class="form-group">
+            <label for="admin-username">Usuario</label>
+            <input type="text" id="admin-username" required autocomplete="username" />
+          </div>
+          <div class="form-group">
+            <label for="admin-password">Contraseña</label>
+            <input type="password" id="admin-password" required autocomplete="current-password" />
+          </div>
+          <button type="submit" class="btn-primary">Iniciar Sesión</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- PANEL DE ADMINISTRACIÓN -->
+    <div id="admin-panel" class="hidden">
+      <!-- HEADER -->
+      <header class="admin-header">
+        <h1>📊 Panel de Administración</h1>
+        <button id="logout-btn" class="btn-secondary">Cerrar Sesión</button>
+      </header>
+
+      <!-- NAVEGACIÓN -->
+      <nav class="admin-nav">
+        <button class="nav-tab active" data-section="ingresantes">🎓 Ingresantes</button>
+        <button class="nav-tab" data-section="countdown">⏰ Contador</button>
+        <button class="nav-tab" data-section="content">📝 Contenido</button>
+      </nav>
+
+      <!-- CONTENIDO PRINCIPAL -->
+      <main class="admin-content">
+        <!-- ==================== SECCIÓN INGRESANTES ==================== -->
+        <section id="ingresantes-section" class="admin-section active">
+          <h2>🎓 Gestión de Ingresantes</h2>
+
+          <!-- Títulos de la Sección -->
+          <div class="admin-card">
+            <h3>📝 Títulos de la Sección</h3>
+            <div class="form-group">
+              <label for="ingresantes-title">Título Principal</label>
+              <input type="text" id="ingresantes-title" placeholder="🎓 Nuestros Ingresantes" />
+            </div>
+            <div class="form-group">
+              <label for="ingresantes-subtitle">Subtítulo</label>
+              <input
+                type="text"
+                id="ingresantes-subtitle"
+                placeholder="Conoce a los estudiantes..."
+              />
+            </div>
+            <div class="button-group">
+              <button id="save-titles-btn" class="btn-primary">💾 Guardar Títulos</button>
+              <button id="reset-titles-btn" class="btn-secondary">
+                🔄 Restaurar Predeterminados
+              </button>
+            </div>
+            <div id="titles-status"></div>
+          </div>
+
+          <!-- Cargar Excel -->
+          <div class="admin-card">
+            <h3>📤 Cargar Lista desde Excel</h3>
+            <div class="upload-area">
+              <input type="file" id="inputExcel" accept=".xlsx,.xls" style="display: none" />
+              <button onclick="document.getElementById('inputExcel').click()" class="btn-primary">
+                📁 Seleccionar Archivo Excel
+              </button>
+              <p class="text-muted">Formato: XLSX o XLS</p>
+            </div>
+          </div>
+
+          <!-- Vista Previa del Excel -->
+          <div id="excel-preview-card" class="admin-card" style="display: none">
+            <h3>👀 Vista Previa</h3>
+            <div id="excel-info"></div>
+            <div id="excel-preview" class="excel-preview-container"></div>
+            <div class="preview-actions">
+              <button class="btn-cancel-excel btn-secondary">❌ Cancelar</button>
+            </div>
+          </div>
+
+          <!-- Listas Guardadas -->
+          <div class="admin-card">
+            <h3>📚 Listas Guardadas</h3>
+            <div id="gi-saved-list" class="saved-lists-container">
+              <div class="gi-saved-loading">Cargando...</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- ==================== SECCIÓN COUNTDOWN ==================== -->
+        <section id="countdown-section" class="admin-section">
+          <h2>⏰ Configuración del Contador</h2>
+
+          <div class="admin-card">
+            <h3>⚙️ Ajustes del Contador Regresivo</h3>
+
+            <!-- Habilitar Countdown -->
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="enable-countdown" checked />
+                <span>Mostrar Contador Regresivo</span>
+              </label>
+            </div>
+
+            <!-- Opciones del Countdown -->
+            <div id="countdown-options" class="options-group">
+              <div class="form-group">
+                <label for="counters-title">Título del Contador</label>
+                <input type="text" id="counters-title" value="Próximo Cursillo Intensivo" />
+              </div>
+
+              <div class="form-group">
+                <label for="counters-subtitle">Subtítulo</label>
+                <input
+                  type="text"
+                  id="counters-subtitle"
+                  value="¡No te pierdas nuestro próximo cursillo intensivo!"
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="countdown-date">Fecha y Hora del Evento</label>
+                <input type="datetime-local" id="countdown-date" value="2025-12-09T08:00" />
+              </div>
+
+              <div class="color-grid">
+                <div class="form-group">
+                  <label for="counters-title-color">Color del Título</label>
+                  <input type="color" id="counters-title-color" value="#ffffff" />
+                  <span id="title-color-label" class="color-label">#ffffff</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="counters-subtitle-color">Color del Subtítulo</label>
+                  <input type="color" id="counters-subtitle-color" value="#ffffff" />
+                  <span id="subtitle-color-label" class="color-label">#ffffff</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="counters-background-color">Color de Fondo</label>
+                  <input type="color" id="counters-background-color" value="#dc2626" />
+                  <span id="background-color-label" class="color-label">#dc2626</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="countdown-timer-background">Fondo del Timer</label>
+                  <input type="color" id="countdown-timer-background" value="#1e40af" />
+                  <span id="timer-background-label" class="color-label">#1e40af</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="countdown-numbers-color">Color de los Números</label>
+                  <input type="color" id="countdown-numbers-color" value="#ffffff" />
+                  <span id="numbers-color-label" class="color-label">#ffffff</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Habilitar CTA -->
+            <div class="form-group">
+              <label class="checkbox-label">
+                <input type="checkbox" id="enable-cta" checked />
+                <span>Mostrar Botón de Llamada a la Acción (CTA)</span>
+              </label>
+            </div>
+
+            <!-- Opciones del CTA -->
+            <div id="cta-options" class="options-group">
+              <div class="form-group">
+                <label for="cta-text">Texto del Botón</label>
+                <input type="text" id="cta-text" value="Inscribirme Ahora" />
+              </div>
+
+              <div class="color-grid">
+                <div class="form-group">
+                  <label for="cta-button-color">Color del Botón</label>
+                  <input type="color" id="cta-button-color" value="#dc2626" />
+                  <span id="cta-color-label" class="color-label">#dc2626</span>
+                </div>
+
+                <div class="form-group">
+                  <label for="cta-text-color">Color del Texto</label>
+                  <input type="color" id="cta-text-color" value="#ffffff" />
+                  <span id="cta-text-color-label" class="color-label">#ffffff</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Botones de Acción -->
+            <div class="button-group">
+              <button id="save-countdown-defaults-btn" class="btn-primary">
+                💾 Guardar como Predeterminado
+              </button>
+              <button id="restore-countdown-defaults-btn" class="btn-secondary">
+                🔄 Restaurar Predeterminados
+              </button>
+            </div>
+
+            <p class="text-muted">
+              ℹ️ Los cambios se guardan automáticamente. Usa "Guardar como Predeterminado" para
+              establecer esta configuración como base.
+            </p>
+          </div>
+        </section>
+
+        <!-- ==================== SECCIÓN CONTENIDO ==================== -->
+        <section id="content-section" class="admin-section">
+          <h2>📝 Gestión de Contenido</h2>
+          <div class="admin-card">
+            <p class="text-muted">Esta sección estará disponible próximamente...</p>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- ==================== SCRIPTS MODULARES ==================== -->
+    <!-- Los módulos se cargan en orden específico -->
+    <script src="admin/modules/auth.module.js"></script>
+    <script src="admin/modules/ingresantes.module.js"></script>
+    <script src="admin/modules/countdown.module.js"></script>
+    <script src="admin/admin-modular.js"></script>
+
+    <!-- Script para navegación entre secciones -->
+    <script>
+      document.addEventListener('DOMContentLoaded', () => {
+        const navTabs = document.querySelectorAll('.nav-tab');
+        const sections = document.querySelectorAll('.admin-section');
+
+        navTabs.forEach(tab => {
+          tab.addEventListener('click', () => {
+            const targetSection = tab.dataset.section;
+
+            // Remover active de todos
+            navTabs.forEach(t => t.classList.remove('active'));
+            sections.forEach(s => s.classList.remove('active'));
+
+            // Agregar active al seleccionado
+            tab.classList.add('active');
+            const section = document.getElementById(`${targetSection}-section`);
+            if (section) section.classList.add('active');
+          });
+        });
+      });
+    </script>
+  </body>
+</html>

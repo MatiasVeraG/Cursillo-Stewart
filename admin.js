@@ -2412,6 +2412,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Initialize default config date display
   admin.initDefaultConfigDate();
 
+  // Initialize ingresantes titles
+  loadIngresantesTitles();
+
   // Global admin instance for debugging
   window.adminPanel = admin;
 });
@@ -2473,7 +2476,7 @@ let currentExamInfo = null;
 
 // Configuración del API
 const INGRESANTES_API = {
-  BASE_URL: '/api/admin_api.php',
+  BASE_URL: 'api/admin_api.php',
 
   // Hacer petición al API
   async request(params = {}, options = {}) {
@@ -2527,6 +2530,10 @@ const INGRESANTES_API = {
           return this.mockGetIngresantes(params.key);
         case 'import_ingresantes':
           return this.mockImportIngresantes(JSON.parse(options.body));
+        case 'delete_ingresantes':
+          return this.mockDeleteIngresantes(params.key);
+        case 'update_ingresantes':
+          return this.mockUpdateIngresantes(JSON.parse(options.body));
         default:
           throw new Error('Acción no válida');
       }
@@ -2580,6 +2587,61 @@ const INGRESANTES_API = {
     }
 
     return { ok: true, key };
+  },
+
+  mockDeleteIngresantes(key) {
+    // Eliminar datos
+    localStorage.removeItem(`ingresantes_${key}`);
+
+    // Actualizar índice
+    const index = JSON.parse(localStorage.getItem('ingresantes_index') || '[]');
+    const newIndex = index.filter(item => item !== key);
+    localStorage.setItem('ingresantes_index', JSON.stringify(newIndex));
+
+    return { ok: true };
+  },
+
+  mockUpdateIngresantes(payload) {
+    const oldKey = payload.key;
+    const existingData = localStorage.getItem(`ingresantes_${oldKey}`);
+    if (!existingData) {
+      throw new Error('Lista no encontrada');
+    }
+
+    const existing = JSON.parse(existingData);
+    const updatedExam = payload.exam || existing.exam;
+    const updatedYear = payload.year || existing.year;
+    const newKey = `${updatedExam}-${updatedYear}`;
+
+    const updatedData = {
+      key: newKey,
+      exam: updatedExam,
+      year: updatedYear,
+      meta: {
+        ...existing.meta,
+        ...(payload.meta || {}),
+        fecha: new Date().toISOString(),
+      },
+      items: payload.items || existing.items,
+    };
+
+    // Guardar con nueva clave
+    localStorage.setItem(`ingresantes_${newKey}`, JSON.stringify(updatedData));
+
+    // Si cambió la clave, eliminar la anterior
+    if (oldKey !== newKey) {
+      localStorage.removeItem(`ingresantes_${oldKey}`);
+    }
+
+    // Actualizar índice
+    const index = JSON.parse(localStorage.getItem('ingresantes_index') || '[]');
+    const newIndex = index.map(item => (item === oldKey ? newKey : item));
+    if (!newIndex.includes(newKey)) {
+      newIndex.push(newKey);
+    }
+    localStorage.setItem('ingresantes_index', JSON.stringify([...new Set(newIndex)]));
+
+    return { ok: true, key: newKey };
   },
 
   // Importar ingresantes
@@ -2714,8 +2776,14 @@ function renderSavedLists(exams) {
         <div class="gi-saved-date">📅 ${formatDate(exam.meta.fecha)}</div>
       </div>
       <div class="gi-saved-actions">
-        <button class="btn-ver-lista" onclick="loadExamPreview('${exam.key}')">
+        <button class="btn-ver-lista gi-ver" data-key="${exam.key}">
           👁️ Ver
+        </button>
+        <button class="btn-editar-lista gi-editar" data-key="${exam.key}">
+          ✏️ Editar
+        </button>
+        <button class="btn-eliminar-lista gi-eliminar" data-key="${exam.key}">
+          �️ Eliminar
         </button>
       </div>
     </div>
@@ -2724,6 +2792,20 @@ function renderSavedLists(exams) {
     .join('');
 
   container.innerHTML = html;
+
+  // Agregar event listeners para los botones
+  container.addEventListener('click', e => {
+    const key = e.target.dataset.key;
+    if (!key) return;
+
+    if (e.target.matches('.gi-ver')) {
+      loadExamPreview(key);
+    } else if (e.target.matches('.gi-eliminar')) {
+      eliminarLista(key).catch(err => showToast(err.message, 'error'));
+    } else if (e.target.matches('.gi-editar')) {
+      abrirModalEdicion(key);
+    }
+  });
 }
 
 // Cargar vista previa de un examen
@@ -2747,6 +2829,417 @@ async function loadExamPreview(key) {
     console.error('Error loading exam preview:', error);
     showToast('Error al cargar la vista previa', 'error');
   }
+}
+
+// Eliminar lista
+async function eliminarLista(key) {
+  if (!confirm(`¿Eliminar la lista ${key}?`)) return;
+
+  try {
+    const response = await fetch(
+      `api/admin_api.php?action=delete_ingresantes&key=${encodeURIComponent(key)}`,
+      {
+        method: 'POST',
+        credentials: 'same-origin',
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const result = await response.json();
+    if (!result.ok) {
+      throw new Error(result.error || 'Error al eliminar');
+    }
+
+    showToast(`Eliminado ${key}`, 'success');
+    await loadSavedLists(); // Refrescar lista
+
+    // Notificar al frontend si está abierto en otra ventana
+    notifyFrontendUpdate();
+  } catch (error) {
+    console.error('Error eliminando lista:', error);
+    throw error;
+  }
+}
+
+// Notificar cambios al frontend usando localStorage
+function notifyFrontendUpdate() {
+  // Usar evento storage para comunicación entre ventanas
+  localStorage.setItem('ingresantes_update_timestamp', Date.now());
+
+  // Trigger evento personalizado en la ventana actual por si acaso
+  window.dispatchEvent(new CustomEvent('ingresantesUpdated'));
+
+  // Notificar específicamente cambios de títulos
+  localStorage.setItem('ingresantes_titles_changed', Date.now());
+  window.dispatchEvent(new CustomEvent('ingresantesTitlesChanged'));
+
+  console.log('Frontend update notification sent');
+}
+
+// Actualizar lista
+async function actualizarLista({ key, exam, year, meta, items }) {
+  try {
+    const response = await fetch('api/admin_api.php?action=update_ingresantes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      credentials: 'same-origin',
+      body: JSON.stringify({ key, exam, year, meta, items }),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP ${response.status}`);
+    }
+
+    const result = await response.json();
+    if (!result.ok) {
+      throw new Error(result.error || 'Error al actualizar');
+    }
+
+    showToast(`Actualizado ${result.key || `${exam}-${year}`}`, 'success');
+    await loadSavedLists(); // Refrescar lista
+  } catch (error) {
+    console.error('Error actualizando lista:', error);
+    throw error;
+  }
+}
+
+// Variables para el modal de edición
+let currentEditModal = null;
+let focusBeforeModal = null;
+
+// Abrir modal de edición accesible
+function abrirModalEdicion(key) {
+  // Guardar elemento con foco actual
+  focusBeforeModal = document.activeElement;
+
+  // Establecer variable global para el key que se está editando
+  window.__editingKey = key;
+
+  // Crear overlay del modal
+  const overlay = document.createElement('div');
+  overlay.className = 'modal-overlay';
+  overlay.id = 'editModalOverlay';
+
+  // Crear modal accesible
+  const modal = document.createElement('div');
+  modal.className = 'edit-modal';
+  modal.id = 'editListModal';
+  modal.setAttribute('role', 'dialog');
+  modal.setAttribute('aria-labelledby', 'editListTitle');
+  modal.setAttribute('aria-modal', 'true');
+
+  const [exam, year] = key.split('-');
+
+  modal.innerHTML = `
+    <div class="modal-header">
+      <h2 id="editListTitle" class="modal-title">Editar Lista: ${key}</h2>
+      <button type="button" class="modal-close" aria-label="Cerrar modal">&times;</button>
+    </div>
+    <div class="modal-body">
+      <form id="editListForm" novalidate>
+        <div class="form-group">
+          <label for="editExam" class="form-label">Examen</label>
+          <input id="editExam" name="exam" type="text" class="form-input" required maxlength="10" 
+                 autocomplete="off" value="${exam}" aria-describedby="errExam">
+          <div class="error-message" id="errExam"></div>
+        </div>
+        <div class="form-group">
+          <label for="editYear" class="form-label">Año</label>
+          <input id="editYear" name="year" type="number" class="form-input" required min="2000" max="2099" 
+                 inputmode="numeric" value="${year}" aria-describedby="errYear">
+          <div class="error-message" id="errYear"></div>
+        </div>
+        <div class="key-preview" id="keyPreview">
+          Clave resultante: <strong id="editKey">${key}</strong>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn-secondary" id="editCancel">Cancelar</button>
+      <button type="submit" form="editListForm" class="btn-primary" id="editSave">
+        Guardar Cambios
+      </button>
+    </div>
+    <div style="position: absolute; left: -10000px; width: 1px; height: 1px;" aria-live="polite" id="editListLive"></div>
+  `;
+
+  overlay.appendChild(modal);
+  document.body.appendChild(overlay);
+  currentEditModal = overlay;
+
+  // Configurar elementos
+  const examEl = modal.querySelector('#editExam');
+  const yearEl = modal.querySelector('#editYear');
+  const keyEl = modal.querySelector('#editKey');
+  const keyPreview = modal.querySelector('#keyPreview');
+  const errExam = modal.querySelector('#errExam');
+  const errYear = modal.querySelector('#errYear');
+  const form = modal.querySelector('#editListForm');
+  const saveBtn = modal.querySelector('#editSave');
+  const cancelBtn = modal.querySelector('#editCancel');
+  const closeBtn = modal.querySelector('.modal-close');
+  const liveRegion = modal.querySelector('#editListLive');
+
+  // Función para actualizar vista previa
+  function updatePreview() {
+    const exam = (examEl.value || '').toUpperCase();
+    const year = yearEl.value || '';
+    const newKey = `${exam}-${year}`;
+    keyEl.textContent = newKey;
+
+    // Validar y cambiar estilos
+    const isValidExam = /^[A-Z]{2,10}$/.test(exam);
+    const isValidYear = year >= 2000 && year <= 2099;
+
+    if (isValidExam && isValidYear) {
+      keyPreview.className = 'key-preview valid';
+    } else {
+      keyPreview.className = 'key-preview';
+    }
+  }
+
+  // Función para validar campo individual
+  function validateField(field, errorEl, validationFn, errorMsg) {
+    const isValid = validationFn(field.value);
+
+    if (isValid) {
+      field.classList.remove('error');
+      field.classList.add('success');
+      errorEl.textContent = '';
+      errorEl.classList.remove('show');
+    } else {
+      field.classList.remove('success');
+      field.classList.add('error');
+      errorEl.textContent = errorMsg;
+      errorEl.classList.add('show');
+    }
+
+    return isValid;
+  }
+
+  // Event listeners para vista previa y validación en tiempo real
+  examEl.addEventListener('input', e => {
+    e.target.value = e.target.value.toUpperCase();
+    updatePreview();
+
+    // Validación en tiempo real
+    if (e.target.value.length > 0) {
+      validateField(
+        e.target,
+        errExam,
+        val => /^[A-Z]{2,10}$/.test(val.trim()),
+        'Debe contener entre 2-10 letras mayúsculas'
+      );
+    } else {
+      e.target.classList.remove('error', 'success');
+      errExam.textContent = '';
+      errExam.classList.remove('show');
+    }
+  });
+
+  yearEl.addEventListener('input', e => {
+    updatePreview();
+
+    // Validación en tiempo real
+    if (e.target.value.length > 0) {
+      const year = parseInt(e.target.value, 10);
+      validateField(
+        e.target,
+        errYear,
+        val => {
+          const num = parseInt(val, 10);
+          return !isNaN(num) && num >= 2000 && num <= 2099;
+        },
+        'Debe ser un año entre 2000 y 2099'
+      );
+    } else {
+      e.target.classList.remove('error', 'success');
+      errYear.textContent = '';
+      errYear.classList.remove('show');
+    }
+  });
+
+  // Envío del formulario
+  form.addEventListener('submit', async ev => {
+    ev.preventDefault();
+
+    const exam = examEl.value.trim().toUpperCase();
+    const year = parseInt(yearEl.value, 10);
+
+    // Limpiar errores previos
+    errExam.textContent = '';
+    errExam.classList.remove('show');
+    errYear.textContent = '';
+    errYear.classList.remove('show');
+    examEl.classList.remove('error');
+    yearEl.classList.remove('error');
+    liveRegion.textContent = '';
+
+    // Validaciones finales
+    let isValid = true;
+
+    if (!/^[A-Z]{2,10}$/.test(exam)) {
+      validateField(examEl, errExam, () => false, 'Debe contener entre 2-10 letras mayúsculas');
+      isValid = false;
+    }
+
+    if (!(year >= 2000 && year <= 2099) || isNaN(year)) {
+      validateField(yearEl, errYear, () => false, 'Debe ser un año entre 2000 y 2099');
+      isValid = false;
+    }
+
+    if (!isValid) {
+      // Enfocar el primer campo con error
+      if (errExam.textContent) examEl.focus();
+      else if (errYear.textContent) yearEl.focus();
+      return;
+    }
+
+    // Deshabilitar botón durante envío
+    saveBtn.disabled = true;
+    saveBtn.textContent = 'Guardando...';
+
+    try {
+      const response = await fetch('api/admin_api.php?action=update_ingresantes', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        credentials: 'same-origin',
+        body: JSON.stringify({ key: window.__editingKey, exam, year }),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || data.ok === false) {
+        throw new Error(data.error || `HTTP ${response.status}`);
+      }
+
+      // Éxito - anunciar a screen reader
+      liveRegion.textContent = `Lista actualizada exitosamente como ${
+        data.key || `${exam}-${year}`
+      }`;
+
+      // Cerrar modal después de un breve delay
+      setTimeout(() => {
+        closeEditModal();
+        loadSavedLists(); // Refrescar listas
+        showToast(`✅ Lista actualizada: ${data.key || `${exam}-${year}`}`, 'success');
+      }, 500);
+    } catch (error) {
+      liveRegion.textContent = `Error al actualizar: ${error.message}`;
+      console.error('Error updating list:', error);
+      showToast(`❌ Error: ${error.message}`, 'error');
+    } finally {
+      // Restaurar botón
+      saveBtn.disabled = false;
+      saveBtn.textContent = 'Guardar Cambios';
+    }
+  });
+
+  // Event listeners para cerrar modal
+  cancelBtn.addEventListener('click', closeEditModal);
+  closeBtn.addEventListener('click', closeEditModal);
+
+  // Cerrar con click en overlay (fuera del modal)
+  overlay.addEventListener('click', e => {
+    if (e.target === overlay) {
+      closeEditModal();
+    }
+  });
+
+  // Cerrar con Escape
+  const handleEscape = e => {
+    if (e.key === 'Escape') {
+      closeEditModal();
+    }
+  };
+
+  document.addEventListener('keydown', handleEscape);
+  overlay._handleEscape = handleEscape; // Guardar referencia para limpieza
+
+  // Mostrar modal con animación
+  requestAnimationFrame(() => {
+    overlay.classList.add('show');
+    modal.classList.add('show');
+
+    // Foco inicial después de la animación
+    setTimeout(() => {
+      examEl.focus();
+      examEl.select(); // Seleccionar texto para facilitar edición
+    }, 200);
+  });
+
+  // Configurar trap de foco
+  trapFocus(modal);
+
+  // Vista previa inicial
+  updatePreview();
+}
+
+// Cerrar modal y limpiar
+function closeEditModal() {
+  if (!currentEditModal) return;
+
+  const overlay = currentEditModal;
+  const modal = overlay.querySelector('.edit-modal');
+
+  // Animación de cierre
+  overlay.classList.remove('show');
+  modal.classList.remove('show');
+
+  // Remover después de la animación
+  setTimeout(() => {
+    // Remover listener de escape
+    if (overlay._handleEscape) {
+      document.removeEventListener('keydown', overlay._handleEscape);
+    }
+
+    // Remover modal del DOM
+    if (overlay.parentNode) {
+      document.body.removeChild(overlay);
+    }
+
+    currentEditModal = null;
+
+    // Restaurar foco
+    if (focusBeforeModal) {
+      focusBeforeModal.focus();
+      focusBeforeModal = null;
+    }
+
+    // Limpiar variable global
+    delete window.__editingKey;
+  }, 200);
+}
+
+// Función para trap de foco
+function trapFocus(modal) {
+  const focusableElements = modal.querySelectorAll(
+    'button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+  );
+
+  const firstElement = focusableElements[0];
+  const lastElement = focusableElements[focusableElements.length - 1];
+
+  const handleTabKey = e => {
+    if (e.key !== 'Tab') return;
+
+    if (e.shiftKey) {
+      if (document.activeElement === firstElement) {
+        e.preventDefault();
+        lastElement.focus();
+      }
+    } else {
+      if (document.activeElement === lastElement) {
+        e.preventDefault();
+        firstElement.focus();
+      }
+    }
+  };
+
+  modal.addEventListener('keydown', handleTabKey);
 }
 
 // Function to handle Excel file selection
@@ -3108,55 +3601,148 @@ function deleteExamSection(examId) {
 // No toggle functionality needed
 
 // ===== INICIALIZACIÓN DE INGRESANTES =====
-// Inicializar datos de prueba si no existen
+// NO INICIALIZAR DATOS DE PRUEBA - El usuario carga sus propias listas
 function initTestData() {
-  if (!localStorage.getItem('ingresantes_index')) {
-    const testData = {
-      'UPTP-2025': {
-        key: 'UPTP-2025',
-        exam: 'UPTP',
-        year: 2025,
-        meta: {
-          archivo: 'Lista_Ingresantes_UPTP_2025.xlsx',
-          total: 3,
-          fecha: '2025-10-14T12:00:00Z',
-        },
-        items: [
-          {
-            nombre: 'María García López',
-            puntaje: 95.5,
-            carrera: 'Ingeniería en Sistemas',
-            puesto: 1,
-            preferencial: true,
-          },
-          {
-            nombre: 'Juan Pérez Rodríguez',
-            puntaje: 88.2,
-            carrera: 'Ingeniería Industrial',
-            puesto: 2,
-            preferencial: false,
-          },
-          {
-            nombre: 'Ana Martínez Silva',
-            puntaje: 91.8,
-            carrera: 'Ingeniería Civil',
-            puesto: 3,
-            preferencial: true,
-          },
-        ],
-      },
-    };
+  // ELIMINADO: No crear listas de ejemplo automáticamente
+  // El usuario debe cargar sus propias listas desde el Excel
+  console.log('Sistema de ingresantes iniciado sin datos de prueba');
+}
 
-    // Guardar índice
-    localStorage.setItem('ingresantes_index', JSON.stringify(['UPTP-2025']));
+// === GESTIÓN DE TÍTULOS DE SECCIÓN INGRESANTES (FUNCIONES GLOBALES) ===
 
-    // Guardar cada dataset
-    Object.keys(testData).forEach(key => {
-      localStorage.setItem(`ingresantes_${key}`, JSON.stringify(testData[key]));
-    });
+// Cargar títulos guardados al inicializar
+function loadIngresantesTitles() {
+  const titleEl = document.getElementById('ingresantes-title');
+  const subtitleEl = document.getElementById('ingresantes-subtitle');
 
-    console.log('Datos de prueba inicializados');
+  if (!titleEl || !subtitleEl) {
+    console.warn('Elementos de títulos no encontrados');
+    return;
   }
+
+  // Cargar desde localStorage o usar valores por defecto
+  const savedTitles = JSON.parse(localStorage.getItem('ingresantes_section_titles') || '{}');
+
+  titleEl.value = savedTitles.title || '🎓 Nuestros Ingresantes';
+  subtitleEl.value =
+    savedTitles.subtitle ||
+    'Conoce a los estudiantes que han confiado en nosotros para su preparación.';
+
+  console.log('Títulos cargados:', savedTitles);
+}
+
+// Guardar títulos
+function saveIngresantesTitles() {
+  const titleEl = document.getElementById('ingresantes-title');
+  const subtitleEl = document.getElementById('ingresantes-subtitle');
+
+  if (!titleEl || !subtitleEl) {
+    alert('❌ Error: Elementos no encontrados');
+    return;
+  }
+
+  const titles = {
+    title: titleEl.value.trim(),
+    subtitle: subtitleEl.value.trim(),
+    lastUpdated: new Date().toISOString(),
+  };
+
+  if (!titles.title || !titles.subtitle) {
+    alert('❌ Por favor completa todos los campos');
+    return;
+  }
+
+  try {
+    // Guardar en localStorage
+    localStorage.setItem('ingresantes_section_titles', JSON.stringify(titles));
+
+    // Notificar cambios al frontend de múltiples maneras
+    notifyFrontendUpdate();
+
+    // Disparar evento específico para títulos
+    window.dispatchEvent(
+      new CustomEvent('storage', {
+        detail: { key: 'ingresantes_section_titles', newValue: JSON.stringify(titles) },
+      })
+    );
+
+    // También abrir una nueva ventana temporal para forzar el evento storage si index.html está abierto
+    try {
+      const popup = window.open('', '_blank', 'width=1,height=1');
+      if (popup) {
+        popup.localStorage.setItem('ingresantes_section_titles', JSON.stringify(titles));
+        popup.close();
+      }
+    } catch (e) {
+      // Ignorar errores de popup
+    }
+
+    alert(
+      '✅ Títulos guardados exitosamente\n\nSi tienes index.html abierto, refresca la página para ver los cambios.'
+    );
+    console.log('Títulos guardados y notificado:', titles);
+  } catch (error) {
+    console.error('Error saving titles:', error);
+    alert('❌ Error al guardar títulos');
+  }
+}
+
+// Restaurar títulos por defecto
+function resetIngresantesTitles() {
+  if (!confirm('¿Restaurar los títulos por defecto?')) return;
+
+  const titleEl = document.getElementById('ingresantes-title');
+  const subtitleEl = document.getElementById('ingresantes-subtitle');
+
+  if (titleEl && subtitleEl) {
+    titleEl.value = '🎓 Nuestros Ingresantes';
+    subtitleEl.value = 'Conoce a los estudiantes que han confiado en nosotros para su preparación.';
+
+    // Eliminar de localStorage
+    localStorage.removeItem('ingresantes_section_titles');
+
+    // Notificar cambios
+    notifyFrontendUpdate();
+
+    // Disparar evento específico para resetear títulos
+    window.dispatchEvent(
+      new CustomEvent('storage', {
+        detail: { key: 'ingresantes_section_titles', newValue: null },
+      })
+    );
+
+    // También abrir una nueva ventana temporal para forzar el evento storage
+    try {
+      const popup = window.open('', '_blank', 'width=1,height=1');
+      if (popup) {
+        popup.localStorage.removeItem('ingresantes_section_titles');
+        popup.close();
+      }
+    } catch (e) {
+      // Ignorar errores de popup
+    }
+
+    alert(
+      '🔄 Títulos restaurados por defecto\n\nSi tienes index.html abierto, refresca la página para ver los cambios.'
+    );
+    console.log('Títulos restaurados a valores por defecto');
+  }
+}
+
+// Función para probar los cambios de títulos
+function testTitlesUpdate() {
+  // Primero guardar los títulos actuales
+  saveIngresantesTitles();
+
+  // Esperar un momento y luego abrir index.html en una nueva pestaña
+  setTimeout(() => {
+    const indexUrl = window.location.origin + '/index.html#ingresantes';
+    window.open(indexUrl, '_blank');
+
+    alert(
+      '🧪 Se ha abierto index.html en una nueva pestaña.\n\nVerifica que los títulos se muestren correctamente en la sección "Nuestros Ingresantes"'
+    );
+  }, 1000);
 }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -3166,5 +3752,218 @@ document.addEventListener('DOMContentLoaded', function () {
   // Cargar listas guardadas al cargar la página
   if (document.getElementById('ingresantes-section')) {
     loadSavedLists();
+
+    // Cargar títulos de ingresantes con la función corregida
+    setTimeout(() => {
+      loadIngresantesTitlesFixed();
+    }, 100);
   }
 });
+
+// === FUNCIONES CORREGIDAS PARA TÍTULOS ===
+
+// Cargar títulos guardados al inicializar (CORREGIDO)
+function loadIngresantesTitlesFixed() {
+  const titleEl = document.getElementById('ingresantes-title');
+  const subtitleEl = document.getElementById('ingresantes-subtitle');
+
+  if (!titleEl || !subtitleEl) {
+    console.warn('Elementos de títulos no encontrados');
+    return;
+  }
+
+  try {
+    const savedTitles = JSON.parse(localStorage.getItem('ingresantes_section_titles') || '{}');
+
+    titleEl.value = savedTitles.title || '🎓 Nuestros Ingresantes';
+    subtitleEl.value =
+      savedTitles.subtitle ||
+      'Conoce a los estudiantes que han confiado en nosotros para su preparación.';
+
+    console.log('✅ Títulos cargados correctamente:', savedTitles);
+  } catch (error) {
+    console.error('Error cargando títulos:', error);
+    titleEl.value = '🎓 Nuestros Ingresantes';
+    subtitleEl.value = 'Conoce a los estudiantes que han confiado en nosotros para su preparación.';
+  }
+}
+
+// Guardar títulos (CORREGIDO Y SIMPLIFICADO)
+function saveIngresantesTitlesFixed() {
+  const titleEl = document.getElementById('ingresantes-title');
+  const subtitleEl = document.getElementById('ingresantes-subtitle');
+  const statusEl = document.getElementById('titles-status');
+
+  if (!titleEl || !subtitleEl) {
+    alert('❌ Error: Elementos no encontrados');
+    return;
+  }
+
+  const titles = {
+    title: titleEl.value.trim(),
+    subtitle: subtitleEl.value.trim(),
+    lastUpdated: new Date().toISOString(),
+  };
+
+  if (!titles.title || !titles.subtitle) {
+    if (statusEl) {
+      statusEl.innerHTML =
+        '<div style="color: #dc3545; padding: 10px; background: #f8d7da; border-radius: 5px;">❌ Por favor completa todos los campos</div>';
+      setTimeout(() => (statusEl.innerHTML = ''), 3000);
+    }
+    return;
+  }
+
+  try {
+    // Guardar en localStorage
+    localStorage.setItem('ingresantes_section_titles', JSON.stringify(titles));
+
+    // Notificar al frontend
+    localStorage.setItem('ingresantes_titles_changed', Date.now().toString());
+
+    // Mensaje de éxito
+    if (statusEl) {
+      statusEl.innerHTML =
+        '<div style="color: #28a745; padding: 10px; background: #d4edda; border-radius: 5px;">✅ Títulos guardados exitosamente. Refresca index.html para ver los cambios.</div>';
+      setTimeout(() => (statusEl.innerHTML = ''), 5000);
+    }
+
+    console.log('✅ Títulos guardados:', titles);
+  } catch (error) {
+    console.error('Error guardando títulos:', error);
+    if (statusEl) {
+      statusEl.innerHTML =
+        '<div style="color: #dc3545; padding: 10px; background: #f8d7da; border-radius: 5px;">❌ Error al guardar títulos</div>';
+      setTimeout(() => (statusEl.innerHTML = ''), 3000);
+    }
+  }
+}
+
+// Restaurar títulos por defecto (CORREGIDO)
+function resetIngresantesTitlesFixed() {
+  if (!confirm('¿Restaurar los títulos por defecto?')) return;
+
+  const titleEl = document.getElementById('ingresantes-title');
+  const subtitleEl = document.getElementById('ingresantes-subtitle');
+  const statusEl = document.getElementById('titles-status');
+
+  if (titleEl && subtitleEl) {
+    titleEl.value = '🎓 Nuestros Ingresantes';
+    subtitleEl.value = 'Conoce a los estudiantes que han confiado en nosotros para su preparación.';
+
+    // Eliminar de localStorage
+    localStorage.removeItem('ingresantes_section_titles');
+    localStorage.setItem('ingresantes_titles_changed', Date.now().toString());
+
+    if (statusEl) {
+      statusEl.innerHTML =
+        '<div style="color: #17a2b8; padding: 10px; background: #d1ecf1; border-radius: 5px;">🔄 Títulos restaurados por defecto</div>';
+      setTimeout(() => (statusEl.innerHTML = ''), 3000);
+    }
+
+    console.log('✅ Títulos restaurados a valores por defecto');
+  }
+}
+
+// === GESTIÓN MEJORADA DE LISTAS GUARDADAS ===
+
+// Función para refrescar la lista
+async function refreshSavedLists() {
+  console.log('🔄 Refrescando listas guardadas...');
+  await loadSavedLists();
+}
+
+// Función para editar una lista
+async function editList(key) {
+  try {
+    const data = await INGRESANTES_API.getIngresantes(key);
+
+    // Abrir modal o formulario de edición
+    const newName = prompt(
+      `Editar nombre de la lista:\nActual: ${key}\n\nFormato: EXAMEN-AÑO (ej: UPTP-2025)`,
+      key
+    );
+
+    if (!newName || newName === key) {
+      return; // Cancelado o sin cambios
+    }
+
+    // Validar formato
+    if (!/^[A-Z0-9]+-\d{4}$/.test(newName)) {
+      alert('❌ Formato inválido. Usa el formato EXAMEN-AÑO (ej: UPTP-2025)');
+      return;
+    }
+
+    // Actualizar en localStorage (modo mock)
+    const [exam, year] = newName.split('-');
+
+    const updatedData = {
+      ...data,
+      key: newName,
+      exam: exam,
+      year: year,
+      meta: {
+        ...data.meta,
+        fecha: new Date().toISOString(),
+      },
+    };
+
+    // Guardar con nuevo nombre
+    localStorage.setItem(`ingresantes_${newName}`, JSON.stringify(updatedData));
+
+    // Si cambió el nombre, eliminar el anterior
+    if (key !== newName) {
+      localStorage.removeItem(`ingresantes_${key}`);
+
+      // Actualizar índice
+      const index = JSON.parse(localStorage.getItem('ingresantes_index') || '[]');
+      const newIndex = index.map(item => (item === key ? newName : item));
+      localStorage.setItem('ingresantes_index', JSON.stringify(newIndex));
+    }
+
+    alert(`✅ Lista renombrada de "${key}" a "${newName}"`);
+
+    // Notificar cambios
+    notifyFrontendUpdate();
+
+    // Recargar listas
+    await loadSavedLists();
+  } catch (error) {
+    console.error('Error editando lista:', error);
+    alert('❌ Error al editar la lista');
+  }
+}
+
+// Función para eliminar una lista (CORREGIDA)
+async function deleteListFixed(key) {
+  if (
+    !confirm(`¿Estás seguro de eliminar la lista "${key}"?\n\nEsta acción no se puede deshacer.`)
+  ) {
+    return;
+  }
+
+  try {
+    console.log(`🗑️ Eliminando lista: ${key}`);
+
+    // Eliminar de localStorage
+    localStorage.removeItem(`ingresantes_${key}`);
+
+    // Actualizar índice
+    const index = JSON.parse(localStorage.getItem('ingresantes_index') || '[]');
+    const newIndex = index.filter(item => item !== key);
+    localStorage.setItem('ingresantes_index', JSON.stringify(newIndex));
+
+    // Notificar al frontend
+    notifyFrontendUpdate();
+
+    alert(`✅ Lista "${key}" eliminada correctamente`);
+
+    // Recargar listas
+    await loadSavedLists();
+
+    console.log(`✅ Lista ${key} eliminada correctamente`);
+  } catch (error) {
+    console.error('Error eliminando lista:', error);
+    alert('❌ Error al eliminar la lista');
+  }
+}
