@@ -93,11 +93,53 @@ class IngresantesModule {
     try {
       localStorage.setItem('ingresantes_section_titles', JSON.stringify(titles));
       localStorage.setItem('ingresantes_titles_changed', Date.now().toString());
-      this.showMessage('✅ Títulos guardados. Refresca index.html', 'success');
+
+      // Mostrar mensaje con preview
+      this.showMessage(
+        `✅ Títulos guardados!\n📝 "${titles.title}"\n📋 "${titles.subtitle}"`,
+        'success'
+      );
       console.log('✅ Títulos guardados:', titles);
+
+      // Actualizar preview en tiempo real si existe
+      this.updateTitlePreview(titles);
     } catch (error) {
       console.error('Error guardando títulos:', error);
       this.showMessage('Error al guardar títulos', 'error');
+    }
+  }
+
+  updateTitlePreview(titles) {
+    // Crear o actualizar preview
+    const previewId = 'title-preview-section';
+    let preview = document.getElementById(previewId);
+
+    if (!preview) {
+      const card = document.querySelector('#ingresantes-section .admin-card');
+      if (card) {
+        preview = document.createElement('div');
+        preview.id = previewId;
+        preview.style.cssText = `
+          margin-top: 20px;
+          padding: 20px;
+          background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+          border-radius: 12px;
+          color: white;
+          animation: slideIn 0.3s ease;
+        `;
+        card.appendChild(preview);
+      }
+    }
+
+    if (preview) {
+      preview.innerHTML = `
+        <div style="text-align: center;">
+          <h4 style="margin: 0 0 10px 0; font-size: 1.2em;">👁️ Vista Previa</h4>
+          <h2 style="margin: 10px 0; font-size: 1.8em;">${titles.title}</h2>
+          <p style="margin: 10px 0; font-size: 1em; opacity: 0.9;">${titles.subtitle}</p>
+          <small style="opacity: 0.7;">Los cambios se aplicarán automáticamente en index.html</small>
+        </div>
+      `;
     }
   }
 
@@ -108,15 +150,28 @@ class IngresantesModule {
     const subtitleEl = document.getElementById('ingresantes-subtitle');
 
     if (titleEl && subtitleEl) {
-      titleEl.value = '🎓 Nuestros Ingresantes';
-      subtitleEl.value =
-        'Conoce a los estudiantes que han confiado en nosotros para su preparación.';
+      const defaultTitles = {
+        title: '🎓 Nuestros Ingresantes',
+        subtitle: 'Conoce a los estudiantes que han confiado en nosotros para su preparación.',
+      };
+
+      titleEl.value = defaultTitles.title;
+      subtitleEl.value = defaultTitles.subtitle;
 
       localStorage.removeItem('ingresantes_section_titles');
       localStorage.setItem('ingresantes_titles_changed', Date.now().toString());
 
       this.showMessage('🔄 Títulos restaurados por defecto', 'success');
       console.log('✅ Títulos restaurados');
+
+      // Actualizar preview
+      this.updateTitlePreview(defaultTitles);
+
+      // Remover preview después de 3 segundos
+      setTimeout(() => {
+        const preview = document.getElementById('title-preview-section');
+        if (preview) preview.remove();
+      }, 3000);
     }
   }
 

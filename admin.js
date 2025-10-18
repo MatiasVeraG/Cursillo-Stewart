@@ -2444,29 +2444,40 @@ document.addEventListener('keydown', e => {
 });
 
 // Function to download the ingresantes template
-function downloadTemplate() {
+window.downloadTemplate = function() {
   try {
+    console.log('Iniciando descarga de plantilla...');
+    
     // Create a link element to trigger the download
     const link = document.createElement('a');
     link.href = 'documents/Plantilla_de_Ingresantes.xlsx';
     link.download = 'Plantilla_de_Ingresantes.xlsx';
-
-    // Append to body, click, and remove
+    link.setAttribute('target', '_blank');
+    
+    // Append to body temporarily
     document.body.appendChild(link);
+    
+    // Trigger the download
     link.click();
-    document.body.removeChild(link);
-
-    // Show success message
-    if (window.adminPanel) {
-      adminPanel.showMessage('Plantilla descargada exitosamente', 'success');
-    }
+    
+    // Remove link after a short delay to ensure download started
+    setTimeout(() => {
+      document.body.removeChild(link);
+      console.log('Plantilla descargada exitosamente');
+      
+      // Show success message
+      if (window.adminPanel) {
+        adminPanel.showMessage('Plantilla descargada exitosamente', 'success');
+      }
+    }, 100);
+    
   } catch (error) {
     console.error('Error downloading template:', error);
     if (window.adminPanel) {
-      adminPanel.showMessage('Error al descargar la plantilla', 'error');
+      adminPanel.showMessage('Error al descargar la plantilla: ' + error.message, 'error');
     }
   }
-}
+};
 
 // Global variables for Excel processing
 let currentExcelData = null;

@@ -704,6 +704,79 @@ class TabNavigationSystem {
   }
 }
 
+// ==================== FUNCIÓN DE DESCARGA DE PLANTILLA ====================
+window.downloadTemplate = function() {
+  try {
+    console.log('Iniciando descarga de plantilla...');
+    
+    // Create a link element to trigger the download
+    const link = document.createElement('a');
+    link.href = 'documents/Plantilla_de_Ingresantes.xlsx';
+    link.download = 'Plantilla_de_Ingresantes.xlsx';
+    link.setAttribute('target', '_blank');
+    
+    // Append to body temporarily
+    document.body.appendChild(link);
+    
+    // Trigger the download
+    link.click();
+    
+    // Remove link after a short delay to ensure download started
+    setTimeout(() => {
+      document.body.removeChild(link);
+      console.log('✅ Plantilla descargada exitosamente');
+      
+      // Show success message if available
+      showMessage('Plantilla descargada exitosamente', 'success');
+    }, 100);
+    
+  } catch (error) {
+    console.error('❌ Error downloading template:', error);
+    showMessage('Error al descargar la plantilla: ' + error.message, 'error');
+  }
+};
+
+// Function to handle Excel file
+window.handleExcelFile = function(event) {
+  try {
+    if (window.ingresantesSystem && typeof window.ingresantesSystem.handleExcelFile === 'function') {
+      window.ingresantesSystem.handleExcelFile(event);
+    } else {
+      console.error('❌ Sistema de ingresantes no disponible');
+      showMessage('Error: Sistema no inicializado', 'error');
+    }
+  } catch (error) {
+    console.error('❌ Error al procesar archivo:', error);
+    showMessage('Error al procesar el archivo: ' + error.message, 'error');
+  }
+};
+
+// Function to cancel Excel upload
+window.cancelExcelUpload = function() {
+  try {
+    console.log('Cancelando carga de Excel...');
+    
+    if (window.ingresantesSystem && typeof window.ingresantesSystem.cancelExcelUpload === 'function') {
+      window.ingresantesSystem.cancelExcelUpload();
+      console.log('✅ Carga cancelada exitosamente');
+      showMessage('Carga cancelada', 'info');
+    } else {
+      // Fallback si el sistema no está disponible
+      const input = document.getElementById('inputExcel');
+      const previewCard = document.getElementById('excel-preview-card');
+      
+      if (input) input.value = '';
+      if (previewCard) previewCard.style.display = 'none';
+      
+      console.log('✅ Carga cancelada (fallback)');
+      showMessage('Carga cancelada', 'info');
+    }
+  } catch (error) {
+    console.error('❌ Error al cancelar:', error);
+    showMessage('Error al cancelar: ' + error.message, 'error');
+  }
+};
+
 // ==================== INICIALIZACIÓN ====================
 let authSystem;
 let ingresantesSystem;
@@ -724,6 +797,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   ingresantesSystem = new IngresantesSystem();
   ingresantesSystem.init();
+  
+  // Hacer ingresantesSystem accesible globalmente para funciones onclick
+  window.ingresantesSystem = ingresantesSystem;
 
   // Inicializar navegación de pestañas
   tabNavigation = new TabNavigationSystem();
