@@ -930,6 +930,18 @@ class CoursesSystem {
     course.schedules.forEach((schedule, index) => {
       const scheduleItem = document.createElement('div');
       scheduleItem.className = 'schedule-item';
+      
+      // Get custom colors or use defaults
+      const defaultColors = {
+        presencial: { bg: '#dbeafe', text: '#1e40af' },
+        sabados: { bg: '#fef3c7', text: '#92400e' },
+        virtual: { bg: '#dcfce7', text: '#166534' },
+        mofa: { bg: '#fee2e2', text: '#991b1b' }
+      };
+      
+      const bgColor = schedule.customBgColor || defaultColors[schedule.type]?.bg || '#dbeafe';
+      const textColor = schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
+      
       scheduleItem.innerHTML = `
         <div class="schedule-header-row">
           <h4 class="schedule-title">${schedule.title}</h4>
@@ -953,7 +965,7 @@ class CoursesSystem {
             <strong>Período:</strong> ${schedule.period}
           </div>
         </div>
-        <div class="schedule-type-badge ${schedule.type}">
+        <div class="schedule-type-badge ${schedule.type}" style="background: ${bgColor}; color: ${textColor};">
           ${schedule.typeLabel}
         </div>
       `;
@@ -995,6 +1007,18 @@ class CoursesSystem {
 
   editSchedule(index) {
     const schedule = this.coursesData[this.currentCourse].schedules[index];
+    
+    // Default colors for each type
+    const defaultColors = {
+      presencial: { bg: '#dbeafe', text: '#1e40af' },
+      sabados: { bg: '#fef3c7', text: '#92400e' },
+      virtual: { bg: '#dcfce7', text: '#166534' },
+      mofa: { bg: '#fee2e2', text: '#991b1b' }
+    };
+
+    // Get current colors or use defaults
+    const currentBgColor = schedule.customBgColor || defaultColors[schedule.type]?.bg || '#dbeafe';
+    const currentTextColor = schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
 
     const modal = document.createElement('div');
     modal.className = 'schedule-modal active';
@@ -1028,6 +1052,33 @@ class CoursesSystem {
             <label>Etiqueta de Tipo:</label>
             <input type="text" id="edit-schedule-type-label" value="${schedule.typeLabel}" />
           </div>
+          
+          <div class="form-group">
+            <h4 style="margin-bottom: 12px; color: var(--admin-text);">🎨 Colores del Turno</h4>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px; background: var(--admin-bg); border-radius: 8px;">
+              <div>
+                <label style="display: block; margin-bottom: 8px;">Color de Fondo:</label>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                  <input type="color" id="edit-schedule-bg-color" value="${currentBgColor}" style="width: 60px; height: 40px; cursor: pointer;" />
+                  <input type="text" id="edit-schedule-bg-color-hex" value="${currentBgColor}" placeholder="#dbeafe" style="flex: 1;" />
+                </div>
+              </div>
+              <div>
+                <label style="display: block; margin-bottom: 8px;">Color de Texto:</label>
+                <div style="display: flex; gap: 10px; align-items: center;">
+                  <input type="color" id="edit-schedule-text-color" value="${currentTextColor}" style="width: 60px; height: 40px; cursor: pointer;" />
+                  <input type="text" id="edit-schedule-text-color-hex" value="${currentTextColor}" placeholder="#1e40af" style="flex: 1;" />
+                </div>
+              </div>
+            </div>
+            <div style="margin-top: 12px; padding: 12px; border-radius: 6px; background: var(--admin-bg);">
+              <small style="color: var(--admin-text-light);">💡 Preview:</small>
+              <div id="color-preview" style="margin-top: 8px; padding: 8px 16px; border-radius: 12px; background: ${currentBgColor}; color: ${currentTextColor}; font-weight: 600; text-align: center; font-size: 13px;">
+                ${schedule.typeLabel}
+              </div>
+            </div>
+          </div>
+          
           <div class="form-group">
             <label>Horario:</label>
             <input type="text" id="edit-schedule-time" value="${
@@ -1056,6 +1107,40 @@ class CoursesSystem {
 
     document.body.appendChild(modal);
 
+    // Color picker sync
+    const bgColorPicker = modal.querySelector('#edit-schedule-bg-color');
+    const bgColorHex = modal.querySelector('#edit-schedule-bg-color-hex');
+    const textColorPicker = modal.querySelector('#edit-schedule-text-color');
+    const textColorHex = modal.querySelector('#edit-schedule-text-color-hex');
+    const preview = modal.querySelector('#color-preview');
+
+    const updatePreview = () => {
+      preview.style.background = bgColorPicker.value;
+      preview.style.color = textColorPicker.value;
+    };
+
+    bgColorPicker.addEventListener('input', (e) => {
+      bgColorHex.value = e.target.value;
+      updatePreview();
+    });
+
+    bgColorHex.addEventListener('input', (e) => {
+      const value = e.target.value.startsWith('#') ? e.target.value : '#' + e.target.value;
+      bgColorPicker.value = value;
+      updatePreview();
+    });
+
+    textColorPicker.addEventListener('input', (e) => {
+      textColorHex.value = e.target.value;
+      updatePreview();
+    });
+
+    textColorHex.addEventListener('input', (e) => {
+      const value = e.target.value.startsWith('#') ? e.target.value : '#' + e.target.value;
+      textColorPicker.value = value;
+      updatePreview();
+    });
+
     modal.querySelector('.schedule-modal-close').addEventListener('click', () => modal.remove());
     modal.querySelector('.modal-cancel').addEventListener('click', () => modal.remove());
     modal.querySelector('.modal-save').addEventListener('click', () => {
@@ -1065,6 +1150,8 @@ class CoursesSystem {
       schedule.time = document.getElementById('edit-schedule-time').value;
       schedule.days = document.getElementById('edit-schedule-days').value;
       schedule.period = document.getElementById('edit-schedule-period').value;
+      schedule.customBgColor = bgColorPicker.value;
+      schedule.customTextColor = textColorPicker.value;
 
       this.renderSchedulesList();
       this.saveCourses();

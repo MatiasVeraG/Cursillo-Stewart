@@ -108,13 +108,25 @@
       return '<div class="schedule-grid"><p style="text-align: center; padding: 40px;">No hay turnos disponibles.</p></div>';
     }
 
+    // Default colors for each type
+    const defaultColors = {
+      presencial: { bg: '#dbeafe', text: '#1e40af' },
+      sabados: { bg: '#fef3c7', text: '#92400e' },
+      virtual: { bg: '#dcfce7', text: '#166534' },
+      mofa: { bg: '#fee2e2', text: '#991b1b' }
+    };
+
     const schedulesHTML = schedules
-      .map(
-        schedule => `
+      .map(schedule => {
+        // Get custom colors or use defaults
+        const bgColor = schedule.customBgColor || defaultColors[schedule.type]?.bg || '#dbeafe';
+        const textColor = schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
+        
+        return `
       <div class="schedule-card ${schedule.type}">
         <div class="schedule-header">
           <h3>${schedule.title}</h3>
-          <span class="schedule-type ${schedule.type}">${schedule.typeLabel}</span>
+          <span class="schedule-type ${schedule.type}" style="background: ${bgColor}; color: ${textColor};">${schedule.typeLabel}</span>
         </div>
         <div class="schedule-info">
           <div class="schedule-time"><strong>Horario:</strong> ${schedule.time}</div>
@@ -122,8 +134,8 @@
           <div class="schedule-dates"><strong>Período:</strong> ${schedule.period}</div>
         </div>
       </div>
-    `
-      )
+    `;
+      })
       .join('');
 
     return `<div class="schedule-grid">${schedulesHTML}</div>`;
@@ -182,12 +194,24 @@
 
   // Get unique badges from schedules
   function getUniqueBadges(schedules) {
+    const defaultColors = {
+      presencial: { bg: '#dbeafe', text: '#1e40af' },
+      sabados: { bg: '#fef3c7', text: '#92400e' },
+      virtual: { bg: '#dcfce7', text: '#166534' },
+      mofa: { bg: '#fee2e2', text: '#991b1b' }
+    };
+
     const uniqueTypes = {};
     schedules.forEach(schedule => {
       if (!uniqueTypes[schedule.type]) {
+        const bgColor = schedule.customBgColor || defaultColors[schedule.type]?.bg || '#dbeafe';
+        const textColor = schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
+        
         uniqueTypes[schedule.type] = {
           typeLabel: schedule.typeLabel,
           days: schedule.days,
+          bgColor: bgColor,
+          textColor: textColor
         };
       }
     });
@@ -195,7 +219,7 @@
     return Object.keys(uniqueTypes)
       .map(type => {
         const info = uniqueTypes[type];
-        return `<li><span class="badge ${type}">${info.typeLabel}</span> ${info.days}</li>`;
+        return `<li><span class="badge ${type}" style="background: ${info.bgColor}; color: ${info.textColor};">${info.typeLabel}</span> ${info.days}</li>`;
       })
       .join('');
   }
