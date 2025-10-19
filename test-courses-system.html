@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test - Gestión de Cursos</title>
+    <link rel="stylesheet" href="styles.css" />
+    <style>
+      body {
+        padding: 40px;
+        background: #f5f5f5;
+      }
+      .test-container {
+        max-width: 1400px;
+        margin: 0 auto;
+        background: white;
+        padding: 40px;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+      .test-header {
+        text-align: center;
+        margin-bottom: 40px;
+      }
+      .test-header h1 {
+        color: #1e293b;
+        margin-bottom: 10px;
+      }
+      .test-header p {
+        color: #64748b;
+      }
+      .test-buttons {
+        display: flex;
+        gap: 12px;
+        justify-content: center;
+        margin-bottom: 40px;
+      }
+      .test-btn {
+        padding: 12px 24px;
+        background: #2563eb;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 600;
+        transition: all 0.3s ease;
+      }
+      .test-btn:hover {
+        background: #1d4ed8;
+        transform: translateY(-2px);
+      }
+      .test-btn.secondary {
+        background: #64748b;
+      }
+      .test-btn.secondary:hover {
+        background: #475569;
+      }
+      #test-output {
+        background: #f8fafc;
+        padding: 20px;
+        border-radius: 8px;
+        border: 1px solid #e2e8f0;
+        margin-top: 20px;
+        font-family: monospace;
+        font-size: 14px;
+        white-space: pre-wrap;
+        max-height: 300px;
+        overflow-y: auto;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="test-container">
+      <div class="test-header">
+        <h1>🧪 Test - Sistema de Gestión de Cursos</h1>
+        <p>Prueba las funcionalidades del nuevo sistema de cursos</p>
+      </div>
+
+      <div class="test-buttons">
+        <button class="test-btn" onclick="testLoadCourses()">📂 Cargar Cursos</button>
+        <button class="test-btn" onclick="testRenderCourses()">🎨 Renderizar Cursos</button>
+        <button class="test-btn secondary" onclick="testClearData()">
+          🗑️ Limpiar LocalStorage
+        </button>
+        <button class="test-btn" onclick="openAdmin()">⚙️ Abrir Admin</button>
+        <button class="test-btn" onclick="openHomepage()">🏠 Abrir Homepage</button>
+      </div>
+
+      <div id="test-output"></div>
+
+      <!-- Course Preview Section -->
+      <section id="programa" style="margin-top: 40px">
+        <div class="container">
+          <div class="section-header">
+            <h2>Vista Previa de Cursos</h2>
+          </div>
+
+          <div class="course-toggle-nav">
+            <!-- Tabs will be generated here -->
+          </div>
+
+          <!-- Course content will be generated here -->
+        </div>
+      </section>
+    </div>
+
+    <script src="homepage.courses.js"></script>
+    <script>
+      const output = document.getElementById('test-output');
+
+      function log(message, type = 'info') {
+        const timestamp = new Date().toLocaleTimeString();
+        const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : 'ℹ️';
+        output.innerHTML += `[${timestamp}] ${icon} ${message}\n`;
+        output.scrollTop = output.scrollHeight;
+      }
+
+      async function testLoadCourses() {
+        log('Cargando cursos desde data/courses.json...');
+        try {
+          const response = await fetch('data/courses.json');
+          const data = await response.json();
+          localStorage.setItem('courses_data', JSON.stringify(data));
+          log(`✓ Cursos cargados: ${Object.keys(data).length} cursos encontrados`, 'success');
+
+          Object.keys(data).forEach(courseId => {
+            const course = data[courseId];
+            log(`  - ${course.name}: ${course.schedules.length} turnos`);
+          });
+        } catch (error) {
+          log(`Error al cargar cursos: ${error.message}`, 'error');
+        }
+      }
+
+      function testRenderCourses() {
+        log('Renderizando cursos en la página...');
+        try {
+          const stored = localStorage.getItem('courses_data');
+          if (!stored) {
+            log('No hay cursos en localStorage. Carga primero los cursos.', 'error');
+            return;
+          }
+
+          // Trigger a storage event to re-render
+          window.dispatchEvent(
+            new StorageEvent('storage', {
+              key: 'courses_data',
+              newValue: stored,
+            })
+          );
+
+          log('✓ Cursos renderizados correctamente', 'success');
+        } catch (error) {
+          log(`Error al renderizar: ${error.message}`, 'error');
+        }
+      }
+
+      function testClearData() {
+        if (confirm('¿Estás seguro de limpiar todos los datos de cursos?')) {
+          localStorage.removeItem('courses_data');
+          log('✓ LocalStorage limpiado', 'success');
+          location.reload();
+        }
+      }
+
+      function openAdmin() {
+        window.open('admin.html', '_blank');
+        log('✓ Panel de administración abierto en nueva pestaña', 'success');
+      }
+
+      function openHomepage() {
+        window.open('index.html', '_blank');
+        log('✓ Homepage abierto en nueva pestaña', 'success');
+      }
+
+      // Auto-load on page load
+      window.addEventListener('load', () => {
+        log('🚀 Sistema de prueba iniciado');
+        log('Haz clic en "Cargar Cursos" para empezar');
+      });
+    </script>
+  </body>
+</html>

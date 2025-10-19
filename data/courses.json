@@ -1,0 +1,122 @@
+{
+  "intensivo": {
+    "id": "intensivo",
+    "name": "Intensivo",
+    "color": "#2563eb",
+    "schedules": [
+      {
+        "id": "intensivo-1",
+        "title": "Grupo 1 - Turno Mañana",
+        "type": "presencial",
+        "typeLabel": "Semanal Presencial",
+        "time": "8:00 - 12:00",
+        "days": "Lunes a Viernes",
+        "period": "4 de Agosto - 31 de Octubre"
+      },
+      {
+        "id": "intensivo-2",
+        "title": "Grupo 2 - Turno Tarde",
+        "type": "presencial",
+        "typeLabel": "Semanal Presencial",
+        "time": "14:00 - 18:00",
+        "days": "Lunes a Viernes",
+        "period": "4 de Agosto - 31 de Octubre"
+      },
+      {
+        "id": "intensivo-3",
+        "title": "Grupo 3 - Sábados",
+        "type": "sabados",
+        "typeLabel": "Sabados Presencial",
+        "time": "8:00 - 18:00",
+        "days": "Todos los Sábados",
+        "period": "29 de Marzo - 25 de Octubre"
+      },
+      {
+        "id": "intensivo-4",
+        "title": "Grupo 4 - Sábados",
+        "type": "sabados",
+        "typeLabel": "Sabados Presencial",
+        "time": "8:00 - 18:00",
+        "days": "Todos los Sábados",
+        "period": "12 de Abril - 25 de Octubre"
+      },
+      {
+        "id": "intensivo-5",
+        "title": "Grupo 5 - Sábados",
+        "type": "sabados",
+        "typeLabel": "Sabados Presencial",
+        "time": "8:00 - 18:00",
+        "days": "Todos los Sábados",
+        "period": "12 de Julio - 25 de Octubre"
+      },
+      {
+        "id": "intensivo-6",
+        "title": "Grupo 6 - Virtual Nocturno",
+        "type": "virtual",
+        "typeLabel": "Sabados Virtual",
+        "time": "19:00 - 22:00",
+        "days": "Sábados",
+        "period": "5 de Julio - 25 de Octubre"
+      }
+    ]
+  },
+  "extensivo": {
+    "id": "extensivo",
+    "name": "Extensivo",
+    "color": "#16a34a",
+    "schedules": [
+      {
+        "id": "extensivo-1",
+        "title": "Grupo 1 - Extensivo Mañana",
+        "type": "presencial",
+        "typeLabel": "Presencial",
+        "time": "9:00 - 12:00",
+        "days": "Martes y Jueves",
+        "period": "Marzo - Noviembre"
+      },
+      {
+        "id": "extensivo-2",
+        "title": "Grupo 2 - Extensivo Tarde",
+        "type": "presencial",
+        "typeLabel": "Presencial",
+        "time": "15:00 - 18:00",
+        "days": "Martes y Jueves",
+        "period": "Marzo - Noviembre"
+      },
+      {
+        "id": "extensivo-3",
+        "title": "Grupo 3 - Extensivo Virtual",
+        "type": "virtual",
+        "typeLabel": "Virtual",
+        "time": "19:00 - 22:00",
+        "days": "Miércoles y Viernes",
+        "period": "Marzo - Noviembre"
+      }
+    ]
+  },
+  "mofa": {
+    "id": "mofa",
+    "name": "MOFA",
+    "color": "#dc2626",
+    "schedules": [
+      {
+        "id": "mofa-1",
+        "title": "MOFA - Modalidad Especial",
+        "type": "mofa",
+        "typeLabel": "MOFA Program",
+        "time": "14:00 - 17:00",
+        "days": "Lunes a Viernes",
+        "period": "Febrero - Mayo"
+      },
+      {
+        "id": "mofa-2",
+        "title": "MOFA - Virtual",
+        "type": "mofa",
+        "typeLabel": "MOFA Virtual",
+        "time": "18:00 - 21:00",
+        "days": "Lunes, Miércoles, Viernes",
+        "period": "Febrero - Mayo"
+      }
+    ]
+  }
+}

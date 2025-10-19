@@ -6,6 +6,8 @@ class AdminPanel {
     this.config = this.loadConfig();
     this.originalContent = {};
     this.hasUnsavedChanges = false;
+    this.coursesData = null;
+    this.currentCourse = null;
     this.init();
   }
 
@@ -13,6 +15,7 @@ class AdminPanel {
     this.bindEvents();
     this.checkAuth();
     this.loadCurrentContent();
+    this.loadCourses();
   }
 
   // Authentication
@@ -127,6 +130,9 @@ class AdminPanel {
 
     // Toggle functionality for checkboxes
     this.bindToggleOptions();
+
+    // Courses management
+    this.bindCoursesManagement();
   }
 
   bindContentInputs() {
@@ -399,6 +405,13 @@ class AdminPanel {
     document.getElementById(`${section}-section`).classList.add('active');
 
     this.currentSection = section;
+
+    // Load courses when switching to courses section
+    if (section === 'cursos' && this.coursesData) {
+      setTimeout(() => {
+        this.renderCourseTabs();
+      }, 100);
+    }
   }
 
   // Content Management
@@ -2444,33 +2457,32 @@ document.addEventListener('keydown', e => {
 });
 
 // Function to download the ingresantes template
-window.downloadTemplate = function() {
+window.downloadTemplate = function () {
   try {
     console.log('Iniciando descarga de plantilla...');
-    
+
     // Create a link element to trigger the download
     const link = document.createElement('a');
     link.href = 'documents/Plantilla_de_Ingresantes.xlsx';
     link.download = 'Plantilla_de_Ingresantes.xlsx';
     link.setAttribute('target', '_blank');
-    
+
     // Append to body temporarily
     document.body.appendChild(link);
-    
+
     // Trigger the download
     link.click();
-    
+
     // Remove link after a short delay to ensure download started
     setTimeout(() => {
       document.body.removeChild(link);
       console.log('Plantilla descargada exitosamente');
-      
+
       // Show success message
       if (window.adminPanel) {
         adminPanel.showMessage('Plantilla descargada exitosamente', 'success');
       }
     }, 100);
-    
   } catch (error) {
     console.error('Error downloading template:', error);
     if (window.adminPanel) {
@@ -3978,3 +3990,384 @@ async function deleteListFixed(key) {
     alert('❌ Error al eliminar la lista');
   }
 }
+
+// ===== COURSES MANAGEMENT =====
+AdminPanel.prototype.loadCourses = async function () {
+  try {
+    // First try to load from localStorage
+    const stored = localStorage.getItem('courses_data');
+    if (stored) {
+      this.coursesData = JSON.parse(stored);
+    } else {
+      // Load from file
+      const response = await fetch('data/courses.json');
+      this.coursesData = await response.json();
+      localStorage.setItem('courses_data', JSON.stringify(this.coursesData));
+    }
+  } catch (error) {
+    console.error('Error loading courses:', error);
+    // Initialize with empty structure if error
+    this.coursesData = {};
+  }
+};
+
+AdminPanel.prototype.saveCourses = function () {
+  localStorage.setItem('courses_data', JSON.stringify(this.coursesData));
+  this.updateCoursesOnHomepage();
+  this.showMessage('Cursos guardados correctamente', 'success');
+};
+
+AdminPanel.prototype.bindCoursesManagement = function () {
+  // Wait for DOM to be ready
+  setTimeout(() => {
+    const addCourseBtn = document.getElementById('add-course-btn');
+    const addScheduleBtn = document.getElementById('add-schedule-btn');
+    const deleteCourseBtn = document.getElementById('delete-course-btn');
+
+    if (addCourseBtn) {
+      addCourseBtn.addEventListener('click', () => this.addNewCourse());
+    }
+
+    if (addScheduleBtn) {
+      addScheduleBtn.addEventListener('click', () => this.addNewSchedule());
+    }
+
+    if (deleteCourseBtn) {
+      deleteCourseBtn.addEventListener('click', () => this.deleteCourse());
+    }
+
+    // Color picker sync
+    const colorPicker = document.getElementById('current-course-color');
+    const colorHex = document.getElementById('current-course-color-hex');
+
+    if (colorPicker && colorHex) {
+      colorPicker.addEventListener('input', e => {
+        colorHex.value = e.target.value;
+        if (this.currentCourse) {
+          this.coursesData[this.currentCourse].color = e.target.value;
+          this.renderCourseTabs();
+          this.saveCourses();
+        }
+      });
+
+      colorHex.addEventListener('input', e => {
+        const value = e.target.value.startsWith('#') ? e.target.value : '#' + e.target.value;
+        colorPicker.value = value;
+        if (this.currentCourse) {
+          this.coursesData[this.currentCourse].color = value;
+          this.renderCourseTabs();
+          this.saveCourses();
+        }
+      });
+    }
+
+    // Course name change
+    const courseName = document.getElementById('current-course-name');
+    if (courseName) {
+      courseName.addEventListener('change', e => {
+        if (this.currentCourse && this.coursesData[this.currentCourse]) {
+          this.coursesData[this.currentCourse].name = e.target.value;
+          this.renderCourseTabs();
+          this.saveCourses();
+        }
+      });
+    }
+  }, 1000);
+};
+
+AdminPanel.prototype.renderCourseTabs = function () {
+  const tabsContainer = document.getElementById('courses-tabs');
+  if (!tabsContainer || !this.coursesData) return;
+
+  tabsContainer.innerHTML = '';
+
+  Object.keys(this.coursesData).forEach(courseId => {
+    const course = this.coursesData[courseId];
+    const tab = document.createElement('button');
+    tab.className = 'course-tab';
+    tab.textContent = course.name;
+    tab.style.color = course.color;
+    tab.dataset.courseId = courseId;
+
+    if (courseId === this.currentCourse) {
+      tab.classList.add('active');
+    }
+
+    tab.addEventListener('click', () => {
+      this.selectCourse(courseId);
+    });
+
+    tabsContainer.appendChild(tab);
+  });
+
+  // Select first course if none selected
+  if (!this.currentCourse && Object.keys(this.coursesData).length > 0) {
+    this.selectCourse(Object.keys(this.coursesData)[0]);
+  }
+};
+
+AdminPanel.prototype.selectCourse = function (courseId) {
+  this.currentCourse = courseId;
+  this.renderCourseTabs();
+  this.renderCourseEditor();
+};
+
+AdminPanel.prototype.renderCourseEditor = function () {
+  if (!this.currentCourse || !this.coursesData[this.currentCourse]) return;
+
+  const course = this.coursesData[this.currentCourse];
+
+  // Update course settings
+  const courseName = document.getElementById('current-course-name');
+  const courseColor = document.getElementById('current-course-color');
+  const courseColorHex = document.getElementById('current-course-color-hex');
+
+  if (courseName) courseName.value = course.name;
+  if (courseColor) courseColor.value = course.color;
+  if (courseColorHex) courseColorHex.value = course.color;
+
+  // Render schedules
+  this.renderSchedulesList();
+};
+
+AdminPanel.prototype.renderSchedulesList = function () {
+  const schedulesList = document.getElementById('schedules-list');
+  if (!schedulesList || !this.currentCourse) return;
+
+  const course = this.coursesData[this.currentCourse];
+  schedulesList.innerHTML = '';
+
+  if (!course.schedules || course.schedules.length === 0) {
+    schedulesList.innerHTML =
+      '<p style="text-align: center; color: var(--admin-text-light); padding: 20px;">No hay turnos agregados. Haz clic en "Agregar Turno" para crear uno.</p>';
+    return;
+  }
+
+  course.schedules.forEach((schedule, index) => {
+    const scheduleItem = document.createElement('div');
+    scheduleItem.className = 'schedule-item';
+    scheduleItem.innerHTML = `
+      <div class="schedule-header-row">
+        <h4 class="schedule-title">${schedule.title}</h4>
+        <div class="schedule-actions">
+          <button class="btn-icon edit" data-index="${index}" title="Editar">
+            ✏️ Editar
+          </button>
+          <button class="btn-icon delete" data-index="${index}" title="Eliminar">
+            🗑️ Eliminar
+          </button>
+        </div>
+      </div>
+      <div class="schedule-details">
+        <div class="schedule-detail">
+          <strong>Horario:</strong> ${schedule.time}
+        </div>
+        <div class="schedule-detail">
+          <strong>Días:</strong> ${schedule.days}
+        </div>
+        <div class="schedule-detail">
+          <strong>Período:</strong> ${schedule.period}
+        </div>
+      </div>
+      <div class="schedule-type-badge ${schedule.type}">
+        ${schedule.typeLabel}
+      </div>
+    `;
+
+    // Bind events
+    const editBtn = scheduleItem.querySelector('.btn-icon.edit');
+    const deleteBtn = scheduleItem.querySelector('.btn-icon.delete');
+
+    editBtn.addEventListener('click', () => this.editSchedule(index));
+    deleteBtn.addEventListener('click', () => this.deleteSchedule(index));
+
+    schedulesList.appendChild(scheduleItem);
+  });
+};
+
+AdminPanel.prototype.addNewSchedule = function () {
+  if (!this.currentCourse) {
+    this.showMessage('Selecciona un curso primero', 'error');
+    return;
+  }
+
+  const newSchedule = {
+    id: `${this.currentCourse}-${Date.now()}`,
+    title: 'Nuevo Turno',
+    type: 'presencial',
+    typeLabel: 'Presencial',
+    time: '9:00 - 12:00',
+    days: 'Lunes a Viernes',
+    period: 'Por definir',
+  };
+
+  this.coursesData[this.currentCourse].schedules.push(newSchedule);
+  this.renderSchedulesList();
+  this.saveCourses();
+
+  // Open edit modal for the new schedule
+  setTimeout(() => {
+    this.editSchedule(this.coursesData[this.currentCourse].schedules.length - 1);
+  }, 100);
+};
+
+AdminPanel.prototype.editSchedule = function (index) {
+  const schedule = this.coursesData[this.currentCourse].schedules[index];
+
+  // Create modal
+  const modal = document.createElement('div');
+  modal.className = 'schedule-modal active';
+  modal.innerHTML = `
+    <div class="schedule-modal-content">
+      <div class="schedule-modal-header">
+        <h3>Editar Turno</h3>
+        <button class="schedule-modal-close">✕</button>
+      </div>
+      <div class="schedule-modal-body">
+        <div class="form-group">
+          <label>Título del Turno:</label>
+          <input type="text" id="edit-schedule-title" value="${schedule.title}" />
+        </div>
+        <div class="form-group">
+          <label>Tipo de Modalidad:</label>
+          <select id="edit-schedule-type">
+            <option value="presencial" ${
+              schedule.type === 'presencial' ? 'selected' : ''
+            }>Presencial</option>
+            <option value="sabados" ${
+              schedule.type === 'sabados' ? 'selected' : ''
+            }>Sábados</option>
+            <option value="virtual" ${
+              schedule.type === 'virtual' ? 'selected' : ''
+            }>Virtual</option>
+            <option value="mofa" ${schedule.type === 'mofa' ? 'selected' : ''}>MOFA</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label>Etiqueta de Tipo:</label>
+          <input type="text" id="edit-schedule-type-label" value="${schedule.typeLabel}" />
+        </div>
+        <div class="form-group">
+          <label>Horario:</label>
+          <input type="text" id="edit-schedule-time" value="${
+            schedule.time
+          }" placeholder="Ej: 8:00 - 12:00" />
+        </div>
+        <div class="form-group">
+          <label>Días:</label>
+          <input type="text" id="edit-schedule-days" value="${
+            schedule.days
+          }" placeholder="Ej: Lunes a Viernes" />
+        </div>
+        <div class="form-group">
+          <label>Período:</label>
+          <input type="text" id="edit-schedule-period" value="${
+            schedule.period
+          }" placeholder="Ej: Marzo - Noviembre" />
+        </div>
+      </div>
+      <div class="schedule-modal-footer">
+        <button class="btn-secondary modal-cancel">Cancelar</button>
+        <button class="btn-primary modal-save">Guardar</button>
+      </div>
+    </div>
+  `;
+
+  document.body.appendChild(modal);
+
+  // Close button
+  modal.querySelector('.schedule-modal-close').addEventListener('click', () => {
+    modal.remove();
+  });
+
+  // Cancel button
+  modal.querySelector('.modal-cancel').addEventListener('click', () => {
+    modal.remove();
+  });
+
+  // Save button
+  modal.querySelector('.modal-save').addEventListener('click', () => {
+    schedule.title = document.getElementById('edit-schedule-title').value;
+    schedule.type = document.getElementById('edit-schedule-type').value;
+    schedule.typeLabel = document.getElementById('edit-schedule-type-label').value;
+    schedule.time = document.getElementById('edit-schedule-time').value;
+    schedule.days = document.getElementById('edit-schedule-days').value;
+    schedule.period = document.getElementById('edit-schedule-period').value;
+
+    this.renderSchedulesList();
+    this.saveCourses();
+    modal.remove();
+  });
+
+  // Close on background click
+  modal.addEventListener('click', e => {
+    if (e.target === modal) {
+      modal.remove();
+    }
+  });
+};
+
+AdminPanel.prototype.deleteSchedule = function (index) {
+  if (!confirm('¿Estás seguro de eliminar este turno?')) return;
+
+  this.coursesData[this.currentCourse].schedules.splice(index, 1);
+  this.renderSchedulesList();
+  this.saveCourses();
+};
+
+AdminPanel.prototype.addNewCourse = function () {
+  const courseName = prompt('Nombre del nuevo curso:');
+  if (!courseName) return;
+
+  const courseId = courseName.toLowerCase().replace(/\s+/g, '-');
+
+  if (this.coursesData[courseId]) {
+    this.showMessage('Ya existe un curso con ese nombre', 'error');
+    return;
+  }
+
+  this.coursesData[courseId] = {
+    id: courseId,
+    name: courseName,
+    color: '#2563eb',
+    schedules: [],
+  };
+
+  this.selectCourse(courseId);
+  this.saveCourses();
+};
+
+AdminPanel.prototype.deleteCourse = function () {
+  if (!this.currentCourse) return;
+
+  if (
+    !confirm(`¿Estás seguro de eliminar el curso "${this.coursesData[this.currentCourse].name}"?`)
+  )
+    return;
+
+  delete this.coursesData[this.currentCourse];
+  this.currentCourse = null;
+  this.renderCourseTabs();
+  this.saveCourses();
+};
+
+AdminPanel.prototype.updateCoursesOnHomepage = function () {
+  // This will update the courses on the homepage
+  try {
+    // Send message to homepage
+    if (window.opener && !window.opener.closed) {
+      window.opener.postMessage(
+        {
+          type: 'UPDATE_COURSES',
+          data: this.coursesData,
+        },
+        '*'
+      );
+    }
+
+    // Also store for direct access
+    localStorage.setItem('courses_data', JSON.stringify(this.coursesData));
+  } catch (error) {
+    console.error('Error updating homepage:', error);
+  }
+};

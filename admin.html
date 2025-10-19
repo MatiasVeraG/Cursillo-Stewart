@@ -780,101 +780,62 @@
         <!-- Cursos Section -->
         <section id="cursos-section" class="admin-section">
           <h2>📚 Gestión de Cursos</h2>
-          <div class="content-grid">
-            <div class="content-card">
-              <h3>📘 Curso Intensivo</h3>
-              <div class="form-group">
-                <label>Descripción General:</label>
-                <textarea
-                  id="intensive-description"
-                  rows="3"
-                  placeholder="Curso intensivo de preparación universitaria..."
-                ></textarea>
+
+          <div class="courses-manager">
+            <!-- Tabs for courses -->
+            <div class="courses-tabs" id="courses-tabs">
+              <!-- Tabs will be generated dynamically -->
+            </div>
+
+            <!-- Course Editor -->
+            <div class="course-editor" id="course-editor">
+              <!-- Course settings -->
+              <div class="content-card">
+                <h3>⚙️ Configuración del Curso</h3>
+                <div class="form-group">
+                  <label>Nombre del Curso:</label>
+                  <input type="text" id="current-course-name" placeholder="Ej: Intensivo" />
+                </div>
+                <div class="form-group">
+                  <label>Color del Curso (hex):</label>
+                  <div style="display: flex; gap: 10px; align-items: center">
+                    <input type="color" id="current-course-color" />
+                    <input
+                      type="text"
+                      id="current-course-color-hex"
+                      placeholder="#2563eb"
+                      style="flex: 1"
+                    />
+                  </div>
+                </div>
+                <div class="form-actions">
+                  <button class="btn-danger" id="delete-course-btn">🗑️ Eliminar Curso</button>
+                </div>
               </div>
-              <div class="form-group">
-                <label>Modalidades Disponibles:</label>
-                <textarea
-                  id="intensive-modalities"
-                  rows="2"
-                  placeholder="Semanal Presencial, Sábados Presencial, Sábados Virtual"
-                ></textarea>
-              </div>
-              <div class="form-group">
-                <label>Precio (opcional):</label>
-                <input type="text" id="intensive-price" placeholder="Gs. 500.000" />
+
+              <!-- Schedules list -->
+              <div class="content-card">
+                <div
+                  style="
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 20px;
+                  "
+                >
+                  <h3>� Turnos del Curso</h3>
+                  <button class="btn-primary" id="add-schedule-btn">➕ Agregar Turno</button>
+                </div>
+
+                <div id="schedules-list" class="schedules-list">
+                  <!-- Schedules will be generated dynamically -->
+                </div>
               </div>
             </div>
 
-            <div class="content-card">
-              <h3>📗 Curso Extensivo</h3>
-              <div class="form-group">
-                <label>Descripción General:</label>
-                <textarea
-                  id="extensive-description"
-                  rows="3"
-                  placeholder="Curso extensivo para estudiantes y trabajadores..."
-                ></textarea>
-              </div>
-              <div class="form-group">
-                <label>Modalidades Disponibles:</label>
-                <textarea
-                  id="extensive-modalities"
-                  rows="2"
-                  placeholder="Presencial, Virtual"
-                ></textarea>
-              </div>
-              <div class="form-group">
-                <label>Precio (opcional):</label>
-                <input type="text" id="extensive-price" placeholder="Gs. 300.000" />
-              </div>
-            </div>
-
-            <div class="content-card">
-              <h3>📙 Curso MOFA</h3>
-              <div class="form-group">
-                <label>Descripción General:</label>
-                <textarea
-                  id="mofa-description"
-                  rows="3"
-                  placeholder="Preparación especializada para exámenes MOFA..."
-                ></textarea>
-              </div>
-              <div class="form-group">
-                <label>Modalidades Disponibles:</label>
-                <textarea
-                  id="mofa-modalities"
-                  rows="2"
-                  placeholder="MOFA Presencial, MOFA Virtual"
-                ></textarea>
-              </div>
-              <div class="form-group">
-                <label>Precio (opcional):</label>
-                <input type="text" id="mofa-price" placeholder="Gs. 400.000" />
-              </div>
-            </div>
-
-            <div class="content-card">
-              <h3>📖 Contenido del Libro</h3>
-              <div class="form-group">
-                <label>Título del Libro:</label>
-                <input
-                  type="text"
-                  id="book-title"
-                  placeholder="Precalculus - Mathematics for Calculus"
-                />
-              </div>
-              <div class="form-group">
-                <label>Autor:</label>
-                <input type="text" id="book-author" placeholder="James Stewart" />
-              </div>
-              <div class="form-group">
-                <label>Descripción del Libro:</label>
-                <textarea
-                  id="book-description"
-                  rows="3"
-                  placeholder="Reconocido mundialmente como uno de los mejores textos de Precálculo..."
-                ></textarea>
-              </div>
+            <!-- Add new course button -->
+            <div class="content-card" style="text-align: center">
+              <button class="btn-success" id="add-course-btn">➕ Agregar Nuevo Curso</button>
             </div>
           </div>
         </section>
