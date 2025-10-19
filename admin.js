@@ -83,6 +83,7 @@ class AdminPanel {
       this.loadBannerTextColors();
       this.initEnhancedOverlayControls();
       this.initBackgroundImagesDragDrop();
+      this.initContactSection(); // Initialize contact section
     }, 100);
   }
 
@@ -166,6 +167,15 @@ class AdminPanel {
   autoSaveContent() {
     const allContent = this.getAllContent();
     localStorage.setItem('website_content', JSON.stringify(allContent));
+
+    // Also set pending updates and timestamp to ensure homepage picks the changes
+    try {
+      localStorage.setItem('pending_homepage_updates', JSON.stringify(allContent));
+      localStorage.setItem('admin_update_timestamp', Date.now().toString());
+      window.dispatchEvent(new CustomEvent('adminContentChange', { detail: allContent }));
+    } catch (e) {
+      console.warn('Could not set pending updates:', e);
+    }
 
     // Try to update homepage in real-time
     this.applyChangesToHomepage(allContent);
@@ -1351,6 +1361,15 @@ class AdminPanel {
     // Save to localStorage
     localStorage.setItem('website_content', JSON.stringify(allContent));
 
+    // Also set pending updates and timestamp to ensure homepage picks the changes
+    try {
+      localStorage.setItem('pending_homepage_updates', JSON.stringify(allContent));
+      localStorage.setItem('admin_update_timestamp', Date.now().toString());
+      window.dispatchEvent(new CustomEvent('adminContentChange', { detail: allContent }));
+    } catch (e) {
+      console.warn('Could not set pending updates on save:', e);
+    }
+
     // Apply changes to homepage if possible
     this.applyChangesToHomepage(allContent);
 
@@ -1567,6 +1586,13 @@ class AdminPanel {
     content.banner_text_colors =
       localStorage.getItem('banner_text_colors') ||
       JSON.stringify({ title: '#ffffff', subtitle: '#ffffff', description: '#ffffff' });
+
+    // Include contact section colors
+    content['contact-colors'] = JSON.stringify({
+      sectionTitle: document.getElementById('contact-section-title-color')?.value || '#002147',
+      formTitle: document.getElementById('contact-form-title-color')?.value || '#002147',
+      infoTitle: document.getElementById('contact-info-title-color')?.value || '#002147',
+    });
 
     // Block images feature removed - no longer included in content
     // const blockImages = JSON.parse(localStorage.getItem('block_images') || '{}');
@@ -4458,4 +4484,137 @@ AdminPanel.prototype.updateCoursesOnHomepage = function () {
   } catch (error) {
     console.error('Error updating homepage:', error);
   }
+};
+
+// ============= CONTACT SECTION FUNCTIONS =============
+
+/**
+ * Preview Map - Opens a preview of the current map URL
+ */
+AdminPanel.prototype.previewMap = function () {
+  // Deprecated preview: instead apply the map value to content and mark unsaved
+  const mapUrl = document.getElementById('contact-map-url').value.trim();
+
+  if (!mapUrl) {
+    this.showMessage('Por favor, ingresa una URL de mapa primero', 'warning');
+    return;
+  }
+
+  // Store to website_content and pending updates so homepage loads it immediately
+  try {
+    const allContent = this.getAllContent();
+    allContent['contact-map-url'] = mapUrl;
+    localStorage.setItem('website_content', JSON.stringify(allContent));
+    localStorage.setItem('pending_homepage_updates', JSON.stringify(allContent));
+    // bump timestamp so index.html detects the change
+    localStorage.setItem('admin_update_timestamp', Date.now().toString());
+    // dispatch storage event manually for same-tab listeners
+    window.dispatchEvent(new CustomEvent('adminContentChange', { detail: allContent }));
+
+    this.showMessage('Enlace de mapa actualizado (se aplicará al guardar).', 'success');
+    this.markAsUnsaved();
+  } catch (error) {
+    console.error('Error applying map URL:', error);
+    this.showMessage('No se pudo aplicar el enlace del mapa', 'error');
+  }
+};
+
+/**
+ * Load contact section data
+ */
+AdminPanel.prototype.loadContactData = function () {
+  const savedContent = localStorage.getItem('website_content');
+  if (!savedContent) return;
+
+  const content = JSON.parse(savedContent);
+
+  // Load titles and subtitles
+  this.setInputValue('contact-section-title-input', content['contact-section-title-input']);
+  this.setInputValue('contact-section-description-input', content['contact-section-description-input']);
+  this.setInputValue('contact-form-title-input', content['contact-form-title-input']);
+  this.setInputValue('contact-info-title-input', content['contact-info-title-input']);
+
+  // Load colors
+  this.setInputValue('contact-section-title-color', content['contact-section-title-color'] || '#002147');
+  this.setInputValue('contact-form-title-color', content['contact-form-title-color'] || '#002147');
+  this.setInputValue('contact-info-title-color', content['contact-info-title-color'] || '#002147');
+
+  // Load contact information
+  this.setInputValue('contact-phone-input', content['contact-phone-input']);
+  this.setInputValue('contact-email-input', content['contact-email-input']);
+  this.setInputValue('contact-address-input', content['contact-address-input']);
+  this.setInputValue('contact-hours-input', content['contact-hours-input']);
+
+  // Load map URL
+  this.setInputValue('contact-map-url', content['contact-map-url']);
+
+  // Load EmailJS configuration
+  this.setInputValue('emailjs-service-id', content['emailjs-service-id']);
+  this.setInputValue('emailjs-template-id', content['emailjs-template-id']);
+  this.setInputValue('emailjs-public-key', content['emailjs-public-key']);
+};
+
+/**
+ * Helper function to set input value
+ */
+AdminPanel.prototype.setInputValue = function (id, value) {
+  const element = document.getElementById(id);
+  if (element && value !== undefined && value !== null) {
+    element.value = value;
+  }
+};
+
+/**
+ * Update contact section colors in real-time
+ */
+AdminPanel.prototype.updateContactColors = function () {
+  // Add event listeners for color changes
+  const colorInputs = [
+    { id: 'contact-section-title-color', target: 'contact-section-title' },
+    { id: 'contact-form-title-color', target: 'contact-form-title' },
+    { id: 'contact-info-title-color', target: 'contact-info-title' },
+  ];
+
+  colorInputs.forEach(input => {
+    const colorInput = document.getElementById(input.id);
+    if (colorInput) {
+      colorInput.addEventListener('input', (e) => {
+        // Store color for save
+        this.markAsUnsaved();
+      });
+    }
+  });
+};
+
+/**
+ * Initialize contact section
+ */
+AdminPanel.prototype.initContactSection = function () {
+  this.loadContactData();
+  this.updateContactColors();
+  
+  // Add change listeners to mark as unsaved
+  const contactInputs = [
+    'contact-section-title-input',
+    'contact-section-description-input',
+    'contact-form-title-input',
+    'contact-info-title-input',
+    'contact-phone-input',
+    'contact-email-input',
+    'contact-address-input',
+    'contact-hours-input',
+    'contact-map-url',
+    'emailjs-service-id',
+    'emailjs-template-id',
+    'emailjs-public-key',
+  ];
+
+  contactInputs.forEach(id => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.addEventListener('input', () => {
+        this.markAsUnsaved();
+      });
+    }
+  });
 };

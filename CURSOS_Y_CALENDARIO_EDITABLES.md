@@ -9,12 +9,14 @@ Se han implementado las siguientes funcionalidades en el panel de administració
 **Ubicación**: Panel Admin → Pestaña "Cursos"
 
 #### Características:
+
 - **Título Principal**: Campo editable para cambiar el título de la sección de cursos (por defecto: "Cursos")
 - **Subtítulo**: Campo opcional para agregar un subtítulo descriptivo
 - **Sincronización automática**: Los cambios se reflejan instantáneamente en el sitio web
 - **Persistencia**: Los títulos se guardan en localStorage y se mantienen entre sesiones
 
 #### Archivos modificados:
+
 - `admin.html` - Agregada interfaz de edición de títulos
 - `admin-final.js` - Clase `CoursesSystem` actualizada con métodos `loadTitles()` y `saveTitles()`
 - `homepage.courses.js` - Funciones `updateCourseTitles()` y `loadSavedTitles()` para aplicar cambios
@@ -28,17 +30,20 @@ Se han implementado las siguientes funcionalidades en el panel de administració
 #### Características principales:
 
 ##### 📝 Información de la Sección
+
 - **Título**: Editable (por defecto: "Calendario de Eventos")
 - **Subtítulo**: Editable (por defecto: "Mantente informado sobre fechas importantes")
 - **Color de fondo**: Selector de color para la sección completa
 
 ##### 🎨 Personalización de Colores
+
 - **Color del círculo de fecha**: Color de fondo del círculo que muestra el día
 - **Color del texto del círculo**: Color del número del día
 - **Color de fondo de la tarjeta**: Color de fondo de cada evento
 - **Color del borde de la tarjeta**: Color del borde de las tarjetas
 
 ##### 📅 Gestión de Eventos
+
 - **Agregar eventos**: Botón para crear nuevos eventos sin límite
 - **Editar eventos**: Cada evento tiene campos editables para:
   - Día (1-31)
@@ -50,6 +55,7 @@ Se han implementado las siguientes funcionalidades en el panel de administració
 - **Vista previa instantánea**: Los cambios se reflejan inmediatamente
 
 ##### 📐 Sistema de Grid Inteligente
+
 - **Máximo 3 columnas**: Los eventos se organizan en un máximo de 3 columnas
 - **Centralidad automática**: El contenido se mantiene centrado sin importar la cantidad de eventos
 - **Responsive**: Se adapta a dispositivos móviles (1 columna en pantallas pequeñas)
@@ -57,9 +63,11 @@ Se han implementado las siguientes funcionalidades en el panel de administració
 #### Archivos creados/modificados:
 
 **Nuevos archivos:**
+
 - `homepage.calendar.js` - Script para manejar la actualización dinámica del calendario en index.html
 
 **Modificados:**
+
 - `admin.html` - Nueva interfaz completa de gestión de calendario
 - `admin-final.js` - Nueva clase `CalendarSystem` con todas las funcionalidades
 - `admin.css` - Estilos para las tarjetas de eventos del calendario
@@ -87,11 +95,13 @@ Sitio Web (index.html)
 ### Almacenamiento
 
 **LocalStorage Keys:**
+
 - `courses_titles` - Títulos de la sección de cursos
 - `courses_data` - Datos de los cursos
 - `calendar_data` - Toda la información del calendario
 
 **Estructura de calendar_data:**
+
 ```json
 {
   "title": "Calendario de Eventos",
@@ -118,19 +128,23 @@ Sitio Web (index.html)
 ## 🎯 Funcionalidades Clave
 
 ### Auto-guardado
+
 - Todos los cambios se guardan automáticamente al modificar cualquier campo
 - No es necesario hacer clic en "Guardar"
 
 ### Sincronización en Tiempo Real
+
 - Los cambios se sincronizan inmediatamente con el sitio web abierto
 - Funciona mediante `postMessage` API y eventos de `storage`
 
 ### Validación
+
 - Días: Solo números del 1-31
 - Año: Solo números
 - Colores: Validación de formato hexadecimal
 
 ### Diseño Responsive
+
 - **Desktop**: Hasta 3 columnas
 - **Tablet**: 2 columnas
 - **Mobile**: 1 columna
@@ -141,11 +155,13 @@ Sitio Web (index.html)
 ## 📱 Uso del Sistema
 
 ### Para editar títulos de Cursos:
+
 1. Ir a Panel Admin → Pestaña "Cursos"
 2. En la parte superior, editar "Título Principal" y/o "Subtítulo"
 3. Los cambios se guardan automáticamente
 
 ### Para gestionar el Calendario:
+
 1. Ir a Panel Admin → Pestaña "Calendario"
 2. Editar título y subtítulo de la sección
 3. Personalizar colores usando los selectores de color
@@ -154,6 +170,7 @@ Sitio Web (index.html)
 6. Eliminar eventos con el botón 🗑️
 
 ### Para verificar los cambios:
+
 1. Abrir el sitio web (index.html) en otra pestaña
 2. Los cambios del admin se reflejan automáticamente
 3. También funciona al recargar la página (datos persistentes)
@@ -183,6 +200,7 @@ Sitio Web (index.html)
 ## 📞 Soporte
 
 Para cualquier duda o problema con el sistema, revisar:
+
 - `admin-final.js` - Lógica principal
 - `homepage.calendar.js` - Renderizado del calendario
 - `homepage.courses.js` - Renderizado de cursos

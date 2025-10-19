@@ -899,45 +899,109 @@
             <!-- Colores de las tarjetas -->
             <div class="content-card">
               <h3>🎨 Colores de las Tarjetas de Eventos</h3>
-              
+
               <!-- Presets de colores -->
               <div class="form-group">
                 <label>Temas Predeterminados:</label>
                 <div class="color-presets-grid">
-                  <button type="button" class="color-preset-btn" onclick="calendarSystem.applyColorPreset('blue')" title="Azul Clásico">
-                    <div class="preset-preview" style="background: linear-gradient(135deg, #1e3a8a 50%, #f8fafc 50%)"></div>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="calendarSystem.applyColorPreset('blue')"
+                    title="Azul Clásico"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: linear-gradient(135deg, #1e3a8a 50%, #f8fafc 50%)"
+                    ></div>
                     <span>Azul</span>
                   </button>
-                  <button type="button" class="color-preset-btn" onclick="calendarSystem.applyColorPreset('red')" title="Rojo Energético">
-                    <div class="preset-preview" style="background: linear-gradient(135deg, #dc2626 50%, #fef2f2 50%)"></div>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="calendarSystem.applyColorPreset('red')"
+                    title="Rojo Energético"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: linear-gradient(135deg, #dc2626 50%, #fef2f2 50%)"
+                    ></div>
                     <span>Rojo</span>
                   </button>
-                  <button type="button" class="color-preset-btn" onclick="calendarSystem.applyColorPreset('green')" title="Verde Natural">
-                    <div class="preset-preview" style="background: linear-gradient(135deg, #059669 50%, #f0fdf4 50%)"></div>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="calendarSystem.applyColorPreset('green')"
+                    title="Verde Natural"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: linear-gradient(135deg, #059669 50%, #f0fdf4 50%)"
+                    ></div>
                     <span>Verde</span>
                   </button>
-                  <button type="button" class="color-preset-btn" onclick="calendarSystem.applyColorPreset('purple')" title="Púrpura Elegante">
-                    <div class="preset-preview" style="background: linear-gradient(135deg, #7c3aed 50%, #faf5ff 50%)"></div>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="calendarSystem.applyColorPreset('purple')"
+                    title="Púrpura Elegante"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: linear-gradient(135deg, #7c3aed 50%, #faf5ff 50%)"
+                    ></div>
                     <span>Púrpura</span>
                   </button>
-                  <button type="button" class="color-preset-btn" onclick="calendarSystem.applyColorPreset('orange')" title="Naranja Vibrante">
-                    <div class="preset-preview" style="background: linear-gradient(135deg, #ea580c 50%, #fff7ed 50%)"></div>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="calendarSystem.applyColorPreset('orange')"
+                    title="Naranja Vibrante"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: linear-gradient(135deg, #ea580c 50%, #fff7ed 50%)"
+                    ></div>
                     <span>Naranja</span>
                   </button>
-                  <button type="button" class="color-preset-btn" onclick="calendarSystem.applyColorPreset('teal')" title="Turquesa Moderno">
-                    <div class="preset-preview" style="background: linear-gradient(135deg, #0d9488 50%, #f0fdfa 50%)"></div>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="calendarSystem.applyColorPreset('teal')"
+                    title="Turquesa Moderno"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: linear-gradient(135deg, #0d9488 50%, #f0fdfa 50%)"
+                    ></div>
                     <span>Turquesa</span>
                   </button>
                 </div>
               </div>
 
-              <div style="margin: 15px 0; padding: 10px; background: #f8fafc; border-radius: 6px; border-left: 3px solid #3b82f6;">
-                <small style="color: #475569; font-size: 0.85rem;">
-                  💡 <strong>Tip:</strong> Selecciona un tema predeterminado o personaliza los colores manualmente abajo.
+              <div
+                style="
+                  margin: 15px 0;
+                  padding: 10px;
+                  background: #f8fafc;
+                  border-radius: 6px;
+                  border-left: 3px solid #3b82f6;
+                "
+              >
+                <small style="color: #475569; font-size: 0.85rem">
+                  💡 <strong>Tip:</strong> Selecciona un tema predeterminado o personaliza los
+                  colores manualmente abajo.
                 </small>
               </div>
 
-              <h4 style="margin-top: 20px; margin-bottom: 15px; color: var(--admin-text); font-size: 1rem;">
+              <h4
+                style="
+                  margin-top: 20px;
+                  margin-bottom: 15px;
+                  color: var(--admin-text);
+                  font-size: 1rem;
+                "
+              >
                 🎨 Personalización Manual
               </h4>
 
@@ -969,7 +1033,12 @@
                 <label>Color de fondo de la tarjeta:</label>
                 <div style="display: flex; gap: 10px; align-items: center">
                   <input type="color" id="calendar-card-bg" value="#ffffff" />
-                  <input type="text" id="calendar-card-bg-hex" placeholder="#ffffff" style="flex: 1" />
+                  <input
+                    type="text"
+                    id="calendar-card-bg-hex"
+                    placeholder="#ffffff"
+                    style="flex: 1"
+                  />
                 </div>
               </div>
               <div class="form-group">
@@ -1017,9 +1086,9 @@
             <!-- Acciones del Calendario -->
             <div class="content-card" style="grid-column: 1 / -1">
               <h3>⚙️ Configuración Predeterminada</h3>
-              <p class="card-description" style="margin-bottom: 20px;">
-                Gestiona la configuración predeterminada del calendario. Puedes guardar tu configuración actual 
-                o restaurar los valores por defecto del sistema.
+              <p class="card-description" style="margin-bottom: 20px">
+                Gestiona la configuración predeterminada del calendario. Puedes guardar tu
+                configuración actual o restaurar los valores por defecto del sistema.
               </p>
               <div class="calendar-actions-grid">
                 <button
@@ -1049,19 +1118,70 @@
         <section id="contacto-section" class="admin-section">
           <h2>📞 Gestión de Contacto</h2>
           <div class="content-grid">
-            <div class="content-card">
-              <h3>📋 Información de la Sección</h3>
-              <div class="form-group">
-                <label>Título de la Sección:</label>
-                <input type="text" id="contact-section-title" placeholder="Contacto" />
+            <div class="content-card contact-titles-card">
+              <h3>📋 Títulos de la Sección</h3>
+              <div class="form-group with-color">
+                <label>Título Principal:</label>
+                <div class="input-with-color">
+                  <input 
+                    type="text" 
+                    id="contact-section-title-input" 
+                    data-target="contact-section-title"
+                    placeholder="Contacto" 
+                  />
+                  <input
+                    type="color"
+                    id="contact-section-title-color"
+                    value="#002147"
+                    class="color-picker-small"
+                    title="Color del título"
+                  />
+                </div>
               </div>
               <div class="form-group">
                 <label>Descripción:</label>
                 <input
                   type="text"
-                  id="contact-section-description"
+                  id="contact-section-description-input"
+                  data-target="contact-section-description"
                   placeholder="Estamos aquí para resolver todas tus dudas"
                 />
+              </div>
+              <div class="form-group with-color">
+                <label>Título del Formulario:</label>
+                <div class="input-with-color">
+                  <input
+                    type="text"
+                    id="contact-form-title-input"
+                    data-target="contact-form-title"
+                    placeholder="Envíanos un Mensaje"
+                  />
+                  <input
+                    type="color"
+                    id="contact-form-title-color"
+                    value="#002147"
+                    class="color-picker-small"
+                    title="Color del título del formulario"
+                  />
+                </div>
+              </div>
+              <div class="form-group with-color">
+                <label>Título de Información:</label>
+                <div class="input-with-color">
+                  <input
+                    type="text"
+                    id="contact-info-title-input"
+                    data-target="contact-info-title"
+                    placeholder="Información de Contacto"
+                  />
+                  <input
+                    type="color"
+                    id="contact-info-title-color"
+                    value="#002147"
+                    class="color-picker-small"
+                    title="Color del título de información"
+                  />
+                </div>
               </div>
             </div>
 
@@ -1071,7 +1191,7 @@
                 <label>Teléfono:</label>
                 <input
                   type="text"
-                  id="contact-phone"
+                  id="contact-phone-input"
                   data-target="contact-phone"
                   placeholder="+595 985 350550"
                 />
@@ -1080,7 +1200,7 @@
                 <label>Email:</label>
                 <input
                   type="email"
-                  id="contact-email"
+                  id="contact-email-input"
                   data-target="contact-email"
                   placeholder="cursillostewart@gmail.com"
                 />
@@ -1088,7 +1208,7 @@
               <div class="form-group">
                 <label>Dirección:</label>
                 <textarea
-                  id="contact-address"
+                  id="contact-address-input"
                   data-target="contact-address"
                   rows="2"
                   placeholder="Independencia Nacional 1159 entre Av. Rodríguez de Francia y Rca. de Colombia, Asunción"
@@ -1098,7 +1218,7 @@
                 <label>Horarios de Atención:</label>
                 <input
                   type="text"
-                  id="contact-hours"
+                  id="contact-hours-input"
                   data-target="contact-hours"
                   placeholder="Lun - Sáb: 8:00 - 12:00 y 14:00 - 18:00"
                 />
@@ -1108,32 +1228,61 @@
             <div class="content-card">
               <h3>🗺️ Mapa y Ubicación</h3>
               <div class="form-group">
-                <label>URL del Mapa (Google Maps):</label>
-                <input type="url" id="map-url" placeholder="https://maps.google.com/..." />
+                <label>URL del Mapa Embebido (Google Maps iframe src):</label>
+                <textarea
+                  id="contact-map-url"
+                  rows="3"
+                  placeholder="https://www.google.com/maps/embed?pb=..."
+                  style="font-family: monospace; font-size: 0.9em;"
+                ></textarea>
+                <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">
+                  💡 Cómo obtener el enlace: <br>
+                  1. Ve a <a href="https://www.google.com/maps" target="_blank">Google Maps</a><br>
+                  2. Busca tu ubicación<br>
+                  3. Haz clic en "Compartir" → "Insertar un mapa"<br>
+                  4. Copia el URL que aparece en el src del iframe (entre comillas)
+                </small>
               </div>
-              <div class="form-group">
-                <label>Coordenadas de Latitud:</label>
-                <input type="text" id="map-lat" placeholder="-25.2637" />
-              </div>
-              <div class="form-group">
-                <label>Coordenadas de Longitud:</label>
-                <input type="text" id="map-lng" placeholder="-57.5759" />
-              </div>
+              <!-- Preview button removed: map URL is applied/saved directly when you Save Changes or wait for autosave -->
             </div>
 
             <div class="content-card">
-              <h3>📧 Configuración de EmailJS</h3>
-              <div class="form-group">
-                <label>Service ID:</label>
-                <input type="text" id="emailjs-service-id" placeholder="service_xxxxxxx" />
+              <h3>� Textos del Formulario de Inscripción</h3>
+              <div class="alert-info" style="margin-bottom: 1rem; padding: 1rem; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196F3;">
+                <strong>📌 Información:</strong> Personaliza los textos que aparecen en el formulario de inscripción.
               </div>
               <div class="form-group">
-                <label>Template ID:</label>
-                <input type="text" id="emailjs-template-id" placeholder="template_xxxxxxx" />
+                <label>Título Principal:</label>
+                <input 
+                  type="text" 
+                  id="inscription-title-input" 
+                  placeholder="Inscripción"
+                />
+                <small style="color: #666; display: block; margin-top: 0.5rem;">
+                  Este es el título principal del formulario
+                </small>
               </div>
               <div class="form-group">
-                <label>Public Key:</label>
-                <input type="text" id="emailjs-public-key" placeholder="xW-mdqdZ0aTjeEmGS" />
+                <label>Subtítulo:</label>
+                <input 
+                  type="text" 
+                  id="inscription-subtitle-input" 
+                  placeholder="Completa tu registro para formar parte del Cursillo Stewart"
+                />
+                <small style="color: #666; display: block; margin-top: 0.5rem;">
+                  Aparece debajo del título principal
+                </small>
+              </div>
+              <div class="form-group">
+                <label>Mensaje de Bienvenida:</label>
+                <textarea 
+                  id="inscription-welcome-input" 
+                  rows="3"
+                  placeholder="¡Bienvenido a Cursillo Stewart! Por favor completar el formulario para finalizar el proceso de inscripción"
+                ></textarea>
+                <small style="color: #666; display: block; margin-top: 0.5rem;">
+                  Mensaje que aparece antes del formulario
+                </small>
               </div>
             </div>
           </div>

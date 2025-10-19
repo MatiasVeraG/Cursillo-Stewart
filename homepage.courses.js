@@ -257,12 +257,12 @@
     if (event.data && event.data.type === 'UPDATE_COURSES') {
       coursesData = event.data.data;
       localStorage.setItem('courses_data', JSON.stringify(coursesData));
-      
+
       // Update titles if provided
       if (event.data.titles) {
         updateCourseTitles(event.data.titles);
       }
-      
+
       renderCourses();
     }
   });
@@ -291,7 +291,7 @@
     const p = sectionHeader.querySelector('p');
 
     if (h2) h2.textContent = titles.mainTitle || 'Cursos';
-    
+
     // Si hay subtítulo, actualizar o crear el elemento p
     if (titles.subtitle) {
       if (p) {

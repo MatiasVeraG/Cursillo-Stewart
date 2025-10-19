@@ -66,7 +66,7 @@
 
     // Find or create grid container
     let gridContainer = container.querySelector('.grid');
-    
+
     if (!gridContainer) {
       gridContainer = document.createElement('div');
       gridContainer.className = 'grid grid-3';
@@ -109,7 +109,7 @@
 
     // Create or update style element for calendar colors
     let styleEl = document.getElementById('calendar-dynamic-styles');
-    
+
     if (!styleEl) {
       styleEl = document.createElement('style');
       styleEl.id = 'calendar-dynamic-styles';

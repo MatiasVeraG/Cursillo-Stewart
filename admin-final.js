@@ -814,10 +814,12 @@ class CoursesSystem {
 
   loadTitles() {
     const storedTitles = localStorage.getItem('courses_titles');
-    let titles = storedTitles ? JSON.parse(storedTitles) : {
-      mainTitle: 'Cursos',
-      subtitle: ''
-    };
+    let titles = storedTitles
+      ? JSON.parse(storedTitles)
+      : {
+          mainTitle: 'Cursos',
+          subtitle: '',
+        };
 
     const mainTitleInput = document.getElementById('courses-main-title');
     const subtitleInput = document.getElementById('courses-subtitle');
@@ -839,7 +841,7 @@ class CoursesSystem {
 
     const titles = { mainTitle, subtitle };
     localStorage.setItem('courses_titles', JSON.stringify(titles));
-    
+
     this.updateCoursesOnHomepage();
     showMessage('Títulos actualizados correctamente', 'success');
   }
@@ -1338,13 +1340,13 @@ class CoursesSystem {
     try {
       const titles = localStorage.getItem('courses_titles');
       const courseTitles = titles ? JSON.parse(titles) : { mainTitle: 'Cursos', subtitle: '' };
-      
+
       if (window.opener && !window.opener.closed) {
         window.opener.postMessage(
           {
             type: 'UPDATE_COURSES',
             data: this.coursesData,
-            titles: courseTitles
+            titles: courseTitles,
           },
           '*'
         );
@@ -1367,7 +1369,7 @@ class CalendarSystem {
       dateCircleText: '#ffffff',
       cardBg: '#ffffff',
       cardBorder: '#e2e8f0',
-      events: []
+      events: [],
     };
   }
 
@@ -1389,43 +1391,43 @@ class CalendarSystem {
           month: 'Enero',
           year: 2024,
           title: 'Inicio de Inscripciones',
-          description: 'Apertura del período de inscripciones para el cursillo'
+          description: 'Apertura del período de inscripciones para el cursillo',
         },
         {
           day: 1,
           month: 'Febrero',
           year: 2024,
           title: 'Inicio de Clases',
-          description: 'Comienzo oficial del programa académico'
+          description: 'Comienzo oficial del programa académico',
         },
         {
           day: 15,
           month: 'Marzo',
           year: 2024,
           title: 'Evaluación Parcial',
-          description: 'Primera evaluación del progreso académico'
+          description: 'Primera evaluación del progreso académico',
         },
         {
           day: 30,
           month: 'Abril',
           year: 2024,
           title: 'Examen Final',
-          description: 'Evaluación final del cursillo'
+          description: 'Evaluación final del cursillo',
         },
         {
           day: 15,
           month: 'Mayo',
           year: 2024,
           title: 'Graduación',
-          description: 'Ceremonia de clausura y entrega de certificados'
+          description: 'Ceremonia de clausura y entrega de certificados',
         },
         {
           day: 1,
           month: 'Junio',
           year: 2024,
           title: 'Ingreso UPTP',
-          description: 'Inicio del período universitario regular'
-        }
+          description: 'Inicio del período universitario regular',
+        },
       ];
       this.saveCalendar();
     }
@@ -1433,7 +1435,7 @@ class CalendarSystem {
     // Cargar valores en inputs
     document.getElementById('calendar-title').value = this.calendarData.title;
     document.getElementById('calendar-subtitle').value = this.calendarData.subtitle;
-    
+
     // Colores
     this.setColorInputs('calendar-bg-color', this.calendarData.bgColor);
     this.setColorInputs('calendar-date-circle-color', this.calendarData.dateCircleColor);
@@ -1445,7 +1447,7 @@ class CalendarSystem {
   setColorInputs(id, color) {
     const colorPicker = document.getElementById(id);
     const colorHex = document.getElementById(id + '-hex');
-    
+
     if (colorPicker) colorPicker.value = color;
     if (colorHex) colorHex.value = color;
   }
@@ -1488,7 +1490,7 @@ class CalendarSystem {
     const colorHex = document.getElementById(id + '-hex');
 
     if (colorPicker) {
-      colorPicker.addEventListener('input', (e) => {
+      colorPicker.addEventListener('input', e => {
         this.calendarData[property] = e.target.value;
         if (colorHex) colorHex.value = e.target.value;
         this.saveCalendar();
@@ -1496,7 +1498,7 @@ class CalendarSystem {
     }
 
     if (colorHex) {
-      colorHex.addEventListener('input', (e) => {
+      colorHex.addEventListener('input', e => {
         const value = e.target.value.startsWith('#') ? e.target.value : '#' + e.target.value;
         this.calendarData[property] = value;
         if (colorPicker) colorPicker.value = value;
@@ -1512,7 +1514,8 @@ class CalendarSystem {
     container.innerHTML = '';
 
     if (this.calendarData.events.length === 0) {
-      container.innerHTML = '<p style="text-align: center; color: #64748b; padding: 2rem;">No hay eventos agregados aún. Haz clic en "Agregar Nuevo Evento" para comenzar.</p>';
+      container.innerHTML =
+        '<p style="text-align: center; color: #64748b; padding: 2rem;">No hay eventos agregados aún. Haz clic en "Agregar Nuevo Evento" para comenzar.</p>';
       return;
     }
 
@@ -1550,7 +1553,9 @@ class CalendarSystem {
           <div class="form-group">
             <label>Descripción:</label>
             <textarea class="form-input" rows="2" 
-              onchange="calendarSystem.updateEvent(${index}, 'description', this.value)">${event.description}</textarea>
+              onchange="calendarSystem.updateEvent(${index}, 'description', this.value)">${
+        event.description
+      }</textarea>
           </div>
         </div>
       `;
@@ -1564,7 +1569,7 @@ class CalendarSystem {
       month: 'Enero',
       year: new Date().getFullYear(),
       title: 'Nuevo Evento',
-      description: 'Descripción del evento'
+      description: 'Descripción del evento',
     };
 
     this.calendarData.events.push(newEvent);
@@ -1582,7 +1587,7 @@ class CalendarSystem {
 
   deleteEvent(index) {
     if (!confirm('¿Estás seguro de eliminar este evento?')) return;
-    
+
     this.calendarData.events.splice(index, 1);
     this.renderEvents();
     this.saveCalendar();
@@ -1600,7 +1605,7 @@ class CalendarSystem {
         window.opener.postMessage(
           {
             type: 'UPDATE_CALENDAR',
-            data: this.calendarData
+            data: this.calendarData,
           },
           '*'
         );
@@ -1618,48 +1623,48 @@ class CalendarSystem {
         dateCircleColor: '#1e3a8a',
         dateCircleText: '#ffffff',
         cardBg: '#ffffff',
-        cardBorder: '#dbeafe'
+        cardBorder: '#dbeafe',
       },
       red: {
         bgColor: '#fef2f2',
         dateCircleColor: '#dc2626',
         dateCircleText: '#ffffff',
         cardBg: '#ffffff',
-        cardBorder: '#fecaca'
+        cardBorder: '#fecaca',
       },
       green: {
         bgColor: '#f0fdf4',
         dateCircleColor: '#059669',
         dateCircleText: '#ffffff',
         cardBg: '#ffffff',
-        cardBorder: '#bbf7d0'
+        cardBorder: '#bbf7d0',
       },
       purple: {
         bgColor: '#faf5ff',
         dateCircleColor: '#7c3aed',
         dateCircleText: '#ffffff',
         cardBg: '#ffffff',
-        cardBorder: '#e9d5ff'
+        cardBorder: '#e9d5ff',
       },
       orange: {
         bgColor: '#fff7ed',
         dateCircleColor: '#ea580c',
         dateCircleText: '#ffffff',
         cardBg: '#ffffff',
-        cardBorder: '#fed7aa'
+        cardBorder: '#fed7aa',
       },
       teal: {
         bgColor: '#f0fdfa',
         dateCircleColor: '#0d9488',
         dateCircleText: '#ffffff',
         cardBg: '#ffffff',
-        cardBorder: '#99f6e4'
-      }
+        cardBorder: '#99f6e4',
+      },
     };
 
     if (presets[preset]) {
       const colors = presets[preset];
-      
+
       // Actualizar datos
       this.calendarData.bgColor = colors.bgColor;
       this.calendarData.dateCircleColor = colors.dateCircleColor;
@@ -1682,12 +1687,16 @@ class CalendarSystem {
 
   // Restaurar configuración por defecto del sistema
   restoreDefaultCalendar() {
-    if (!confirm('¿Estás seguro de restaurar la configuración por defecto del sistema? Esto sobrescribirá tu configuración actual.')) {
+    if (
+      !confirm(
+        '¿Estás seguro de restaurar la configuración por defecto del sistema? Esto sobrescribirá tu configuración actual.'
+      )
+    ) {
       return;
     }
 
     const defaultConfig = localStorage.getItem('calendar_default_config');
-    
+
     if (defaultConfig) {
       this.calendarData = JSON.parse(defaultConfig);
     } else {
@@ -1706,51 +1715,51 @@ class CalendarSystem {
             month: 'Enero',
             year: 2024,
             title: 'Inicio de Inscripciones',
-            description: 'Apertura del período de inscripciones para el cursillo'
+            description: 'Apertura del período de inscripciones para el cursillo',
           },
           {
             day: 1,
             month: 'Febrero',
             year: 2024,
             title: 'Inicio de Clases',
-            description: 'Comienzo oficial del programa académico'
+            description: 'Comienzo oficial del programa académico',
           },
           {
             day: 15,
             month: 'Marzo',
             year: 2024,
             title: 'Evaluación Parcial',
-            description: 'Primera evaluación del progreso académico'
+            description: 'Primera evaluación del progreso académico',
           },
           {
             day: 30,
             month: 'Abril',
             year: 2024,
             title: 'Examen Final',
-            description: 'Evaluación final del cursillo'
+            description: 'Evaluación final del cursillo',
           },
           {
             day: 15,
             month: 'Mayo',
             year: 2024,
             title: 'Graduación',
-            description: 'Ceremonia de clausura y entrega de certificados'
+            description: 'Ceremonia de clausura y entrega de certificados',
           },
           {
             day: 1,
             month: 'Junio',
             year: 2024,
             title: 'Ingreso UPTP',
-            description: 'Inicio del período universitario regular'
-          }
-        ]
+            description: 'Inicio del período universitario regular',
+          },
+        ],
       };
     }
 
     // Actualizar todos los inputs
     document.getElementById('calendar-title').value = this.calendarData.title;
     document.getElementById('calendar-subtitle').value = this.calendarData.subtitle;
-    
+
     this.setColorInputs('calendar-bg-color', this.calendarData.bgColor);
     this.setColorInputs('calendar-date-circle-color', this.calendarData.dateCircleColor);
     this.setColorInputs('calendar-date-circle-text', this.calendarData.dateCircleText);
@@ -1759,7 +1768,7 @@ class CalendarSystem {
 
     // Re-renderizar eventos
     this.renderEvents();
-    
+
     // Guardar
     this.saveCalendar();
     showMessage('Configuración restaurada correctamente', 'success');
@@ -1767,12 +1776,150 @@ class CalendarSystem {
 
   // Guardar configuración actual como predeterminada
   saveAsDefaultCalendar() {
-    if (!confirm('¿Guardar la configuración actual como predeterminada? Esta será la configuración que se restaurará al usar "Restaurar por Defecto".')) {
+    if (
+      !confirm(
+        '¿Guardar la configuración actual como predeterminada? Esta será la configuración que se restaurará al usar "Restaurar por Defecto".'
+      )
+    ) {
       return;
     }
 
     localStorage.setItem('calendar_default_config', JSON.stringify(this.calendarData));
     showMessage('Configuración guardada como predeterminada', 'success');
+  }
+}
+
+// ==================== SISTEMA DE CONTACTO ====================
+class ContactSystem {
+  constructor() {
+    this.storageKey = 'website_content';
+  }
+
+  init() {
+    this.loadContactData();
+    this.bindContactInputs();
+    console.log('📞 ContactSystem initialized');
+  }
+
+  loadContactData() {
+    try {
+      const savedContent = localStorage.getItem(this.storageKey);
+      if (!savedContent) return;
+
+      const content = JSON.parse(savedContent);
+
+      // Load titles and colors
+      this.setInputValue('contact-section-title-input', content['contact-section-title-input']);
+      this.setInputValue('contact-section-description-input', content['contact-section-description-input']);
+      this.setInputValue('contact-form-title-input', content['contact-form-title-input']);
+      this.setInputValue('contact-info-title-input', content['contact-info-title-input']);
+
+      // Load colors
+      this.setInputValue('contact-section-title-color', content['contact-section-title-color'] || '#002147');
+      this.setInputValue('contact-form-title-color', content['contact-form-title-color'] || '#002147');
+      this.setInputValue('contact-info-title-color', content['contact-info-title-color'] || '#002147');
+
+      // Load contact information
+      this.setInputValue('contact-phone-input', content['contact-phone-input']);
+      this.setInputValue('contact-email-input', content['contact-email-input']);
+      this.setInputValue('contact-address-input', content['contact-address-input']);
+      this.setInputValue('contact-hours-input', content['contact-hours-input']);
+
+      // Load map URL
+      this.setInputValue('contact-map-url', content['contact-map-url']);
+
+      // Load inscription form texts
+      this.setInputValue('inscription-title-input', content['inscription-title-input']);
+      this.setInputValue('inscription-subtitle-input', content['inscription-subtitle-input']);
+      this.setInputValue('inscription-welcome-input', content['inscription-welcome-input']);
+
+      console.log('✅ Contact data loaded');
+    } catch (error) {
+      console.error('Error loading contact data:', error);
+    }
+  }
+
+  setInputValue(id, value) {
+    const element = document.getElementById(id);
+    if (element && value !== undefined && value !== null) {
+      element.value = value;
+    }
+  }
+
+  bindContactInputs() {
+    const contactInputIds = [
+      'contact-section-title-input',
+      'contact-section-description-input',
+      'contact-form-title-input',
+      'contact-info-title-input',
+      'contact-section-title-color',
+      'contact-form-title-color',
+      'contact-info-title-color',
+      'contact-phone-input',
+      'contact-email-input',
+      'contact-address-input',
+      'contact-hours-input',
+      'contact-map-url',
+      'inscription-title-input',
+      'inscription-subtitle-input',
+      'inscription-welcome-input',
+    ];
+
+    contactInputIds.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.addEventListener('input', () => {
+          this.saveContactData();
+        });
+      }
+    });
+
+    console.log('📞 Contact inputs bound');
+  }
+
+  saveContactData() {
+    try {
+      // Get all existing content
+      const existingContent = JSON.parse(localStorage.getItem(this.storageKey) || '{}');
+
+      // Update contact fields
+      const contactInputIds = [
+        'contact-section-title-input',
+        'contact-section-description-input',
+        'contact-form-title-input',
+        'contact-info-title-input',
+        'contact-section-title-color',
+        'contact-form-title-color',
+        'contact-info-title-color',
+        'contact-phone-input',
+        'contact-email-input',
+        'contact-address-input',
+        'contact-hours-input',
+        'contact-map-url',
+        'inscription-title-input',
+        'inscription-subtitle-input',
+        'inscription-welcome-input',
+      ];
+
+      contactInputIds.forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+          existingContent[id] = element.value;
+        }
+      });
+
+      // Save back to localStorage
+      localStorage.setItem(this.storageKey, JSON.stringify(existingContent));
+      localStorage.setItem('pending_homepage_updates', JSON.stringify(existingContent));
+      localStorage.setItem('admin_update_timestamp', Date.now().toString());
+
+      // Dispatch event for real-time update
+      window.dispatchEvent(new CustomEvent('adminContentChange', { detail: existingContent }));
+
+      console.log('✅ Contact data saved');
+    } catch (error) {
+      console.error('Error saving contact data:', error);
+    }
   }
 }
 
@@ -1782,6 +1929,7 @@ let ingresantesSystem;
 let tabNavigation;
 let coursesSystem;
 let calendarSystem;
+let contactSystem;
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🚀 Iniciando sistema de administración...');
@@ -1816,6 +1964,13 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Hacer calendarSystem accesible globalmente
   window.calendarSystem = calendarSystem;
+
+  // Inicializar sistema de contacto
+  contactSystem = new ContactSystem();
+  contactSystem.init();
+
+  // Hacer contactSystem accesible globalmente
+  window.contactSystem = contactSystem;
 
   console.log('✅ Sistema iniciado correctamente');
 });

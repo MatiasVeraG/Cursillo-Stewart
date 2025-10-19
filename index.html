@@ -19,7 +19,23 @@
       property="og:type"
       content="web      // EmailJS initialization
       (function() {
-        emailjs.init('xW-mdqdZ0aTjeEmGS'); // Clave pública de EmailJS
+        // Initialize EmailJS using stored config from admin panel if available
+        try {
+          const stored = localStorage.getItem('emailjs_config');
+          if (stored) {
+            const cfg = JSON.parse(stored);
+            if (cfg && cfg.publicKey) {
+              emailjs.init(cfg.publicKey);
+            } else {
+              emailjs.init('xW-mdqdZ0aTjeEmGS'); // fallback
+            }
+          } else {
+            emailjs.init('xW-mdqdZ0aTjeEmGS'); // Clave pública por defecto
+          }
+        } catch (e) {
+          console.warn('Error initializing EmailJS from stored config:', e);
+          emailjs.init('xW-mdqdZ0aTjeEmGS');
+        }
       })();"
     />
     <meta property="og:url" content="https://cursillo-stewart.uptp.edu.py/" />
@@ -744,11 +760,11 @@
     <section id="inscripcion">
       <div class="container">
         <div class="section-header">
-          <h2>Inscripción</h2>
-          <p>Completa tu registro para formar parte del Cursillo Stewart</p>
+          <h2 id="inscription-title">Inscripción</h2>
+          <p id="inscription-subtitle">Completa tu registro para formar parte del Cursillo Stewart</p>
         </div>
         <div class="form-container">
-          <p style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem; color: var(--navy)">
+          <p id="inscription-welcome" style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem; color: var(--navy)">
             ¡Bienvenido a Cursillo Stewart! Por favor completar el formulario para finalizar el
             proceso de inscripción
           </p>
@@ -913,13 +929,14 @@
     <section id="contacto">
       <div class="container">
         <div class="section-header">
-          <h2>Contacto</h2>
-          <p>Estamos aquí para resolver todas tus dudas</p>
+          <h2 id="contact-section-title" style="color: var(--navy)">Contacto</h2>
+          <p id="contact-section-description">Estamos aquí para resolver todas tus dudas</p>
         </div>
         <div class="contact-grid">
           <!-- Formulario de Contacto -->
           <div>
             <h3
+              id="contact-form-title"
               style="
                 font-size: 1.5rem;
                 font-weight: bold;
@@ -978,6 +995,7 @@
           <!-- Información de Contacto y Mapa -->
           <div>
             <h3
+              id="contact-info-title"
               style="
                 font-size: 1.5rem;
                 font-weight: bold;
@@ -998,7 +1016,7 @@
                 </div>
                 <div class="contact-info">
                   <p>Dirección</p>
-                  <p>
+                  <p id="contact-address">
                     Independencia Nacional 1159 entre Av. Rodríguez de Francia y Rca. de Colombia,
                     Asunción
                   </p>
@@ -1015,7 +1033,7 @@
                 </div>
                 <div class="contact-info">
                   <p>Teléfono</p>
-                  <p>+595 985 350550</p>
+                  <p id="contact-phone">+595 985 350550</p>
                 </div>
               </div>
 
@@ -1029,7 +1047,7 @@
                 </div>
                 <div class="contact-info">
                   <p>Email</p>
-                  <p>cursillostewart@gmail.com</p>
+                  <p id="contact-email">cursillostewart@gmail.com</p>
                 </div>
               </div>
 
@@ -1043,7 +1061,7 @@
                 </div>
                 <div class="contact-info">
                   <p>Horarios</p>
-                  <p>Lun - Sáb: 8:00 - 12:00 y 14:00 - 18:00</p>
+                  <p id="contact-hours">Lun - Sáb: 8:00 - 12:00 y 14:00 - 18:00</p>
                 </div>
               </div>
             </div>
@@ -1051,6 +1069,7 @@
             <!-- Google Maps -->
             <div class="map-container">
               <iframe
+                id="contact-map-iframe"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14290.629488811443!2d-57.63289752233832!3d-25.288506144782207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945da78778a93781%3A0xa7c23edfe28540ce!2sCursillo%20STEWART!5e0!3m2!1sen!2spy!4v1758971873336!5m2!1sen!2spy"
                 width="600"
                 height="450"
@@ -1953,7 +1972,51 @@
           updateTimelineContent(content.timeline_data);
         }
 
+        // Apply contact section changes
+        updateContactSection(content);
+
         console.log('Admin panel changes applied to homepage');
+      }
+
+      // Update contact section
+      function updateContactSection(content) {
+        // Update titles and subtitles
+        const updateElement = (id, inputKey, colorKey = null) => {
+          const element = document.getElementById(id);
+          const value = content[inputKey];
+          
+          if (element && value && value.trim() !== '') {
+            element.textContent = value;
+            
+            if (colorKey && content[colorKey]) {
+              element.style.color = content[colorKey];
+            }
+          }
+        };
+
+        // Update contact titles
+        updateElement('contact-section-title', 'contact-section-title-input', 'contact-section-title-color');
+        updateElement('contact-section-description', 'contact-section-description-input');
+        updateElement('contact-form-title', 'contact-form-title-input', 'contact-form-title-color');
+        updateElement('contact-info-title', 'contact-info-title-input', 'contact-info-title-color');
+
+        // Update contact information
+        updateElement('contact-phone', 'contact-phone-input');
+        updateElement('contact-email', 'contact-email-input');
+        updateElement('contact-address', 'contact-address-input');
+        updateElement('contact-hours', 'contact-hours-input');
+
+        // Update map iframe
+        const mapIframe = document.getElementById('contact-map-iframe');
+        const mapUrl = content['contact-map-url'];
+        if (mapIframe && mapUrl && mapUrl.trim() !== '') {
+          mapIframe.src = mapUrl;
+        }
+
+        // Update inscription form texts
+        updateElement('inscription-title', 'inscription-title-input');
+        updateElement('inscription-subtitle', 'inscription-subtitle-input');
+        updateElement('inscription-welcome', 'inscription-welcome-input');
       }
 
       // Update countdown section in homepage
