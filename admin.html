@@ -782,6 +782,29 @@
           <h2>📚 Gestión de Cursos</h2>
 
           <div class="courses-manager">
+            <!-- Títulos de la Sección de Cursos -->
+            <div class="content-card">
+              <h3>✏️ Títulos de la Sección</h3>
+              <div class="form-group">
+                <label>Título Principal:</label>
+                <input
+                  type="text"
+                  id="courses-main-title"
+                  placeholder="Cursos"
+                  class="form-input"
+                />
+              </div>
+              <div class="form-group">
+                <label>Subtítulo (opcional):</label>
+                <input
+                  type="text"
+                  id="courses-subtitle"
+                  placeholder="Conoce nuestros programas disponibles"
+                  class="form-input"
+                />
+              </div>
+            </div>
+
             <!-- Tabs for courses -->
             <div class="courses-tabs" id="courses-tabs">
               <!-- Tabs will be generated dynamically -->
@@ -844,6 +867,7 @@
         <section id="calendario-section" class="admin-section">
           <h2>📅 Gestión de Calendario</h2>
           <div class="content-grid">
+            <!-- Información de la Sección -->
             <div class="content-card">
               <h3>📋 Información de la Sección</h3>
               <div class="form-group">
@@ -851,74 +875,172 @@
                 <input type="text" id="calendar-title" placeholder="Calendario de Eventos" />
               </div>
               <div class="form-group">
-                <label>Descripción:</label>
+                <label>Subtítulo:</label>
                 <input
                   type="text"
-                  id="calendar-description"
+                  id="calendar-subtitle"
                   placeholder="Mantente informado sobre fechas importantes"
                 />
               </div>
+              <div class="form-group">
+                <label>Color de Fondo de la Sección:</label>
+                <div style="display: flex; gap: 10px; align-items: center">
+                  <input type="color" id="calendar-bg-color" value="#f8fafc" />
+                  <input
+                    type="text"
+                    id="calendar-bg-color-hex"
+                    placeholder="#f8fafc"
+                    style="flex: 1"
+                  />
+                </div>
+              </div>
             </div>
 
+            <!-- Colores de las tarjetas -->
             <div class="content-card">
-              <h3>📅 Eventos del Calendario</h3>
-              <div class="calendar-event">
-                <h4>Evento 1</h4>
-                <div class="form-group">
-                  <label>Día:</label>
-                  <input type="number" id="event1-day" min="1" max="31" placeholder="15" />
-                </div>
-                <div class="form-group">
-                  <label>Mes:</label>
-                  <input type="text" id="event1-month" placeholder="Enero" />
-                </div>
-                <div class="form-group">
-                  <label>Año:</label>
-                  <input type="number" id="event1-year" placeholder="2024" />
-                </div>
-                <div class="form-group">
-                  <label>Título del Evento:</label>
-                  <input type="text" id="event1-title" placeholder="Inicio de Inscripciones" />
-                </div>
-                <div class="form-group">
-                  <label>Descripción:</label>
-                  <textarea
-                    id="event1-description"
-                    rows="2"
-                    placeholder="Apertura del período de inscripciones..."
-                  ></textarea>
-                </div>
-              </div>
-
-              <div class="calendar-event">
-                <h4>Evento 2</h4>
-                <div class="form-group">
-                  <label>Día:</label>
-                  <input type="number" id="event2-day" min="1" max="31" placeholder="01" />
-                </div>
-                <div class="form-group">
-                  <label>Mes:</label>
-                  <input type="text" id="event2-month" placeholder="Febrero" />
-                </div>
-                <div class="form-group">
-                  <label>Año:</label>
-                  <input type="number" id="event2-year" placeholder="2024" />
-                </div>
-                <div class="form-group">
-                  <label>Título del Evento:</label>
-                  <input type="text" id="event2-title" placeholder="Inicio de Clases" />
-                </div>
-                <div class="form-group">
-                  <label>Descripción:</label>
-                  <textarea
-                    id="event2-description"
-                    rows="2"
-                    placeholder="Comienzo oficial del programa académico"
-                  ></textarea>
+              <h3>🎨 Colores de las Tarjetas de Eventos</h3>
+              
+              <!-- Presets de colores -->
+              <div class="form-group">
+                <label>Temas Predeterminados:</label>
+                <div class="color-presets-grid">
+                  <button type="button" class="color-preset-btn" onclick="calendarSystem.applyColorPreset('blue')" title="Azul Clásico">
+                    <div class="preset-preview" style="background: linear-gradient(135deg, #1e3a8a 50%, #f8fafc 50%)"></div>
+                    <span>Azul</span>
+                  </button>
+                  <button type="button" class="color-preset-btn" onclick="calendarSystem.applyColorPreset('red')" title="Rojo Energético">
+                    <div class="preset-preview" style="background: linear-gradient(135deg, #dc2626 50%, #fef2f2 50%)"></div>
+                    <span>Rojo</span>
+                  </button>
+                  <button type="button" class="color-preset-btn" onclick="calendarSystem.applyColorPreset('green')" title="Verde Natural">
+                    <div class="preset-preview" style="background: linear-gradient(135deg, #059669 50%, #f0fdf4 50%)"></div>
+                    <span>Verde</span>
+                  </button>
+                  <button type="button" class="color-preset-btn" onclick="calendarSystem.applyColorPreset('purple')" title="Púrpura Elegante">
+                    <div class="preset-preview" style="background: linear-gradient(135deg, #7c3aed 50%, #faf5ff 50%)"></div>
+                    <span>Púrpura</span>
+                  </button>
+                  <button type="button" class="color-preset-btn" onclick="calendarSystem.applyColorPreset('orange')" title="Naranja Vibrante">
+                    <div class="preset-preview" style="background: linear-gradient(135deg, #ea580c 50%, #fff7ed 50%)"></div>
+                    <span>Naranja</span>
+                  </button>
+                  <button type="button" class="color-preset-btn" onclick="calendarSystem.applyColorPreset('teal')" title="Turquesa Moderno">
+                    <div class="preset-preview" style="background: linear-gradient(135deg, #0d9488 50%, #f0fdfa 50%)"></div>
+                    <span>Turquesa</span>
+                  </button>
                 </div>
               </div>
 
-              <button id="add-calendar-event-btn" class="btn-primary">Agregar Nuevo Evento</button>
+              <div style="margin: 15px 0; padding: 10px; background: #f8fafc; border-radius: 6px; border-left: 3px solid #3b82f6;">
+                <small style="color: #475569; font-size: 0.85rem;">
+                  💡 <strong>Tip:</strong> Selecciona un tema predeterminado o personaliza los colores manualmente abajo.
+                </small>
+              </div>
+
+              <h4 style="margin-top: 20px; margin-bottom: 15px; color: var(--admin-text); font-size: 1rem;">
+                🎨 Personalización Manual
+              </h4>
+
+              <div class="form-group">
+                <label>Color del círculo de fecha:</label>
+                <div style="display: flex; gap: 10px; align-items: center">
+                  <input type="color" id="calendar-date-circle-color" value="#1e3a8a" />
+                  <input
+                    type="text"
+                    id="calendar-date-circle-color-hex"
+                    placeholder="#1e3a8a"
+                    style="flex: 1"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Color del texto del círculo:</label>
+                <div style="display: flex; gap: 10px; align-items: center">
+                  <input type="color" id="calendar-date-circle-text" value="#ffffff" />
+                  <input
+                    type="text"
+                    id="calendar-date-circle-text-hex"
+                    placeholder="#ffffff"
+                    style="flex: 1"
+                  />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Color de fondo de la tarjeta:</label>
+                <div style="display: flex; gap: 10px; align-items: center">
+                  <input type="color" id="calendar-card-bg" value="#ffffff" />
+                  <input type="text" id="calendar-card-bg-hex" placeholder="#ffffff" style="flex: 1" />
+                </div>
+              </div>
+              <div class="form-group">
+                <label>Color del borde de la tarjeta:</label>
+                <div style="display: flex; gap: 10px; align-items: center">
+                  <input type="color" id="calendar-card-border" value="#e2e8f0" />
+                  <input
+                    type="text"
+                    id="calendar-card-border-hex"
+                    placeholder="#e2e8f0"
+                    style="flex: 1"
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- Eventos del Calendario -->
+            <div class="content-card" style="grid-column: 1 / -1">
+              <div
+                style="
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  margin-bottom: 20px;
+                "
+              >
+                <h3>📅 Eventos del Calendario</h3>
+                <button id="add-calendar-event-btn" class="btn-primary">
+                  ➕ Agregar Nuevo Evento
+                </button>
+              </div>
+
+              <div id="calendar-events-container" class="calendar-events-list">
+                <!-- Los eventos se cargarán dinámicamente aquí -->
+              </div>
+
+              <div style="margin-top: 20px; padding: 15px; background: #eff6ff; border-radius: 8px">
+                <p style="margin: 0; color: #1e40af; font-size: 0.9rem">
+                  ℹ️ <strong>Nota:</strong> Los eventos se mostrarán automáticamente en un máximo de
+                  3 columnas, manteniendo la centralidad sin importar la cantidad de eventos.
+                </p>
+              </div>
+            </div>
+
+            <!-- Acciones del Calendario -->
+            <div class="content-card" style="grid-column: 1 / -1">
+              <h3>⚙️ Configuración Predeterminada</h3>
+              <p class="card-description" style="margin-bottom: 20px;">
+                Gestiona la configuración predeterminada del calendario. Puedes guardar tu configuración actual 
+                o restaurar los valores por defecto del sistema.
+              </p>
+              <div class="calendar-actions-grid">
+                <button
+                  type="button"
+                  class="btn-action btn-restore"
+                  onclick="calendarSystem.restoreDefaultCalendar()"
+                  title="Restaurar valores por defecto del sistema"
+                >
+                  <span class="btn-icon">🔄</span>
+                  <span class="btn-text">Restaurar por Defecto</span>
+                </button>
+                <button
+                  type="button"
+                  class="btn-action btn-save-default"
+                  onclick="calendarSystem.saveAsDefaultCalendar()"
+                  title="Guardar configuración actual como predeterminada"
+                >
+                  <span class="btn-icon">💾</span>
+                  <span class="btn-text">Establecer como Predeterminado</span>
+                </button>
+              </div>
             </div>
           </div>
         </section>

@@ -791,6 +791,7 @@ class CoursesSystem {
 
   async init() {
     await this.loadCourses();
+    this.loadTitles();
     this.bindEvents();
     this.renderCourseTabs();
   }
@@ -809,6 +810,38 @@ class CoursesSystem {
       console.error('Error loading courses:', error);
       this.coursesData = {};
     }
+  }
+
+  loadTitles() {
+    const storedTitles = localStorage.getItem('courses_titles');
+    let titles = storedTitles ? JSON.parse(storedTitles) : {
+      mainTitle: 'Cursos',
+      subtitle: ''
+    };
+
+    const mainTitleInput = document.getElementById('courses-main-title');
+    const subtitleInput = document.getElementById('courses-subtitle');
+
+    if (mainTitleInput) {
+      mainTitleInput.value = titles.mainTitle;
+      mainTitleInput.addEventListener('input', () => this.saveTitles());
+    }
+
+    if (subtitleInput) {
+      subtitleInput.value = titles.subtitle;
+      subtitleInput.addEventListener('input', () => this.saveTitles());
+    }
+  }
+
+  saveTitles() {
+    const mainTitle = document.getElementById('courses-main-title').value;
+    const subtitle = document.getElementById('courses-subtitle').value;
+
+    const titles = { mainTitle, subtitle };
+    localStorage.setItem('courses_titles', JSON.stringify(titles));
+    
+    this.updateCoursesOnHomepage();
+    showMessage('Títulos actualizados correctamente', 'success');
   }
 
   bindEvents() {
@@ -930,18 +963,18 @@ class CoursesSystem {
     course.schedules.forEach((schedule, index) => {
       const scheduleItem = document.createElement('div');
       scheduleItem.className = 'schedule-item';
-      
+
       // Get custom colors or use defaults
       const defaultColors = {
         presencial: { bg: '#dbeafe', text: '#1e40af' },
         sabados: { bg: '#fef3c7', text: '#92400e' },
         virtual: { bg: '#dcfce7', text: '#166534' },
-        mofa: { bg: '#fee2e2', text: '#991b1b' }
+        mofa: { bg: '#fee2e2', text: '#991b1b' },
       };
-      
+
       const bgColor = schedule.customBgColor || defaultColors[schedule.type]?.bg || '#dbeafe';
       const textColor = schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
-      
+
       scheduleItem.innerHTML = `
         <div class="schedule-header-row">
           <h4 class="schedule-title">${schedule.title}</h4>
@@ -994,6 +1027,7 @@ class CoursesSystem {
       time: '9:00 - 12:00',
       days: 'Lunes a Viernes',
       period: 'Por definir',
+      borderColor: '#2563eb',
     };
 
     this.coursesData[this.currentCourse].schedules.push(newSchedule);
@@ -1007,18 +1041,19 @@ class CoursesSystem {
 
   editSchedule(index) {
     const schedule = this.coursesData[this.currentCourse].schedules[index];
-    
+
     // Default colors for each type
     const defaultColors = {
       presencial: { bg: '#dbeafe', text: '#1e40af' },
       sabados: { bg: '#fef3c7', text: '#92400e' },
       virtual: { bg: '#dcfce7', text: '#166534' },
-      mofa: { bg: '#fee2e2', text: '#991b1b' }
+      mofa: { bg: '#fee2e2', text: '#991b1b' },
     };
 
     // Get current colors or use defaults
     const currentBgColor = schedule.customBgColor || defaultColors[schedule.type]?.bg || '#dbeafe';
-    const currentTextColor = schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
+    const currentTextColor =
+      schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
 
     const modal = document.createElement('div');
     modal.className = 'schedule-modal active';
@@ -1055,25 +1090,76 @@ class CoursesSystem {
           
           <div class="form-group">
             <h4 style="margin-bottom: 12px; color: var(--admin-text);">🎨 Colores del Turno</h4>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px; padding: 16px; background: var(--admin-bg); border-radius: 8px;">
-              <div>
-                <label style="display: block; margin-bottom: 8px;">Color de Fondo:</label>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                  <input type="color" id="edit-schedule-bg-color" value="${currentBgColor}" style="width: 60px; height: 40px; cursor: pointer;" />
-                  <input type="text" id="edit-schedule-bg-color-hex" value="${currentBgColor}" placeholder="#dbeafe" style="flex: 1;" />
-                </div>
+            
+            <!-- Paleta de colores predeterminados -->
+            <div style="margin-bottom: 16px;">
+              <label style="display: block; margin-bottom: 8px; font-weight: 600;">🎨 Combinaciones Predeterminadas:</label>
+              <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 8px;">
+                <button type="button" class="color-preset-btn" data-bg="#dbeafe" data-text="#1e40af" data-border="#2563eb" style="background: #dbeafe; color: #1e40af; border-left: 4px solid #2563eb; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                  🔵 Azul
+                </button>
+                <button type="button" class="color-preset-btn" data-bg="#dcfce7" data-text="#166534" data-border="#10b981" style="background: #dcfce7; color: #166534; border-left: 4px solid #10b981; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                  🟢 Verde
+                </button>
+                <button type="button" class="color-preset-btn" data-bg="#fee2e2" data-text="#991b1b" data-border="#dc2626" style="background: #fee2e2; color: #991b1b; border-left: 4px solid #dc2626; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                  🔴 Rojo
+                </button>
+                <button type="button" class="color-preset-btn" data-bg="#fef3c7" data-text="#92400e" data-border="#f59e0b" style="background: #fef3c7; color: #92400e; border-left: 4px solid #f59e0b; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                  🟡 Amarillo
+                </button>
+                <button type="button" class="color-preset-btn" data-bg="#fed7aa" data-text="#7c2d12" data-border="#ea580c" style="background: #fed7aa; color: #7c2d12; border-left: 4px solid #ea580c; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                  🟠 Naranja
+                </button>
+                <button type="button" class="color-preset-btn" data-bg="#fae8ff" data-text="#86198f" data-border="#c026d3" style="background: #fae8ff; color: #86198f; border-left: 4px solid #c026d3; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                  🟣 Morado
+                </button>
+                <button type="button" class="color-preset-btn" data-bg="#e0f2fe" data-text="#075985" data-border="#0284c7" style="background: #e0f2fe; color: #075985; border-left: 4px solid #0284c7; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                  🩵 Celeste
+                </button>
+                <button type="button" class="color-preset-btn" data-bg="#f3f4f6" data-text="#1f2937" data-border="#6b7280" style="background: #f3f4f6; color: #1f2937; border-left: 4px solid #6b7280; padding: 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12px; border-top: 1px solid #e2e8f0; border-right: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0;">
+                  ⚫ Gris
+                </button>
               </div>
-              <div>
-                <label style="display: block; margin-bottom: 8px;">Color de Texto:</label>
-                <div style="display: flex; gap: 10px; align-items: center;">
-                  <input type="color" id="edit-schedule-text-color" value="${currentTextColor}" style="width: 60px; height: 40px; cursor: pointer;" />
-                  <input type="text" id="edit-schedule-text-color-hex" value="${currentTextColor}" placeholder="#1e40af" style="flex: 1;" />
+            </div>
+
+            <!-- Colores personalizados -->
+            <div style="padding: 16px; background: var(--admin-bg); border-radius: 8px; border: 2px dashed var(--admin-border);">
+              <label style="display: block; margin-bottom: 12px; font-weight: 600;">✏️ Personalizar Colores:</label>
+              <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 16px;">
+                <div>
+                  <label style="display: block; margin-bottom: 8px;">Color de Fondo:</label>
+                  <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="color" id="edit-schedule-bg-color" value="${currentBgColor}" style="width: 60px; height: 40px; cursor: pointer;" />
+                    <input type="text" id="edit-schedule-bg-color-hex" value="${currentBgColor}" placeholder="#dbeafe" style="flex: 1;" />
+                  </div>
+                </div>
+                <div>
+                  <label style="display: block; margin-bottom: 8px;">Color de Texto:</label>
+                  <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="color" id="edit-schedule-text-color" value="${currentTextColor}" style="width: 60px; height: 40px; cursor: pointer;" />
+                    <input type="text" id="edit-schedule-text-color-hex" value="${currentTextColor}" placeholder="#1e40af" style="flex: 1;" />
+                  </div>
+                </div>
+                <div style="grid-column: 1 / -1;">
+                  <label style="display: block; margin-bottom: 8px;">Color del Borde Lateral:</label>
+                  <div style="display: flex; gap: 10px; align-items: center;">
+                    <input type="color" id="edit-schedule-border-color" value="${
+                      schedule.borderColor || '#2563eb'
+                    }" style="width: 60px; height: 40px; cursor: pointer;" />
+                    <input type="text" id="edit-schedule-border-color-hex" value="${
+                      schedule.borderColor || '#2563eb'
+                    }" placeholder="#2563eb" style="flex: 1;" />
+                  </div>
                 </div>
               </div>
             </div>
+
+            <!-- Vista previa -->
             <div style="margin-top: 12px; padding: 12px; border-radius: 6px; background: var(--admin-bg);">
-              <small style="color: var(--admin-text-light);">💡 Preview:</small>
-              <div id="color-preview" style="margin-top: 8px; padding: 8px 16px; border-radius: 12px; background: ${currentBgColor}; color: ${currentTextColor}; font-weight: 600; text-align: center; font-size: 13px;">
+              <small style="color: var(--admin-text-light);">💡 Vista Previa:</small>
+              <div id="color-preview" style="margin-top: 8px; padding: 8px 16px; border-radius: 12px; background: ${currentBgColor}; color: ${currentTextColor}; font-weight: 600; text-align: center; font-size: 13px; border-left: 4px solid ${
+      schedule.borderColor || '#2563eb'
+    };">
                 ${schedule.typeLabel}
               </div>
             </div>
@@ -1112,33 +1198,67 @@ class CoursesSystem {
     const bgColorHex = modal.querySelector('#edit-schedule-bg-color-hex');
     const textColorPicker = modal.querySelector('#edit-schedule-text-color');
     const textColorHex = modal.querySelector('#edit-schedule-text-color-hex');
+    const borderColorPicker = modal.querySelector('#edit-schedule-border-color');
+    const borderColorHex = modal.querySelector('#edit-schedule-border-color-hex');
     const preview = modal.querySelector('#color-preview');
 
     const updatePreview = () => {
       preview.style.background = bgColorPicker.value;
       preview.style.color = textColorPicker.value;
+      preview.style.borderLeftColor = borderColorPicker.value;
     };
 
-    bgColorPicker.addEventListener('input', (e) => {
+    bgColorPicker.addEventListener('input', e => {
       bgColorHex.value = e.target.value;
       updatePreview();
     });
 
-    bgColorHex.addEventListener('input', (e) => {
+    bgColorHex.addEventListener('input', e => {
       const value = e.target.value.startsWith('#') ? e.target.value : '#' + e.target.value;
       bgColorPicker.value = value;
       updatePreview();
     });
 
-    textColorPicker.addEventListener('input', (e) => {
+    textColorPicker.addEventListener('input', e => {
       textColorHex.value = e.target.value;
       updatePreview();
     });
 
-    textColorHex.addEventListener('input', (e) => {
+    textColorHex.addEventListener('input', e => {
       const value = e.target.value.startsWith('#') ? e.target.value : '#' + e.target.value;
       textColorPicker.value = value;
       updatePreview();
+    });
+
+    borderColorPicker.addEventListener('input', e => {
+      borderColorHex.value = e.target.value;
+      updatePreview();
+    });
+
+    borderColorHex.addEventListener('input', e => {
+      const value = e.target.value.startsWith('#') ? e.target.value : '#' + e.target.value;
+      borderColorPicker.value = value;
+      updatePreview();
+    });
+
+    // Preset color buttons
+    modal.querySelectorAll('.color-preset-btn').forEach(btn => {
+      btn.addEventListener('click', e => {
+        const bg = btn.dataset.bg;
+        const text = btn.dataset.text;
+        const border = btn.dataset.border;
+
+        // Update color pickers
+        bgColorPicker.value = bg;
+        bgColorHex.value = bg;
+        textColorPicker.value = text;
+        textColorHex.value = text;
+        borderColorPicker.value = border;
+        borderColorHex.value = border;
+
+        // Update preview
+        updatePreview();
+      });
     });
 
     modal.querySelector('.schedule-modal-close').addEventListener('click', () => modal.remove());
@@ -1152,6 +1272,7 @@ class CoursesSystem {
       schedule.period = document.getElementById('edit-schedule-period').value;
       schedule.customBgColor = bgColorPicker.value;
       schedule.customTextColor = textColorPicker.value;
+      schedule.borderColor = borderColorPicker.value;
 
       this.renderSchedulesList();
       this.saveCourses();
@@ -1215,11 +1336,15 @@ class CoursesSystem {
 
   updateCoursesOnHomepage() {
     try {
+      const titles = localStorage.getItem('courses_titles');
+      const courseTitles = titles ? JSON.parse(titles) : { mainTitle: 'Cursos', subtitle: '' };
+      
       if (window.opener && !window.opener.closed) {
         window.opener.postMessage(
           {
             type: 'UPDATE_COURSES',
             data: this.coursesData,
+            titles: courseTitles
           },
           '*'
         );
@@ -1231,11 +1356,432 @@ class CoursesSystem {
   }
 }
 
+// ==================== SISTEMA DE CALENDARIO ====================
+class CalendarSystem {
+  constructor() {
+    this.calendarData = {
+      title: 'Calendario de Eventos',
+      subtitle: 'Mantente informado sobre fechas importantes',
+      bgColor: '#f8fafc',
+      dateCircleColor: '#1e3a8a',
+      dateCircleText: '#ffffff',
+      cardBg: '#ffffff',
+      cardBorder: '#e2e8f0',
+      events: []
+    };
+  }
+
+  init() {
+    this.loadCalendar();
+    this.bindEvents();
+    this.renderEvents();
+  }
+
+  loadCalendar() {
+    const stored = localStorage.getItem('calendar_data');
+    if (stored) {
+      this.calendarData = JSON.parse(stored);
+    } else {
+      // Cargar eventos por defecto
+      this.calendarData.events = [
+        {
+          day: 15,
+          month: 'Enero',
+          year: 2024,
+          title: 'Inicio de Inscripciones',
+          description: 'Apertura del período de inscripciones para el cursillo'
+        },
+        {
+          day: 1,
+          month: 'Febrero',
+          year: 2024,
+          title: 'Inicio de Clases',
+          description: 'Comienzo oficial del programa académico'
+        },
+        {
+          day: 15,
+          month: 'Marzo',
+          year: 2024,
+          title: 'Evaluación Parcial',
+          description: 'Primera evaluación del progreso académico'
+        },
+        {
+          day: 30,
+          month: 'Abril',
+          year: 2024,
+          title: 'Examen Final',
+          description: 'Evaluación final del cursillo'
+        },
+        {
+          day: 15,
+          month: 'Mayo',
+          year: 2024,
+          title: 'Graduación',
+          description: 'Ceremonia de clausura y entrega de certificados'
+        },
+        {
+          day: 1,
+          month: 'Junio',
+          year: 2024,
+          title: 'Ingreso UPTP',
+          description: 'Inicio del período universitario regular'
+        }
+      ];
+      this.saveCalendar();
+    }
+
+    // Cargar valores en inputs
+    document.getElementById('calendar-title').value = this.calendarData.title;
+    document.getElementById('calendar-subtitle').value = this.calendarData.subtitle;
+    
+    // Colores
+    this.setColorInputs('calendar-bg-color', this.calendarData.bgColor);
+    this.setColorInputs('calendar-date-circle-color', this.calendarData.dateCircleColor);
+    this.setColorInputs('calendar-date-circle-text', this.calendarData.dateCircleText);
+    this.setColorInputs('calendar-card-bg', this.calendarData.cardBg);
+    this.setColorInputs('calendar-card-border', this.calendarData.cardBorder);
+  }
+
+  setColorInputs(id, color) {
+    const colorPicker = document.getElementById(id);
+    const colorHex = document.getElementById(id + '-hex');
+    
+    if (colorPicker) colorPicker.value = color;
+    if (colorHex) colorHex.value = color;
+  }
+
+  bindEvents() {
+    // Inputs de título y subtítulo
+    const titleInput = document.getElementById('calendar-title');
+    const subtitleInput = document.getElementById('calendar-subtitle');
+
+    if (titleInput) {
+      titleInput.addEventListener('input', () => {
+        this.calendarData.title = titleInput.value;
+        this.saveCalendar();
+      });
+    }
+
+    if (subtitleInput) {
+      subtitleInput.addEventListener('input', () => {
+        this.calendarData.subtitle = subtitleInput.value;
+        this.saveCalendar();
+      });
+    }
+
+    // Color pickers
+    this.bindColorPicker('calendar-bg-color', 'bgColor');
+    this.bindColorPicker('calendar-date-circle-color', 'dateCircleColor');
+    this.bindColorPicker('calendar-date-circle-text', 'dateCircleText');
+    this.bindColorPicker('calendar-card-bg', 'cardBg');
+    this.bindColorPicker('calendar-card-border', 'cardBorder');
+
+    // Botón agregar evento
+    const addBtn = document.getElementById('add-calendar-event-btn');
+    if (addBtn) {
+      addBtn.addEventListener('click', () => this.addNewEvent());
+    }
+  }
+
+  bindColorPicker(id, property) {
+    const colorPicker = document.getElementById(id);
+    const colorHex = document.getElementById(id + '-hex');
+
+    if (colorPicker) {
+      colorPicker.addEventListener('input', (e) => {
+        this.calendarData[property] = e.target.value;
+        if (colorHex) colorHex.value = e.target.value;
+        this.saveCalendar();
+      });
+    }
+
+    if (colorHex) {
+      colorHex.addEventListener('input', (e) => {
+        const value = e.target.value.startsWith('#') ? e.target.value : '#' + e.target.value;
+        this.calendarData[property] = value;
+        if (colorPicker) colorPicker.value = value;
+        this.saveCalendar();
+      });
+    }
+  }
+
+  renderEvents() {
+    const container = document.getElementById('calendar-events-container');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    if (this.calendarData.events.length === 0) {
+      container.innerHTML = '<p style="text-align: center; color: #64748b; padding: 2rem;">No hay eventos agregados aún. Haz clic en "Agregar Nuevo Evento" para comenzar.</p>';
+      return;
+    }
+
+    this.calendarData.events.forEach((event, index) => {
+      const eventCard = document.createElement('div');
+      eventCard.className = 'calendar-event-card';
+      eventCard.innerHTML = `
+        <div class="calendar-event-header">
+          <h4>Evento ${index + 1}</h4>
+          <button class="btn-delete-event" onclick="calendarSystem.deleteEvent(${index})" title="Eliminar evento">
+            🗑️
+          </button>
+        </div>
+        <div class="calendar-event-body">
+          <div class="form-group">
+            <label>Día:</label>
+            <input type="number" class="form-input" min="1" max="31" value="${event.day}" 
+              onchange="calendarSystem.updateEvent(${index}, 'day', this.value)" />
+          </div>
+          <div class="form-group">
+            <label>Mes:</label>
+            <input type="text" class="form-input" value="${event.month}" 
+              onchange="calendarSystem.updateEvent(${index}, 'month', this.value)" />
+          </div>
+          <div class="form-group">
+            <label>Año:</label>
+            <input type="number" class="form-input" value="${event.year}" 
+              onchange="calendarSystem.updateEvent(${index}, 'year', this.value)" />
+          </div>
+          <div class="form-group">
+            <label>Título del Evento:</label>
+            <input type="text" class="form-input" value="${event.title}" 
+              onchange="calendarSystem.updateEvent(${index}, 'title', this.value)" />
+          </div>
+          <div class="form-group">
+            <label>Descripción:</label>
+            <textarea class="form-input" rows="2" 
+              onchange="calendarSystem.updateEvent(${index}, 'description', this.value)">${event.description}</textarea>
+          </div>
+        </div>
+      `;
+      container.appendChild(eventCard);
+    });
+  }
+
+  addNewEvent() {
+    const newEvent = {
+      day: 1,
+      month: 'Enero',
+      year: new Date().getFullYear(),
+      title: 'Nuevo Evento',
+      description: 'Descripción del evento'
+    };
+
+    this.calendarData.events.push(newEvent);
+    this.renderEvents();
+    this.saveCalendar();
+  }
+
+  updateEvent(index, field, value) {
+    if (field === 'day' || field === 'year') {
+      value = parseInt(value);
+    }
+    this.calendarData.events[index][field] = value;
+    this.saveCalendar();
+  }
+
+  deleteEvent(index) {
+    if (!confirm('¿Estás seguro de eliminar este evento?')) return;
+    
+    this.calendarData.events.splice(index, 1);
+    this.renderEvents();
+    this.saveCalendar();
+  }
+
+  saveCalendar() {
+    localStorage.setItem('calendar_data', JSON.stringify(this.calendarData));
+    this.updateCalendarOnHomepage();
+    showMessage('Calendario actualizado correctamente', 'success');
+  }
+
+  updateCalendarOnHomepage() {
+    try {
+      if (window.opener && !window.opener.closed) {
+        window.opener.postMessage(
+          {
+            type: 'UPDATE_CALENDAR',
+            data: this.calendarData
+          },
+          '*'
+        );
+      }
+    } catch (error) {
+      console.error('Error updating homepage calendar:', error);
+    }
+  }
+
+  // Aplicar preset de colores
+  applyColorPreset(preset) {
+    const presets = {
+      blue: {
+        bgColor: '#f8fafc',
+        dateCircleColor: '#1e3a8a',
+        dateCircleText: '#ffffff',
+        cardBg: '#ffffff',
+        cardBorder: '#dbeafe'
+      },
+      red: {
+        bgColor: '#fef2f2',
+        dateCircleColor: '#dc2626',
+        dateCircleText: '#ffffff',
+        cardBg: '#ffffff',
+        cardBorder: '#fecaca'
+      },
+      green: {
+        bgColor: '#f0fdf4',
+        dateCircleColor: '#059669',
+        dateCircleText: '#ffffff',
+        cardBg: '#ffffff',
+        cardBorder: '#bbf7d0'
+      },
+      purple: {
+        bgColor: '#faf5ff',
+        dateCircleColor: '#7c3aed',
+        dateCircleText: '#ffffff',
+        cardBg: '#ffffff',
+        cardBorder: '#e9d5ff'
+      },
+      orange: {
+        bgColor: '#fff7ed',
+        dateCircleColor: '#ea580c',
+        dateCircleText: '#ffffff',
+        cardBg: '#ffffff',
+        cardBorder: '#fed7aa'
+      },
+      teal: {
+        bgColor: '#f0fdfa',
+        dateCircleColor: '#0d9488',
+        dateCircleText: '#ffffff',
+        cardBg: '#ffffff',
+        cardBorder: '#99f6e4'
+      }
+    };
+
+    if (presets[preset]) {
+      const colors = presets[preset];
+      
+      // Actualizar datos
+      this.calendarData.bgColor = colors.bgColor;
+      this.calendarData.dateCircleColor = colors.dateCircleColor;
+      this.calendarData.dateCircleText = colors.dateCircleText;
+      this.calendarData.cardBg = colors.cardBg;
+      this.calendarData.cardBorder = colors.cardBorder;
+
+      // Actualizar inputs
+      this.setColorInputs('calendar-bg-color', colors.bgColor);
+      this.setColorInputs('calendar-date-circle-color', colors.dateCircleColor);
+      this.setColorInputs('calendar-date-circle-text', colors.dateCircleText);
+      this.setColorInputs('calendar-card-bg', colors.cardBg);
+      this.setColorInputs('calendar-card-border', colors.cardBorder);
+
+      // Guardar
+      this.saveCalendar();
+      showMessage(`Tema ${preset} aplicado correctamente`, 'success');
+    }
+  }
+
+  // Restaurar configuración por defecto del sistema
+  restoreDefaultCalendar() {
+    if (!confirm('¿Estás seguro de restaurar la configuración por defecto del sistema? Esto sobrescribirá tu configuración actual.')) {
+      return;
+    }
+
+    const defaultConfig = localStorage.getItem('calendar_default_config');
+    
+    if (defaultConfig) {
+      this.calendarData = JSON.parse(defaultConfig);
+    } else {
+      // Configuración por defecto del sistema
+      this.calendarData = {
+        title: 'Calendario de Eventos',
+        subtitle: 'Mantente informado sobre fechas importantes',
+        bgColor: '#f8fafc',
+        dateCircleColor: '#1e3a8a',
+        dateCircleText: '#ffffff',
+        cardBg: '#ffffff',
+        cardBorder: '#e2e8f0',
+        events: [
+          {
+            day: 15,
+            month: 'Enero',
+            year: 2024,
+            title: 'Inicio de Inscripciones',
+            description: 'Apertura del período de inscripciones para el cursillo'
+          },
+          {
+            day: 1,
+            month: 'Febrero',
+            year: 2024,
+            title: 'Inicio de Clases',
+            description: 'Comienzo oficial del programa académico'
+          },
+          {
+            day: 15,
+            month: 'Marzo',
+            year: 2024,
+            title: 'Evaluación Parcial',
+            description: 'Primera evaluación del progreso académico'
+          },
+          {
+            day: 30,
+            month: 'Abril',
+            year: 2024,
+            title: 'Examen Final',
+            description: 'Evaluación final del cursillo'
+          },
+          {
+            day: 15,
+            month: 'Mayo',
+            year: 2024,
+            title: 'Graduación',
+            description: 'Ceremonia de clausura y entrega de certificados'
+          },
+          {
+            day: 1,
+            month: 'Junio',
+            year: 2024,
+            title: 'Ingreso UPTP',
+            description: 'Inicio del período universitario regular'
+          }
+        ]
+      };
+    }
+
+    // Actualizar todos los inputs
+    document.getElementById('calendar-title').value = this.calendarData.title;
+    document.getElementById('calendar-subtitle').value = this.calendarData.subtitle;
+    
+    this.setColorInputs('calendar-bg-color', this.calendarData.bgColor);
+    this.setColorInputs('calendar-date-circle-color', this.calendarData.dateCircleColor);
+    this.setColorInputs('calendar-date-circle-text', this.calendarData.dateCircleText);
+    this.setColorInputs('calendar-card-bg', this.calendarData.cardBg);
+    this.setColorInputs('calendar-card-border', this.calendarData.cardBorder);
+
+    // Re-renderizar eventos
+    this.renderEvents();
+    
+    // Guardar
+    this.saveCalendar();
+    showMessage('Configuración restaurada correctamente', 'success');
+  }
+
+  // Guardar configuración actual como predeterminada
+  saveAsDefaultCalendar() {
+    if (!confirm('¿Guardar la configuración actual como predeterminada? Esta será la configuración que se restaurará al usar "Restaurar por Defecto".')) {
+      return;
+    }
+
+    localStorage.setItem('calendar_default_config', JSON.stringify(this.calendarData));
+    showMessage('Configuración guardada como predeterminada', 'success');
+  }
+}
+
 // ==================== INICIALIZACIÓN ====================
 let authSystem;
 let ingresantesSystem;
 let tabNavigation;
 let coursesSystem;
+let calendarSystem;
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🚀 Iniciando sistema de administración...');
@@ -1263,6 +1809,13 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicializar sistema de cursos
   coursesSystem = new CoursesSystem();
   coursesSystem.init();
+
+  // Inicializar sistema de calendario
+  calendarSystem = new CalendarSystem();
+  calendarSystem.init();
+
+  // Hacer calendarSystem accesible globalmente
+  window.calendarSystem = calendarSystem;
 
   console.log('✅ Sistema iniciado correctamente');
 });

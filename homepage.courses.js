@@ -113,17 +113,19 @@
       presencial: { bg: '#dbeafe', text: '#1e40af' },
       sabados: { bg: '#fef3c7', text: '#92400e' },
       virtual: { bg: '#dcfce7', text: '#166534' },
-      mofa: { bg: '#fee2e2', text: '#991b1b' }
+      mofa: { bg: '#fee2e2', text: '#991b1b' },
     };
 
     const schedulesHTML = schedules
       .map(schedule => {
         // Get custom colors or use defaults
         const bgColor = schedule.customBgColor || defaultColors[schedule.type]?.bg || '#dbeafe';
-        const textColor = schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
-        
+        const textColor =
+          schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
+        const borderColor = schedule.borderColor || '#2563eb';
+
         return `
-      <div class="schedule-card ${schedule.type}">
+      <div class="schedule-card ${schedule.type}" style="border-left-color: ${borderColor};">
         <div class="schedule-header">
           <h3>${schedule.title}</h3>
           <span class="schedule-type ${schedule.type}" style="background: ${bgColor}; color: ${textColor};">${schedule.typeLabel}</span>
@@ -198,20 +200,21 @@
       presencial: { bg: '#dbeafe', text: '#1e40af' },
       sabados: { bg: '#fef3c7', text: '#92400e' },
       virtual: { bg: '#dcfce7', text: '#166534' },
-      mofa: { bg: '#fee2e2', text: '#991b1b' }
+      mofa: { bg: '#fee2e2', text: '#991b1b' },
     };
 
     const uniqueTypes = {};
     schedules.forEach(schedule => {
       if (!uniqueTypes[schedule.type]) {
         const bgColor = schedule.customBgColor || defaultColors[schedule.type]?.bg || '#dbeafe';
-        const textColor = schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
-        
+        const textColor =
+          schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
+
         uniqueTypes[schedule.type] = {
           typeLabel: schedule.typeLabel,
           days: schedule.days,
           bgColor: bgColor,
-          textColor: textColor
+          textColor: textColor,
         };
       }
     });
@@ -254,6 +257,12 @@
     if (event.data && event.data.type === 'UPDATE_COURSES') {
       coursesData = event.data.data;
       localStorage.setItem('courses_data', JSON.stringify(coursesData));
+      
+      // Update titles if provided
+      if (event.data.titles) {
+        updateCourseTitles(event.data.titles);
+      }
+      
       renderCourses();
     }
   });
@@ -264,12 +273,57 @@
       coursesData = JSON.parse(e.newValue);
       renderCourses();
     }
+    if (e.key === 'courses_titles') {
+      const titles = JSON.parse(e.newValue);
+      updateCourseTitles(titles);
+    }
   });
+
+  // Update course section titles
+  function updateCourseTitles(titles) {
+    const programaSection = document.getElementById('programa');
+    if (!programaSection) return;
+
+    const sectionHeader = programaSection.querySelector('.section-header');
+    if (!sectionHeader) return;
+
+    const h2 = sectionHeader.querySelector('h2');
+    const p = sectionHeader.querySelector('p');
+
+    if (h2) h2.textContent = titles.mainTitle || 'Cursos';
+    
+    // Si hay subtítulo, actualizar o crear el elemento p
+    if (titles.subtitle) {
+      if (p) {
+        p.textContent = titles.subtitle;
+        p.style.display = 'block';
+      } else {
+        const newP = document.createElement('p');
+        newP.textContent = titles.subtitle;
+        sectionHeader.appendChild(newP);
+      }
+    } else if (p) {
+      p.style.display = 'none';
+    }
+  }
+
+  // Load and apply saved titles on page load
+  function loadSavedTitles() {
+    const stored = localStorage.getItem('courses_titles');
+    if (stored) {
+      const titles = JSON.parse(stored);
+      updateCourseTitles(titles);
+    }
+  }
 
   // Initialize on page load
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', loadCoursesData);
+    document.addEventListener('DOMContentLoaded', () => {
+      loadCoursesData();
+      loadSavedTitles();
+    });
   } else {
     loadCoursesData();
+    loadSavedTitles();
   }
 })();

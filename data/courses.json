@@ -11,7 +11,8 @@
         "typeLabel": "Semanal Presencial",
         "time": "8:00 - 12:00",
         "days": "Lunes a Viernes",
-        "period": "4 de Agosto - 31 de Octubre"
+        "period": "4 de Agosto - 31 de Octubre",
+        "borderColor": "#2563eb"
       },
       {
         "id": "intensivo-2",
@@ -20,7 +21,8 @@
         "typeLabel": "Semanal Presencial",
         "time": "14:00 - 18:00",
         "days": "Lunes a Viernes",
-        "period": "4 de Agosto - 31 de Octubre"
+        "period": "4 de Agosto - 31 de Octubre",
+        "borderColor": "#2563eb"
       },
       {
         "id": "intensivo-3",
@@ -29,7 +31,8 @@
         "typeLabel": "Sabados Presencial",
         "time": "8:00 - 18:00",
         "days": "Todos los Sábados",
-        "period": "29 de Marzo - 25 de Octubre"
+        "period": "29 de Marzo - 25 de Octubre",
+        "borderColor": "#f59e0b"
       },
       {
         "id": "intensivo-4",
@@ -38,7 +41,8 @@
         "typeLabel": "Sabados Presencial",
         "time": "8:00 - 18:00",
         "days": "Todos los Sábados",
-        "period": "12 de Abril - 25 de Octubre"
+        "period": "12 de Abril - 25 de Octubre",
+        "borderColor": "#f59e0b"
       },
       {
         "id": "intensivo-5",
@@ -47,7 +51,8 @@
         "typeLabel": "Sabados Presencial",
         "time": "8:00 - 18:00",
         "days": "Todos los Sábados",
-        "period": "12 de Julio - 25 de Octubre"
+        "period": "12 de Julio - 25 de Octubre",
+        "borderColor": "#f59e0b"
       },
       {
         "id": "intensivo-6",
@@ -56,7 +61,8 @@
         "typeLabel": "Sabados Virtual",
         "time": "19:00 - 22:00",
         "days": "Sábados",
-        "period": "5 de Julio - 25 de Octubre"
+        "period": "5 de Julio - 25 de Octubre",
+        "borderColor": "#10b981"
       }
     ]
   },
@@ -72,7 +78,8 @@
         "typeLabel": "Presencial",
         "time": "9:00 - 12:00",
         "days": "Martes y Jueves",
-        "period": "Marzo - Noviembre"
+        "period": "Marzo - Noviembre",
+        "borderColor": "#2563eb"
       },
       {
         "id": "extensivo-2",
@@ -81,7 +88,8 @@
         "typeLabel": "Presencial",
         "time": "15:00 - 18:00",
         "days": "Martes y Jueves",
-        "period": "Marzo - Noviembre"
+        "period": "Marzo - Noviembre",
+        "borderColor": "#2563eb"
       },
       {
         "id": "extensivo-3",
@@ -90,7 +98,8 @@
         "typeLabel": "Virtual",
         "time": "19:00 - 22:00",
         "days": "Miércoles y Viernes",
-        "period": "Marzo - Noviembre"
+        "period": "Marzo - Noviembre",
+        "borderColor": "#10b981"
       }
     ]
   },
@@ -106,7 +115,8 @@
         "typeLabel": "MOFA Program",
         "time": "14:00 - 17:00",
         "days": "Lunes a Viernes",
-        "period": "Febrero - Mayo"
+        "period": "Febrero - Mayo",
+        "borderColor": "#dc2626"
       },
       {
         "id": "mofa-2",
@@ -115,7 +125,8 @@
         "typeLabel": "MOFA Virtual",
         "time": "18:00 - 21:00",
         "days": "Lunes, Miércoles, Viernes",
-        "period": "Febrero - Mayo"
+        "period": "Febrero - Mayo",
+        "borderColor": "#dc2626"
       }
     ]
   }

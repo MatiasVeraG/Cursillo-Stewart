@@ -292,6 +292,22 @@ section {
 
 .grid-3 {
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  max-width: 1200px; /* Limitar el ancho máximo para mantener centralidad */
+  margin: 0 auto; /* Centrar el grid */
+}
+
+/* Asegurar que no haya más de 3 columnas */
+@supports (grid-template-columns: repeat(auto-fit, minmax(300px, 1fr))) {
+  .grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(max(300px, calc((100% - 4rem) / 3)), 1fr));
+  }
+}
+
+/* Cuando hay más de 3 items, mantener máximo 3 columnas */
+@media (min-width: 1024px) {
+  .grid-3 {
+    grid-template-columns: repeat(auto-fit, minmax(300px, calc((100% - 4rem) / 3)));
+  }
 }
 
 .grid-2 {

@@ -4146,18 +4146,18 @@ AdminPanel.prototype.renderSchedulesList = function () {
   course.schedules.forEach((schedule, index) => {
     const scheduleItem = document.createElement('div');
     scheduleItem.className = 'schedule-item';
-    
+
     // Get custom colors or use defaults
     const defaultColors = {
       presencial: { bg: '#dbeafe', text: '#1e40af' },
       sabados: { bg: '#fef3c7', text: '#92400e' },
       virtual: { bg: '#dcfce7', text: '#166534' },
-      mofa: { bg: '#fee2e2', text: '#991b1b' }
+      mofa: { bg: '#fee2e2', text: '#991b1b' },
     };
-    
+
     const bgColor = schedule.customBgColor || defaultColors[schedule.type]?.bg || '#dbeafe';
     const textColor = schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
-    
+
     scheduleItem.innerHTML = `
       <div class="schedule-header-row">
         <h4 class="schedule-title">${schedule.title}</h4>
@@ -4231,12 +4231,13 @@ AdminPanel.prototype.editSchedule = function (index) {
     presencial: { bg: '#dbeafe', text: '#1e40af' },
     sabados: { bg: '#fef3c7', text: '#92400e' },
     virtual: { bg: '#dcfce7', text: '#166534' },
-    mofa: { bg: '#fee2e2', text: '#991b1b' }
+    mofa: { bg: '#fee2e2', text: '#991b1b' },
   };
 
   // Get current colors or use defaults
   const currentBgColor = schedule.customBgColor || defaultColors[schedule.type]?.bg || '#dbeafe';
-  const currentTextColor = schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
+  const currentTextColor =
+    schedule.customTextColor || defaultColors[schedule.type]?.text || '#1e40af';
 
   // Create modal
   const modal = document.createElement('div');
@@ -4338,23 +4339,23 @@ AdminPanel.prototype.editSchedule = function (index) {
     preview.style.color = textColorPicker.value;
   };
 
-  bgColorPicker.addEventListener('input', (e) => {
+  bgColorPicker.addEventListener('input', e => {
     bgColorHex.value = e.target.value;
     updatePreview();
   });
 
-  bgColorHex.addEventListener('input', (e) => {
+  bgColorHex.addEventListener('input', e => {
     const value = e.target.value.startsWith('#') ? e.target.value : '#' + e.target.value;
     bgColorPicker.value = value;
     updatePreview();
   });
 
-  textColorPicker.addEventListener('input', (e) => {
+  textColorPicker.addEventListener('input', e => {
     textColorHex.value = e.target.value;
     updatePreview();
   });
 
-  textColorHex.addEventListener('input', (e) => {
+  textColorHex.addEventListener('input', e => {
     const value = e.target.value.startsWith('#') ? e.target.value : '#' + e.target.value;
     textColorPicker.value = value;
     updatePreview();

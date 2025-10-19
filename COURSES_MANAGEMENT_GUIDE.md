@@ -25,9 +25,14 @@
   - Título del turno
   - Tipo de modalidad (Presencial, Sábados, Virtual, MOFA)
   - Etiqueta personalizada
+  - **🎨 Colores personalizables:**
+    - Color de fondo de la etiqueta
+    - Color del texto de la etiqueta
+    - Color del borde lateral del card
   - Horario
   - Días de clase
   - Período académico
+  - **Vista previa en tiempo real** de los colores seleccionados
 - 🗑️ **Eliminar turnos**: Con confirmación
 
 ### 3. **Visualización en Homepage**
