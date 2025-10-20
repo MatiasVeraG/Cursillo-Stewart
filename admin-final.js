@@ -88,6 +88,1453 @@ class AuthSystem {
   }
 }
 
+// ==================== SISTEMA DE BANNER PRINCIPAL ====================
+class BannerSystem {
+  constructor() {
+    this.bannerData = {};
+    this.defaultImages = [
+      'images/Imagen de Fondo 1.jpeg',
+      'images/Imagen de Fondo 3.jpeg',
+      'images/Imagen de Fondo 4.jpeg',
+      'images/Imagen de Fondo 5.jpeg'
+    ];
+  }
+
+  init() {
+    this.loadBannerData();
+    this.bindEvents();
+    this.initBackgroundManager();
+    this.initLogoUpload();
+    console.log('✅ Banner System initialized');
+  }
+
+  bindEvents() {
+    // Bind banner text inputs
+    const titleInput = document.getElementById('banner-title');
+    const subtitleInput = document.getElementById('banner-subtitle');
+    const descriptionInput = document.getElementById('banner-description');
+
+    if (titleInput) {
+      titleInput.addEventListener('input', () => this.saveBannerData());
+    }
+    if (subtitleInput) {
+      subtitleInput.addEventListener('input', () => this.saveBannerData());
+    }
+    if (descriptionInput) {
+      descriptionInput.addEventListener('input', () => this.saveBannerData());
+    }
+
+    // Bind color inputs
+    const titleColorInput = document.getElementById('banner-title-color');
+    const subtitleColorInput = document.getElementById('banner-subtitle-color');
+    const descriptionColorInput = document.getElementById('banner-description-color');
+
+    if (titleColorInput) {
+      titleColorInput.addEventListener('input', () => this.saveBannerColors());
+    }
+    if (subtitleColorInput) {
+      subtitleColorInput.addEventListener('input', () => this.saveBannerColors());
+    }
+    if (descriptionColorInput) {
+      descriptionColorInput.addEventListener('input', () => this.saveBannerColors());
+    }
+
+    // Bind overlay controls
+    const overlayColorInput = document.getElementById('banner-overlay-color');
+    const overlayOpacityInput = document.getElementById('banner-overlay-opacity');
+    const brightnessInput = document.getElementById('banner-image-brightness');
+
+    if (overlayColorInput) {
+      overlayColorInput.addEventListener('input', () => this.updateBannerOverlay());
+    }
+    if (overlayOpacityInput) {
+      overlayOpacityInput.addEventListener('input', () => this.updateBannerOverlay());
+    }
+    if (brightnessInput) {
+      brightnessInput.addEventListener('input', () => this.updateBannerOverlay());
+    }
+
+    // Carousel interval
+    const intervalInput = document.getElementById('carousel-interval');
+    if (intervalInput) {
+      intervalInput.addEventListener('change', (e) => this.updateCarouselInterval(e.target.value));
+    }
+  }
+
+  loadBannerData() {
+    try {
+      // Load banner content
+      const savedContent = JSON.parse(localStorage.getItem('website_content') || '{}');
+      
+      const titleInput = document.getElementById('banner-title');
+      const subtitleInput = document.getElementById('banner-subtitle');
+      const descriptionInput = document.getElementById('banner-description');
+
+      if (titleInput) {
+        titleInput.value = savedContent['banner-title'] || 'Cursillo Stewart';
+      }
+      if (subtitleInput) {
+        subtitleInput.value = savedContent['banner-subtitle'] || 'Universidad Politécnica Taiwan Paraguay';
+      }
+      if (descriptionInput) {
+        descriptionInput.value = savedContent['banner-description'] || 
+          'Somos el cursillo #1 para la Universidad Politécnica Taiwan-Paraguay en porcentaje, cantidad y calidad de ingresantes';
+      }
+
+      // Load banner colors
+      const savedColors = JSON.parse(localStorage.getItem('banner_text_colors') || '{}');
+      
+      const titleColorInput = document.getElementById('banner-title-color');
+      const subtitleColorInput = document.getElementById('banner-subtitle-color');
+      const descriptionColorInput = document.getElementById('banner-description-color');
+
+      if (titleColorInput) {
+        titleColorInput.value = savedColors.title || '#ffffff';
+      }
+      if (subtitleColorInput) {
+        subtitleColorInput.value = savedColors.subtitle || '#ffffff';
+      }
+      if (descriptionColorInput) {
+        descriptionColorInput.value = savedColors.description || '#ffffff';
+      }
+
+      // Load overlay settings
+      const savedOverlay = JSON.parse(localStorage.getItem('banner_overlay_settings') || '{}');
+      
+      const overlayColorInput = document.getElementById('banner-overlay-color');
+      const overlayOpacityInput = document.getElementById('banner-overlay-opacity');
+      const brightnessInput = document.getElementById('banner-image-brightness');
+
+      if (overlayColorInput) {
+        overlayColorInput.value = savedOverlay.color || '#1e40af';
+        const colorValueEl = document.getElementById('overlay-color-value');
+        if (colorValueEl) colorValueEl.textContent = savedOverlay.color || '#1e40af';
+      }
+      if (overlayOpacityInput) {
+        overlayOpacityInput.value = savedOverlay.opacity || 15;
+        const opacityValueEl = document.getElementById('overlay-opacity-value');
+        if (opacityValueEl) opacityValueEl.textContent = (savedOverlay.opacity || 15) + '%';
+      }
+      if (brightnessInput) {
+        brightnessInput.value = savedOverlay.brightness || 100;
+        const brightnessValueEl = document.getElementById('brightness-value');
+        if (brightnessValueEl) brightnessValueEl.textContent = (savedOverlay.brightness || 100) + '%';
+      }
+
+      // Load carousel interval
+      const savedInterval = localStorage.getItem('carousel_interval') || '10';
+      const intervalInput = document.getElementById('carousel-interval');
+      const currentIntervalEl = document.getElementById('current-interval');
+      if (intervalInput) intervalInput.value = savedInterval;
+      if (currentIntervalEl) currentIntervalEl.textContent = savedInterval;
+
+      // Load current logo
+      const savedLogo = localStorage.getItem('website_logo');
+      const logoImg = document.getElementById('current-logo');
+      if (logoImg && savedLogo) {
+        logoImg.src = savedLogo;
+      }
+
+      console.log('✅ Banner data loaded');
+    } catch (error) {
+      console.error('Error loading banner data:', error);
+    }
+  }
+
+  saveBannerData() {
+    try {
+      const titleInput = document.getElementById('banner-title');
+      const subtitleInput = document.getElementById('banner-subtitle');
+      const descriptionInput = document.getElementById('banner-description');
+
+      // Get current website content
+      const currentContent = JSON.parse(localStorage.getItem('website_content') || '{}');
+      
+      // Update with banner data
+      if (titleInput) {
+        currentContent['banner-title'] = titleInput.value;
+      }
+      if (subtitleInput) {
+        currentContent['banner-subtitle'] = subtitleInput.value;
+      }
+      if (descriptionInput) {
+        currentContent['banner-description'] = descriptionInput.value;
+      }
+
+      // Save updated content
+      localStorage.setItem('website_content', JSON.stringify(currentContent));
+      localStorage.setItem('admin_update_timestamp', Date.now().toString());
+
+      console.log('✅ Banner data saved');
+    } catch (error) {
+      console.error('Error saving banner data:', error);
+    }
+  }
+
+  saveBannerColors() {
+    try {
+      const titleColorInput = document.getElementById('banner-title-color');
+      const subtitleColorInput = document.getElementById('banner-subtitle-color');
+      const descriptionColorInput = document.getElementById('banner-description-color');
+
+      const colors = {};
+      
+      if (titleColorInput) {
+        colors.title = titleColorInput.value;
+      }
+      if (subtitleColorInput) {
+        colors.subtitle = subtitleColorInput.value;
+      }
+      if (descriptionColorInput) {
+        colors.description = descriptionColorInput.value;
+      }
+
+      localStorage.setItem('banner_text_colors', JSON.stringify(colors));
+      localStorage.setItem('admin_update_timestamp', Date.now().toString());
+
+      console.log('✅ Banner colors saved');
+    } catch (error) {
+      console.error('Error saving banner colors:', error);
+    }
+  }
+
+  updateBannerOverlay() {
+    try {
+      const overlayColorInput = document.getElementById('banner-overlay-color');
+      const overlayOpacityInput = document.getElementById('banner-overlay-opacity');
+      const brightnessInput = document.getElementById('banner-image-brightness');
+
+      const settings = {
+        color: overlayColorInput?.value || '#1e40af',
+        opacity: overlayOpacityInput ? parseInt(overlayOpacityInput.value) : 15,
+        brightness: brightnessInput ? parseInt(brightnessInput.value) : 100,
+        gradient: '135deg' // Default gradient
+      };
+
+      // Update UI display values
+      const colorValueEl = document.getElementById('overlay-color-value');
+      const opacityValueEl = document.getElementById('overlay-opacity-value');
+      const brightnessValueEl = document.getElementById('brightness-value');
+
+      if (colorValueEl) colorValueEl.textContent = settings.color;
+      if (opacityValueEl) opacityValueEl.textContent = settings.opacity + '%';
+      if (brightnessValueEl) brightnessValueEl.textContent = settings.brightness + '%';
+
+      // Save settings
+      localStorage.setItem('banner_overlay_settings', JSON.stringify(settings));
+      localStorage.setItem('admin_update_timestamp', Date.now().toString());
+
+      console.log('✅ Banner overlay updated:', settings);
+    } catch (error) {
+      console.error('Error updating banner overlay:', error);
+    }
+  }
+
+  resetBannerOverlay() {
+    if (!confirm('¿Restaurar filtro de banner a valores por defecto?')) return;
+
+    const overlayColorInput = document.getElementById('banner-overlay-color');
+    const overlayOpacityInput = document.getElementById('banner-overlay-opacity');
+    const brightnessInput = document.getElementById('banner-image-brightness');
+
+    if (overlayColorInput) overlayColorInput.value = '#1e40af';
+    if (overlayOpacityInput) overlayOpacityInput.value = 15;
+    if (brightnessInput) brightnessInput.value = 100;
+
+    this.updateBannerOverlay();
+    showToast('🔄 Filtro de banner restaurado', 'success');
+  }
+
+  updateCarouselInterval(value) {
+    const interval = parseInt(value);
+    if (interval < 3 || interval > 30) {
+      showToast('⚠️ El intervalo debe estar entre 3 y 30 segundos', 'error');
+      return;
+    }
+
+    localStorage.setItem('carousel_interval', interval.toString());
+    localStorage.setItem('admin_update_timestamp', Date.now().toString());
+
+    const currentIntervalEl = document.getElementById('current-interval');
+    if (currentIntervalEl) currentIntervalEl.textContent = interval;
+
+    showToast(`✅ Intervalo actualizado a ${interval} segundos`, 'success');
+    console.log('✅ Carousel interval updated:', interval);
+  }
+
+  updateBannerTextColor(type) {
+    this.saveBannerColors();
+  }
+
+  // ============= GESTIÓN DE IMÁGENES DE FONDO =============
+  initBackgroundManager() {
+    const fileInput = document.getElementById('background-file-input');
+    const uploadArea = document.getElementById('background-upload-area');
+
+    if (fileInput) {
+      fileInput.addEventListener('change', (e) => this.handleBackgroundUpload(e));
+    }
+
+    if (uploadArea) {
+      // Drag & Drop
+      uploadArea.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        uploadArea.classList.add('drag-over');
+      });
+
+      uploadArea.addEventListener('dragleave', () => {
+        uploadArea.classList.remove('drag-over');
+      });
+
+      uploadArea.addEventListener('drop', (e) => {
+        e.preventDefault();
+        uploadArea.classList.remove('drag-over');
+        this.handleBackgroundUpload({ target: { files: e.dataTransfer.files } });
+      });
+    }
+
+    // Load and display current images
+    this.loadBackgroundImages();
+  }
+
+  loadBackgroundImages() {
+    const savedImages = JSON.parse(localStorage.getItem('carousel_images') || 'null');
+    let images = savedImages || this.defaultImages;
+
+    // Migrar formato legacy (strings) a nuevo formato {src, thumb}
+    // Los defaults permanecen como strings (rutas de archivo)
+    const needsMigration = images.some(img => typeof img === 'string' && img.startsWith('data:'));
+    
+    if (needsMigration) {
+      console.warn('⚠️ Imágenes en formato legacy detectadas. Considera re-subirlas para mejor calidad.');
+      console.warn('💡 Formato legacy usa la misma imagen para admin y carousel.');
+    }
+
+    this.displayBackgroundImages(images);
+  }
+
+  displayBackgroundImages(images) {
+    const container = document.getElementById('background-images-container');
+    const countEl = document.getElementById('background-count');
+    
+    if (!container) return;
+
+    container.innerHTML = '';
+    
+    if (countEl) {
+      countEl.textContent = `${images.length} imagen${images.length !== 1 ? 'es' : ''}`;
+    }
+
+    images.forEach((imageData, index) => {
+      const imageCard = document.createElement('div');
+      imageCard.className = 'background-image-card';
+      imageCard.draggable = true;
+      imageCard.dataset.index = index;
+
+      // Detectar formato: objeto {src, thumb} o string legacy
+      const isObject = typeof imageData === 'object' && imageData !== null;
+      const thumbnailSrc = isObject ? imageData.thumb : imageData;
+      const originalSrc = isObject ? imageData.src : imageData;
+
+      imageCard.innerHTML = `
+        <div class="thumbnail">
+          <img src="${thumbnailSrc}" alt="Imagen ${index + 1}" data-original-size="${isObject ? 'full-res' : 'legacy'}">
+        </div>
+        <div class="image-controls">
+          <button class="btn-delete" onclick="bannerSystem.removeBackgroundImage(${index})" title="Eliminar">
+            🗑️
+          </button>
+          <span class="image-number">${index + 1}</span>
+        </div>
+      `;
+
+      // Verificar dimensiones del thumbnail en admin
+      const imgEl = imageCard.querySelector('img');
+      imgEl.addEventListener('load', function() {
+        const naturalW = this.naturalWidth;
+        const naturalH = this.naturalHeight;
+        const displayW = this.offsetWidth;
+        const displayH = this.offsetHeight;
+        
+        console.log(`🖼️ [Admin] Imagen ${index + 1}: Natural ${naturalW}x${naturalH} → Display ${displayW}x${displayH}`);
+        
+        if (isObject) {
+          console.log(`   ✅ Usando thumbnail para admin (original disponible: full-res)`);
+        } else {
+          console.warn(`   ⚠️ Imagen legacy detectada - considera re-subir para obtener versión full-res`);
+        }
+        
+        if (naturalW < displayW || naturalH < displayH) {
+          console.warn(`   ⚠️ Thumbnail siendo upscaleado en admin panel!`);
+        }
+      });
+
+      // Drag events
+      imageCard.addEventListener('dragstart', (e) => {
+        e.dataTransfer.effectAllowed = 'move';
+        e.dataTransfer.setData('text/html', index);
+        imageCard.classList.add('dragging');
+      });
+
+      imageCard.addEventListener('dragend', () => {
+        imageCard.classList.remove('dragging');
+      });
+
+      imageCard.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        e.dataTransfer.dropEffect = 'move';
+      });
+
+      imageCard.addEventListener('drop', (e) => {
+        e.preventDefault();
+        const fromIndex = parseInt(e.dataTransfer.getData('text/html'));
+        const toIndex = parseInt(imageCard.dataset.index);
+        this.reorderBackgroundImages(fromIndex, toIndex);
+      });
+
+      container.appendChild(imageCard);
+    });
+  }
+
+  handleBackgroundUpload(event) {
+    const files = event.target.files;
+    if (!files || files.length === 0) return;
+
+    const savedImages = JSON.parse(localStorage.getItem('carousel_images') || 'null');
+    const currentImages = savedImages || [...this.defaultImages];
+
+    let processedCount = 0;
+    const totalFiles = files.length;
+
+    Array.from(files).forEach(file => {
+      if (!file.type.startsWith('image/')) {
+        showToast('⚠️ Solo se permiten archivos de imagen', 'error');
+        return;
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const originalBase64 = e.target.result; // Guardar ORIGINAL en alta resolución
+        
+        // Crear thumbnail HiDPI SOLO para el panel de administración
+        const img = new Image();
+        img.onload = () => {
+          // Configuración del thumbnail para admin
+          const maxCSS = 200; // Tamaño máximo en píxeles CSS
+          const dpr = window.devicePixelRatio || 1;
+          
+          // Calcular dimensiones CSS manteniendo proporción (sin upscale)
+          let cssWidth = img.width;
+          let cssHeight = img.height;
+          
+          if (cssWidth > maxCSS || cssHeight > maxCSS) {
+            const scale = Math.min(maxCSS / cssWidth, maxCSS / cssHeight);
+            cssWidth = Math.floor(cssWidth * scale);
+            cssHeight = Math.floor(cssHeight * scale);
+          }
+          
+          // Dimensiones del canvas con DPR para HiDPI
+          const canvasWidth = cssWidth * dpr;
+          const canvasHeight = cssHeight * dpr;
+          
+          // Crear canvas HiDPI
+          const canvas = document.createElement('canvas');
+          const ctx = canvas.getContext('2d');
+          
+          canvas.width = canvasWidth;
+          canvas.height = canvasHeight;
+          canvas.style.width = `${cssWidth}px`;
+          canvas.style.height = `${cssHeight}px`;
+          
+          // Configurar alta calidad de rendering
+          ctx.scale(dpr, dpr);
+          ctx.imageSmoothingEnabled = true;
+          ctx.imageSmoothingQuality = 'high';
+          
+          // Dibujar imagen escalada
+          ctx.drawImage(img, 0, 0, cssWidth, cssHeight);
+          
+          // Exportar thumbnail como WebP
+          const thumbnailBase64 = canvas.toDataURL('image/webp', 0.9);
+          
+          // Logging para verificar dimensiones
+          console.log(`📸 Imagen procesada: ${img.width}x${img.height}`);
+          console.log(`   └─ Original: ${(originalBase64.length / 1024).toFixed(0)}KB (para carousel)`);
+          console.log(`   └─ Thumbnail: ${cssWidth}x${cssHeight} CSS @ ${dpr}x DPR (solo admin)`);
+          
+          // GUARDAR AMBOS: original para carousel + thumbnail para admin
+          currentImages.push({
+            src: originalBase64,      // ORIGINAL en alta resolución para el carousel
+            thumb: thumbnailBase64    // Thumbnail optimizado SOLO para admin
+          });
+          
+          localStorage.setItem('carousel_images', JSON.stringify(currentImages));
+          localStorage.setItem('admin_update_timestamp', Date.now().toString());
+          
+          processedCount++;
+          if (processedCount === totalFiles) {
+            this.displayBackgroundImages(currentImages);
+            showToast(`✅ ${totalFiles} imagen${totalFiles > 1 ? 'es' : ''} agregada${totalFiles > 1 ? 's' : ''} al carousel`, 'success');
+          }
+        };
+        img.src = originalBase64;
+      };
+      reader.readAsDataURL(file);
+    });
+
+    // Reset input
+    event.target.value = '';
+  }
+
+  removeBackgroundImage(index) {
+    if (!confirm('¿Eliminar esta imagen del carousel?')) return;
+
+    const savedImages = JSON.parse(localStorage.getItem('carousel_images') || 'null');
+    const currentImages = savedImages || [...this.defaultImages];
+
+    if (currentImages.length <= 1) {
+      showToast('⚠️ Debe haber al menos una imagen en el carousel', 'error');
+      return;
+    }
+
+    currentImages.splice(index, 1);
+    localStorage.setItem('carousel_images', JSON.stringify(currentImages));
+    localStorage.setItem('admin_update_timestamp', Date.now().toString());
+    this.displayBackgroundImages(currentImages);
+    showToast('🗑️ Imagen eliminada', 'success');
+  }
+
+  reorderBackgroundImages(fromIndex, toIndex) {
+    if (fromIndex === toIndex) return;
+
+    const savedImages = JSON.parse(localStorage.getItem('carousel_images') || 'null');
+    const currentImages = savedImages || [...this.defaultImages];
+
+    const [movedImage] = currentImages.splice(fromIndex, 1);
+    currentImages.splice(toIndex, 0, movedImage);
+
+    localStorage.setItem('carousel_images', JSON.stringify(currentImages));
+    localStorage.setItem('admin_update_timestamp', Date.now().toString());
+    this.displayBackgroundImages(currentImages);
+    showToast('✅ Imágenes reordenadas', 'success');
+  }
+
+  resetToDefaultImages() {
+    if (!confirm('¿Restaurar imágenes de fondo por defecto? Se perderán las imágenes personalizadas.')) return;
+
+    localStorage.removeItem('carousel_images');
+    localStorage.setItem('admin_update_timestamp', Date.now().toString());
+    this.displayBackgroundImages(this.defaultImages);
+    showToast('🔄 Imágenes restauradas por defecto', 'success');
+  }
+
+  // Limpiar imágenes legacy en baja resolución
+  clearLegacyImages() {
+    if (!confirm('⚠️ ADVERTENCIA: Esto eliminará TODAS las imágenes personalizadas del carousel.\n\n¿Estás seguro de que deseas continuar?\n\nDeberás re-subir las imágenes después de esta operación para obtener versiones de alta resolución.')) {
+      return;
+    }
+
+    try {
+      // Eliminar imágenes guardadas
+      localStorage.removeItem('carousel_images');
+      localStorage.setItem('admin_update_timestamp', Date.now().toString());
+      
+      // Recargar con imágenes por defecto
+      this.loadBackgroundImages();
+      
+      console.log('🧹 Imágenes legacy eliminadas del localStorage');
+      console.log('💡 Por favor, re-sube tus imágenes para obtener versiones full-res');
+      showToast('🧹 Imágenes legacy eliminadas. Re-sube tus imágenes ahora.', 'success');
+      
+    } catch (error) {
+      console.error('Error clearing legacy images:', error);
+      showToast('❌ Error al limpiar imágenes legacy', 'error');
+    }
+  }
+
+  // ============= GESTIÓN DE LOGO =============
+  initLogoUpload() {
+    const logoInput = document.getElementById('logo-upload');
+    if (logoInput) {
+      logoInput.addEventListener('change', (e) => this.handleLogoUpload(e));
+    }
+  }
+
+  handleLogoUpload(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    if (!file.type.startsWith('image/')) {
+      showToast('⚠️ Solo se permiten archivos de imagen', 'error');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      // Crear thumbnail HiDPI optimizado para el logo
+      const img = new Image();
+      img.onload = () => {
+        // Configuración del logo thumbnail
+        const maxCSS = 200; // Tamaño máximo en píxeles CSS
+        const dpr = window.devicePixelRatio || 1;
+        
+        // Calcular dimensiones CSS manteniendo proporción (sin upscale)
+        let cssWidth = img.width;
+        let cssHeight = img.height;
+        
+        if (cssWidth > maxCSS || cssHeight > maxCSS) {
+          const scale = Math.min(maxCSS / cssWidth, maxCSS / cssHeight);
+          cssWidth = Math.floor(cssWidth * scale);
+          cssHeight = Math.floor(cssHeight * scale);
+        }
+        
+        // Dimensiones del canvas con DPR para HiDPI
+        const canvasWidth = cssWidth * dpr;
+        const canvasHeight = cssHeight * dpr;
+        
+        // Crear canvas HiDPI
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+        canvas.style.width = `${cssWidth}px`;
+        canvas.style.height = `${cssHeight}px`;
+        
+        // Configurar alta calidad de rendering
+        ctx.scale(dpr, dpr);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        
+        // Dibujar imagen escalada
+        ctx.drawImage(img, 0, 0, cssWidth, cssHeight);
+        
+        // Exportar como WebP de alta calidad
+        const logoThumbnail = canvas.toDataURL('image/webp', 0.9);
+        
+        // Logging para verificar dimensiones
+        console.log(`🏷️ Logo generado: ${img.width}x${img.height} → ${cssWidth}x${cssHeight} CSS (${canvasWidth}x${canvasHeight} canvas @ ${dpr}x DPR)`);
+        
+        // Update preview
+        const logoImg = document.getElementById('current-logo');
+        if (logoImg) {
+          logoImg.src = logoThumbnail;
+        }
+
+        // Save to localStorage
+        localStorage.setItem('website_logo', logoThumbnail);
+        localStorage.setItem('admin_update_timestamp', Date.now().toString());
+
+        showToast('✅ Logo actualizado correctamente', 'success');
+        console.log('✅ Logo saved as optimized HiDPI thumbnail');
+      };
+      img.src = e.target.result;
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  // ============= CONFIGURACIÓN POR DEFECTO =============
+  setAsDefaultConfiguration() {
+    if (!confirm('¿Guardar la configuración actual del banner como valores por defecto?\n\nEstos valores se usarán cuando restaures la configuración.')) {
+      return;
+    }
+
+    try {
+      // Recopilar toda la configuración actual del banner
+      const defaultConfig = {
+        // Textos del banner
+        bannerContent: {
+          'banner-title': document.getElementById('banner-title')?.value || 'Cursillo Stewart',
+          'banner-subtitle': document.getElementById('banner-subtitle')?.value || 'Universidad Politécnica Taiwan Paraguay',
+          'banner-description': document.getElementById('banner-description')?.value || 'Somos el cursillo #1 para la Universidad Politécnica Taiwan-Paraguay'
+        },
+        
+        // Colores del banner
+        bannerColors: {
+          title: document.getElementById('banner-title-color')?.value || '#ffffff',
+          subtitle: document.getElementById('banner-subtitle-color')?.value || '#ffffff',
+          description: document.getElementById('banner-description-color')?.value || '#ffffff'
+        },
+        
+        // Configuración del overlay
+        overlaySettings: {
+          color: document.getElementById('banner-overlay-color')?.value || '#1e40af',
+          opacity: parseInt(document.getElementById('banner-overlay-opacity')?.value || 15),
+          brightness: parseInt(document.getElementById('banner-image-brightness')?.value || 100),
+          gradient: '135deg'
+        },
+        
+        // Intervalo del carousel
+        carouselInterval: parseInt(document.getElementById('carousel-interval')?.value || 10),
+        
+        // Imágenes del carousel
+        carouselImages: JSON.parse(localStorage.getItem('carousel_images') || 'null') || this.defaultImages,
+        
+        // Logo
+        logo: localStorage.getItem('website_logo') || null,
+        
+        // Timestamp
+        savedAt: new Date().toISOString()
+      };
+
+      // Guardar configuración por defecto
+      localStorage.setItem('banner_default_config', JSON.stringify(defaultConfig));
+      
+      showToast('✅ Configuración guardada como predeterminada', 'success');
+      console.log('✅ Default configuration saved:', defaultConfig);
+      
+    } catch (error) {
+      console.error('Error saving default configuration:', error);
+      showToast('❌ Error al guardar configuración por defecto', 'error');
+    }
+  }
+
+  restoreDefaultConfiguration() {
+    if (!confirm('¿Restaurar la configuración del banner a los valores por defecto guardados?\n\nSe perderá la configuración actual.')) {
+      return;
+    }
+
+    try {
+      // Intentar cargar configuración guardada por el usuario
+      const savedDefaultConfig = localStorage.getItem('banner_default_config');
+      
+      let defaultConfig;
+      if (savedDefaultConfig) {
+        // Usar configuración guardada por el usuario
+        defaultConfig = JSON.parse(savedDefaultConfig);
+        console.log('📂 Restaurando configuración guardada por usuario');
+      } else {
+        // Usar configuración del sistema por defecto
+        defaultConfig = {
+          bannerContent: {
+            'banner-title': 'Cursillo Stewart',
+            'banner-subtitle': 'Universidad Politécnica Taiwan Paraguay',
+            'banner-description': 'Somos el cursillo #1 para la Universidad Politécnica Taiwan-Paraguay en porcentaje, cantidad y calidad de ingresantes'
+          },
+          bannerColors: {
+            title: '#ffffff',
+            subtitle: '#ffffff',
+            description: '#ffffff'
+          },
+          overlaySettings: {
+            color: '#1e40af',
+            opacity: 15,
+            brightness: 100,
+            gradient: '135deg'
+          },
+          carouselInterval: 10,
+          carouselImages: this.defaultImages,
+          logo: null
+        };
+        console.log('🏭 Restaurando configuración del sistema');
+      }
+
+      // Restaurar textos del banner
+      if (defaultConfig.bannerContent) {
+        const titleInput = document.getElementById('banner-title');
+        const subtitleInput = document.getElementById('banner-subtitle');
+        const descriptionInput = document.getElementById('banner-description');
+        
+        if (titleInput) titleInput.value = defaultConfig.bannerContent['banner-title'];
+        if (subtitleInput) subtitleInput.value = defaultConfig.bannerContent['banner-subtitle'];
+        if (descriptionInput) descriptionInput.value = defaultConfig.bannerContent['banner-description'];
+      }
+
+      // Restaurar colores
+      if (defaultConfig.bannerColors) {
+        const titleColorInput = document.getElementById('banner-title-color');
+        const subtitleColorInput = document.getElementById('banner-subtitle-color');
+        const descriptionColorInput = document.getElementById('banner-description-color');
+        
+        if (titleColorInput) titleColorInput.value = defaultConfig.bannerColors.title;
+        if (subtitleColorInput) subtitleColorInput.value = defaultConfig.bannerColors.subtitle;
+        if (descriptionColorInput) descriptionColorInput.value = defaultConfig.bannerColors.description;
+      }
+
+      // Restaurar overlay
+      if (defaultConfig.overlaySettings) {
+        const overlayColorInput = document.getElementById('banner-overlay-color');
+        const overlayOpacityInput = document.getElementById('banner-overlay-opacity');
+        const brightnessInput = document.getElementById('banner-image-brightness');
+        
+        if (overlayColorInput) overlayColorInput.value = defaultConfig.overlaySettings.color;
+        if (overlayOpacityInput) overlayOpacityInput.value = defaultConfig.overlaySettings.opacity;
+        if (brightnessInput) brightnessInput.value = defaultConfig.overlaySettings.brightness;
+      }
+
+      // Restaurar intervalo del carousel
+      if (defaultConfig.carouselInterval) {
+        const intervalInput = document.getElementById('carousel-interval');
+        if (intervalInput) intervalInput.value = defaultConfig.carouselInterval;
+      }
+
+      // Restaurar imágenes
+      if (defaultConfig.carouselImages) {
+        localStorage.setItem('carousel_images', JSON.stringify(defaultConfig.carouselImages));
+        this.displayBackgroundImages(defaultConfig.carouselImages);
+      }
+
+      // Restaurar logo
+      if (defaultConfig.logo) {
+        localStorage.setItem('website_logo', defaultConfig.logo);
+        const logoImg = document.getElementById('current-logo');
+        if (logoImg) logoImg.src = defaultConfig.logo;
+      } else {
+        localStorage.removeItem('website_logo');
+        const logoImg = document.getElementById('current-logo');
+        if (logoImg) logoImg.src = 'images/1-1-logo-cursillo-stewart.png';
+      }
+
+      // Guardar todos los cambios
+      this.saveBannerData();
+      this.saveBannerColors();
+      this.updateBannerOverlay();
+      if (defaultConfig.carouselInterval) {
+        localStorage.setItem('carousel_interval', defaultConfig.carouselInterval.toString());
+      }
+
+      // Actualizar timestamp
+      localStorage.setItem('admin_update_timestamp', Date.now().toString());
+
+      showToast('🔄 Configuración restaurada correctamente', 'success');
+      console.log('✅ Configuration restored');
+      
+    } catch (error) {
+      console.error('Error restoring default configuration:', error);
+      showToast('❌ Error al restaurar configuración', 'error');
+    }
+  }
+}
+
+// ==================== SISTEMA DE CONÓCENOS Y TIMELINE ====================
+class ConocenosSystem {
+  constructor() {
+    this.timelineData = [];
+  }
+
+  init() {
+    this.loadTimeline();
+    this.bindEvents();
+  }
+
+  bindEvents() {
+    // Bind inputs for auto-save
+    const titleInput = document.getElementById('about-title');
+    const descInput = document.getElementById('about-description');
+
+    if (titleInput) {
+      titleInput.addEventListener('input', () => this.autoSave());
+    }
+
+    if (descInput) {
+      descInput.addEventListener('input', () => this.autoSave());
+    }
+  }
+
+  loadTimeline() {
+    // Load from localStorage or set defaults
+    const saved = localStorage.getItem('timeline_data');
+    
+    if (saved) {
+      this.timelineData = JSON.parse(saved);
+    } else {
+      // Default timeline
+      this.timelineData = [
+        {
+          id: this.generateId(),
+          year: '2022',
+          title: 'Los Inicios',
+          description:
+            'Todo comenzó cuando cuatro educadores visionarios: Prof. Facundo Rolón, Prof. Alejandro López, Prof. Leandro Volta y Prof. Mirella López fundaron el Cursillo Stewart. Con la determinación de brindar una preparación matemática excepcional, iniciaron este proyecto en un departamento, creando un ambiente íntimo y personalizado para la enseñanza del reconocido libro "Precalculus - Mathematics for Calculus" de James Stewart.',
+          image: 'images/departamento-inicial.jpeg',
+          imageName: 'departamento-inicial.jpeg',
+        },
+        {
+          id: this.generateId(),
+          year: '2023',
+          title: 'Primera Mudanza',
+          description:
+            'Con el crecimiento inicial y el reconocimiento de la calidad educativa, el Cursillo Stewart se mudó a nuevas instalaciones más amplias. Este cambio permitió recibir a más estudiantes y ofrecer mejores condiciones de aprendizaje, manteniendo siempre el enfoque personalizado que caracteriza nuestra metodología de enseñanza.',
+          image: null,
+        },
+        {
+          id: this.generateId(),
+          year: '2025',
+          title: 'Nueva Sede',
+          description:
+            'En nuestro tercer año de funcionamiento, nos establecimos en nuestra sede actual. Esta nueva mudanza representa el crecimiento sostenido y el compromiso continuo con la excelencia educativa. Con instalaciones modernas y un equipo docente ampliado, continuamos preparando a los futuros ingenieros y profesionales del Paraguay.',
+          image: null,
+        },
+        {
+          id: this.generateId(),
+          year: 'Presente',
+          title: 'Consolidación',
+          description:
+            'Hoy, tras tres años de dedicación y múltiples mudanzas que reflejan nuestro crecimiento, el Cursillo Stewart se ha consolidado como una institución de referencia en preparación universitaria. Los fundadores originales, junto con nuevos profesores especializados, continúan comprometidos con la formación académica de calidad, manteniendo vivo el espíritu emprendedor que dio origen a esta iniciativa educativa.',
+          image: null,
+        },
+      ];
+      this.saveTimelineData();
+    }
+
+    // Load titles
+    const titleEl = document.getElementById('about-title');
+    const descEl = document.getElementById('about-description');
+    const savedContent = JSON.parse(localStorage.getItem('website_content') || '{}');
+
+    if (titleEl) {
+      titleEl.value = savedContent['about-title'] || 'Conócenos';
+    }
+
+    if (descEl) {
+      descEl.value =
+        savedContent['about-description'] ||
+        'Descubre la historia y evolución del Cursillo Stewart, desde sus humildes inicios hasta convertirse en el programa de preparación universitaria más reconocido de Paraguay.';
+    }
+
+    this.renderTimeline();
+  }
+
+  generateId() {
+    return 'timeline_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  }
+
+  renderTimeline() {
+    const container = document.getElementById('timeline-entries');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    // Sort by year
+    const sorted = [...this.timelineData].sort((a, b) => {
+      const yearA = a.year === 'Presente' ? 9999 : parseInt(a.year) || 0;
+      const yearB = b.year === 'Presente' ? 9999 : parseInt(b.year) || 0;
+      return yearA - yearB;
+    });
+
+    sorted.forEach(entry => {
+      const entryEl = this.createTimelineEntry(entry);
+      container.appendChild(entryEl);
+    });
+  }
+
+  createTimelineEntry(entry) {
+    const div = document.createElement('div');
+    div.className = 'timeline-entry';
+    div.dataset.id = entry.id;
+
+    div.innerHTML = `
+      <div class="timeline-entry-header">
+        <input type="text" 
+               class="timeline-year-input" 
+               value="${entry.year}" 
+               placeholder="Año"
+               data-id="${entry.id}">
+        <div class="timeline-controls-group">
+          <button type="button" 
+                  class="btn-delete-timeline" 
+                  data-id="${entry.id}"
+                  title="Eliminar entrada">
+            🗑️
+          </button>
+        </div>
+      </div>
+      
+      <div class="timeline-content">
+        <div class="timeline-text">
+          <div class="form-group">
+            <label>Título del Evento:</label>
+            <input type="text" 
+                   class="timeline-title-input" 
+                   value="${entry.title || ''}" 
+                   placeholder="Ej: Los Inicios, Nueva Sede..."
+                   data-id="${entry.id}">
+          </div>
+          
+          <div class="form-group">
+            <label>Descripción:</label>
+            <textarea class="timeline-description" 
+                      placeholder="Describe qué pasó en este año..."
+                      data-id="${entry.id}">${entry.description || ''}</textarea>
+          </div>
+        </div>
+        
+        <div class="timeline-image-section">
+          <label>Imagen (opcional):</label>
+          <div class="timeline-image-upload ${entry.image ? 'has-image' : ''}" 
+               data-id="${entry.id}">
+            <input type="file" 
+                   id="timeline-file-${entry.id}" 
+                   accept="image/*" 
+                   data-id="${entry.id}"
+                   style="display: none;">
+            
+            ${
+              entry.image
+                ? `
+              <img src="${entry.image}" alt="Timeline image" class="timeline-image-preview">
+              <div class="timeline-image-name">${entry.imageName || 'Imagen cargada'}</div>
+            `
+                : `
+              <div style="color: #64748b; font-size: 2rem; margin-bottom: 0.5rem;">📷</div>
+              <div style="color: #64748b; font-size: 0.875rem;">Haz clic para subir imagen</div>
+              <div class="timeline-upload-text">JPG, PNG, GIF (máx. 5MB)</div>
+            `
+            }
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Bind events
+    const yearInput = div.querySelector('.timeline-year-input');
+    const titleInput = div.querySelector('.timeline-title-input');
+    const descInput = div.querySelector('.timeline-description');
+    const deleteBtn = div.querySelector('.btn-delete-timeline');
+    const imageUpload = div.querySelector('.timeline-image-upload');
+    const fileInput = div.querySelector('input[type="file"]');
+
+    yearInput.addEventListener('change', e => this.updateYear(entry.id, e.target.value));
+    titleInput.addEventListener('change', e => this.updateTitle(entry.id, e.target.value));
+    descInput.addEventListener('change', e => this.updateDescription(entry.id, e.target.value));
+    deleteBtn.addEventListener('click', () => this.deleteEntry(entry.id));
+    imageUpload.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', e => this.updateImage(entry.id, e.target.files[0]));
+
+    return div;
+  }
+
+  addTimelineEntry() {
+    const newEntry = {
+      id: this.generateId(),
+      year: new Date().getFullYear().toString(),
+      title: 'Nuevo Evento',
+      description: 'Describe qué pasó en este año...',
+      image: null,
+      imageName: null,
+    };
+
+    this.timelineData.push(newEntry);
+    this.saveTimelineData();
+    this.renderTimeline();
+    this.autoSave();
+    showToast('Nueva entrada agregada', 'success');
+  }
+
+  updateYear(id, value) {
+    const entry = this.timelineData.find(e => e.id === id);
+    if (entry) {
+      entry.year = value;
+      this.saveTimelineData();
+      this.renderTimeline(); // Re-render to resort
+      this.autoSave();
+    }
+  }
+
+  updateTitle(id, value) {
+    const entry = this.timelineData.find(e => e.id === id);
+    if (entry) {
+      entry.title = value;
+      this.saveTimelineData();
+      this.autoSave();
+    }
+  }
+
+  updateDescription(id, value) {
+    const entry = this.timelineData.find(e => e.id === id);
+    if (entry) {
+      entry.description = value;
+      this.saveTimelineData();
+      this.autoSave();
+    }
+  }
+
+  updateImage(id, file) {
+    if (!file) return;
+
+    // Validate
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('La imagen no puede superar los 5MB', 'error');
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      showToast('Solo se permiten archivos de imagen', 'error');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      const entry = this.timelineData.find(en => en.id === id);
+      if (entry) {
+        entry.image = e.target.result;
+        entry.imageName = file.name;
+        this.saveTimelineData();
+        this.renderTimeline();
+        this.autoSave();
+        showToast('Imagen agregada', 'success');
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  deleteEntry(id) {
+    if (!confirm('¿Estás seguro de que quieres eliminar esta entrada?')) {
+      return;
+    }
+
+    this.timelineData = this.timelineData.filter(e => e.id !== id);
+    this.saveTimelineData();
+    this.renderTimeline();
+    this.autoSave();
+    showToast('Entrada eliminada', 'success');
+  }
+
+  saveTimelineData() {
+    localStorage.setItem('timeline_data', JSON.stringify(this.timelineData));
+  }
+
+  restoreTimelineDefaults() {
+    if (
+      !confirm(
+        '¿Restaurar timeline a valores por defecto? Se perderán todos los cambios actuales.'
+      )
+    ) {
+      return;
+    }
+
+    localStorage.removeItem('timeline_data');
+    this.loadTimeline();
+    this.autoSave();
+    showToast('Timeline restaurado', 'success');
+  }
+
+  saveAsTimelineDefaults() {
+    const content = {
+      'about-title': document.getElementById('about-title')?.value || 'Conócenos',
+      'about-description':
+        document.getElementById('about-description')?.value || 'Descubre nuestra historia...',
+    };
+
+    localStorage.setItem('default_timeline_data', JSON.stringify(this.timelineData));
+    localStorage.setItem('default_timeline_timestamp', Date.now().toString());
+    localStorage.setItem('default_conocenos_content', JSON.stringify(content));
+
+    showToast('Configuración guardada como predeterminada', 'success');
+  }
+
+  autoSave() {
+    const content = JSON.parse(localStorage.getItem('website_content') || '{}');
+    
+    content['about-title'] = document.getElementById('about-title')?.value || '';
+    content['about-description'] = document.getElementById('about-description')?.value || '';
+    content.timeline_data = this.timelineData;
+
+    localStorage.setItem('website_content', JSON.stringify(content));
+    localStorage.setItem('admin_update_timestamp', Date.now().toString());
+
+    // Trigger event for homepage
+    window.dispatchEvent(
+      new CustomEvent('adminContentChange', { detail: content })
+    );
+  }
+}
+
+// ==================== SISTEMA DE CONTADOR REGRESIVO ====================
+class CountdownSystem {
+  constructor() {
+    this.saveTimeout = null;
+    this.defaultConfig = {
+      enabled: true,
+      title: "Próximo Cursillo Intensivo",
+      titleColor: "#ffffff",
+      subtitle: "¡No te pierdas nuestro próximo cursillo intensivo!",
+      subtitleColor: "#ffffff",
+      backgroundColor: "#dc2626",
+      targetDate: this.getDefaultTargetDate(),
+      timerBackground: "#1e40af",
+      numbersColor: "#ffffff",
+      ctaEnabled: true,
+      ctaText: "Inscribirme Ahora",
+      ctaButtonColor: "#dc2626",
+      ctaTextColor: "#ffffff"
+    };
+  }
+
+  /**
+   * Obtiene una fecha objetivo por defecto (30 días desde hoy)
+   */
+  getDefaultTargetDate() {
+    const date = new Date();
+    date.setDate(date.getDate() + 30);
+    date.setHours(8, 0, 0, 0);
+    return date.toISOString().slice(0, 16);
+  }
+
+  /**
+   * Inicializa el sistema
+   */
+  init() {
+    this.loadConfig();
+    this.bindEvents();
+    this.updateColorLabels();
+  }
+
+  /**
+   * Vincula eventos de los controles
+   */
+  bindEvents() {
+    // Toggle principal para mostrar/ocultar countdown
+    const enableCheckbox = document.getElementById("enable-countdown");
+    const countdownOptions = document.getElementById("countdown-options");
+    
+    if (enableCheckbox) {
+      enableCheckbox.addEventListener("change", (e) => {
+        if (countdownOptions) {
+          countdownOptions.style.display = e.target.checked ? "block" : "none";
+        }
+        this.scheduleAutoSave();
+      });
+    }
+
+    // Toggle para CTA
+    const ctaCheckbox = document.getElementById("enable-cta");
+    const ctaOptions = document.getElementById("cta-options");
+    
+    if (ctaCheckbox) {
+      ctaCheckbox.addEventListener("change", (e) => {
+        if (ctaOptions) {
+          ctaOptions.style.display = e.target.checked ? "block" : "none";
+        }
+        this.scheduleAutoSave();
+      });
+    }
+
+    // Inputs de texto
+    const textInputs = [
+      "counters-title",
+      "counters-subtitle",
+      "cta-text"
+    ];
+    textInputs.forEach(id => {
+      const input = document.getElementById(id);
+      if (input) {
+        input.addEventListener("input", () => this.scheduleAutoSave());
+      }
+    });
+
+    // Inputs de color con labels
+    const colorInputs = [
+      { id: "counters-title-color", labelId: null },
+      { id: "counters-subtitle-color", labelId: null },
+      { id: "counters-background-color", labelId: "background-color-label" },
+      { id: "countdown-timer-background", labelId: "timer-background-label" },
+      { id: "countdown-numbers-color", labelId: "numbers-color-label" },
+      { id: "cta-button-color", labelId: "cta-color-label" },
+      { id: "cta-text-color", labelId: "cta-text-color-label" }
+    ];
+
+    colorInputs.forEach(({ id, labelId }) => {
+      const input = document.getElementById(id);
+      if (input) {
+        input.addEventListener("input", (e) => {
+          if (labelId) {
+            const label = document.getElementById(labelId);
+            if (label) {
+              label.textContent = e.target.value;
+            }
+          }
+          this.scheduleAutoSave();
+        });
+      }
+    });
+
+    // Input de fecha
+    const dateInput = document.getElementById("countdown-date");
+    if (dateInput) {
+      dateInput.addEventListener("change", () => this.scheduleAutoSave());
+    }
+  }
+
+  /**
+   * Actualiza las etiquetas de colores
+   */
+  updateColorLabels() {
+    const colorMappings = [
+      { inputId: "counters-background-color", labelId: "background-color-label" },
+      { inputId: "countdown-timer-background", labelId: "timer-background-label" },
+      { inputId: "countdown-numbers-color", labelId: "numbers-color-label" },
+      { inputId: "cta-button-color", labelId: "cta-color-label" },
+      { inputId: "cta-text-color", labelId: "cta-text-color-label" }
+    ];
+
+    colorMappings.forEach(({ inputId, labelId }) => {
+      const input = document.getElementById(inputId);
+      const label = document.getElementById(labelId);
+      if (input && label) {
+        label.textContent = input.value;
+      }
+    });
+  }
+
+  /**
+   * Carga la configuración guardada o valores por defecto
+   */
+  loadConfig() {
+    const content = JSON.parse(localStorage.getItem("website_content") || "{}");
+    const savedConfig = content.countdown || {};
+    const config = { ...this.defaultConfig, ...savedConfig };
+
+    // Aplicar valores a los controles
+    this.setInputValue("enable-countdown", config.enabled, "checkbox");
+    this.setInputValue("counters-title", config.title);
+    this.setInputValue("counters-title-color", config.titleColor);
+    this.setInputValue("counters-subtitle", config.subtitle);
+    this.setInputValue("counters-subtitle-color", config.subtitleColor);
+    this.setInputValue("counters-background-color", config.backgroundColor);
+    this.setInputValue("countdown-date", config.targetDate);
+    this.setInputValue("countdown-timer-background", config.timerBackground);
+    this.setInputValue("countdown-numbers-color", config.numbersColor);
+    this.setInputValue("enable-cta", config.ctaEnabled, "checkbox");
+    this.setInputValue("cta-text", config.ctaText);
+    this.setInputValue("cta-button-color", config.ctaButtonColor);
+    this.setInputValue("cta-text-color", config.ctaTextColor);
+
+    // Mostrar/ocultar opciones según los toggles
+    const countdownOptions = document.getElementById("countdown-options");
+    if (countdownOptions) {
+      countdownOptions.style.display = config.enabled ? "block" : "none";
+    }
+
+    const ctaOptions = document.getElementById("cta-options");
+    if (ctaOptions) {
+      ctaOptions.style.display = config.ctaEnabled ? "block" : "none";
+    }
+  }
+
+  /**
+   * Establece el valor de un input
+   */
+  setInputValue(id, value, type = "text") {
+    const input = document.getElementById(id);
+    if (!input) return;
+
+    if (type === "checkbox") {
+      input.checked = value;
+    } else {
+      input.value = value || "";
+    }
+  }
+
+  /**
+   * Programa el autoguardado (debounce de 2 segundos)
+   */
+  scheduleAutoSave() {
+    if (this.saveTimeout) {
+      clearTimeout(this.saveTimeout);
+    }
+    this.saveTimeout = setTimeout(() => this.autoSave(), 2000);
+  }
+
+  /**
+   * Guarda automáticamente los cambios
+   */
+  autoSave() {
+    const content = JSON.parse(localStorage.getItem("website_content") || "{}");
+    
+    content.countdown = {
+      enabled: document.getElementById("enable-countdown")?.checked || false,
+      title: document.getElementById("counters-title")?.value || "",
+      titleColor: document.getElementById("counters-title-color")?.value || "#ffffff",
+      subtitle: document.getElementById("counters-subtitle")?.value || "",
+      subtitleColor: document.getElementById("counters-subtitle-color")?.value || "#ffffff",
+      backgroundColor: document.getElementById("counters-background-color")?.value || "#dc2626",
+      targetDate: document.getElementById("countdown-date")?.value || "",
+      timerBackground: document.getElementById("countdown-timer-background")?.value || "#1e40af",
+      numbersColor: document.getElementById("countdown-numbers-color")?.value || "#ffffff",
+      ctaEnabled: document.getElementById("enable-cta")?.checked || false,
+      ctaText: document.getElementById("cta-text")?.value || "",
+      ctaButtonColor: document.getElementById("cta-button-color")?.value || "#dc2626",
+      ctaTextColor: document.getElementById("cta-text-color")?.value || "#ffffff"
+    };
+
+    localStorage.setItem("website_content", JSON.stringify(content));
+    localStorage.setItem("admin_update_timestamp", Date.now().toString());
+
+    // Disparar evento para que homepage se actualice
+    window.dispatchEvent(
+      new CustomEvent("adminContentChange", { detail: content })
+    );
+
+    console.log("✅ Configuración del countdown guardada automáticamente");
+  }
+
+  /**
+   * Restaura la configuración por defecto del sistema
+   */
+  restoreDefaults() {
+    if (!confirm("¿Estás seguro de que deseas restaurar los valores por defecto del sistema?\n\nEsto eliminará tu configuración personalizada guardada.")) {
+      return;
+    }
+
+    // Limpiar configuración guardada
+    const content = JSON.parse(localStorage.getItem("website_content") || "{}");
+    delete content.countdown;
+    delete content.countdown_defaults;
+    localStorage.setItem("website_content", JSON.stringify(content));
+
+    // Recargar con valores por defecto
+    this.loadConfig();
+    this.updateColorLabels();
+
+    // Guardar inmediatamente
+    this.autoSave();
+
+    alert("✅ Configuración restaurada a valores por defecto del sistema");
+  }
+
+  /**
+   * Guarda la configuración actual como valores por defecto personalizados
+   */
+  saveAsDefaults() {
+    if (!confirm("¿Deseas guardar la configuración actual como tus valores por defecto?\n\nEstos valores se usarán cuando restaures la configuración.")) {
+      return;
+    }
+
+    const content = JSON.parse(localStorage.getItem("website_content") || "{}");
+    
+    const currentConfig = {
+      enabled: document.getElementById("enable-countdown")?.checked || false,
+      title: document.getElementById("counters-title")?.value || "",
+      titleColor: document.getElementById("counters-title-color")?.value || "#ffffff",
+      subtitle: document.getElementById("counters-subtitle")?.value || "",
+      subtitleColor: document.getElementById("counters-subtitle-color")?.value || "#ffffff",
+      backgroundColor: document.getElementById("counters-background-color")?.value || "#dc2626",
+      targetDate: document.getElementById("countdown-date")?.value || "",
+      timerBackground: document.getElementById("countdown-timer-background")?.value || "#1e40af",
+      numbersColor: document.getElementById("countdown-numbers-color")?.value || "#ffffff",
+      ctaEnabled: document.getElementById("enable-cta")?.checked || false,
+      ctaText: document.getElementById("cta-text")?.value || "",
+      ctaButtonColor: document.getElementById("cta-button-color")?.value || "#dc2626",
+      ctaTextColor: document.getElementById("cta-text-color")?.value || "#ffffff"
+    };
+
+    content.countdown_defaults = currentConfig;
+    localStorage.setItem("website_content", JSON.stringify(content));
+
+    alert("✅ Configuración guardada como valores por defecto personalizados");
+  }
+
+  /**
+   * Save countdown data (used by global save button)
+   */
+  saveCountdownData() {
+    this.autoSave();
+    console.log('✅ Countdown data saved');
+  }
+}
+
 // ==================== SISTEMA DE INGRESANTES ====================
 class IngresantesSystem {
   constructor() {
@@ -1995,6 +3442,14 @@ class ContactSystem {
       setTimeout(() => messageEl.remove(), 300);
     }, 3000);
   }
+
+  /**
+   * Save all contact data (used by global save button)
+   */
+  saveAllContactData() {
+    this.saveContactData();
+    console.log('✅ All contact data saved');
+  }
 }
 
 // ==================== SISTEMA DE REDES SOCIALES ====================
@@ -2056,6 +3511,14 @@ class SocialMediaSystem {
     } catch (error) {
       console.error('Error saving social media data:', error);
     }
+  }
+
+  /**
+   * Save all data (used by global save button)
+   */
+  saveAllData() {
+    this.saveData();
+    console.log('✅ All social media data saved');
   }
 }
 
@@ -2504,24 +3967,73 @@ class FooterEditorSystem {
     // Read file and convert to base64
     const reader = new FileReader();
     reader.onload = e => {
-      const base64 = e.target.result;
-      const preview = document.getElementById('footer-logo-preview');
-      const uploadZone = document.getElementById('footer-logo-upload-zone');
-      const urlInput = document.getElementById('footer-logo-url');
+      const originalBase64 = e.target.result;
+      
+      // Crear thumbnail optimizado para el logo del footer
+      const img = new Image();
+      img.onload = () => {
+        // Configuración del logo thumbnail
+        const maxCSS = 200; // Tamaño máximo en píxeles CSS
+        const dpr = window.devicePixelRatio || 1;
+        
+        // Calcular dimensiones CSS manteniendo proporción (sin upscale)
+        let cssWidth = img.width;
+        let cssHeight = img.height;
+        
+        if (cssWidth > maxCSS || cssHeight > maxCSS) {
+          const scale = Math.min(maxCSS / cssWidth, maxCSS / cssHeight);
+          cssWidth = Math.floor(cssWidth * scale);
+          cssHeight = Math.floor(cssHeight * scale);
+        }
+        
+        // Dimensiones del canvas con DPR para HiDPI
+        const canvasWidth = cssWidth * dpr;
+        const canvasHeight = cssHeight * dpr;
+        
+        // Crear canvas HiDPI
+        const canvas = document.createElement('canvas');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = canvasWidth;
+        canvas.height = canvasHeight;
+        canvas.style.width = `${cssWidth}px`;
+        canvas.style.height = `${cssHeight}px`;
+        
+        // Configurar alta calidad de rendering
+        ctx.scale(dpr, dpr);
+        ctx.imageSmoothingEnabled = true;
+        ctx.imageSmoothingQuality = 'high';
+        
+        // Dibujar imagen escalada
+        ctx.drawImage(img, 0, 0, cssWidth, cssHeight);
+        
+        // Exportar como WebP optimizado
+        const logoThumbnail = canvas.toDataURL('image/webp', 0.85);
+        
+        // Logging
+        console.log(`🏷️ Footer logo: ${img.width}x${img.height} → ${cssWidth}x${cssHeight} CSS`);
+        console.log(`   └─ Original: ${(originalBase64.length / 1024).toFixed(0)}KB`);
+        console.log(`   └─ Optimizado: ${(logoThumbnail.length / 1024).toFixed(0)}KB (${((1 - logoThumbnail.length / originalBase64.length) * 100).toFixed(0)}% reducción)`);
+        
+        const preview = document.getElementById('footer-logo-preview');
+        const uploadZone = document.getElementById('footer-logo-upload-zone');
+        const urlInput = document.getElementById('footer-logo-url');
 
-      // Show preview
-      preview.src = base64;
-      preview.style.display = 'block';
-      uploadZone.classList.add('has-image');
+        // Show preview con thumbnail
+        preview.src = logoThumbnail;
+        preview.style.display = 'block';
+        uploadZone.classList.add('has-image');
 
-      // Update URL input with base64
-      if (urlInput) {
-        urlInput.value = base64;
-      }
+        // Update URL input con thumbnail optimizado
+        if (urlInput) {
+          urlInput.value = logoThumbnail;
+        }
 
-      // Save
-      this.saveData();
-      this.showMessage('✅ Imagen cargada correctamente', 'success');
+        // Save
+        this.saveData();
+        this.showMessage('✅ Logo optimizado y cargado correctamente', 'success');
+      };
+      img.src = originalBase64;
     };
 
     reader.readAsDataURL(file);
@@ -2569,7 +4081,7 @@ class FooterEditorSystem {
   applyFooterColorPreset(presetName) {
     const presets = {
       dark: { bg: '#1a1a1a', text: '#ffffff' },
-      blue: { bg: '#002147', text: '#ffffff' },
+      blue: { bg: '#000080', text: '#ffffff' }, // Navy blue
       green: { bg: '#065f46', text: '#ffffff' },
       purple: { bg: '#5b21b6', text: '#ffffff' },
       red: { bg: '#991b1b', text: '#ffffff' },
@@ -2602,6 +4114,14 @@ class FooterEditorSystem {
       messageEl.style.opacity = '0';
       setTimeout(() => messageEl.remove(), 300);
     }, 3000);
+  }
+
+  /**
+   * Save footer settings (used by global save button)
+   */
+  saveFooterSettings() {
+    this.saveData();
+    console.log('✅ Footer settings saved');
   }
 }
 
@@ -3089,6 +4609,7 @@ class SimulacrosSystem {
 }
 // ==================== INICIALIZACIÓN ====================
 let authSystem;
+let bannerSystem;
 let ingresantesSystem;
 let tabNavigation;
 let coursesSystem;
@@ -3096,6 +4617,8 @@ let calendarSystem;
 let contactSystem;
 let socialMediaSystem;
 let simulacrosSystem;
+let conocenosSystem;
+let countdownSystem;
 let profesoresSystem;
 let footerSystem;
 let backupRestoreSystem;
@@ -3114,6 +4637,11 @@ document.addEventListener('DOMContentLoaded', () => {
   // Inicializar sistemas
   authSystem = new AuthSystem();
   authSystem.init();
+
+  // Inicializar sistema de banner
+  bannerSystem = new BannerSystem();
+  bannerSystem.init();
+  window.bannerSystem = bannerSystem;
 
   ingresantesSystem = new IngresantesSystem();
   ingresantesSystem.init();
@@ -3152,6 +4680,15 @@ document.addEventListener('DOMContentLoaded', () => {
   simulacrosSystem = new SimulacrosSystem();
   simulacrosSystem.init();
   window.simulacrosSystem = simulacrosSystem;
+  // Inicializar sistema de Conócenos/Timeline
+  conocenosSystem = new ConocenosSystem();
+  conocenosSystem.init();
+  window.conocenosSystem = conocenosSystem;
+
+  // Inicializar sistema de Countdown
+  countdownSystem = new CountdownSystem();
+  countdownSystem.init();
+  window.countdownSystem = countdownSystem;
 
   // Inicializar sistema de profesores
   profesoresSystem = new ProfesoresSystem();
@@ -3177,6 +4714,53 @@ document.addEventListener('DOMContentLoaded', () => {
   passwordChangeSystem = new PasswordChangeSystem();
   passwordChangeSystem.init();
   window.passwordChangeSystem = passwordChangeSystem;
+
+  // Inicializar botón de guardar global
+  const saveAllBtn = document.getElementById('save-all-btn');
+  if (saveAllBtn) {
+    saveAllBtn.addEventListener('click', () => {
+      // Guardar todos los datos
+      if (bannerSystem) bannerSystem.saveBannerData();
+      if (bannerSystem) bannerSystem.saveBannerColors();
+      if (bannerSystem) bannerSystem.updateBannerOverlay();
+      if (ingresantesSystem) ingresantesSystem.saveTitles();
+      if (conocenosSystem) conocenosSystem.autoSave();
+      if (countdownSystem) countdownSystem.saveCountdownData();
+      if (contactSystem) contactSystem.saveAllContactData();
+      if (socialMediaSystem) socialMediaSystem.saveAllData();
+      if (footerSystem) footerSystem.saveFooterSettings();
+      
+      // Mostrar mensaje de éxito
+      showToast('💾 ¡Todos los cambios han sido guardados exitosamente!', 'success');
+      
+      // Update timestamp para notificar cambios
+      localStorage.setItem('admin_update_timestamp', Date.now().toString());
+      
+      console.log('✅ Todos los cambios guardados');
+    });
+  }
+
+  // Crear objeto global adminPanel para compatibilidad con onclick en HTML
+  window.adminPanel = {
+    // Banner functions
+    updateBannerTextColor: (type) => bannerSystem && bannerSystem.updateBannerTextColor(type),
+    updateBannerOverlay: () => bannerSystem && bannerSystem.updateBannerOverlay(),
+    resetBannerOverlay: () => bannerSystem && bannerSystem.resetBannerOverlay(),
+    updateCarouselInterval: (value) => bannerSystem && bannerSystem.updateCarouselInterval(value),
+    resetToDefaultImages: () => bannerSystem && bannerSystem.resetToDefaultImages(),
+    clearLegacyImages: () => bannerSystem && bannerSystem.clearLegacyImages(),
+    setAsDefaultConfiguration: () => bannerSystem && bannerSystem.setAsDefaultConfiguration(),
+    restoreDefaultConfiguration: () => bannerSystem && bannerSystem.restoreDefaultConfiguration(),
+    
+    // Timeline/Conocenos functions
+    addTimelineEntry: () => conocenosSystem && conocenosSystem.addTimelineEntry(),
+    restoreTimelineDefaults: () => conocenosSystem && conocenosSystem.restoreTimelineDefaults(),
+    saveAsTimelineDefaults: () => conocenosSystem && conocenosSystem.saveAsTimelineDefaults(),
+    
+    // Countdown functions
+    restoreCountdownDefaults: () => countdownSystem && countdownSystem.restoreDefaults(),
+    saveAsCountdownDefaults: () => countdownSystem && countdownSystem.saveAsDefaults(),
+  };
 
   console.log('✅ Sistema iniciado correctamente');
 });

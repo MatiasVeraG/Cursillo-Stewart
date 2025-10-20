@@ -184,6 +184,13 @@ nav a:hover {
   align-items: center;
   position: relative;
   overflow: hidden;
+  /* Optimización de rendering para imágenes de alta calidad */
+  image-rendering: auto;
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -webkit-backface-visibility: hidden;
+  -moz-backface-visibility: hidden;
+  backface-visibility: hidden;
 }
 
 .banner::before {
@@ -365,6 +372,8 @@ section {
   max-width: 800px;
   margin: 3rem auto;
   position: relative;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .timeline-container::before {

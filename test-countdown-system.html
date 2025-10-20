@@ -1,0 +1,436 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test Countdown System - Quick Check</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            padding: 40px;
+            max-width: 800px;
+            width: 100%;
+        }
+
+        h1 {
+            color: #2d3748;
+            margin-bottom: 10px;
+            font-size: 28px;
+        }
+
+        .subtitle {
+            color: #718096;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .test-section {
+            background: #f7fafc;
+            border-radius: 12px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid #667eea;
+        }
+
+        .test-section h2 {
+            color: #4a5568;
+            font-size: 18px;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .status {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: auto;
+        }
+
+        .status.ok {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .status.error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        .status.warning {
+            background: #feebc8;
+            color: #7c2d12;
+        }
+
+        .data-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 8px 0;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .data-row:last-child {
+            border-bottom: none;
+        }
+
+        .label {
+            color: #4a5568;
+            font-weight: 500;
+        }
+
+        .value {
+            color: #2d3748;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+        }
+
+        .color-preview {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 4px;
+            border: 2px solid #cbd5e0;
+            vertical-align: middle;
+            margin-left: 8px;
+        }
+
+        button {
+            background: #667eea;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin-right: 10px;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #5a67d8;
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-secondary {
+            background: #718096;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        pre {
+            background: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 8px;
+            overflow-x: auto;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        .icon {
+            font-size: 20px;
+        }
+
+        .actions {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Test Countdown System</h1>
+        <p class="subtitle">Verificación rápida del sistema de countdown editable</p>
+
+        <!-- Estado General -->
+        <div class="test-section">
+            <h2>
+                <span class="icon">📊</span>
+                Estado General
+                <span class="status" id="general-status">Verificando...</span>
+            </h2>
+            <div id="general-info"></div>
+        </div>
+
+        <!-- Configuración del Countdown -->
+        <div class="test-section">
+            <h2>
+                <span class="icon">⏰</span>
+                Configuración del Countdown
+                <span class="status" id="countdown-status">Verificando...</span>
+            </h2>
+            <div id="countdown-info"></div>
+        </div>
+
+        <!-- Archivos del Sistema -->
+        <div class="test-section">
+            <h2>
+                <span class="icon">📁</span>
+                Archivos del Sistema
+                <span class="status" id="files-status">Verificando...</span>
+            </h2>
+            <div id="files-info"></div>
+        </div>
+
+        <!-- JSON Completo -->
+        <div class="test-section">
+            <h2>
+                <span class="icon">💾</span>
+                Datos en localStorage
+            </h2>
+            <pre id="json-output">Cargando...</pre>
+        </div>
+
+        <!-- Acciones -->
+        <div class="actions">
+            <button onclick="runTests()">🔄 Re-verificar Todo</button>
+            <button onclick="clearCountdownData()" class="btn-secondary">🗑️ Limpiar Datos</button>
+            <button onclick="setTestData()">🧪 Datos de Prueba</button>
+            <button onclick="location.href='admin.html'">👉 Ir a Admin</button>
+        </div>
+    </div>
+
+    <script>
+        function runTests() {
+            testGeneralStatus();
+            testCountdownConfig();
+            testFiles();
+            showJSON();
+        }
+
+        function testGeneralStatus() {
+            const statusEl = document.getElementById('general-status');
+            const infoEl = document.getElementById('general-info');
+            
+            let html = '';
+            let hasErrors = false;
+
+            // Verificar localStorage
+            const localStorageAvailable = typeof(Storage) !== "undefined";
+            html += `<div class="data-row">
+                <span class="label">localStorage disponible:</span>
+                <span class="value">${localStorageAvailable ? '✅ Sí' : '❌ No'}</span>
+            </div>`;
+            if (!localStorageAvailable) hasErrors = true;
+
+            // Verificar website_content
+            const content = localStorage.getItem('website_content');
+            html += `<div class="data-row">
+                <span class="label">website_content existe:</span>
+                <span class="value">${content ? '✅ Sí' : '⚠️ No'}</span>
+            </div>`;
+
+            // Verificar countdown data
+            if (content) {
+                const data = JSON.parse(content);
+                const hasCountdown = data.countdown !== undefined;
+                html += `<div class="data-row">
+                    <span class="label">countdown config existe:</span>
+                    <span class="value">${hasCountdown ? '✅ Sí' : '⚠️ No'}</span>
+                </div>`;
+            }
+
+            // Timestamp
+            const timestamp = localStorage.getItem('admin_update_timestamp');
+            if (timestamp) {
+                const date = new Date(parseInt(timestamp));
+                html += `<div class="data-row">
+                    <span class="label">Última actualización:</span>
+                    <span class="value">${date.toLocaleString('es-ES')}</span>
+                </div>`;
+            }
+
+            infoEl.innerHTML = html;
+            statusEl.className = 'status ' + (hasErrors ? 'error' : 'ok');
+            statusEl.textContent = hasErrors ? 'Error' : 'OK';
+        }
+
+        function testCountdownConfig() {
+            const statusEl = document.getElementById('countdown-status');
+            const infoEl = document.getElementById('countdown-info');
+            
+            const content = localStorage.getItem('website_content');
+            if (!content) {
+                infoEl.innerHTML = '<div class="data-row"><span class="value">⚠️ No hay datos guardados</span></div>';
+                statusEl.className = 'status warning';
+                statusEl.textContent = 'Sin datos';
+                return;
+            }
+
+            const data = JSON.parse(content);
+            const countdown = data.countdown || {};
+
+            let html = '';
+            
+            html += `<div class="data-row">
+                <span class="label">Contador habilitado:</span>
+                <span class="value">${countdown.enabled ? '✅ Sí' : '❌ No'}</span>
+            </div>`;
+
+            html += `<div class="data-row">
+                <span class="label">Título:</span>
+                <span class="value">${countdown.title || 'No definido'}</span>
+            </div>`;
+
+            if (countdown.titleColor) {
+                html += `<div class="data-row">
+                    <span class="label">Color título:</span>
+                    <span class="value">${countdown.titleColor}
+                        <span class="color-preview" style="background-color: ${countdown.titleColor}"></span>
+                    </span>
+                </div>`;
+            }
+
+            html += `<div class="data-row">
+                <span class="label">Subtítulo:</span>
+                <span class="value">${countdown.subtitle || 'No definido'}</span>
+            </div>`;
+
+            if (countdown.backgroundColor) {
+                html += `<div class="data-row">
+                    <span class="label">Fondo sección:</span>
+                    <span class="value">${countdown.backgroundColor}
+                        <span class="color-preview" style="background-color: ${countdown.backgroundColor}"></span>
+                    </span>
+                </div>`;
+            }
+
+            if (countdown.targetDate) {
+                const targetDate = new Date(countdown.targetDate);
+                html += `<div class="data-row">
+                    <span class="label">Fecha objetivo:</span>
+                    <span class="value">${targetDate.toLocaleString('es-ES')}</span>
+                </div>`;
+            }
+
+            html += `<div class="data-row">
+                <span class="label">CTA habilitado:</span>
+                <span class="value">${countdown.ctaEnabled ? '✅ Sí' : '❌ No'}</span>
+            </div>`;
+
+            if (countdown.ctaText) {
+                html += `<div class="data-row">
+                    <span class="label">Texto CTA:</span>
+                    <span class="value">${countdown.ctaText}</span>
+                </div>`;
+            }
+
+            infoEl.innerHTML = html;
+            statusEl.className = 'status ok';
+            statusEl.textContent = 'OK';
+        }
+
+        function testFiles() {
+            const statusEl = document.getElementById('files-status');
+            const infoEl = document.getElementById('files-info');
+
+            const files = [
+                { name: 'homepage.countdown.js', required: true },
+                { name: 'admin-final.js', required: true },
+                { name: 'admin.html', required: true },
+                { name: 'index.html', required: true }
+            ];
+
+            let html = '<div class="data-row"><span class="value">ℹ️ Verificación manual requerida - Asegúrate de que los archivos existen</span></div>';
+            
+            files.forEach(file => {
+                html += `<div class="data-row">
+                    <span class="label">${file.name}:</span>
+                    <span class="value">⚠️ Verificar manualmente</span>
+                </div>`;
+            });
+
+            infoEl.innerHTML = html;
+            statusEl.className = 'status warning';
+            statusEl.textContent = 'Manual';
+        }
+
+        function showJSON() {
+            const content = localStorage.getItem('website_content');
+            const output = document.getElementById('json-output');
+            
+            if (!content) {
+                output.textContent = '⚠️ No hay datos en localStorage';
+                return;
+            }
+
+            try {
+                const data = JSON.parse(content);
+                output.textContent = JSON.stringify(data, null, 2);
+            } catch (e) {
+                output.textContent = '❌ Error al parsear JSON: ' + e.message;
+            }
+        }
+
+        function clearCountdownData() {
+            if (!confirm('¿Estás seguro de que quieres eliminar TODOS los datos del countdown?')) {
+                return;
+            }
+
+            const content = JSON.parse(localStorage.getItem('website_content') || '{}');
+            delete content.countdown;
+            delete content.countdown_defaults;
+            localStorage.setItem('website_content', JSON.stringify(content));
+            
+            alert('✅ Datos del countdown eliminados');
+            runTests();
+        }
+
+        function setTestData() {
+            const content = JSON.parse(localStorage.getItem('website_content') || '{}');
+            
+            content.countdown = {
+                enabled: true,
+                title: "🎉 Test Countdown Title",
+                titleColor: "#00ff00",
+                subtitle: "Este es un subtítulo de prueba",
+                subtitleColor: "#ffff00",
+                backgroundColor: "#ff0000",
+                targetDate: "2025-12-31T23:59",
+                timerBackground: "#0000ff",
+                numbersColor: "#ffffff",
+                ctaEnabled: true,
+                ctaText: "¡Click Aquí!",
+                ctaButtonColor: "#ff6600",
+                ctaTextColor: "#000000"
+            };
+
+            localStorage.setItem('website_content', JSON.stringify(content));
+            localStorage.setItem('admin_update_timestamp', Date.now().toString());
+            
+            alert('✅ Datos de prueba configurados!\n\nAbre index.html para ver los cambios.');
+            runTests();
+        }
+
+        // Ejecutar tests al cargar
+        runTests();
+    </script>
+</body>
+</html>
