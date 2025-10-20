@@ -80,6 +80,340 @@ class AuthSystem {
   }
 }
 
+// ==================== SISTEMA DE CONÓCENOS Y TIMELINE ====================
+class ConocenosSystem {
+  constructor() {
+    this.timelineData = [];
+  }
+
+  init() {
+    this.loadTimeline();
+    this.bindEvents();
+  }
+
+  bindEvents() {
+    // Bind inputs for auto-save
+    const titleInput = document.getElementById('about-title');
+    const descInput = document.getElementById('about-description');
+
+    if (titleInput) {
+      titleInput.addEventListener('input', () => this.autoSave());
+    }
+
+    if (descInput) {
+      descInput.addEventListener('input', () => this.autoSave());
+    }
+  }
+
+  loadTimeline() {
+    // Load from localStorage or set defaults
+    const saved = localStorage.getItem('timeline_data');
+    
+    if (saved) {
+      this.timelineData = JSON.parse(saved);
+    } else {
+      // Default timeline
+      this.timelineData = [
+        {
+          id: this.generateId(),
+          year: '2022',
+          title: 'Los Inicios',
+          description:
+            'Todo comenzó cuando cuatro educadores visionarios: Prof. Facundo Rolón, Prof. Alejandro López, Prof. Leandro Volta y Prof. Mirella López fundaron el Cursillo Stewart. Con la determinación de brindar una preparación matemática excepcional, iniciaron este proyecto en un departamento, creando un ambiente íntimo y personalizado para la enseñanza del reconocido libro "Precalculus - Mathematics for Calculus" de James Stewart.',
+          image: 'images/departamento-inicial.jpeg',
+          imageName: 'departamento-inicial.jpeg',
+        },
+        {
+          id: this.generateId(),
+          year: '2023',
+          title: 'Primera Mudanza',
+          description:
+            'Con el crecimiento inicial y el reconocimiento de la calidad educativa, el Cursillo Stewart se mudó a nuevas instalaciones más amplias. Este cambio permitió recibir a más estudiantes y ofrecer mejores condiciones de aprendizaje, manteniendo siempre el enfoque personalizado que caracteriza nuestra metodología de enseñanza.',
+          image: null,
+        },
+        {
+          id: this.generateId(),
+          year: '2025',
+          title: 'Nueva Sede',
+          description:
+            'En nuestro tercer año de funcionamiento, nos establecimos en nuestra sede actual. Esta nueva mudanza representa el crecimiento sostenido y el compromiso continuo con la excelencia educativa. Con instalaciones modernas y un equipo docente ampliado, continuamos preparando a los futuros ingenieros y profesionales del Paraguay.',
+          image: null,
+        },
+        {
+          id: this.generateId(),
+          year: 'Presente',
+          title: 'Consolidación',
+          description:
+            'Hoy, tras tres años de dedicación y múltiples mudanzas que reflejan nuestro crecimiento, el Cursillo Stewart se ha consolidado como una institución de referencia en preparación universitaria. Los fundadores originales, junto con nuevos profesores especializados, continúan comprometidos con la formación académica de calidad, manteniendo vivo el espíritu emprendedor que dio origen a esta iniciativa educativa.',
+          image: null,
+        },
+      ];
+      this.saveTimelineData();
+    }
+
+    // Load titles
+    const titleEl = document.getElementById('about-title');
+    const descEl = document.getElementById('about-description');
+    const savedContent = JSON.parse(localStorage.getItem('website_content') || '{}');
+
+    if (titleEl) {
+      titleEl.value = savedContent['about-title'] || 'Conócenos';
+    }
+
+    if (descEl) {
+      descEl.value =
+        savedContent['about-description'] ||
+        'Descubre la historia y evolución del Cursillo Stewart, desde sus humildes inicios hasta convertirse en el programa de preparación universitaria más reconocido de Paraguay.';
+    }
+
+    this.renderTimeline();
+  }
+
+  generateId() {
+    return 'timeline_' + Date.now() + '_' + Math.random().toString(36).substr(2, 9);
+  }
+
+  renderTimeline() {
+    const container = document.getElementById('timeline-entries');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    // Sort by year
+    const sorted = [...this.timelineData].sort((a, b) => {
+      const yearA = a.year === 'Presente' ? 9999 : parseInt(a.year) || 0;
+      const yearB = b.year === 'Presente' ? 9999 : parseInt(b.year) || 0;
+      return yearA - yearB;
+    });
+
+    sorted.forEach(entry => {
+      const entryEl = this.createTimelineEntry(entry);
+      container.appendChild(entryEl);
+    });
+  }
+
+  createTimelineEntry(entry) {
+    const div = document.createElement('div');
+    div.className = 'timeline-entry';
+    div.dataset.id = entry.id;
+
+    div.innerHTML = `
+      <div class="timeline-entry-header">
+        <input type="text" 
+               class="timeline-year-input" 
+               value="${entry.year}" 
+               placeholder="Año"
+               data-id="${entry.id}">
+        <div class="timeline-controls-group">
+          <button type="button" 
+                  class="btn-delete-timeline" 
+                  data-id="${entry.id}"
+                  title="Eliminar entrada">
+            🗑️
+          </button>
+        </div>
+      </div>
+      
+      <div class="timeline-content">
+        <div class="timeline-text">
+          <div class="form-group">
+            <label>Título del Evento:</label>
+            <input type="text" 
+                   class="timeline-title-input" 
+                   value="${entry.title || ''}" 
+                   placeholder="Ej: Los Inicios, Nueva Sede..."
+                   data-id="${entry.id}">
+          </div>
+          
+          <div class="form-group">
+            <label>Descripción:</label>
+            <textarea class="timeline-description" 
+                      placeholder="Describe qué pasó en este año..."
+                      data-id="${entry.id}">${entry.description || ''}</textarea>
+          </div>
+        </div>
+        
+        <div class="timeline-image-section">
+          <label>Imagen (opcional):</label>
+          <div class="timeline-image-upload ${entry.image ? 'has-image' : ''}" 
+               data-id="${entry.id}">
+            <input type="file" 
+                   id="timeline-file-${entry.id}" 
+                   accept="image/*" 
+                   data-id="${entry.id}"
+                   style="display: none;">
+            
+            ${
+              entry.image
+                ? `
+              <img src="${entry.image}" alt="Timeline image" class="timeline-image-preview">
+              <div class="timeline-image-name">${entry.imageName || 'Imagen cargada'}</div>
+            `
+                : `
+              <div style="color: #64748b; font-size: 2rem; margin-bottom: 0.5rem;">📷</div>
+              <div style="color: #64748b; font-size: 0.875rem;">Haz clic para subir imagen</div>
+              <div class="timeline-upload-text">JPG, PNG, GIF (máx. 5MB)</div>
+            `
+            }
+          </div>
+        </div>
+      </div>
+    `;
+
+    // Bind events
+    const yearInput = div.querySelector('.timeline-year-input');
+    const titleInput = div.querySelector('.timeline-title-input');
+    const descInput = div.querySelector('.timeline-description');
+    const deleteBtn = div.querySelector('.btn-delete-timeline');
+    const imageUpload = div.querySelector('.timeline-image-upload');
+    const fileInput = div.querySelector('input[type="file"]');
+
+    yearInput.addEventListener('change', e => this.updateYear(entry.id, e.target.value));
+    titleInput.addEventListener('change', e => this.updateTitle(entry.id, e.target.value));
+    descInput.addEventListener('change', e => this.updateDescription(entry.id, e.target.value));
+    deleteBtn.addEventListener('click', () => this.deleteEntry(entry.id));
+    imageUpload.addEventListener('click', () => fileInput.click());
+    fileInput.addEventListener('change', e => this.updateImage(entry.id, e.target.files[0]));
+
+    return div;
+  }
+
+  addTimelineEntry() {
+    const newEntry = {
+      id: this.generateId(),
+      year: new Date().getFullYear().toString(),
+      title: 'Nuevo Evento',
+      description: 'Describe qué pasó en este año...',
+      image: null,
+      imageName: null,
+    };
+
+    this.timelineData.push(newEntry);
+    this.saveTimelineData();
+    this.renderTimeline();
+    this.autoSave();
+    showToast('Nueva entrada agregada', 'success');
+  }
+
+  updateYear(id, value) {
+    const entry = this.timelineData.find(e => e.id === id);
+    if (entry) {
+      entry.year = value;
+      this.saveTimelineData();
+      this.renderTimeline(); // Re-render to resort
+      this.autoSave();
+    }
+  }
+
+  updateTitle(id, value) {
+    const entry = this.timelineData.find(e => e.id === id);
+    if (entry) {
+      entry.title = value;
+      this.saveTimelineData();
+      this.autoSave();
+    }
+  }
+
+  updateDescription(id, value) {
+    const entry = this.timelineData.find(e => e.id === id);
+    if (entry) {
+      entry.description = value;
+      this.saveTimelineData();
+      this.autoSave();
+    }
+  }
+
+  updateImage(id, file) {
+    if (!file) return;
+
+    // Validate
+    if (file.size > 5 * 1024 * 1024) {
+      showToast('La imagen no puede superar los 5MB', 'error');
+      return;
+    }
+
+    if (!file.type.startsWith('image/')) {
+      showToast('Solo se permiten archivos de imagen', 'error');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      const entry = this.timelineData.find(en => en.id === id);
+      if (entry) {
+        entry.image = e.target.result;
+        entry.imageName = file.name;
+        this.saveTimelineData();
+        this.renderTimeline();
+        this.autoSave();
+        showToast('Imagen agregada', 'success');
+      }
+    };
+    reader.readAsDataURL(file);
+  }
+
+  deleteEntry(id) {
+    if (!confirm('¿Estás seguro de que quieres eliminar esta entrada?')) {
+      return;
+    }
+
+    this.timelineData = this.timelineData.filter(e => e.id !== id);
+    this.saveTimelineData();
+    this.renderTimeline();
+    this.autoSave();
+    showToast('Entrada eliminada', 'success');
+  }
+
+  saveTimelineData() {
+    localStorage.setItem('timeline_data', JSON.stringify(this.timelineData));
+  }
+
+  restoreTimelineDefaults() {
+    if (
+      !confirm(
+        '¿Restaurar timeline a valores por defecto? Se perderán todos los cambios actuales.'
+      )
+    ) {
+      return;
+    }
+
+    localStorage.removeItem('timeline_data');
+    this.loadTimeline();
+    this.autoSave();
+    showToast('Timeline restaurado', 'success');
+  }
+
+  saveAsTimelineDefaults() {
+    const content = {
+      'about-title': document.getElementById('about-title')?.value || 'Conócenos',
+      'about-description':
+        document.getElementById('about-description')?.value || 'Descubre nuestra historia...',
+    };
+
+    localStorage.setItem('default_timeline_data', JSON.stringify(this.timelineData));
+    localStorage.setItem('default_timeline_timestamp', Date.now().toString());
+    localStorage.setItem('default_conocenos_content', JSON.stringify(content));
+
+    showToast('Configuración guardada como predeterminada', 'success');
+  }
+
+  autoSave() {
+    const content = JSON.parse(localStorage.getItem('website_content') || '{}');
+    
+    content['about-title'] = document.getElementById('about-title')?.value || '';
+    content['about-description'] = document.getElementById('about-description')?.value || '';
+    content.timeline_data = this.timelineData;
+
+    localStorage.setItem('website_content', JSON.stringify(content));
+    localStorage.setItem('admin_update_timestamp', Date.now().toString());
+
+    // Trigger event for homepage
+    window.dispatchEvent(
+      new CustomEvent('adminContentChange', { detail: content })
+    );
+  }
+}
+
 // ==================== SISTEMA DE INGRESANTES ====================
 class IngresantesSystem {
   constructor() {
@@ -2893,6 +3227,7 @@ let coursesSystem;
 let calendarSystem;
 let contactSystem;
 let socialMediaSystem;
+let conocenosSystem;
 let profesoresSystem;
 let footerSystem;
 let backupRestoreSystem;
@@ -2945,6 +3280,11 @@ document.addEventListener('DOMContentLoaded', () => {
   socialMediaSystem.init();
   window.socialMediaSystem = socialMediaSystem;
 
+  // Inicializar sistema de Conócenos/Timeline
+  conocenosSystem = new ConocenosSystem();
+  conocenosSystem.init();
+  window.conocenosSystem = conocenosSystem;
+
   // Inicializar sistema de profesores
   profesoresSystem = new ProfesoresSystem();
   profesoresSystem.init();
@@ -2969,6 +3309,14 @@ document.addEventListener('DOMContentLoaded', () => {
   passwordChangeSystem = new PasswordChangeSystem();
   passwordChangeSystem.init();
   window.passwordChangeSystem = passwordChangeSystem;
+
+  // Crear objeto global adminPanel para compatibilidad con onclick en HTML
+  window.adminPanel = {
+    // Timeline/Conocenos functions
+    addTimelineEntry: () => conocenosSystem && conocenosSystem.addTimelineEntry(),
+    restoreTimelineDefaults: () => conocenosSystem && conocenosSystem.restoreTimelineDefaults(),
+    saveAsTimelineDefaults: () => conocenosSystem && conocenosSystem.saveAsTimelineDefaults(),
+  };
 
   console.log('✅ Sistema iniciado correctamente');
 });

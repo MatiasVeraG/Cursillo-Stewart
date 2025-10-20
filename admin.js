@@ -1392,6 +1392,12 @@ class AdminPanel {
     this.updateSaveButton();
   }
 
+  // Auto-guardar cambios (usado por timeline y otros componentes)
+  autoSave() {
+    // Trigger auto-save content
+    this.autoSaveContent();
+  }
+
   // Actualizar el botón de guardar
   updateSaveButton() {
     const saveBtn = document.getElementById('save-all-btn');
@@ -2438,6 +2444,40 @@ class AdminPanel {
         }
       }
     }
+  }
+
+  // ============= FUNCIONES DE DEFAULTS PARA TIMELINE =============
+
+  restoreTimelineDefaults() {
+    if (confirm('¿Estás seguro de que quieres restaurar el timeline a los valores por defecto? Se perderán todos los cambios actuales.')) {
+      // Eliminar datos actuales del timeline
+      localStorage.removeItem('timeline_data');
+      
+      // Reinicializar con valores por defecto
+      this.initializeTimeline();
+      
+      // Marcar como no guardado
+      this.markAsUnsaved();
+      
+      this.showMessage('Timeline restaurado a valores por defecto', 'success');
+    }
+  }
+
+  saveAsTimelineDefaults() {
+    const timelineData = this.getTimelineData();
+    const currentContent = {
+      'about-title': document.getElementById('about-title')?.value || 'Conócenos',
+      'about-description': document.getElementById('about-description')?.value || 'Descubre nuestra historia...',
+    };
+    
+    // Guardar timeline como predeterminado
+    localStorage.setItem('default_timeline_data', JSON.stringify(timelineData));
+    localStorage.setItem('default_timeline_timestamp', Date.now().toString());
+    
+    // Guardar contenido como predeterminado
+    localStorage.setItem('default_conocenos_content', JSON.stringify(currentContent));
+    
+    this.showMessage('Configuración actual establecida como predeterminada', 'success');
   }
 }
 

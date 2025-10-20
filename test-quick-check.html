@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test - Verificación Rápida</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #1a1a2e;
+            color: #eee;
+        }
+        .status {
+            padding: 10px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { background: #10b981; }
+        .error { background: #ef4444; }
+        button {
+            padding: 10px 20px;
+            margin: 5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background: #3b82f6;
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    <h1>🧪 Verificación Rápida del Sistema</h1>
+    
+    <button onclick="checkConocenos()">Verificar Sistema Conócenos</button>
+    <button onclick="clearData()">Limpiar Datos</button>
+    
+    <div id="results"></div>
+
+    <script>
+        function checkConocenos() {
+            const results = document.getElementById('results');
+            results.innerHTML = '<h3>Verificando...</h3>';
+            
+            let html = '';
+            
+            // Check localStorage
+            const timelineData = localStorage.getItem('timeline_data');
+            if (timelineData) {
+                html += '<div class="status success">✅ Timeline data encontrado</div>';
+                const data = JSON.parse(timelineData);
+                html += `<div class="status success">📊 ${data.length} entradas en timeline</div>`;
+            } else {
+                html += '<div class="status error">❌ No hay timeline data</div>';
+            }
+            
+            const websiteContent = localStorage.getItem('website_content');
+            if (websiteContent) {
+                html += '<div class="status success">✅ Website content encontrado</div>';
+                const content = JSON.parse(websiteContent);
+                if (content['about-title']) {
+                    html += `<div class="status success">📝 Título: "${content['about-title']}"</div>`;
+                }
+            } else {
+                html += '<div class="status error">❌ No hay website content</div>';
+            }
+            
+            results.innerHTML = html;
+        }
+        
+        function clearData() {
+            if (confirm('¿Limpiar todos los datos del sistema?')) {
+                localStorage.removeItem('timeline_data');
+                localStorage.removeItem('website_content');
+                localStorage.removeItem('admin_update_timestamp');
+                alert('Datos limpiados. Recarga admin.html para reinicializar.');
+            }
+        }
+        
+        // Auto-check on load
+        window.addEventListener('load', checkConocenos);
+    </script>
+</body>
+</html>
