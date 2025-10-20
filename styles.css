@@ -365,6 +365,8 @@ section {
   max-width: 800px;
   margin: 3rem auto;
   position: relative;
+  opacity: 1;
+  transition: opacity 0.3s ease;
 }
 
 .timeline-container::before {

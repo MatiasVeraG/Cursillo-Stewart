@@ -1348,6 +1348,28 @@ p {
   gap: 0.75rem;
 }
 
+.timeline-title-input {
+  background: #0f172a;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  color: white;
+  padding: 0.75rem;
+  font-size: 1rem;
+  font-weight: 600;
+  font-family: inherit;
+}
+
+.timeline-title-input:focus {
+  outline: none;
+  border-color: var(--admin-primary);
+  box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1);
+}
+
+.timeline-title-input::placeholder {
+  color: #64748b;
+  font-weight: 400;
+}
+
 .timeline-description {
   background: #0f172a;
   border: 1px solid #475569;
@@ -4240,4 +4262,159 @@ html[data-theme='dark'] .alert-info strong {
 
 .image-upload-zone.has-image .upload-placeholder {
   display: none;
+}
+
+/* ===============================================
+   ESTILOS ESPECÍFICOS PARA ADMIN CONÓCENOS
+   =============================================== */
+
+.admin-actions-bottom {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+  padding: 1.5rem;
+  border-top: 1px solid #334155;
+}
+
+.btn-action {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 8px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-decoration: none;
+  min-width: 180px;
+  justify-content: center;
+}
+
+.btn-action .btn-icon {
+  font-size: 1rem;
+}
+
+.btn-action .btn-text {
+  font-weight: 600;
+}
+
+.btn-reset {
+  background: #475569;
+  color: white;
+  border: 1px solid #64748b;
+}
+
+.btn-reset:hover {
+  background: #64748b;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.btn-save-default {
+  background: var(--admin-success);
+  color: white;
+}
+
+.btn-save-default:hover {
+  background: #047857;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
+}
+
+.btn-action:active {
+  transform: translateY(0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Message Container Styles */
+.message-container {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.message {
+  padding: 1rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  animation: slideIn 0.3s ease-out;
+  max-width: 300px;
+}
+
+.message.success {
+  background: #d1fae5;
+  color: #065f46;
+  border-left: 4px solid #10b981;
+}
+
+.message.error {
+  background: #fee2e2;
+  color: #991b1b;
+  border-left: 4px solid #ef4444;
+}
+
+.message.info {
+  background: #dbeafe;
+  color: #1e40af;
+  border-left: 4px solid #3b82f6;
+}
+
+@keyframes slideIn {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+/* Botón de guardado con estado unsaved */
+.btn-save.unsaved {
+  background: #f59e0b;
+  color: white;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(245, 158, 11, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(245, 158, 11, 0);
+  }
+}
+
+/* Responsive para admin actions */
+@media (max-width: 768px) {
+  .admin-actions-bottom {
+    flex-direction: column;
+    gap: 0.75rem;
+  }
+  
+  .btn-action {
+    width: 100%;
+    min-width: auto;
+  }
+  
+  .message-container {
+    left: 20px;
+    right: 20px;
+  }
+  
+  .message {
+    max-width: none;
+  }
 }

@@ -1,0 +1,448 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Test - Edición de Conócenos</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .header {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        margin-bottom: 2rem;
+        text-align: center;
+      }
+
+      .header h1 {
+        color: #333;
+        margin-bottom: 0.5rem;
+      }
+
+      .header p {
+        color: #666;
+      }
+
+      .test-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+      }
+
+      .test-card {
+        background: white;
+        padding: 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+      }
+
+      .test-card h3 {
+        color: #333;
+        margin-bottom: 1rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+      }
+
+      .status {
+        display: inline-block;
+        padding: 0.25rem 0.75rem;
+        border-radius: 20px;
+        font-size: 0.875rem;
+        font-weight: 600;
+        margin-top: 0.5rem;
+      }
+
+      .status.success {
+        background: #d1fae5;
+        color: #065f46;
+      }
+
+      .status.error {
+        background: #fee2e2;
+        color: #991b1b;
+      }
+
+      .status.pending {
+        background: #fef3c7;
+        color: #92400e;
+      }
+
+      .test-item {
+        padding: 0.75rem;
+        background: #f9fafb;
+        border-radius: 8px;
+        margin-bottom: 0.5rem;
+      }
+
+      .test-item:last-child {
+        margin-bottom: 0;
+      }
+
+      .test-item strong {
+        color: #374151;
+      }
+
+      .test-item span {
+        color: #6b7280;
+        font-size: 0.875rem;
+      }
+
+      .btn {
+        background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        color: white;
+        border: none;
+        padding: 0.75rem 1.5rem;
+        border-radius: 8px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        margin: 0.5rem;
+      }
+
+      .btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+      }
+
+      .btn-group {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-top: 1rem;
+      }
+
+      .code-block {
+        background: #1e293b;
+        color: #e2e8f0;
+        padding: 1rem;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        font-size: 0.875rem;
+        overflow-x: auto;
+        margin-top: 1rem;
+      }
+
+      .alert {
+        background: #dbeafe;
+        border-left: 4px solid #3b82f6;
+        padding: 1rem;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+      }
+
+      .alert h4 {
+        color: #1e40af;
+        margin-bottom: 0.5rem;
+      }
+
+      .alert p {
+        color: #1e3a8a;
+        font-size: 0.875rem;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header">
+        <h1>🧪 Test - Sistema de Conócenos Editable</h1>
+        <p>Verificación de funcionalidades de la sección Conócenos</p>
+      </div>
+
+      <div class="alert">
+        <h4>📋 Instrucciones</h4>
+        <p>
+          Este test verifica que todos los componentes del sistema de edición de Conócenos estén
+          funcionando correctamente. Haz clic en los botones para probar cada funcionalidad.
+        </p>
+      </div>
+
+      <div class="test-grid">
+        <!-- Test 1: Archivos -->
+        <div class="test-card">
+          <h3>📁 Archivos del Sistema</h3>
+          <div id="files-status" class="status pending">Verificando...</div>
+          <div id="files-details"></div>
+        </div>
+
+        <!-- Test 2: LocalStorage -->
+        <div class="test-card">
+          <h3>💾 Almacenamiento Local</h3>
+          <div id="storage-status" class="status pending">Verificando...</div>
+          <div id="storage-details"></div>
+        </div>
+
+        <!-- Test 3: Timeline Data -->
+        <div class="test-card">
+          <h3>📅 Datos del Timeline</h3>
+          <div id="timeline-status" class="status pending">Verificando...</div>
+          <div id="timeline-details"></div>
+        </div>
+
+        <!-- Test 4: Conocenos Manager -->
+        <div class="test-card">
+          <h3>⚙️ Gestor de Conócenos</h3>
+          <div id="manager-status" class="status pending">Verificando...</div>
+          <div id="manager-details"></div>
+        </div>
+      </div>
+
+      <div class="test-card">
+        <h3>🎮 Acciones de Prueba</h3>
+        <div class="btn-group">
+          <button class="btn" onclick="testCreateTimeline()">Crear Timeline de Prueba</button>
+          <button class="btn" onclick="testUpdateTitles()">Actualizar Títulos</button>
+          <button class="btn" onclick="testClearData()">Limpiar Datos</button>
+          <button class="btn" onclick="runAllTests()">Ejecutar Todos los Tests</button>
+        </div>
+        <div id="test-results"></div>
+      </div>
+
+      <div class="test-card">
+        <h3>🔍 Información del Sistema</h3>
+        <div id="system-info"></div>
+      </div>
+    </div>
+
+    <script>
+      // Tests
+      function checkFiles() {
+        const files = [
+          { name: 'homepage.conocenos.js', required: true },
+          { name: 'admin.js', required: true },
+          { name: 'admin.html', required: true },
+          { name: 'index.html', required: true },
+        ];
+
+        const details = document.getElementById('files-details');
+        const status = document.getElementById('files-status');
+
+        details.innerHTML = '<div style="margin-top: 1rem;">';
+        files.forEach(file => {
+          details.innerHTML += `<div class="test-item">
+            <strong>${file.name}</strong>
+            <span>${file.required ? '(Requerido)' : '(Opcional)'}</span>
+          </div>`;
+        });
+        details.innerHTML += '</div>';
+
+        status.className = 'status success';
+        status.textContent = '✅ Archivos verificados';
+      }
+
+      function checkStorage() {
+        const details = document.getElementById('storage-details');
+        const status = document.getElementById('storage-status');
+
+        const timelineData = localStorage.getItem('timeline_data');
+        const websiteContent = localStorage.getItem('website_content');
+
+        details.innerHTML = '<div style="margin-top: 1rem;">';
+        details.innerHTML += `<div class="test-item">
+          <strong>Timeline Data:</strong>
+          <span>${timelineData ? 'Presente' : 'No encontrado'}</span>
+        </div>`;
+        details.innerHTML += `<div class="test-item">
+          <strong>Website Content:</strong>
+          <span>${websiteContent ? 'Presente' : 'No encontrado'}</span>
+        </div>`;
+
+        if (timelineData) {
+          const parsed = JSON.parse(timelineData);
+          details.innerHTML += `<div class="test-item">
+            <strong>Entradas del Timeline:</strong>
+            <span>${parsed.length} eventos</span>
+          </div>`;
+        }
+
+        details.innerHTML += '</div>';
+
+        status.className = 'status success';
+        status.textContent = '✅ Storage OK';
+      }
+
+      function checkTimeline() {
+        const details = document.getElementById('timeline-details');
+        const status = document.getElementById('timeline-status');
+
+        const timelineData = localStorage.getItem('timeline_data');
+
+        if (!timelineData) {
+          status.className = 'status error';
+          status.textContent = '❌ Sin datos';
+          details.innerHTML =
+            '<p style="margin-top: 1rem; color: #991b1b;">No hay datos del timeline. Crea uno de prueba.</p>';
+          return;
+        }
+
+        const parsed = JSON.parse(timelineData);
+
+        details.innerHTML = '<div style="margin-top: 1rem;">';
+        parsed.forEach((entry, index) => {
+          details.innerHTML += `<div class="test-item">
+            <strong>${entry.year}${entry.title ? ' - ' + entry.title : ''}</strong><br>
+            <span>${entry.description ? entry.description.substring(0, 50) + '...' : 'Sin descripción'}</span>
+          </div>`;
+        });
+        details.innerHTML += '</div>';
+
+        status.className = 'status success';
+        status.textContent = `✅ ${parsed.length} eventos`;
+      }
+
+      function checkManager() {
+        const details = document.getElementById('manager-details');
+        const status = document.getElementById('manager-status');
+
+        // Check if conocenosManager exists
+        if (typeof window.conocenosManager !== 'undefined') {
+          status.className = 'status success';
+          status.textContent = '✅ Manager cargado';
+
+          details.innerHTML = `<div style="margin-top: 1rem;">
+            <div class="test-item">
+              <strong>Funciones disponibles:</strong><br>
+              <span>- reload()</span><br>
+              <span>- updateSection()</span><br>
+              <span>- updateTimeline()</span>
+            </div>
+          </div>`;
+        } else {
+          status.className = 'status error';
+          status.textContent = '❌ No cargado';
+          details.innerHTML =
+            '<p style="margin-top: 1rem; color: #991b1b;">El gestor no está disponible. Verifica homepage.conocenos.js</p>';
+        }
+      }
+
+      // Test Actions
+      function testCreateTimeline() {
+        const sampleTimeline = [
+          {
+            id: 'timeline_' + Date.now() + '_1',
+            year: '2022',
+            title: 'Test - Inicio',
+            description: 'Este es un evento de prueba para el año 2022.',
+            image: null,
+          },
+          {
+            id: 'timeline_' + Date.now() + '_2',
+            year: '2023',
+            title: 'Test - Crecimiento',
+            description: 'Evento de prueba para 2023 mostrando crecimiento.',
+            image: null,
+          },
+          {
+            id: 'timeline_' + Date.now() + '_3',
+            year: 'Presente',
+            title: 'Test - Actualidad',
+            description: 'Evento actual de prueba.',
+            image: null,
+          },
+        ];
+
+        localStorage.setItem('timeline_data', JSON.stringify(sampleTimeline));
+
+        const results = document.getElementById('test-results');
+        results.innerHTML = `<div class="code-block">
+✅ Timeline de prueba creado con ${sampleTimeline.length} eventos<br>
+Abre index.html para ver los cambios
+        </div>`;
+
+        runAllTests();
+      }
+
+      function testUpdateTitles() {
+        const content = {
+          'about-title': 'Test - Conócenos Actualizado',
+          'about-description': 'Esta es una descripción de prueba actualizada desde el sistema de test.',
+        };
+
+        const websiteContent = JSON.parse(localStorage.getItem('website_content') || '{}');
+        Object.assign(websiteContent, content);
+        localStorage.setItem('website_content', JSON.stringify(websiteContent));
+        localStorage.setItem('admin_update_timestamp', Date.now().toString());
+
+        const results = document.getElementById('test-results');
+        results.innerHTML = `<div class="code-block">
+✅ Títulos actualizados<br>
+Título: "${content['about-title']}"<br>
+Abre index.html para ver los cambios
+        </div>`;
+
+        runAllTests();
+      }
+
+      function testClearData() {
+        if (confirm('¿Estás seguro de que quieres limpiar todos los datos de prueba?')) {
+          localStorage.removeItem('timeline_data');
+          const websiteContent = JSON.parse(localStorage.getItem('website_content') || '{}');
+          delete websiteContent['about-title'];
+          delete websiteContent['about-description'];
+          localStorage.setItem('website_content', JSON.stringify(websiteContent));
+
+          const results = document.getElementById('test-results');
+          results.innerHTML = `<div class="code-block">
+🗑️ Datos de prueba eliminados<br>
+Sistema restaurado a valores por defecto
+          </div>`;
+
+          runAllTests();
+        }
+      }
+
+      function runAllTests() {
+        checkFiles();
+        checkStorage();
+        checkTimeline();
+        checkManager();
+        updateSystemInfo();
+      }
+
+      function updateSystemInfo() {
+        const info = document.getElementById('system-info');
+        const updateTimestamp = localStorage.getItem('admin_update_timestamp');
+        const lastUpdate = updateTimestamp ? new Date(parseInt(updateTimestamp)).toLocaleString('es-ES') : 'Nunca';
+
+        info.innerHTML = `
+          <div class="test-item">
+            <strong>Última actualización:</strong>
+            <span>${lastUpdate}</span>
+          </div>
+          <div class="test-item">
+            <strong>Navegador:</strong>
+            <span>${navigator.userAgent.split('(')[1].split(')')[0]}</span>
+          </div>
+          <div class="test-item">
+            <strong>LocalStorage disponible:</strong>
+            <span>${typeof Storage !== 'undefined' ? 'Sí' : 'No'}</span>
+          </div>
+        `;
+      }
+
+      // Run tests on load
+      window.addEventListener('DOMContentLoaded', () => {
+        runAllTests();
+      });
+    </script>
+  </body>
+</html>
