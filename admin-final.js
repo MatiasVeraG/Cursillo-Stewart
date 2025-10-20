@@ -414,6 +414,292 @@ class ConocenosSystem {
   }
 }
 
+// ==================== SISTEMA DE CONTADOR REGRESIVO ====================
+class CountdownSystem {
+  constructor() {
+    this.saveTimeout = null;
+    this.defaultConfig = {
+      enabled: true,
+      title: "Próximo Cursillo Intensivo",
+      titleColor: "#ffffff",
+      subtitle: "¡No te pierdas nuestro próximo cursillo intensivo!",
+      subtitleColor: "#ffffff",
+      backgroundColor: "#dc2626",
+      targetDate: this.getDefaultTargetDate(),
+      timerBackground: "#1e40af",
+      numbersColor: "#ffffff",
+      ctaEnabled: true,
+      ctaText: "Inscribirme Ahora",
+      ctaButtonColor: "#dc2626",
+      ctaTextColor: "#ffffff"
+    };
+  }
+
+  /**
+   * Obtiene una fecha objetivo por defecto (30 días desde hoy)
+   */
+  getDefaultTargetDate() {
+    const date = new Date();
+    date.setDate(date.getDate() + 30);
+    date.setHours(8, 0, 0, 0);
+    return date.toISOString().slice(0, 16);
+  }
+
+  /**
+   * Inicializa el sistema
+   */
+  init() {
+    this.loadConfig();
+    this.bindEvents();
+    this.updateColorLabels();
+  }
+
+  /**
+   * Vincula eventos de los controles
+   */
+  bindEvents() {
+    // Toggle principal para mostrar/ocultar countdown
+    const enableCheckbox = document.getElementById("enable-countdown");
+    const countdownOptions = document.getElementById("countdown-options");
+    
+    if (enableCheckbox) {
+      enableCheckbox.addEventListener("change", (e) => {
+        if (countdownOptions) {
+          countdownOptions.style.display = e.target.checked ? "block" : "none";
+        }
+        this.scheduleAutoSave();
+      });
+    }
+
+    // Toggle para CTA
+    const ctaCheckbox = document.getElementById("enable-cta");
+    const ctaOptions = document.getElementById("cta-options");
+    
+    if (ctaCheckbox) {
+      ctaCheckbox.addEventListener("change", (e) => {
+        if (ctaOptions) {
+          ctaOptions.style.display = e.target.checked ? "block" : "none";
+        }
+        this.scheduleAutoSave();
+      });
+    }
+
+    // Inputs de texto
+    const textInputs = [
+      "counters-title",
+      "counters-subtitle",
+      "cta-text"
+    ];
+    textInputs.forEach(id => {
+      const input = document.getElementById(id);
+      if (input) {
+        input.addEventListener("input", () => this.scheduleAutoSave());
+      }
+    });
+
+    // Inputs de color con labels
+    const colorInputs = [
+      { id: "counters-title-color", labelId: null },
+      { id: "counters-subtitle-color", labelId: null },
+      { id: "counters-background-color", labelId: "background-color-label" },
+      { id: "countdown-timer-background", labelId: "timer-background-label" },
+      { id: "countdown-numbers-color", labelId: "numbers-color-label" },
+      { id: "cta-button-color", labelId: "cta-color-label" },
+      { id: "cta-text-color", labelId: "cta-text-color-label" }
+    ];
+
+    colorInputs.forEach(({ id, labelId }) => {
+      const input = document.getElementById(id);
+      if (input) {
+        input.addEventListener("input", (e) => {
+          if (labelId) {
+            const label = document.getElementById(labelId);
+            if (label) {
+              label.textContent = e.target.value;
+            }
+          }
+          this.scheduleAutoSave();
+        });
+      }
+    });
+
+    // Input de fecha
+    const dateInput = document.getElementById("countdown-date");
+    if (dateInput) {
+      dateInput.addEventListener("change", () => this.scheduleAutoSave());
+    }
+  }
+
+  /**
+   * Actualiza las etiquetas de colores
+   */
+  updateColorLabels() {
+    const colorMappings = [
+      { inputId: "counters-background-color", labelId: "background-color-label" },
+      { inputId: "countdown-timer-background", labelId: "timer-background-label" },
+      { inputId: "countdown-numbers-color", labelId: "numbers-color-label" },
+      { inputId: "cta-button-color", labelId: "cta-color-label" },
+      { inputId: "cta-text-color", labelId: "cta-text-color-label" }
+    ];
+
+    colorMappings.forEach(({ inputId, labelId }) => {
+      const input = document.getElementById(inputId);
+      const label = document.getElementById(labelId);
+      if (input && label) {
+        label.textContent = input.value;
+      }
+    });
+  }
+
+  /**
+   * Carga la configuración guardada o valores por defecto
+   */
+  loadConfig() {
+    const content = JSON.parse(localStorage.getItem("website_content") || "{}");
+    const savedConfig = content.countdown || {};
+    const config = { ...this.defaultConfig, ...savedConfig };
+
+    // Aplicar valores a los controles
+    this.setInputValue("enable-countdown", config.enabled, "checkbox");
+    this.setInputValue("counters-title", config.title);
+    this.setInputValue("counters-title-color", config.titleColor);
+    this.setInputValue("counters-subtitle", config.subtitle);
+    this.setInputValue("counters-subtitle-color", config.subtitleColor);
+    this.setInputValue("counters-background-color", config.backgroundColor);
+    this.setInputValue("countdown-date", config.targetDate);
+    this.setInputValue("countdown-timer-background", config.timerBackground);
+    this.setInputValue("countdown-numbers-color", config.numbersColor);
+    this.setInputValue("enable-cta", config.ctaEnabled, "checkbox");
+    this.setInputValue("cta-text", config.ctaText);
+    this.setInputValue("cta-button-color", config.ctaButtonColor);
+    this.setInputValue("cta-text-color", config.ctaTextColor);
+
+    // Mostrar/ocultar opciones según los toggles
+    const countdownOptions = document.getElementById("countdown-options");
+    if (countdownOptions) {
+      countdownOptions.style.display = config.enabled ? "block" : "none";
+    }
+
+    const ctaOptions = document.getElementById("cta-options");
+    if (ctaOptions) {
+      ctaOptions.style.display = config.ctaEnabled ? "block" : "none";
+    }
+  }
+
+  /**
+   * Establece el valor de un input
+   */
+  setInputValue(id, value, type = "text") {
+    const input = document.getElementById(id);
+    if (!input) return;
+
+    if (type === "checkbox") {
+      input.checked = value;
+    } else {
+      input.value = value || "";
+    }
+  }
+
+  /**
+   * Programa el autoguardado (debounce de 2 segundos)
+   */
+  scheduleAutoSave() {
+    if (this.saveTimeout) {
+      clearTimeout(this.saveTimeout);
+    }
+    this.saveTimeout = setTimeout(() => this.autoSave(), 2000);
+  }
+
+  /**
+   * Guarda automáticamente los cambios
+   */
+  autoSave() {
+    const content = JSON.parse(localStorage.getItem("website_content") || "{}");
+    
+    content.countdown = {
+      enabled: document.getElementById("enable-countdown")?.checked || false,
+      title: document.getElementById("counters-title")?.value || "",
+      titleColor: document.getElementById("counters-title-color")?.value || "#ffffff",
+      subtitle: document.getElementById("counters-subtitle")?.value || "",
+      subtitleColor: document.getElementById("counters-subtitle-color")?.value || "#ffffff",
+      backgroundColor: document.getElementById("counters-background-color")?.value || "#dc2626",
+      targetDate: document.getElementById("countdown-date")?.value || "",
+      timerBackground: document.getElementById("countdown-timer-background")?.value || "#1e40af",
+      numbersColor: document.getElementById("countdown-numbers-color")?.value || "#ffffff",
+      ctaEnabled: document.getElementById("enable-cta")?.checked || false,
+      ctaText: document.getElementById("cta-text")?.value || "",
+      ctaButtonColor: document.getElementById("cta-button-color")?.value || "#dc2626",
+      ctaTextColor: document.getElementById("cta-text-color")?.value || "#ffffff"
+    };
+
+    localStorage.setItem("website_content", JSON.stringify(content));
+    localStorage.setItem("admin_update_timestamp", Date.now().toString());
+
+    // Disparar evento para que homepage se actualice
+    window.dispatchEvent(
+      new CustomEvent("adminContentChange", { detail: content })
+    );
+
+    console.log("✅ Configuración del countdown guardada automáticamente");
+  }
+
+  /**
+   * Restaura la configuración por defecto del sistema
+   */
+  restoreDefaults() {
+    if (!confirm("¿Estás seguro de que deseas restaurar los valores por defecto del sistema?\n\nEsto eliminará tu configuración personalizada guardada.")) {
+      return;
+    }
+
+    // Limpiar configuración guardada
+    const content = JSON.parse(localStorage.getItem("website_content") || "{}");
+    delete content.countdown;
+    delete content.countdown_defaults;
+    localStorage.setItem("website_content", JSON.stringify(content));
+
+    // Recargar con valores por defecto
+    this.loadConfig();
+    this.updateColorLabels();
+
+    // Guardar inmediatamente
+    this.autoSave();
+
+    alert("✅ Configuración restaurada a valores por defecto del sistema");
+  }
+
+  /**
+   * Guarda la configuración actual como valores por defecto personalizados
+   */
+  saveAsDefaults() {
+    if (!confirm("¿Deseas guardar la configuración actual como tus valores por defecto?\n\nEstos valores se usarán cuando restaures la configuración.")) {
+      return;
+    }
+
+    const content = JSON.parse(localStorage.getItem("website_content") || "{}");
+    
+    const currentConfig = {
+      enabled: document.getElementById("enable-countdown")?.checked || false,
+      title: document.getElementById("counters-title")?.value || "",
+      titleColor: document.getElementById("counters-title-color")?.value || "#ffffff",
+      subtitle: document.getElementById("counters-subtitle")?.value || "",
+      subtitleColor: document.getElementById("counters-subtitle-color")?.value || "#ffffff",
+      backgroundColor: document.getElementById("counters-background-color")?.value || "#dc2626",
+      targetDate: document.getElementById("countdown-date")?.value || "",
+      timerBackground: document.getElementById("countdown-timer-background")?.value || "#1e40af",
+      numbersColor: document.getElementById("countdown-numbers-color")?.value || "#ffffff",
+      ctaEnabled: document.getElementById("enable-cta")?.checked || false,
+      ctaText: document.getElementById("cta-text")?.value || "",
+      ctaButtonColor: document.getElementById("cta-button-color")?.value || "#dc2626",
+      ctaTextColor: document.getElementById("cta-text-color")?.value || "#ffffff"
+    };
+
+    content.countdown_defaults = currentConfig;
+    localStorage.setItem("website_content", JSON.stringify(content));
+
+    alert("✅ Configuración guardada como valores por defecto personalizados");
+  }
+}
+
 // ==================== SISTEMA DE INGRESANTES ====================
 class IngresantesSystem {
   constructor() {
@@ -3228,6 +3514,7 @@ let calendarSystem;
 let contactSystem;
 let socialMediaSystem;
 let conocenosSystem;
+let countdownSystem;
 let profesoresSystem;
 let footerSystem;
 let backupRestoreSystem;
@@ -3285,6 +3572,11 @@ document.addEventListener('DOMContentLoaded', () => {
   conocenosSystem.init();
   window.conocenosSystem = conocenosSystem;
 
+  // Inicializar sistema de Countdown
+  countdownSystem = new CountdownSystem();
+  countdownSystem.init();
+  window.countdownSystem = countdownSystem;
+
   // Inicializar sistema de profesores
   profesoresSystem = new ProfesoresSystem();
   profesoresSystem.init();
@@ -3316,6 +3608,10 @@ document.addEventListener('DOMContentLoaded', () => {
     addTimelineEntry: () => conocenosSystem && conocenosSystem.addTimelineEntry(),
     restoreTimelineDefaults: () => conocenosSystem && conocenosSystem.restoreTimelineDefaults(),
     saveAsTimelineDefaults: () => conocenosSystem && conocenosSystem.saveAsTimelineDefaults(),
+    
+    // Countdown functions
+    restoreCountdownDefaults: () => countdownSystem && countdownSystem.restoreDefaults(),
+    saveAsCountdownDefaults: () => countdownSystem && countdownSystem.saveAsDefaults(),
   };
 
   console.log('✅ Sistema iniciado correctamente');
