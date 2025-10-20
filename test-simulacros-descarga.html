@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agregar Simulacro de Prueba</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        button {
+            padding: 12px 24px;
+            background: #2563eb;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 16px;
+            margin: 10px 5px;
+        }
+        button:hover {
+            background: #1d4ed8;
+        }
+        .success {
+            background: #10b981;
+            padding: 15px;
+            border-radius: 6px;
+            color: white;
+            margin: 20px 0;
+            display: none;
+        }
+        .info {
+            background: #eff6ff;
+            padding: 15px;
+            border-radius: 6px;
+            border-left: 4px solid #2563eb;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🧪 Prueba de Simulacros</h1>
+        
+        <div class="info">
+            <strong>📝 Instrucciones:</strong><br>
+            1. Click en "Agregar Simulacro de Prueba"<br>
+            2. Luego ve a <a href="simulacros.html" target="_blank">simulacros.html</a><br>
+            3. Verifica que el botón de descarga funcione
+        </div>
+
+        <button onclick="agregarSimulacro()">➕ Agregar Simulacro de Prueba</button>
+        <button onclick="verDatos()">👁️ Ver Datos Guardados</button>
+        <button onclick="limpiarDatos()">🗑️ Limpiar Todos los Datos</button>
+
+        <div id="success" class="success"></div>
+
+        <div id="output" style="margin-top: 20px;"></div>
+    </div>
+
+    <script>
+        function agregarSimulacro() {
+            const simulacros = [
+                {
+                    nombre: "Simulacro de Matemática 2024",
+                    nombreArchivo: "simulacro-prueba.pdf",
+                    rutaArchivo: "documents/simulacros/simulacro-prueba.pdf"
+                },
+                {
+                    nombre: "Simulacro de Física 2024",
+                    nombreArchivo: "simulacro-prueba.pdf",
+                    rutaArchivo: "documents/simulacros/simulacro-prueba.pdf"
+                },
+                {
+                    nombre: "Simulacro de Química 2024",
+                    nombreArchivo: "simulacro-prueba.pdf",
+                    rutaArchivo: "documents/simulacros/simulacro-prueba.pdf"
+                }
+            ];
+
+            localStorage.setItem('simulacros_data', JSON.stringify(simulacros));
+            
+            const titles = {
+                title: "SIMULACROS DE PRÁCTICA",
+                subtitle: "Descarga material de preparación para tu examen de ingreso"
+            };
+            localStorage.setItem('simulacros_titles', JSON.stringify(titles));
+
+            mostrarExito('✅ Se agregaron 3 simulacros de prueba. <a href="simulacros.html" target="_blank" style="color: white; text-decoration: underline;">Ver página de simulacros</a>');
+        }
+
+        function verDatos() {
+            const data = localStorage.getItem('simulacros_data');
+            const titles = localStorage.getItem('simulacros_titles');
+            
+            const output = document.getElementById('output');
+            
+            if (!data) {
+                output.innerHTML = '<p style="color: #666;">No hay datos guardados</p>';
+                return;
+            }
+
+            const simulacros = JSON.parse(data);
+            const titlesObj = titles ? JSON.parse(titles) : null;
+
+            output.innerHTML = `
+                <h3>📊 Datos Guardados:</h3>
+                ${titlesObj ? `
+                    <p><strong>Título:</strong> ${titlesObj.title}</p>
+                    <p><strong>Subtítulo:</strong> ${titlesObj.subtitle}</p>
+                ` : ''}
+                <p><strong>Total de simulacros:</strong> ${simulacros.length}</p>
+                <hr>
+                <h4>Lista:</h4>
+                <ul>
+                    ${simulacros.map((s, i) => `
+                        <li>
+                            <strong>${i + 1}. ${s.nombre}</strong><br>
+                            Archivo: ${s.nombreArchivo}<br>
+                            Ruta: ${s.rutaArchivo}
+                        </li>
+                    `).join('')}
+                </ul>
+                <pre style="background: #f5f5f5; padding: 10px; border-radius: 4px; overflow-x: auto;">${JSON.stringify(simulacros, null, 2)}</pre>
+            `;
+        }
+
+        function limpiarDatos() {
+            if (confirm('¿Estás seguro de que deseas eliminar todos los simulacros?')) {
+                localStorage.removeItem('simulacros_data');
+                localStorage.removeItem('simulacros_titles');
+                mostrarExito('🗑️ Todos los datos fueron eliminados');
+                document.getElementById('output').innerHTML = '';
+            }
+        }
+
+        function mostrarExito(mensaje) {
+            const div = document.getElementById('success');
+            div.innerHTML = mensaje;
+            div.style.display = 'block';
+            
+            setTimeout(() => {
+                div.style.display = 'none';
+            }, 5000);
+        }
+
+        // Mostrar datos al cargar
+        window.addEventListener('DOMContentLoaded', verDatos);
+    </script>
+</body>
+</html>

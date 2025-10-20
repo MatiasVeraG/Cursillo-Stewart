@@ -1,7 +1,15 @@
 # Cursillo Stewart - Sitio Web Oficial
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-1.0.0-blue.svg)](https://github.com/MatiasVeraG/Cursillo-Stewart)
+[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/MatiasVeraG/Cursillo-Stewart)
+[![Developer](https://img.shields.io/badge/Developer-Mat%C3%ADas%20Vera-blue.svg)](https://github.com/MatiasVeraG)
+
+## 👨‍💻 Desarrollador
+
+**Matías Vera**  
+[![GitHub](https://img.shields.io/badge/GitHub-MatiasVeraG-181717?logo=github)](https://github.com/MatiasVeraG)
+
+---
 
 ## 📖 Descripción
 
@@ -126,9 +134,23 @@ Usamos [Conventional Commits](https://conventionalcommits.org/):
 
 Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
 
-## 👥 Autores
+## �‍💻 Autor
 
-- **Matias Vera G** - *Desarrollo inicial* - [@MatiasVeraG](https://github.com/MatiasVeraG)
+<div align="center">
+  <img src="https://github.com/MatiasVeraG.png" width="100" style="border-radius: 50%;" />
+  
+  ### Matías Vera
+  
+  **Desarrollador Full Stack**
+  
+  [![GitHub](https://img.shields.io/badge/GitHub-MatiasVeraG-181717?style=for-the-badge&logo=github)](https://github.com/MatiasVeraG)
+  
+  *Desarrollo completo del sitio web y panel de administración*
+  
+  © 2025 - Todos los derechos reservados
+</div>
+
+---
 
 ## 📞 Contacto
 

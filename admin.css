@@ -4405,6 +4405,90 @@ html[data-theme='dark'] .alert-info strong {
   display: none;
 }
 
+/* ===== SIMULACROS SYSTEM STYLES ===== */
+.simulacros-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 1.5rem;
+}
+
+.simulacro-card {
+  background: var(--admin-light);
+  border: 1px solid var(--admin-border);
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: var(--admin-shadow);
+  transition: all 0.3s ease;
+}
+
+.simulacro-card:hover {
+  transform: translateY(-2px);
+  box-shadow: var(--admin-shadow-lg);
+}
+
+.simulacro-icon {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.simulacro-info {
+  margin-bottom: 1rem;
+}
+
+.simulacro-info h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--admin-text);
+  margin-bottom: 0.5rem;
+}
+
+.simulacro-filename {
+  font-size: 0.85rem;
+  color: var(--admin-text-light);
+  word-break: break-all;
+}
+
+.simulacro-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+}
+
+.btn-delete {
+  padding: 0.5rem 1rem;
+  background: var(--admin-danger);
+  color: white;
+  border: none;
+  border-radius: 6px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 500;
+}
+
+.btn-delete:hover {
+  background: #b91c1c;
+  transform: scale(1.05);
+}
+
+.empty-message {
+  text-align: center;
+  padding: 3rem 2rem;
+  color: var(--admin-text-light);
+  font-size: 1.1rem;
+}
+
+@media (max-width: 1024px) {
+  .simulacros-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 640px) {
+  .simulacros-grid {
+    grid-template-columns: 1fr;
 /* ===============================================
    ESTILOS ESPECÍFICOS PARA ADMIN CONÓCENOS
    =============================================== */
