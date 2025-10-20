@@ -3,9 +3,14 @@
   ╔═══════════════════════════════════════════════════════════════╗
   ║                    CURSILLO STEWART - UPTP                     ║
   ║                                                                ║
-  ║  Desarrollado por: Matías Vera                                 ║
+  ║  Desarrollado por: Matías Vera G                               ║
   ║  GitHub: https://github.com/MatiasVeraG                        ║
   ║  Año: 2025                                                     ║
+  ║                                                                ║
+  ║  Créditos:                                                     ║
+  ║  - Diseño y Desarrollo: Matías Vera G                          ║
+  ║  - Animaciones y Optimización: Matías Vera G                   ║
+  ║  - Sistema de Gestión: Matías Vera G                           ║
   ║                                                                ║
   ║  © 2025 Todos los derechos reservados                          ║
   ╚═══════════════════════════════════════════════════════════════╝
@@ -110,31 +115,33 @@
   </head>
   <body>
     <!-- Header -->
-    <header>
+    <header class="navbar site-header">
       <div class="container">
         <div class="header-content">
           <!-- Logo -->
-          <div class="logo">
+          <div class="logo reveal fade-in">
             <img
               src="images/logo-cursillo-stewart.png"
               alt="Cursillo Stewart Logo"
               class="logo-image"
+              loading="lazy"
+              decoding="async"
             />
           </div>
 
           <!-- Navigation Menu -->
           <nav>
-            <a href="#inicio">Inicio</a>
-            <a href="#conocenos">Conócenos</a>
-            <a href="#ingresantes">Ingresantes</a>
-            <a href="#programa">Cursos</a>
+            <a href="#inicio" role="button" aria-label="Ir a Inicio">Inicio</a>
+            <a href="#conocenos" role="button" aria-label="Ir a Conócenos">Conócenos</a>
+            <a href="#ingresantes" role="button" aria-label="Ir a Ingresantes">Ingresantes</a>
+            <a href="#programa" role="button" aria-label="Ir a Cursos">Cursos</a>
             <a href="simulacros.html">Simulacros</a>
             <a href="profesores.html">Profesores</a>
-            <a href="#contacto">¡Contáctanos!</a>
+            <a href="#contacto" role="button" aria-label="Ir a Contacto">¡Contáctanos!</a>
           </nav>
 
           <!-- Mobile Menu Button -->
-          <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+          <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Abrir menú de navegación">☰</button>
         </div>
 
         <!-- Mobile Menu -->
@@ -175,7 +182,7 @@
     <!-- Sección Conócenos -->
     <section id="conocenos" class="bg-gray">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal fade-up">
           <h2>Conócenos</h2>
           <p>
             Descubre la historia y evolución del Cursillo Stewart, desde sus humildes inicios hasta
@@ -202,6 +209,9 @@
                 <img
                   src="images/departamento-inicial.jpeg"
                   alt="Departamento inicial del Cursillo Stewart"
+                  class="reveal fade-in"
+                  loading="lazy"
+                  decoding="async"
                   style="
                     width: 100%;
                     max-width: 400px;
@@ -272,7 +282,7 @@
     <!-- Contador Regresivo -->
     <section class="countdown-section">
       <div class="container">
-        <div class="countdown-header">
+        <div class="countdown-header reveal fade-up">
           <h2>Próximo Cursillo Intensivo</h2>
           <p>¡No te pierdas nuestro próximo cursillo intensivo!</p>
           <div class="countdown-date">
@@ -280,7 +290,7 @@
           </div>
         </div>
 
-        <div class="countdown-timer" id="countdown">
+        <div class="countdown-timer reveal zoom-in" id="countdown">
           <div class="countdown-item">
             <div class="countdown-number" id="days">0</div>
             <div class="countdown-label">Días</div>
@@ -312,23 +322,23 @@
     <!-- Nuestros Ingresantes -->
     <section id="ingresantes" class="bg-gray">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal fade-up">
           <h2>🎓 Nuestros Ingresantes</h2>
           <p>Conoce a los estudiantes que han confiado en nosotros para su preparación.</p>
         </div>
 
         <!-- Tabs dinámicos para EXAMEN-AÑO -->
-        <div class="years-tabs" id="dynamicTabs">
+        <div class="years-tabs reveal fade-up" id="dynamicTabs">
           <!-- Los botones se cargarán dinámicamente desde la API -->
         </div>
 
         <!-- Contenido por examen-año -->
-        <div class="years-content" id="dynamicContent">
+        <div class="years-content reveal fade-in" id="dynamicContent">
           <!-- El contenido se cargará dinámicamente -->
         </div>
 
         <!-- Estadísticas dinámicas -->
-        <div class="stats" id="dynamicStats">
+        <div class="stats stagger reveal fade-up" id="dynamicStats">
           <!-- Las estadísticas se calcularán dinámicamente -->
         </div>
       </div>
@@ -338,12 +348,12 @@
     <!-- Programa -->
     <section id="programa">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal fade-up">
           <h2>Cursos</h2>
         </div>
 
         <!-- Toggle Navigation -->
-        <div class="course-toggle-nav">
+        <div class="course-toggle-nav reveal fade-up">
           <button class="toggle-btn active" data-course="intensivo">Intensivo</button>
           <button class="toggle-btn" data-course="extensivo">Extensivo</button>
           <button class="toggle-btn" data-course="mofa">MOFA</button>
@@ -352,9 +362,9 @@
         <!-- Course Content Containers -->
         <!-- Intensivo Course -->
         <div id="intensivo-content" class="course-content active">
-          <div class="schedule-grid">
+          <div class="schedule-grid stagger">
             <!-- Grupo 1: Turno Mañana -->
-            <div class="schedule-card presencial">
+            <div class="schedule-card presencial reveal fade-up">
               <div class="schedule-header">
                 <h3>Grupo 1 - Turno Mañana</h3>
                 <span class="schedule-type presencial">Semanal Presencial</span>
@@ -369,7 +379,7 @@
             </div>
 
             <!-- Grupo 2: Turno Tarde -->
-            <div class="schedule-card presencial">
+            <div class="schedule-card presencial reveal fade-up">
               <div class="schedule-header">
                 <h3>Grupo 2 - Turno Tarde</h3>
                 <span class="schedule-type presencial">Semanal Presencial</span>
@@ -384,7 +394,7 @@
             </div>
 
             <!-- Grupo 3: Sábados (Inicio Marzo) -->
-            <div class="schedule-card sabados">
+            <div class="schedule-card sabados reveal fade-up">
               <div class="schedule-header">
                 <h3>Grupo 3 - Sábados</h3>
                 <span class="schedule-type sabados">Sabados Presencial</span>
@@ -773,11 +783,11 @@
     <!-- Inscripción -->
     <section id="inscripcion">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal fade-up">
           <h2 id="inscription-title">Inscripción</h2>
           <p id="inscription-subtitle">Completa tu registro para formar parte del Cursillo Stewart</p>
         </div>
-        <div class="form-container">
+        <div class="form-container reveal zoom-in">
           <p id="inscription-welcome" style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem; color: var(--navy)">
             ¡Bienvenido a Cursillo Stewart! Por favor completar el formulario para finalizar el
             proceso de inscripción
@@ -942,13 +952,13 @@
     <!-- Contacto -->
     <section id="contacto">
       <div class="container">
-        <div class="section-header">
+        <div class="section-header reveal fade-up">
           <h2 id="contact-section-title" style="color: var(--navy)">Contacto</h2>
           <p id="contact-section-description">Estamos aquí para resolver todas tus dudas</p>
         </div>
-        <div class="contact-grid">
+        <div class="contact-grid stagger">
           <!-- Formulario de Contacto -->
-          <div>
+          <div class="reveal fade-up">
             <h3
               id="contact-form-title"
               style="
@@ -1007,7 +1017,7 @@
           </div>
 
           <!-- Información de Contacto y Mapa -->
-          <div>
+          <div class="reveal fade-up">
             <h3
               id="contact-info-title"
               style="
@@ -2478,5 +2488,177 @@
     
     <!-- Script para gestión dinámica de calendario -->
     <script src="homepage.calendar.js"></script>
+
+    <!-- ============================================================
+         SISTEMA DE ANIMACIONES ELEGANTES Y PERFORMANTES
+         Autor: Matías Vera G - 2025
+         
+         Incluye:
+         - CountUp.js para conteos animados
+         - Scroll Reveal con IntersectionObserver
+         - Navbar sticky con sombra
+         - Parallax sutil en hero/carrusel
+         - Lazy loading automático de imágenes
+         - Soporte para prefers-reduced-motion
+         ============================================================ -->
+    <script type="module">
+      // Import CountUp ESM desde CDN
+      import { CountUp } from "https://cdn.skypack.dev/countup.js@2.0.8";
+
+      // Utils
+      const $all = (sel, root = document) => Array.from(root.querySelectorAll(sel));
+
+      // ===== SCROLL REVEAL (IntersectionObserver) =====
+      const revealObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (e.isIntersecting) {
+              const el = e.target;
+              el.classList.add("is-visible");
+
+              // Aplicar retardos escalonados si el padre tiene clase .stagger
+              const parent = el.parentElement;
+              if (parent && parent.classList.contains("stagger")) {
+                $all(":scope > *", parent).forEach((child, i) =>
+                  child.style.setProperty("--i", i)
+                );
+              }
+
+              // Activar CountUp si el elemento tiene data-count
+              if (el.classList.contains('metric-number') && el.hasAttribute('data-count')) {
+                const end = Number(el.getAttribute('data-count') || 0);
+                const cu = new CountUp(el, end, {
+                  duration: 3.5,
+                  separator: '.',
+                  useEasing: true
+                });
+                if (!cu.error) cu.start();
+              }
+
+              revealObs.unobserve(el);
+            }
+          });
+        },
+        { threshold: 0.15 }
+      );
+
+      // Observar todos los elementos con clase .reveal
+      $all(".reveal").forEach((el) => revealObs.observe(el));
+
+      // ===== COUNTUP AL ENTRAR EN VIEWPORT (una sola vez) =====
+      const countObs = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((e) => {
+            if (!e.isIntersecting) return;
+            const el = e.target;
+            const end = Number(el.getAttribute("data-count") || 0);
+            const cu = new CountUp(el, end, {
+              duration: 3.5,
+              separator: ".",
+              useEasing: true,
+            });
+            if (!cu.error) cu.start();
+            countObs.unobserve(el);
+          });
+        },
+        { threshold: 0.35 }
+      );
+
+      // Observar todos los .metric-number con data-count
+      $all(".metric-number[data-count]").forEach((el) => countObs.observe(el));
+
+      // Re-observar dinámicamente cuando se agreguen nuevas estadísticas
+      const statsObserver = new MutationObserver((mutations) => {
+        mutations.forEach((mutation) => {
+          mutation.addedNodes.forEach((node) => {
+            if (node.nodeType === 1) {
+              // Element node
+              // Observar el nuevo elemento si tiene clase reveal
+              if (node.classList && node.classList.contains('reveal')) {
+                revealObs.observe(node);
+              }
+              // Buscar elementos reveal dentro del nodo agregado
+              $all('.reveal', node).forEach((el) => revealObs.observe(el));
+              
+              // Buscar elementos con data-count
+              if (node.classList && node.classList.contains('metric-number') && node.hasAttribute('data-count')) {
+                countObs.observe(node);
+              }
+              $all('.metric-number[data-count]', node).forEach((el) => countObs.observe(el));
+            }
+          });
+        });
+      });
+
+      // Observar el contenedor de estadísticas dinámicas
+      const statsContainer = document.getElementById('dynamicStats');
+      if (statsContainer) {
+        statsObserver.observe(statsContainer, {
+          childList: true,
+          subtree: true
+        });
+      }
+
+      // ===== NAVBAR STICKY SHADOW =====
+      const nav = document.querySelector(".navbar, header nav, .site-header, header");
+      const onScrollHeader = () => {
+        if (!nav) return;
+        if (window.scrollY > 10) {
+          nav.classList.add("is-stuck");
+        } else {
+          nav.classList.remove("is-stuck");
+        }
+      };
+      onScrollHeader();
+      addEventListener("scroll", onScrollHeader, { passive: true });
+
+      // ===== PARALLAX SUTIL EN HERO/CARRUSEL =====
+      const parallaxEls = $all(".parallax-wrap");
+      let ticking = false;
+
+      const parallax = () => {
+        const vh = window.innerHeight;
+        parallaxEls.forEach((el) => {
+          const r = el.getBoundingClientRect();
+          const mid = r.top + r.height / 2;
+          const pct = Math.max(-1, Math.min(1, (mid - vh / 2) / (vh / 2))); // -1..1
+          const translate = pct * 20; // px máx ±20
+          el.style.transform = `translateY(${translate}px)`;
+        });
+        ticking = false;
+      };
+
+      const onScrollParallax = () => {
+        if (!ticking) {
+          requestAnimationFrame(parallax);
+          ticking = true;
+        }
+      };
+
+      addEventListener("scroll", onScrollParallax, { passive: true });
+      addEventListener("resize", onScrollParallax);
+
+      // ===== LAZY LOADING AUTOMÁTICO DE IMÁGENES =====
+      $all("img").forEach((img) => {
+        if (!img.loading) img.loading = "lazy";
+        if (!img.decoding) img.decoding = "async";
+      });
+
+      // ===== SOPORTE PREFERS-REDUCED-MOTION =====
+      const prefersReduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      if (prefersReduced) {
+        console.log("⚠️ Prefers-reduced-motion activado: deshabilitando animaciones fuertes");
+        // Desactivar parallax
+        parallaxEls.forEach((el) => (el.style.transform = "none"));
+        // Los CountUp solo se disparan al hacer scroll, se pueden omitir
+      }
+
+      // Log de inicialización
+      console.log("✨ Sistema de animaciones inicializado");
+      console.log(`📊 ${$all('.reveal').length} elementos con animación reveal`);
+      console.log(`🔢 ${$all('.metric-number[data-count]').length} contadores animados`);
+      console.log(`🎭 ${parallaxEls.length} elementos con parallax`);
+    </script>
   </body>
 </html>
+

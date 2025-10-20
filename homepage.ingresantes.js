@@ -359,8 +359,8 @@ async function calculateStats(keys) {
     const recentYears = years.slice(0, 3);
     recentYears.forEach(year => {
       statsHTML += `
-        <div class="stat-item">
-          <span class="stat-number">${yearStats[year]}</span>
+        <div class="stat-item reveal fade-up">
+          <span class="stat-number metric-number" data-count="${yearStats[year]}">0</span>
           <span class="stat-label">Ingresantes ${year}</span>
         </div>
       `;
@@ -368,8 +368,8 @@ async function calculateStats(keys) {
 
     // Total general (siempre al final)
     statsHTML += `
-      <div class="stat-item total-stat">
-        <span class="stat-number">${totalIngresantes}</span>
+      <div class="stat-item total-stat reveal fade-up">
+        <span class="stat-number metric-number" data-count="${totalIngresantes}">0</span>
         <span class="stat-label">Total Ingresantes</span>
       </div>
     `;
