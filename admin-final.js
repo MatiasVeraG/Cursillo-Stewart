@@ -2051,6 +2051,360 @@ class SocialMediaSystem {
   }
 }
 
+// ==================== SISTEMA DE PROFESORES ====================
+class ProfesoresSystem {
+  constructor() {
+    this.storageKey = 'profesores_settings';
+    this.profesores = [];
+    this.cropper = null;
+    this.currentIndex = null;
+  }
+
+  init() {
+    this.loadData();
+    this.bindEvents();
+    this.renderProfesoresList();
+  }
+
+  bindEvents() {
+    const titleInput = document.getElementById('profesores-section-title');
+    const subtitleInput = document.getElementById('profesores-section-subtitle');
+
+    if (titleInput) {
+      titleInput.addEventListener('input', () => this.saveData());
+    }
+    if (subtitleInput) {
+      subtitleInput.addEventListener('input', () => this.saveData());
+    }
+  }
+
+  loadData() {
+    try {
+      const data = localStorage.getItem(this.storageKey);
+      if (data) {
+        const parsed = JSON.parse(data);
+        this.profesores = parsed.profesores || [];
+
+        const titleInput = document.getElementById('profesores-section-title');
+        const subtitleInput = document.getElementById('profesores-section-subtitle');
+
+        if (titleInput && parsed.title) titleInput.value = parsed.title;
+        if (subtitleInput && parsed.subtitle) subtitleInput.value = parsed.subtitle;
+      }
+    } catch (error) {
+      console.error('Error loading profesores data:', error);
+    }
+  }
+
+  saveData() {
+    try {
+      const titleInput = document.getElementById('profesores-section-title');
+      const subtitleInput = document.getElementById('profesores-section-subtitle');
+
+      const data = {
+        title: titleInput ? titleInput.value : 'Equipo Docente Profesionales',
+        subtitle: subtitleInput
+          ? subtitleInput.value
+          : 'Conoce al equipo que te guiará hacia el éxito académico',
+        profesores: this.profesores,
+      };
+
+      localStorage.setItem(this.storageKey, JSON.stringify(data));
+      console.log('✅ Profesores data saved');
+    } catch (error) {
+      console.error('Error saving profesores data:', error);
+    }
+  }
+
+  renderProfesoresList() {
+    const container = document.getElementById('profesores-list');
+    if (!container) return;
+
+    container.innerHTML = '';
+
+    this.profesores.forEach((profesor, index) => {
+      const card = this.createProfesorCard(profesor, index);
+      container.appendChild(card);
+    });
+  }
+
+  createProfesorCard(profesor, index) {
+    const card = document.createElement('div');
+    card.className = 'content-card';
+    card.style.marginBottom = '1rem';
+    card.style.background = 'var(--admin-card-bg)';
+    card.style.padding = '1.5rem';
+
+    const initials = profesor.nombre
+      .split(' ')
+      .map(word => word[0])
+      .join('')
+      .toUpperCase()
+      .substring(0, 2);
+
+    card.innerHTML = `
+      <div style="display: flex; gap: 1.5rem; align-items: start; flex-wrap: wrap;">
+        <div style="flex-shrink: 0;">
+          ${
+            profesor.imagen
+              ? `<img src="${profesor.imagen}" alt="${profesor.nombre}" style="width: 120px; height: 120px; border-radius: 50%; object-fit: cover; border: 3px solid var(--primary);" />`
+              : `<div style="width: 120px; height: 120px; border-radius: 50%; background: linear-gradient(135deg, #002147, #004080); color: white; display: flex; align-items: center; justify-content: center; font-size: 2rem; font-weight: bold;">${initials}</div>`
+          }
+          <div 
+            id="dropzone-${index}" 
+            style="
+              margin-top: 1rem;
+              border: 2px dashed #ccc;
+              border-radius: 0.5rem;
+              padding: 1rem;
+              text-align: center;
+              cursor: pointer;
+              transition: all 0.3s;
+              background: var(--admin-bg);
+            "
+            ondragover="event.preventDefault(); this.style.borderColor='#002147'; this.style.background='rgba(0,33,71,0.1)';"
+            ondragleave="this.style.borderColor='#ccc'; this.style.background='var(--admin-bg)';"
+            ondrop="profesoresSystem.handleDrop(event, ${index})"
+            onclick="document.getElementById('file-input-${index}').click()"
+          >
+            <div style="font-size: 2rem; margin-bottom: 0.5rem;">📷</div>
+            <div style="font-size: 0.875rem; color: var(--admin-text-light);">
+              Arrastra imágenes aquí<br>o haz clic para seleccionar
+            </div>
+          </div>
+          <input 
+            type="file" 
+            id="file-input-${index}" 
+            accept="image/*" 
+            style="display: none;" 
+            onchange="profesoresSystem.handleFileSelect(event, ${index})"
+          />
+        </div>
+        <div style="flex-grow: 1; min-width: 300px;">
+          <div class="form-group">
+            <label>Nombre del Profesor:</label>
+            <input type="text" id="profesor-nombre-${index}" value="${profesor.nombre}" />
+          </div>
+          <div class="form-group">
+            <label>Cargo/Especialidad:</label>
+            <input type="text" id="profesor-cargo-${index}" value="${
+      profesor.cargo || ''
+    }" placeholder="Ej: Especialista en Cálculo" />
+          </div>
+          <div class="form-group">
+            <label>Descripción:</label>
+            <textarea id="profesor-descripcion-${index}" rows="3" style="resize: vertical;">${
+      profesor.descripcion
+    }</textarea>
+          </div>
+          <div class="form-group">
+            <label>Logros (uno por línea):</label>
+            <textarea id="profesor-logros-${index}" rows="3" style="resize: vertical;" placeholder="Logro 1&#10;Logro 2&#10;Logro 3">${(
+      profesor.logros || []
+    ).join('\n')}</textarea>
+          </div>
+          
+          <div style="border-top: 1px solid #ddd; margin: 1rem 0; padding-top: 1rem;">
+            <label style="font-weight: 600; margin-bottom: 0.5rem; display: block;">🌐 Redes Sociales:</label>
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 0.75rem;">
+              <div class="form-group" style="margin: 0;">
+                <label style="font-size: 0.875rem;">Facebook:</label>
+                <input type="url" id="profesor-facebook-${index}" value="${
+      profesor.redes?.facebook || ''
+    }" placeholder="https://facebook.com/..." />
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label style="font-size: 0.875rem;">Instagram:</label>
+                <input type="url" id="profesor-instagram-${index}" value="${
+      profesor.redes?.instagram || ''
+    }" placeholder="https://instagram.com/..." />
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label style="font-size: 0.875rem;">Twitter/X:</label>
+                <input type="url" id="profesor-twitter-${index}" value="${
+      profesor.redes?.twitter || ''
+    }" placeholder="https://twitter.com/..." />
+              </div>
+              <div class="form-group" style="margin: 0;">
+                <label style="font-size: 0.875rem;">LinkedIn:</label>
+                <input type="url" id="profesor-linkedin-${index}" value="${
+      profesor.redes?.linkedin || ''
+    }" placeholder="https://linkedin.com/..." />
+              </div>
+            </div>
+          </div>
+          
+          <div style="display: flex; gap: 0.5rem; margin-top: 1rem;">
+            <button type="button" class="btn-primary" onclick="profesoresSystem.updateProfesor(${index})" style="flex: 1;">
+              💾 Guardar Cambios
+            </button>
+            <button type="button" class="btn-danger" onclick="profesoresSystem.deleteProfesor(${index})" style="background: #dc2626;">
+              🗑️ Eliminar
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+
+    return card;
+  }
+
+  handleDrop(event, index) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const dropzone = event.currentTarget;
+    dropzone.style.borderColor = '#ccc';
+    dropzone.style.background = 'var(--admin-bg)';
+
+    const files = event.dataTransfer.files;
+    if (files.length > 0) {
+      this.processImage(files[0], index);
+    }
+  }
+
+  handleFileSelect(event, index) {
+    const files = event.target.files;
+    if (files.length > 0) {
+      this.processImage(files[0], index);
+    }
+  }
+
+  processImage(file, index) {
+    if (!file.type.startsWith('image/')) {
+      alert('Por favor selecciona una imagen válida');
+      return;
+    }
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      this.currentIndex = index;
+      this.showCropModal(e.target.result);
+    };
+    reader.readAsDataURL(file);
+  }
+
+  showCropModal(imageSrc) {
+    const modal = document.getElementById('crop-modal');
+    const image = document.getElementById('crop-image');
+
+    if (modal && image) {
+      image.src = imageSrc;
+      modal.style.display = 'flex';
+
+      // Destruir cropper anterior si existe
+      if (this.cropper) {
+        this.cropper.destroy();
+      }
+
+      // Crear nuevo cropper
+      this.cropper = new Cropper(image, {
+        aspectRatio: 1,
+        viewMode: 1,
+        dragMode: 'move',
+        autoCropArea: 1,
+        restore: false,
+        guides: true,
+        center: true,
+        highlight: false,
+        cropBoxMovable: true,
+        cropBoxResizable: true,
+        toggleDragModeOnDblclick: false,
+      });
+    }
+  }
+
+  applyCrop() {
+    if (this.cropper && this.currentIndex !== null) {
+      const canvas = this.cropper.getCroppedCanvas({
+        width: 300,
+        height: 300,
+        imageSmoothingEnabled: true,
+        imageSmoothingQuality: 'high',
+      });
+
+      const croppedImage = canvas.toDataURL('image/jpeg', 0.9);
+
+      // Guardar imagen
+      this.profesores[this.currentIndex].imagen = croppedImage;
+      this.saveData();
+      this.renderProfesoresList();
+      this.cancelCrop();
+    }
+  }
+
+  cancelCrop() {
+    const modal = document.getElementById('crop-modal');
+    if (modal) {
+      modal.style.display = 'none';
+    }
+    if (this.cropper) {
+      this.cropper.destroy();
+      this.cropper = null;
+    }
+    this.currentIndex = null;
+  }
+
+  addProfesor() {
+    const newProfesor = {
+      nombre: 'Nuevo Profesor',
+      cargo: 'Cargo/Especialidad',
+      imagen: '',
+      descripcion: 'Descripción del profesor',
+      logros: ['Logro 1', 'Logro 2', 'Logro 3'],
+      redes: {
+        facebook: '',
+        instagram: '',
+        twitter: '',
+        linkedin: '',
+      },
+    };
+
+    this.profesores.push(newProfesor);
+    this.saveData();
+    this.renderProfesoresList();
+  }
+
+  updateProfesor(index) {
+    const nombreInput = document.getElementById(`profesor-nombre-${index}`);
+    const cargoInput = document.getElementById(`profesor-cargo-${index}`);
+    const descripcionInput = document.getElementById(`profesor-descripcion-${index}`);
+    const logrosInput = document.getElementById(`profesor-logros-${index}`);
+    const facebookInput = document.getElementById(`profesor-facebook-${index}`);
+    const instagramInput = document.getElementById(`profesor-instagram-${index}`);
+    const twitterInput = document.getElementById(`profesor-twitter-${index}`);
+    const linkedinInput = document.getElementById(`profesor-linkedin-${index}`);
+
+    if (nombreInput && descripcionInput) {
+      this.profesores[index] = {
+        ...this.profesores[index],
+        nombre: nombreInput.value,
+        cargo: cargoInput ? cargoInput.value : '',
+        descripcion: descripcionInput.value,
+        logros: logrosInput ? logrosInput.value.split('\n').filter(l => l.trim()) : [],
+        redes: {
+          facebook: facebookInput ? facebookInput.value : '',
+          instagram: instagramInput ? instagramInput.value : '',
+          twitter: twitterInput ? twitterInput.value : '',
+          linkedin: linkedinInput ? linkedinInput.value : '',
+        },
+      };
+
+      this.saveData();
+      this.renderProfesoresList();
+      alert('✅ Profesor actualizado correctamente');
+    }
+  }
+
+  deleteProfesor(index) {
+    if (confirm('¿Eliminar este profesor?')) {
+      this.profesores.splice(index, 1);
+      this.saveData();
+      this.renderProfesoresList();
+    }
+  }
+}
+
 // ==================== SISTEMA DE FOOTER ====================
 class FooterEditorSystem {
   constructor() {
@@ -2539,6 +2893,7 @@ let coursesSystem;
 let calendarSystem;
 let contactSystem;
 let socialMediaSystem;
+let profesoresSystem;
 let footerSystem;
 let backupRestoreSystem;
 let usernameChangeSystem;
@@ -2589,6 +2944,11 @@ document.addEventListener('DOMContentLoaded', () => {
   socialMediaSystem = new SocialMediaSystem();
   socialMediaSystem.init();
   window.socialMediaSystem = socialMediaSystem;
+
+  // Inicializar sistema de profesores
+  profesoresSystem = new ProfesoresSystem();
+  profesoresSystem.init();
+  window.profesoresSystem = profesoresSystem;
 
   // Inicializar sistema de footer
   footerSystem = new FooterEditorSystem();

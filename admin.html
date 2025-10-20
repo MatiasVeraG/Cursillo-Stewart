@@ -6,6 +6,12 @@
     <title>Panel de Administración - Cursillo Stewart</title>
     <link rel="stylesheet" href="admin.css" />
 
+    <!-- Cropper.js para recortar imágenes -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.css"
+    />
+
     <!-- Favicon - Mismo que homepage -->
     <link rel="icon" type="image/png" sizes="32x32" href="images/1-1-logo-cursillo-stewart.png" />
     <link rel="icon" type="image/png" sizes="16x16" href="images/1-1-logo-cursillo-stewart.png" />
@@ -1119,28 +1125,86 @@
         <section id="profesores-section" class="admin-section">
           <h2>👨‍🏫 Gestión de Profesores</h2>
           <div class="content-grid">
-            <!-- Esta sección está lista para futuras funcionalidades -->
+            <!-- Títulos de la Sección -->
             <div class="content-card">
-              <div style="text-align: center; padding: 3rem 1rem; color: var(--admin-text-light)">
-                <svg
-                  width="80"
-                  height="80"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                  stroke="currentColor"
-                  style="margin: 0 auto 1rem; opacity: 0.3"
-                >
-                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
-                  <circle cx="9" cy="7" r="4"></circle>
-                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
-                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
-                </svg>
-                <h3 style="margin-bottom: 0.5rem">Sección en Desarrollo</h3>
-                <p>Esta sección estará disponible próximamente para gestionar profesores.</p>
+              <h3>📋 Títulos de la Sección</h3>
+              <div class="form-group">
+                <label>Título Principal:</label>
+                <input
+                  type="text"
+                  id="profesores-section-title"
+                  placeholder="Equipo Docente Profesionales"
+                  value="Equipo Docente Profesionales"
+                />
               </div>
+              <div class="form-group">
+                <label>Subtítulo:</label>
+                <input
+                  type="text"
+                  id="profesores-section-subtitle"
+                  placeholder="Conoce al equipo que te guiará hacia el éxito académico"
+                  value="Conoce al equipo que te guiará hacia el éxito académico"
+                />
+              </div>
+            </div>
+
+            <!-- Lista de Profesores -->
+            <div class="content-card" style="grid-column: 1 / -1">
+              <h3>👥 Lista de Profesores</h3>
+              <div id="profesores-list" style="margin-bottom: 1rem">
+                <!-- Los profesores se cargarán dinámicamente aquí -->
+              </div>
+              <button
+                type="button"
+                class="btn-primary"
+                onclick="profesoresSystem.addProfesor()"
+                style="width: 100%"
+              >
+                ➕ Agregar Profesor
+              </button>
             </div>
           </div>
         </section>
+
+        <!-- Modal de Recorte de Imagen -->
+        <div
+          id="crop-modal"
+          style="
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 10000;
+            justify-content: center;
+            align-items: center;
+          "
+        >
+          <div
+            style="
+              background: white;
+              padding: 2rem;
+              border-radius: 1rem;
+              max-width: 600px;
+              width: 90%;
+            "
+          >
+            <h3 style="margin-top: 0">Ajustar Imagen</h3>
+            <div style="max-height: 400px; overflow: hidden">
+              <img id="crop-image" style="max-width: 100%" />
+            </div>
+            <div style="display: flex; gap: 1rem; margin-top: 1.5rem; justify-content: flex-end">
+              <button type="button" class="btn-secondary" onclick="profesoresSystem.cancelCrop()">
+                Cancelar
+              </button>
+              <button type="button" class="btn-primary" onclick="profesoresSystem.applyCrop()">
+                Aplicar
+              </button>
+            </div>
+          </div>
+        </div>
 
         <!-- Contacto Section -->
         <section id="contacto-section" class="admin-section">
@@ -1687,6 +1751,9 @@
 
     <!-- SheetJS library for Excel reading -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
+
+    <!-- Cropper.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.1/cropper.min.js"></script>
 
     <!-- SISTEMA DE ADMINISTRACIÓN - VERSION FUNCIONAL -->
     <script src="admin-final.js"></script>
