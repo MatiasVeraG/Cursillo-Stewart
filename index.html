@@ -1092,12 +1092,13 @@
           <div>
             <div class="footer-logo">
               <img
+                id="footer-logo-img"
                 src="images/logo-cursillo-stewart.png"
                 alt="Cursillo Stewart Logo"
                 class="footer-logo-image"
               />
             </div>
-            <p style="color: var(--gray-300); font-size: 0.875rem">
+            <p id="footer-description-text" style="color: var(--gray-300); font-size: 0.875rem">
               Preparándote para un futuro universitario exitoso en la Universidad Politécnica Taiwan
               Paraguay.
             </p>
@@ -1139,35 +1140,35 @@
           <div>
             <h4>Síguenos</h4>
             <div class="social-links">
-              <a href="#" style="color: #fff" class="social-link" title="Facebook">
+              <a href="#" id="social-facebook" style="color: #fff" class="social-link" title="Facebook">
                 <img
                   src="Icons/brand-facebook.svg"
                   alt="Facebook"
                   style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
                 />
               </a>
-              <a href="#" style="color: #fff" class="social-link" title="Instagram">
+              <a href="#" id="social-instagram" style="color: #fff" class="social-link" title="Instagram">
                 <img
                   src="Icons/brand-instagram.svg"
                   alt="Instagram"
                   style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
                 />
               </a>
-              <a href="#" style="color: #fff" class="social-link" title="TikTok">
+              <a href="#" id="social-tiktok" style="color: #fff" class="social-link" title="TikTok">
                 <img
                   src="Icons/brand-tiktok.svg"
                   alt="TikTok"
                   style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
                 />
               </a>
-              <a href="#" style="color: #fff" class="social-link" title="X (Twitter)">
+              <a href="#" id="social-twitter" style="color: #fff" class="social-link" title="X (Twitter)">
                 <img
                   src="Icons/brand-x.svg"
                   alt="X (Twitter)"
                   style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
                 />
               </a>
-              <a href="#" style="color: #fff" class="social-link" title="WhatsApp">
+              <a href="#" id="social-whatsapp" style="color: #fff" class="social-link" title="WhatsApp">
                 <img
                   src="Icons/brand-whatsapp.svg"
                   alt="WhatsApp"
@@ -1179,7 +1180,7 @@
         </div>
 
         <div class="footer-bottom">
-          <p>&copy; 2024 Cursillo Stewart - UPTP. Todos los derechos reservados.</p>
+          <p id="footer-copyright-text">&copy; 2024 Cursillo Stewart - UPTP. Todos los derechos reservados.</p>
         </div>
       </div>
     </footer>
@@ -1894,6 +1895,8 @@
           const pendingUpdates = localStorage.getItem('pending_homepage_updates');
           const savedLogo = localStorage.getItem('website_logo');
           const timelineData = localStorage.getItem('timeline_data');
+          const socialMediaData = localStorage.getItem('social_media_links');
+          const footerData = localStorage.getItem('footer_settings');
 
           const content = savedContent
             ? JSON.parse(savedContent)
@@ -1914,6 +1917,26 @@
               updateTimelineContent(parsedTimelineData);
             } catch (error) {
               console.log('Error parsing timeline data:', error);
+            }
+          }
+
+          // Apply social media links
+          if (socialMediaData) {
+            try {
+              const parsedSocialData = JSON.parse(socialMediaData);
+              updateSocialMedia(parsedSocialData);
+            } catch (error) {
+              console.log('Error parsing social media data:', error);
+            }
+          }
+
+          // Apply footer settings
+          if (footerData) {
+            try {
+              const parsedFooterData = JSON.parse(footerData);
+              updateFooter(parsedFooterData);
+            } catch (error) {
+              console.log('Error parsing footer data:', error);
             }
           }
 
@@ -2017,6 +2040,88 @@
         updateElement('inscription-title', 'inscription-title-input');
         updateElement('inscription-subtitle', 'inscription-subtitle-input');
         updateElement('inscription-welcome', 'inscription-welcome-input');
+      }
+
+      // Update social media links
+      function updateSocialMedia(data) {
+        const links = {
+          'facebook-url': 'social-facebook',
+          'instagram-url': 'social-instagram',
+          'tiktok-url': 'social-tiktok',
+          'twitter-url': 'social-twitter'
+        };
+
+        Object.entries(links).forEach(([dataKey, elementId]) => {
+          const element = document.getElementById(elementId);
+          const url = data[dataKey];
+          
+          if (element && url && url.trim() !== '') {
+            element.href = url;
+            element.style.display = '';
+          } else if (element) {
+            element.style.display = 'none';
+          }
+        });
+
+        // Update WhatsApp link
+        const whatsappLink = document.getElementById('social-whatsapp');
+        const whatsappData = data['whatsapp-link'];
+        if (whatsappLink && whatsappData && whatsappData.trim() !== '') {
+          // Check if it's already a wa.me link
+          if (whatsappData.includes('wa.me') || whatsappData.startsWith('http')) {
+            whatsappLink.href = whatsappData;
+          } else {
+            // If it's just a number, convert to wa.me link
+            whatsappLink.href = `https://wa.me/${whatsappData}`;
+          }
+          whatsappLink.style.display = '';
+        } else if (whatsappLink) {
+          whatsappLink.style.display = 'none';
+        }
+
+        console.log('✅ Social media links updated');
+      }
+
+      // Update footer
+      function updateFooter(data) {
+        const footer = document.querySelector('footer');
+        if (!footer) return;
+
+        // Update background and text colors
+        if (data['footer-bg-color']) {
+          footer.style.backgroundColor = data['footer-bg-color'];
+        }
+
+        if (data['footer-text-color']) {
+          footer.style.color = data['footer-text-color'];
+          // Update all text elements inside footer
+          const textElements = footer.querySelectorAll('p, h4, li, a');
+          textElements.forEach(el => {
+            if (!el.closest('.social-links')) { // Don't change social icons
+              el.style.color = data['footer-text-color'];
+            }
+          });
+        }
+
+        // Update description
+        const descriptionEl = document.getElementById('footer-description-text');
+        if (descriptionEl && data['footer-description']) {
+          descriptionEl.textContent = data['footer-description'];
+        }
+
+        // Update copyright
+        const copyrightEl = document.getElementById('footer-copyright-text');
+        if (copyrightEl && data['footer-copyright']) {
+          copyrightEl.textContent = data['footer-copyright'];
+        }
+
+        // Update logo
+        const logoImg = document.getElementById('footer-logo-img');
+        if (logoImg && data['footer-logo-url']) {
+          logoImg.src = data['footer-logo-url'];
+        }
+
+        console.log('✅ Footer updated');
       }
 
       // Update countdown section in homepage
@@ -2230,6 +2335,8 @@
           e.key === 'website_content' ||
           e.key === 'pending_homepage_updates' ||
           e.key === 'timeline_data' ||
+          e.key === 'social_media_links' ||
+          e.key === 'footer_settings' ||
           e.key === 'admin_update_timestamp'
         ) {
           loadAdminChanges();
@@ -2239,6 +2346,16 @@
       // Listen for custom admin content change events
       window.addEventListener('adminContentChange', function (e) {
         updateCountdownSection(e.detail);
+      });
+
+      // Listen for social media changes
+      window.addEventListener('socialMediaChange', function (e) {
+        updateSocialMedia(e.detail);
+      });
+
+      // Listen for footer changes
+      window.addEventListener('footerChange', function (e) {
+        updateFooter(e.detail);
       });
 
       // Polling fallback for same-tab updates

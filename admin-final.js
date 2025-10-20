@@ -42,7 +42,11 @@ class AuthSystem {
         const username = document.getElementById('username').value;
         const password = document.getElementById('password').value;
 
-        if (username === 'admin' && password === 'stewart2024') {
+        // Get stored username and password or use defaults
+        const storedUsername = localStorage.getItem('admin_username') || 'admin';
+        const storedPassword = localStorage.getItem('admin_password') || 'stewart2024';
+
+        if (username === storedUsername && password === storedPassword) {
           localStorage.setItem(this.sessionKey, 'active');
           localStorage.setItem(this.timestampKey, Date.now().toString());
           this.showAdminPanel();
@@ -1810,14 +1814,26 @@ class ContactSystem {
 
       // Load titles and colors
       this.setInputValue('contact-section-title-input', content['contact-section-title-input']);
-      this.setInputValue('contact-section-description-input', content['contact-section-description-input']);
+      this.setInputValue(
+        'contact-section-description-input',
+        content['contact-section-description-input']
+      );
       this.setInputValue('contact-form-title-input', content['contact-form-title-input']);
       this.setInputValue('contact-info-title-input', content['contact-info-title-input']);
 
       // Load colors
-      this.setInputValue('contact-section-title-color', content['contact-section-title-color'] || '#002147');
-      this.setInputValue('contact-form-title-color', content['contact-form-title-color'] || '#002147');
-      this.setInputValue('contact-info-title-color', content['contact-info-title-color'] || '#002147');
+      this.setInputValue(
+        'contact-section-title-color',
+        content['contact-section-title-color'] || '#002147'
+      );
+      this.setInputValue(
+        'contact-form-title-color',
+        content['contact-form-title-color'] || '#002147'
+      );
+      this.setInputValue(
+        'contact-info-title-color',
+        content['contact-info-title-color'] || '#002147'
+      );
 
       // Load contact information
       this.setInputValue('contact-phone-input', content['contact-phone-input']);
@@ -1921,6 +1937,598 @@ class ContactSystem {
       console.error('Error saving contact data:', error);
     }
   }
+
+  /**
+   * Apply color preset to contact section
+   */
+  applyContactColorPreset(presetName) {
+    const presets = {
+      blue: '#002147',
+      red: '#dc2626',
+      green: '#059669',
+      purple: '#7c3aed',
+      orange: '#ea580c',
+      teal: '#0d9488',
+    };
+
+    const color = presets[presetName];
+    if (!color) return;
+
+    // Apply to all three color pickers
+    const titleColor = document.getElementById('contact-section-title-color');
+    const formTitleColor = document.getElementById('contact-form-title-color');
+    const infoTitleColor = document.getElementById('contact-info-title-color');
+
+    if (titleColor) titleColor.value = color;
+    if (formTitleColor) formTitleColor.value = color;
+    if (infoTitleColor) infoTitleColor.value = color;
+
+    // Save changes
+    this.saveContactData();
+
+    // Show feedback
+    this.showMessage(`Colores aplicados: ${presetName}`, 'success');
+  }
+
+  /**
+   * Show temporary message
+   */
+  showMessage(message, type = 'success') {
+    const container = document.getElementById('message-container');
+    if (!container) return;
+
+    const messageEl = document.createElement('div');
+    messageEl.className = `message message-${type}`;
+    messageEl.textContent = message;
+    container.appendChild(messageEl);
+
+    setTimeout(() => {
+      messageEl.style.opacity = '0';
+      setTimeout(() => messageEl.remove(), 300);
+    }, 3000);
+  }
+}
+
+// ==================== SISTEMA DE REDES SOCIALES ====================
+class SocialMediaSystem {
+  constructor() {
+    this.storageKey = 'social_media_links';
+  }
+
+  init() {
+    this.loadData();
+    this.bindEvents();
+  }
+
+  bindEvents() {
+    const inputs = ['facebook-url', 'instagram-url', 'tiktok-url', 'twitter-url', 'whatsapp-link'];
+
+    inputs.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.addEventListener('input', () => this.saveData());
+      }
+    });
+  }
+
+  loadData() {
+    try {
+      const saved = localStorage.getItem(this.storageKey);
+      if (!saved) return;
+
+      const data = JSON.parse(saved);
+
+      Object.entries(data).forEach(([key, value]) => {
+        const element = document.getElementById(key);
+        if (element) {
+          element.value = value || '';
+        }
+      });
+    } catch (error) {
+      console.error('Error loading social media data:', error);
+    }
+  }
+
+  saveData() {
+    try {
+      const data = {
+        'facebook-url': document.getElementById('facebook-url')?.value || '',
+        'instagram-url': document.getElementById('instagram-url')?.value || '',
+        'tiktok-url': document.getElementById('tiktok-url')?.value || '',
+        'twitter-url': document.getElementById('twitter-url')?.value || '',
+        'whatsapp-link': document.getElementById('whatsapp-link')?.value || '',
+      };
+
+      localStorage.setItem(this.storageKey, JSON.stringify(data));
+      localStorage.setItem('pending_homepage_updates', JSON.stringify(data));
+      localStorage.setItem('admin_update_timestamp', Date.now().toString());
+
+      window.dispatchEvent(new CustomEvent('socialMediaChange', { detail: data }));
+      console.log('✅ Social media links saved');
+    } catch (error) {
+      console.error('Error saving social media data:', error);
+    }
+  }
+}
+
+// ==================== SISTEMA DE FOOTER ====================
+class FooterEditorSystem {
+  constructor() {
+    this.storageKey = 'footer_settings';
+  }
+
+  init() {
+    this.loadData();
+    this.bindEvents();
+    this.initImageUpload();
+  }
+
+  bindEvents() {
+    const inputs = [
+      'footer-bg-color',
+      'footer-text-color',
+      'footer-description',
+      'footer-copyright',
+      'footer-logo-url',
+    ];
+
+    inputs.forEach(id => {
+      const element = document.getElementById(id);
+      if (element) {
+        element.addEventListener('input', () => this.saveData());
+      }
+    });
+  }
+
+  initImageUpload() {
+    const uploadZone = document.getElementById('footer-logo-upload-zone');
+    const fileInput = document.getElementById('footer-logo-input');
+    const preview = document.getElementById('footer-logo-preview');
+    const urlInput = document.getElementById('footer-logo-url');
+
+    if (!uploadZone || !fileInput || !preview) return;
+
+    // Click to upload
+    uploadZone.addEventListener('click', () => fileInput.click());
+
+    // File input change
+    fileInput.addEventListener('change', e => {
+      const file = e.target.files[0];
+      if (file) {
+        this.handleImageFile(file);
+      }
+    });
+
+    // Drag & drop
+    uploadZone.addEventListener('dragover', e => {
+      e.preventDefault();
+      uploadZone.classList.add('drag-over');
+    });
+
+    uploadZone.addEventListener('dragleave', () => {
+      uploadZone.classList.remove('drag-over');
+    });
+
+    uploadZone.addEventListener('drop', e => {
+      e.preventDefault();
+      uploadZone.classList.remove('drag-over');
+
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith('image/')) {
+        this.handleImageFile(file);
+      }
+    });
+
+    // URL input - update preview when URL changes
+    if (urlInput) {
+      urlInput.addEventListener('input', () => {
+        const url = urlInput.value.trim();
+        if (url) {
+          preview.src = url;
+          preview.style.display = 'block';
+          uploadZone.classList.add('has-image');
+        }
+      });
+    }
+  }
+
+  handleImageFile(file) {
+    // Validate file size (max 5MB)
+    if (file.size > 5 * 1024 * 1024) {
+      this.showMessage('❌ La imagen es demasiado grande (máximo 5MB)', 'error');
+      return;
+    }
+
+    // Read file and convert to base64
+    const reader = new FileReader();
+    reader.onload = e => {
+      const base64 = e.target.result;
+      const preview = document.getElementById('footer-logo-preview');
+      const uploadZone = document.getElementById('footer-logo-upload-zone');
+      const urlInput = document.getElementById('footer-logo-url');
+
+      // Show preview
+      preview.src = base64;
+      preview.style.display = 'block';
+      uploadZone.classList.add('has-image');
+
+      // Update URL input with base64
+      if (urlInput) {
+        urlInput.value = base64;
+      }
+
+      // Save
+      this.saveData();
+      this.showMessage('✅ Imagen cargada correctamente', 'success');
+    };
+
+    reader.readAsDataURL(file);
+  }
+
+  loadData() {
+    try {
+      const saved = localStorage.getItem(this.storageKey);
+      if (!saved) return;
+
+      const data = JSON.parse(saved);
+
+      Object.entries(data).forEach(([key, value]) => {
+        const element = document.getElementById(key);
+        if (element) {
+          element.value = value || '';
+        }
+      });
+    } catch (error) {
+      console.error('Error loading footer data:', error);
+    }
+  }
+
+  saveData() {
+    try {
+      const data = {
+        'footer-bg-color': document.getElementById('footer-bg-color')?.value || '#1a1a1a',
+        'footer-text-color': document.getElementById('footer-text-color')?.value || '#ffffff',
+        'footer-description': document.getElementById('footer-description')?.value || '',
+        'footer-copyright': document.getElementById('footer-copyright')?.value || '',
+        'footer-logo-url': document.getElementById('footer-logo-url')?.value || '',
+      };
+
+      localStorage.setItem(this.storageKey, JSON.stringify(data));
+      localStorage.setItem('pending_homepage_updates', JSON.stringify(data));
+      localStorage.setItem('admin_update_timestamp', Date.now().toString());
+
+      window.dispatchEvent(new CustomEvent('footerChange', { detail: data }));
+      console.log('✅ Footer settings saved');
+    } catch (error) {
+      console.error('Error saving footer data:', error);
+    }
+  }
+
+  applyFooterColorPreset(presetName) {
+    const presets = {
+      dark: { bg: '#1a1a1a', text: '#ffffff' },
+      blue: { bg: '#002147', text: '#ffffff' },
+      green: { bg: '#065f46', text: '#ffffff' },
+      purple: { bg: '#5b21b6', text: '#ffffff' },
+      red: { bg: '#991b1b', text: '#ffffff' },
+      orange: { bg: '#9a3412', text: '#ffffff' },
+    };
+
+    const preset = presets[presetName];
+    if (!preset) return;
+
+    const bgColor = document.getElementById('footer-bg-color');
+    const textColor = document.getElementById('footer-text-color');
+
+    if (bgColor) bgColor.value = preset.bg;
+    if (textColor) textColor.value = preset.text;
+
+    this.saveData();
+    this.showMessage(`Colores de footer aplicados: ${presetName}`, 'success');
+  }
+
+  showMessage(message, type = 'success') {
+    const container = document.getElementById('message-container');
+    if (!container) return;
+
+    const messageEl = document.createElement('div');
+    messageEl.className = `message message-${type}`;
+    messageEl.textContent = message;
+    container.appendChild(messageEl);
+
+    setTimeout(() => {
+      messageEl.style.opacity = '0';
+      setTimeout(() => messageEl.remove(), 300);
+    }, 3000);
+  }
+}
+
+// ==================== SISTEMA DE BACKUP Y RESTAURACIÓN ====================
+class BackupRestoreSystem {
+  constructor() {
+    this.storageKeys = [
+      'website_content',
+      'courses_data',
+      'calendar_events',
+      'social_media_links',
+      'footer_settings',
+      'ingresantes_lists',
+    ];
+  }
+
+  init() {
+    this.bindEvents();
+    this.updateLastBackupDate();
+  }
+
+  bindEvents() {
+    const backupBtn = document.getElementById('backup-btn');
+    const restoreBtn = document.getElementById('restore-btn');
+    const restoreInput = document.getElementById('restore-input');
+
+    if (backupBtn) {
+      backupBtn.addEventListener('click', () => this.createBackup());
+    }
+
+    if (restoreBtn) {
+      restoreBtn.addEventListener('click', () => restoreInput.click());
+    }
+
+    if (restoreInput) {
+      restoreInput.addEventListener('change', e => this.restoreBackup(e));
+    }
+  }
+
+  createBackup() {
+    try {
+      const backup = {
+        timestamp: new Date().toISOString(),
+        version: '1.0',
+        data: {},
+      };
+
+      // Collect all data
+      this.storageKeys.forEach(key => {
+        const data = localStorage.getItem(key);
+        if (data) {
+          backup.data[key] = JSON.parse(data);
+        }
+      });
+
+      // Create download
+      const blob = new Blob([JSON.stringify(backup, null, 2)], { type: 'application/json' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      const date = new Date().toISOString().split('T')[0];
+      a.href = url;
+      a.download = `stewart-backup-${date}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+
+      // Save backup date
+      localStorage.setItem('last_backup_date', new Date().toISOString());
+      this.updateLastBackupDate();
+
+      this.showMessage('✅ Respaldo creado exitosamente', 'success');
+    } catch (error) {
+      console.error('Error creating backup:', error);
+      this.showMessage('❌ Error al crear respaldo', 'error');
+    }
+  }
+
+  restoreBackup(event) {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = e => {
+      try {
+        const backup = JSON.parse(e.target.result);
+
+        if (!backup.data) {
+          throw new Error('Formato de respaldo inválido');
+        }
+
+        if (
+          confirm('¿Desea restaurar este respaldo? Se sobrescribirá toda la configuración actual.')
+        ) {
+          // Restore all data
+          Object.entries(backup.data).forEach(([key, value]) => {
+            localStorage.setItem(key, JSON.stringify(value));
+          });
+
+          this.showMessage('✅ Respaldo restaurado exitosamente', 'success');
+
+          setTimeout(() => {
+            location.reload();
+          }, 2000);
+        }
+      } catch (error) {
+        console.error('Error restoring backup:', error);
+        this.showMessage('❌ Error al restaurar respaldo', 'error');
+      }
+    };
+
+    reader.readAsText(file);
+  }
+
+  updateLastBackupDate() {
+    const lastBackup = localStorage.getItem('last_backup_date');
+    const element = document.getElementById('last-backup');
+
+    if (element) {
+      if (lastBackup) {
+        const date = new Date(lastBackup);
+        element.textContent = date.toLocaleString('es-PY');
+      } else {
+        element.textContent = 'Nunca';
+      }
+    }
+  }
+
+  showMessage(message, type = 'success') {
+    const container = document.getElementById('message-container');
+    if (!container) return;
+
+    const messageEl = document.createElement('div');
+    messageEl.className = `message message-${type}`;
+    messageEl.textContent = message;
+    container.appendChild(messageEl);
+
+    setTimeout(() => {
+      messageEl.style.opacity = '0';
+      setTimeout(() => messageEl.remove(), 300);
+    }, 3000);
+  }
+}
+
+// ==================== SISTEMA DE CAMBIO DE NOMBRE DE USUARIO ====================
+class UsernameChangeSystem {
+  constructor() {
+    this.usernameKey = 'admin_username';
+  }
+
+  init() {
+    this.loadUsername();
+    this.bindEvents();
+    // Set default username if not exists
+    if (!localStorage.getItem(this.usernameKey)) {
+      localStorage.setItem(this.usernameKey, 'admin');
+    }
+  }
+
+  bindEvents() {
+    const changeBtn = document.getElementById('change-username-btn');
+    if (changeBtn) {
+      changeBtn.addEventListener('click', () => this.changeUsername());
+    }
+  }
+
+  loadUsername() {
+    const usernameInput = document.getElementById('admin-username');
+    const currentUsername = localStorage.getItem(this.usernameKey) || 'admin';
+
+    if (usernameInput) {
+      usernameInput.value = currentUsername;
+    }
+  }
+
+  changeUsername() {
+    const newUsername = document.getElementById('admin-username')?.value?.trim();
+
+    // Validations
+    if (!newUsername) {
+      this.showMessage('❌ El nombre de usuario no puede estar vacío', 'error');
+      return;
+    }
+
+    if (newUsername.length < 3) {
+      this.showMessage('❌ El nombre de usuario debe tener al menos 3 caracteres', 'error');
+      return;
+    }
+
+    // Check if it contains only valid characters
+    if (!/^[a-zA-Z0-9_]+$/.test(newUsername)) {
+      this.showMessage('❌ Solo letras, números y guión bajo (_) permitidos', 'error');
+      return;
+    }
+
+    // Save new username
+    localStorage.setItem(this.usernameKey, newUsername);
+
+    this.showMessage('✅ Nombre de usuario cambiado exitosamente', 'success');
+  }
+
+  showMessage(message, type = 'success') {
+    const container = document.getElementById('message-container');
+    if (!container) return;
+
+    const messageEl = document.createElement('div');
+    messageEl.className = `message message-${type}`;
+    messageEl.textContent = message;
+    container.appendChild(messageEl);
+
+    setTimeout(() => {
+      messageEl.style.opacity = '0';
+      setTimeout(() => messageEl.remove(), 300);
+    }, 3000);
+  }
+}
+
+// ==================== SISTEMA DE CAMBIO DE CONTRASEÑA ====================
+class PasswordChangeSystem {
+  constructor() {
+    this.passwordKey = 'admin_password';
+  }
+
+  init() {
+    this.bindEvents();
+    // Set default password if not exists
+    if (!localStorage.getItem(this.passwordKey)) {
+      localStorage.setItem(this.passwordKey, 'stewart2024');
+    }
+  }
+
+  bindEvents() {
+    const changeBtn = document.getElementById('change-password-btn');
+    if (changeBtn) {
+      changeBtn.addEventListener('click', () => this.changePassword());
+    }
+  }
+
+  changePassword() {
+    const currentPassword = document.getElementById('current-password')?.value;
+    const newPassword = document.getElementById('new-password')?.value;
+    const confirmPassword = document.getElementById('confirm-password')?.value;
+
+    // Validations
+    if (!currentPassword || !newPassword || !confirmPassword) {
+      this.showMessage('❌ Por favor complete todos los campos', 'error');
+      return;
+    }
+
+    const storedPassword = localStorage.getItem(this.passwordKey) || 'stewart2024';
+
+    if (currentPassword !== storedPassword) {
+      this.showMessage('❌ Contraseña actual incorrecta', 'error');
+      return;
+    }
+
+    if (newPassword !== confirmPassword) {
+      this.showMessage('❌ Las contraseñas nuevas no coinciden', 'error');
+      return;
+    }
+
+    if (newPassword.length < 6) {
+      this.showMessage('❌ La contraseña debe tener al menos 6 caracteres', 'error');
+      return;
+    }
+
+    // Save new password
+    localStorage.setItem(this.passwordKey, newPassword);
+
+    // Clear fields
+    document.getElementById('current-password').value = '';
+    document.getElementById('new-password').value = '';
+    document.getElementById('confirm-password').value = '';
+
+    this.showMessage('✅ Contraseña cambiada exitosamente', 'success');
+  }
+
+  showMessage(message, type = 'success') {
+    const container = document.getElementById('message-container');
+    if (!container) return;
+
+    const messageEl = document.createElement('div');
+    messageEl.className = `message message-${type}`;
+    messageEl.textContent = message;
+    container.appendChild(messageEl);
+
+    setTimeout(() => {
+      messageEl.style.opacity = '0';
+      setTimeout(() => messageEl.remove(), 300);
+    }, 3000);
+  }
 }
 
 // ==================== INICIALIZACIÓN ====================
@@ -1930,6 +2538,11 @@ let tabNavigation;
 let coursesSystem;
 let calendarSystem;
 let contactSystem;
+let socialMediaSystem;
+let footerSystem;
+let backupRestoreSystem;
+let usernameChangeSystem;
+let passwordChangeSystem;
 
 document.addEventListener('DOMContentLoaded', () => {
   console.log('🚀 Iniciando sistema de administración...');
@@ -1971,6 +2584,31 @@ document.addEventListener('DOMContentLoaded', () => {
 
   // Hacer contactSystem accesible globalmente
   window.contactSystem = contactSystem;
+
+  // Inicializar sistema de redes sociales
+  socialMediaSystem = new SocialMediaSystem();
+  socialMediaSystem.init();
+  window.socialMediaSystem = socialMediaSystem;
+
+  // Inicializar sistema de footer
+  footerSystem = new FooterEditorSystem();
+  footerSystem.init();
+  window.footerSystem = footerSystem;
+
+  // Inicializar sistema de backup y restauración
+  backupRestoreSystem = new BackupRestoreSystem();
+  backupRestoreSystem.init();
+  window.backupRestoreSystem = backupRestoreSystem;
+
+  // Inicializar sistema de cambio de nombre de usuario
+  usernameChangeSystem = new UsernameChangeSystem();
+  usernameChangeSystem.init();
+  window.usernameChangeSystem = usernameChangeSystem;
+
+  // Inicializar sistema de cambio de contraseña
+  passwordChangeSystem = new PasswordChangeSystem();
+  passwordChangeSystem.init();
+  window.passwordChangeSystem = passwordChangeSystem;
 
   console.log('✅ Sistema iniciado correctamente');
 });

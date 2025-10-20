@@ -70,6 +70,7 @@
         <button class="nav-tab" data-section="ingresantes">🎓 Ingresantes</button>
         <button class="nav-tab" data-section="cursos">📚 Cursos</button>
         <button class="nav-tab" data-section="calendario">📅 Calendario</button>
+        <button class="nav-tab" data-section="profesores">👨‍🏫 Profesores</button>
         <button class="nav-tab" data-section="contacto">📞 Contacto</button>
         <button class="nav-tab" data-section="settings">⚙️ Configuración</button>
       </nav>
@@ -1114,20 +1115,135 @@
           </div>
         </section>
 
+        <!-- Profesores Section -->
+        <section id="profesores-section" class="admin-section">
+          <h2>👨‍🏫 Gestión de Profesores</h2>
+          <div class="content-grid">
+            <!-- Esta sección está lista para futuras funcionalidades -->
+            <div class="content-card">
+              <div style="text-align: center; padding: 3rem 1rem; color: var(--admin-text-light)">
+                <svg
+                  width="80"
+                  height="80"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  style="margin: 0 auto 1rem; opacity: 0.3"
+                >
+                  <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                  <circle cx="9" cy="7" r="4"></circle>
+                  <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                  <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                </svg>
+                <h3 style="margin-bottom: 0.5rem">Sección en Desarrollo</h3>
+                <p>Esta sección estará disponible próximamente para gestionar profesores.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- Contacto Section -->
         <section id="contacto-section" class="admin-section">
           <h2>📞 Gestión de Contacto</h2>
           <div class="content-grid">
             <div class="content-card contact-titles-card">
               <h3>📋 Títulos de la Sección</h3>
+
+              <!-- Color Presets -->
+              <div class="form-group">
+                <label>🎨 Combinaciones de Colores Predeterminadas:</label>
+                <div
+                  class="color-presets-grid"
+                  style="
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                    gap: 0.5rem;
+                    margin-bottom: 1rem;
+                  "
+                >
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="contactSystem.applyContactColorPreset('blue')"
+                    title="Azul Profesional"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: #002147; height: 30px; border-radius: 4px"
+                    ></div>
+                    <span>Azul</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="contactSystem.applyContactColorPreset('red')"
+                    title="Rojo Enérgico"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: #dc2626; height: 30px; border-radius: 4px"
+                    ></div>
+                    <span>Rojo</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="contactSystem.applyContactColorPreset('green')"
+                    title="Verde Natural"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: #059669; height: 30px; border-radius: 4px"
+                    ></div>
+                    <span>Verde</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="contactSystem.applyContactColorPreset('purple')"
+                    title="Púrpura Elegante"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: #7c3aed; height: 30px; border-radius: 4px"
+                    ></div>
+                    <span>Púrpura</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="contactSystem.applyContactColorPreset('orange')"
+                    title="Naranja Vibrante"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: #ea580c; height: 30px; border-radius: 4px"
+                    ></div>
+                    <span>Naranja</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="contactSystem.applyContactColorPreset('teal')"
+                    title="Turquesa Moderno"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: #0d9488; height: 30px; border-radius: 4px"
+                    ></div>
+                    <span>Turquesa</span>
+                  </button>
+                </div>
+              </div>
+
               <div class="form-group with-color">
                 <label>Título Principal:</label>
                 <div class="input-with-color">
-                  <input 
-                    type="text" 
-                    id="contact-section-title-input" 
+                  <input
+                    type="text"
+                    id="contact-section-title-input"
                     data-target="contact-section-title"
-                    placeholder="Contacto" 
+                    placeholder="Contacto"
                   />
                   <input
                     type="color"
@@ -1233,13 +1349,14 @@
                   id="contact-map-url"
                   rows="3"
                   placeholder="https://www.google.com/maps/embed?pb=..."
-                  style="font-family: monospace; font-size: 0.9em;"
+                  style="font-family: monospace; font-size: 0.9em"
                 ></textarea>
-                <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem;">
-                  💡 Cómo obtener el enlace: <br>
-                  1. Ve a <a href="https://www.google.com/maps" target="_blank">Google Maps</a><br>
-                  2. Busca tu ubicación<br>
-                  3. Haz clic en "Compartir" → "Insertar un mapa"<br>
+                <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem">
+                  💡 Cómo obtener el enlace: <br />
+                  1. Ve a <a href="https://www.google.com/maps" target="_blank">Google Maps</a
+                  ><br />
+                  2. Busca tu ubicación<br />
+                  3. Haz clic en "Compartir" → "Insertar un mapa"<br />
                   4. Copia el URL que aparece en el src del iframe (entre comillas)
                 </small>
               </div>
@@ -1248,39 +1365,45 @@
 
             <div class="content-card">
               <h3>� Textos del Formulario de Inscripción</h3>
-              <div class="alert-info" style="margin-bottom: 1rem; padding: 1rem; background: #e3f2fd; border-radius: 8px; border-left: 4px solid #2196F3;">
-                <strong>📌 Información:</strong> Personaliza los textos que aparecen en el formulario de inscripción.
+              <div
+                class="alert-info"
+                style="
+                  margin-bottom: 1rem;
+                  padding: 1rem;
+                  background: #1e405b;
+                  border-radius: 8px;
+                  border-left: 4px solid #2196f3;
+                "
+              >
+                <strong>📌 Información:</strong> Personaliza los textos que aparecen en el
+                formulario de inscripción.
               </div>
               <div class="form-group">
                 <label>Título Principal:</label>
-                <input 
-                  type="text" 
-                  id="inscription-title-input" 
-                  placeholder="Inscripción"
-                />
-                <small style="color: #666; display: block; margin-top: 0.5rem;">
+                <input type="text" id="inscription-title-input" placeholder="Inscripción" />
+                <small style="color: #666; display: block; margin-top: 0.5rem">
                   Este es el título principal del formulario
                 </small>
               </div>
               <div class="form-group">
                 <label>Subtítulo:</label>
-                <input 
-                  type="text" 
-                  id="inscription-subtitle-input" 
+                <input
+                  type="text"
+                  id="inscription-subtitle-input"
                   placeholder="Completa tu registro para formar parte del Cursillo Stewart"
                 />
-                <small style="color: #666; display: block; margin-top: 0.5rem;">
+                <small style="color: #666; display: block; margin-top: 0.5rem">
                   Aparece debajo del título principal
                 </small>
               </div>
               <div class="form-group">
                 <label>Mensaje de Bienvenida:</label>
-                <textarea 
-                  id="inscription-welcome-input" 
+                <textarea
+                  id="inscription-welcome-input"
                   rows="3"
                   placeholder="¡Bienvenido a Cursillo Stewart! Por favor completar el formulario para finalizar el proceso de inscripción"
                 ></textarea>
-                <small style="color: #666; display: block; margin-top: 0.5rem;">
+                <small style="color: #666; display: block; margin-top: 0.5rem">
                   Mensaje que aparece antes del formulario
                 </small>
               </div>
@@ -1294,8 +1417,21 @@
           <div class="content-grid">
             <div class="content-card">
               <h3>🌐 Redes Sociales</h3>
+              <div
+                class="alert-info"
+                style="
+                  margin-bottom: 1rem;
+                  padding: 1rem;
+                  background: #031929;
+                  border-radius: 8px;
+                  border-left: 4px solid #2196f3;
+                "
+              >
+                <strong>Información:</strong> Estos enlaces aparecerán en la sección "Síguenos" del
+                footer.
+              </div>
               <div class="form-group">
-                <label>Facebook URL:</label>
+                <label>📘 Facebook URL:</label>
                 <input
                   type="url"
                   id="facebook-url"
@@ -1303,7 +1439,7 @@
                 />
               </div>
               <div class="form-group">
-                <label>Instagram URL:</label>
+                <label>📷 Instagram URL:</label>
                 <input
                   type="url"
                   id="instagram-url"
@@ -1311,26 +1447,208 @@
                 />
               </div>
               <div class="form-group">
-                <label>WhatsApp:</label>
-                <input type="text" id="whatsapp-number" placeholder="595985350550" />
-              </div>
-            </div>
-
-            <div class="content-card">
-              <h3>💾 Respaldo y Restauración</h3>
-              <div class="backup-tools">
-                <button id="backup-btn" class="btn-secondary">Crear Respaldo</button>
-                <input type="file" id="restore-input" accept=".json" style="display: none" />
-                <button id="restore-btn" class="btn-secondary">Restaurar Respaldo</button>
+                <label>📱 TikTok URL:</label>
+                <input
+                  type="url"
+                  id="tiktok-url"
+                  placeholder="https://tiktok.com/@cursillostewart"
+                />
               </div>
               <div class="form-group">
-                <label>Último respaldo:</label>
-                <span id="last-backup">Nunca</span>
+                <label>✖️ X (Twitter) URL:</label>
+                <input type="url" id="twitter-url" placeholder="https://x.com/cursillostewart" />
+              </div>
+              <div class="form-group">
+                <label>💬 WhatsApp:</label>
+                <input type="text" id="whatsapp-link" placeholder="https://wa.me/595985350550" />
+                <small style="color: #adabab; display: block; margin-top: 0.5rem">
+                  Ingresa el enlace completo de WhatsApp (wa.me) o solo el número
+                </small>
               </div>
             </div>
 
             <div class="content-card">
+              <h3>🎨 Editor de Footer</h3>
+
+              <!-- Color Presets Footer -->
+              <div class="form-group">
+                <label>🎨 Combinaciones de Colores Predeterminadas:</label>
+                <div
+                  class="color-presets-grid"
+                  style="
+                    display: grid;
+                    grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                    gap: 0.5rem;
+                    margin-bottom: 1rem;
+                  "
+                >
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="footerSystem.applyFooterColorPreset('dark')"
+                    title="Oscuro Profesional"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: #1a1a1a; height: 30px; border-radius: 4px"
+                    ></div>
+                    <span>Oscuro</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="footerSystem.applyFooterColorPreset('blue')"
+                    title="Azul Corporativo"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: #002147; height: 30px; border-radius: 4px"
+                    ></div>
+                    <span>Azul</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="footerSystem.applyFooterColorPreset('green')"
+                    title="Verde Moderno"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: #065f46; height: 30px; border-radius: 4px"
+                    ></div>
+                    <span>Verde</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="footerSystem.applyFooterColorPreset('purple')"
+                    title="Púrpura Elegante"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: #5b21b6; height: 30px; border-radius: 4px"
+                    ></div>
+                    <span>Púrpura</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="footerSystem.applyFooterColorPreset('red')"
+                    title="Rojo Enérgico"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: #991b1b; height: 30px; border-radius: 4px"
+                    ></div>
+                    <span>Rojo</span>
+                  </button>
+                  <button
+                    type="button"
+                    class="color-preset-btn"
+                    onclick="footerSystem.applyFooterColorPreset('orange')"
+                    title="Naranja Cálido"
+                  >
+                    <div
+                      class="preset-preview"
+                      style="background: #9a3412; height: 30px; border-radius: 4px"
+                    ></div>
+                    <span>Naranja</span>
+                  </button>
+                </div>
+              </div>
+
+              <div
+                style="
+                  display: grid;
+                  grid-template-columns: repeat(2, minmax(220px, 1fr));
+                  gap: 1rem;
+                  align-items: end;
+                  margin-bottom: 1rem;
+                "
+              >
+                <div class="form-group" style="margin: 0">
+                  <label>Color de Fondo:</label>
+                  <input type="color" id="footer-bg-color" value="#1a1a1a" class="color-picker" />
+                </div>
+                <div class="form-group" style="margin: 0">
+                  <label>Color del Texto:</label>
+                  <input type="color" id="footer-text-color" value="#ffffff" class="color-picker" />
+                </div>
+              </div>
+
+              <div class="form-group">
+                <label>Descripción del Footer:</label>
+                <textarea
+                  id="footer-description"
+                  rows="3"
+                  placeholder="Preparamos a estudiantes para ingresar a la Universidad..."
+                ></textarea>
+              </div>
+              <div class="form-group">
+                <label>Texto del Copyright:</label>
+                <input
+                  type="text"
+                  id="footer-copyright"
+                  placeholder="© 2024 Cursillo Stewart. Todos los derechos reservados."
+                />
+              </div>
+              <div class="form-group">
+                <label>Logo del Footer:</label>
+                <div class="image-upload-zone" id="footer-logo-upload-zone">
+                  <div class="upload-placeholder">
+                    <svg
+                      width="48"
+                      height="48"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                      <polyline points="17 8 12 3 7 8"></polyline>
+                      <line x1="12" y1="3" x2="12" y2="15"></line>
+                    </svg>
+                    <p>Arrastra imágenes aquí o haz clic para seleccionar</p>
+                    <small>PNG, JPG, GIF hasta 5MB</small>
+                  </div>
+                  <img id="footer-logo-preview" class="image-preview" style="display: none" />
+                  <input
+                    type="file"
+                    id="footer-logo-input"
+                    accept="image/*"
+                    style="display: none"
+                  />
+                </div>
+                <input
+                  type="url"
+                  id="footer-logo-url"
+                  placeholder="O pega una URL: images/logo-cursillo-stewart.png"
+                  style="margin-top: 0.5rem"
+                />
+                <small style="color: #adabab; display: block; margin-top: 0.5rem">
+                  Sube una imagen o ingresa una URL
+                </small>
+              </div>
+            </div>
+
+            <div class="content-card">
+              <h3>⚙️ Configuración de Usuario</h3>
+
+              <div class="form-group">
+                <label>Nombre de Usuario:</label>
+                <input type="text" id="admin-username" placeholder="admin" />
+                <small style="color: #adabab; display: block; margin-top: 0.5rem">
+                  Este será el nombre para iniciar sesión
+                </small>
+              </div>
+
+              <button id="change-username-btn" class="btn-primary">
+                Cambiar Nombre de Usuario
+              </button>
+
+              <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid #ccc" />
+
               <h3>🔒 Cambiar Contraseña</h3>
+
               <div class="form-group">
                 <label>Contraseña Actual:</label>
                 <input type="password" id="current-password" />
@@ -1343,33 +1661,21 @@
                 <label>Confirmar Nueva Contraseña:</label>
                 <input type="password" id="confirm-password" />
               </div>
-              <button id="change-password-btn" class="btn-primary">Cambiar Contraseña</button>
-            </div>
 
-            <div class="content-card">
-              <h3>🔧 Configuración por Defecto</h3>
-              <p class="card-description">
-                Gestiona la configuración predeterminada del sistema. Puedes restaurar toda la
-                configuración a los valores por defecto establecidos.
-              </p>
+              <button id="change-password-btn" class="btn-primary">Cambiar Contraseña</button>
+
+              <hr style="margin: 1.5rem 0; border: 0; border-top: 1px solid #ccc" />
+
+              <h3>💾 Respaldo y Restauración</h3>
               <div class="backup-tools">
-                <button
-                  type="button"
-                  class="btn-secondary"
-                  onclick="adminPanel.restoreDefaultConfiguration()"
-                  title="Restaurar configuración por defecto"
-                >
-                  🔄 Restaurar Configuración por Defecto
-                </button>
+                <button id="backup-btn" class="btn-primary">Crear Respaldo</button>
+                <input type="file" id="restore-input" accept=".json" style="display: none" />
+                <button id="restore-btn" class="btn-primary">Restaurar Respaldo</button>
               </div>
               <div class="form-group">
-                <label>Configuración por defecto creada:</label>
-                <span id="default-config-date">No disponible</span>
+                <label>Último respaldo:</label>
+                <span id="last-backup">Nunca</span>
               </div>
-              <small style="color: var(--admin-text-light); font-size: 0.8rem">
-                💡 Para establecer una nueva configuración por defecto, ve a la pestaña "Inicio" y
-                usa el botón "Establecer como predeterminado" al final de la sección.
-              </small>
             </div>
           </div>
         </section>

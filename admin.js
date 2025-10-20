@@ -4530,12 +4530,18 @@ AdminPanel.prototype.loadContactData = function () {
 
   // Load titles and subtitles
   this.setInputValue('contact-section-title-input', content['contact-section-title-input']);
-  this.setInputValue('contact-section-description-input', content['contact-section-description-input']);
+  this.setInputValue(
+    'contact-section-description-input',
+    content['contact-section-description-input']
+  );
   this.setInputValue('contact-form-title-input', content['contact-form-title-input']);
   this.setInputValue('contact-info-title-input', content['contact-info-title-input']);
 
   // Load colors
-  this.setInputValue('contact-section-title-color', content['contact-section-title-color'] || '#002147');
+  this.setInputValue(
+    'contact-section-title-color',
+    content['contact-section-title-color'] || '#002147'
+  );
   this.setInputValue('contact-form-title-color', content['contact-form-title-color'] || '#002147');
   this.setInputValue('contact-info-title-color', content['contact-info-title-color'] || '#002147');
 
@@ -4578,7 +4584,7 @@ AdminPanel.prototype.updateContactColors = function () {
   colorInputs.forEach(input => {
     const colorInput = document.getElementById(input.id);
     if (colorInput) {
-      colorInput.addEventListener('input', (e) => {
+      colorInput.addEventListener('input', e => {
         // Store color for save
         this.markAsUnsaved();
       });
@@ -4592,7 +4598,7 @@ AdminPanel.prototype.updateContactColors = function () {
 AdminPanel.prototype.initContactSection = function () {
   this.loadContactData();
   this.updateContactColors();
-  
+
   // Add change listeners to mark as unsaved
   const contactInputs = [
     'contact-section-title-input',
