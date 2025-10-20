@@ -375,7 +375,7 @@
             </div>
           </div>
 
-          <!-- Botón Establecer como Predeterminado -->
+          <!-- Botones de Configuración por Defecto -->
           <div class="default-config-section">
             <div class="content-card">
               <h3>⚙️ Configuración por Defecto</h3>
@@ -384,15 +384,26 @@
                 que se restaurará cuando uses la opción "Restaurar por defecto" en cualquier
                 sección.
               </p>
-              <button
-                type="button"
-                class="btn-default-config"
-                onclick="adminPanel.setAsDefaultConfiguration()"
-                title="Guardar configuración actual como predeterminada"
-              >
-                <span class="btn-icon">💾</span>
-                <span class="btn-text">Establecer como predeterminado</span>
-              </button>
+              <div class="config-buttons-group">
+                <button
+                  type="button"
+                  class="btn-default-config"
+                  onclick="adminPanel.setAsDefaultConfiguration()"
+                  title="Guardar configuración actual como predeterminada"
+                >
+                  <span class="btn-icon">💾</span>
+                  <span class="btn-text">Establecer como predeterminado</span>
+                </button>
+                <button
+                  type="button"
+                  class="btn-restore-config"
+                  onclick="adminPanel.restoreDefaultConfiguration()"
+                  title="Restaurar a la configuración predeterminada guardada"
+                >
+                  <span class="btn-icon">🔄</span>
+                  <span class="btn-text">Restaurar por defecto</span>
+                </button>
+              </div>
             </div>
           </div>
         </section>
@@ -1428,12 +1439,13 @@
                   style="font-family: monospace; font-size: 0.9em"
                 ></textarea>
                 <small style="color: var(--admin-text-muted); display: block; margin-top: 0.5rem">
-                  💡 Cómo obtener el enlace: <br />
-                  1. Ve a <a href="https://www.google.com/maps" target="_blank">Google Maps</a
-                  ><br />
-                  2. Busca tu ubicación<br />
-                  3. Haz clic en "Compartir" → "Insertar un mapa"<br />
-                  4. Copia el URL que aparece en el src del iframe (entre comillas)
+                  💡 <strong>Cómo obtener el enlace del mapa embebido:</strong><br />
+                  1️⃣ Ve a <a href="https://www.google.com/maps" target="_blank" style="color: #4fc3f7">Google Maps</a><br />
+                  2️⃣ Busca tu ubicación (dirección, negocio, punto de interés)<br />
+                  3️⃣ Haz clic en el botón <strong>"Compartir"</strong> (Share)<br />
+                  4️⃣ Selecciona la pestaña <strong>"Insertar un mapa"</strong> (Embed a map)<br />
+                  5️⃣ Copia <strong>SOLO</strong> el URL que está dentro del <code>src="..."</code> del iframe<br />
+                  📋 <strong>Ejemplo:</strong> <code style="font-size: 0.85em">https://www.google.com/maps/embed?pb=1234...</code>
                 </small>
               </div>
               <!-- Preview button removed: map URL is applied/saved directly when you Save Changes or wait for autosave -->
@@ -1574,11 +1586,11 @@
                     type="button"
                     class="color-preset-btn"
                     onclick="footerSystem.applyFooterColorPreset('blue')"
-                    title="Azul Corporativo"
+                    title="Azul Navy"
                   >
                     <div
                       class="preset-preview"
-                      style="background: #002147; height: 30px; border-radius: 4px"
+                      style="background: #000080; height: 30px; border-radius: 4px"
                     ></div>
                     <span>Azul</span>
                   </button>

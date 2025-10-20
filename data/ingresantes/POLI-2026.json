@@ -1,0 +1,19 @@
+{
+    "key": "POLI-2026",
+    "exam": "POLI",
+    "year": 2026,
+    "meta": {
+        "archivo": "Plantilla_de_Ingresantes (4).xlsx",
+        "total": 1,
+        "fecha": "2025-10-20T14:51:00+00:00"
+    },
+    "items": [
+        {
+            "nombre": "Matias Vera",
+            "puntaje": 100,
+            "carrera": "IIN",
+            "puesto": 1,
+            "preferencial": true
+        }
+    ]
+}
