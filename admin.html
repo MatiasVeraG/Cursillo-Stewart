@@ -1,8 +1,22 @@
 <!DOCTYPE html>
+<!--
+  ╔═══════════════════════════════════════════════════════════════╗
+  ║                    CURSILLO STEWART - UPTP                     ║
+  ║                  Panel de Administración                       ║
+  ║                                                                ║
+  ║  Desarrollado por: Matías Vera                                 ║
+  ║  GitHub: https://github.com/MatiasVeraG                        ║
+  ║  Año: 2024                                                     ║
+  ║                                                                ║
+  ║  © 2024 Todos los derechos reservados                          ║
+  ╚═══════════════════════════════════════════════════════════════╝
+-->
 <html lang="es" data-theme="dark">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="author" content="Matías Vera - MatiasVeraG" />
+    <meta name="developer" content="Matías Vera" />
     <title>Panel de Administración - Cursillo Stewart</title>
     <link rel="stylesheet" href="admin.css" />
 
@@ -76,6 +90,7 @@
         <button class="nav-tab" data-section="ingresantes">🎓 Ingresantes</button>
         <button class="nav-tab" data-section="cursos">📚 Cursos</button>
         <button class="nav-tab" data-section="calendario">📅 Calendario</button>
+        <button class="nav-tab" data-section="simulacros">📝 Simulacros</button>
         <button class="nav-tab" data-section="profesores">👨‍🏫 Profesores</button>
         <button class="nav-tab" data-section="contacto">📞 Contacto</button>
         <button class="nav-tab" data-section="settings">⚙️ Configuración</button>
@@ -1121,6 +1136,75 @@
           </div>
         </section>
 
+        <!-- Simulacros Section -->
+        <section id="simulacros-section" class="admin-section">
+          <h2>📝 Gestión de Simulacros</h2>
+          <div class="content-grid">
+            <!-- Títulos de la Sección -->
+            <div class="content-card">
+              <h3>📋 Títulos de la Sección</h3>
+              <div class="form-group">
+                <label>Título Principal:</label>
+                <input
+                  type="text"
+                  id="simulacros-section-title"
+                  placeholder="Simulacros de Práctica"
+                  value="Simulacros de Práctica"
+                />
+              </div>
+              <div class="form-group">
+                <label>Subtítulo:</label>
+                <input
+                  type="text"
+                  id="simulacros-section-subtitle"
+                  placeholder="Descarga material de práctica para prepararte para tu examen de ingreso"
+                  value="Descarga material de práctica para prepararte para tu examen de ingreso"
+                />
+              </div>
+            </div>
+
+            <!-- Lista de Simulacros -->
+            <div class="content-card" style="grid-column: 1 / -1">
+              <h3>📚 Lista de Simulacros</h3>
+              
+              <!-- Formulario para agregar simulacros -->
+              <div class="form-group">
+                <label>Nombre del Simulacro:</label>
+                <input
+                  type="text"
+                  id="simulacro-name"
+                  placeholder="Ej: Simulacro Matemática 2024"
+                  style="width: 100%; margin-bottom: 1rem"
+                />
+              </div>
+              
+              <div class="form-group">
+                <label>Seleccionar PDF:</label>
+                <input
+                  type="file"
+                  id="simulacro-file"
+                  accept=".pdf"
+                  multiple
+                  style="width: 100%; margin-bottom: 1rem"
+                />
+              </div>
+              
+              <button
+                type="button"
+                class="btn-primary"
+                onclick="simulacrosSystem.addSimulacro()"
+                style="width: 100%; margin-bottom: 2rem"
+              >
+                ➕ Agregar Simulacro
+              </button>
+              
+              <div id="simulacros-list" style="margin-top: 1rem">
+                <!-- Los simulacros se cargarán dinámicamente aquí -->
+              </div>
+            </div>
+          </div>
+        </section>
+
         <!-- Profesores Section -->
         <section id="profesores-section" class="admin-section">
           <h2>👨‍🏫 Gestión de Profesores</h2>
@@ -1445,7 +1529,7 @@
               <div class="form-group">
                 <label>Título Principal:</label>
                 <input type="text" id="inscription-title-input" placeholder="Inscripción" />
-                <small style="color: #666; display: block; margin-top: 0.5rem">
+                <small style="color: #adacac; display: block; margin-top: 0.5rem">
                   Este es el título principal del formulario
                 </small>
               </div>
@@ -1456,7 +1540,7 @@
                   id="inscription-subtitle-input"
                   placeholder="Completa tu registro para formar parte del Cursillo Stewart"
                 />
-                <small style="color: #666; display: block; margin-top: 0.5rem">
+                <small style="color: #adacac; display: block; margin-top: 0.5rem">
                   Aparece debajo del título principal
                 </small>
               </div>
@@ -1467,7 +1551,7 @@
                   rows="3"
                   placeholder="¡Bienvenido a Cursillo Stewart! Por favor completar el formulario para finalizar el proceso de inscripción"
                 ></textarea>
-                <small style="color: #666; display: block; margin-top: 0.5rem">
+                <small style="color: #adacac; display: block; margin-top: 0.5rem">
                   Mensaje que aparece antes del formulario
                 </small>
               </div>
@@ -1744,6 +1828,21 @@
           </div>
         </section>
       </main>
+      
+      <!-- Admin Footer -->
+      <footer style="
+        text-align: center;
+        padding: 1.5rem;
+        margin-top: 3rem;
+        border-top: 1px solid var(--admin-border);
+        color: var(--admin-text-muted);
+        font-size: 0.875rem;
+      ">
+        <p>&copy; 2025 Cursillo Stewart - UPTP. Panel de Administración.</p>
+        <p style="margin-top: 0.5rem;">
+          Desarrollado por <a href="https://github.com/MatiasVeraG" target="_blank" rel="noopener noreferrer" style="color: var(--admin-primary); text-decoration: none; font-weight: 500;">Matías Vera</a>
+        </p>
+      </footer>
     </div>
 
     <!-- Success/Error Messages -->

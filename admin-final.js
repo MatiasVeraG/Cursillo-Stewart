@@ -1,6 +1,14 @@
 /**
- * ADMIN FUNCIONAL - VERSION FINAL
- * Sistema completo de administración que FUNCIONA
+ * ╔═══════════════════════════════════════════════════════════════╗
+ * ║           CURSILLO STEWART - PANEL DE ADMINISTRACIÓN          ║
+ * ║                                                                ║
+ * ║  Desarrollado por: Matías Vera                                 ║
+ * ║  GitHub: https://github.com/MatiasVeraG                        ║
+ * ║  Año: 2025                                                     ║
+ * ║                                                                ║
+ * ║  Sistema completo de administración para el Cursillo Stewart   ║
+ * ║  © 2025 Todos los derechos reservados                          ║
+ * ╚═══════════════════════════════════════════════════════════════╝
  */
 
 // ==================== AUTENTICACIÓN ====================
@@ -2885,6 +2893,200 @@ class PasswordChangeSystem {
   }
 }
 
+// ==================== SISTEMA DE SIMULACROS ====================
+class SimulacrosSystem {
+  constructor() {
+    this.storageKey = 'simulacros_data';
+    this.simulacros = [];
+  }
+
+  init() {
+    this.loadSimulacros();
+    this.renderSimulacrosList();
+    this.loadTitles();
+    this.bindTitleEvents();
+  }
+
+  bindTitleEvents() {
+    const titleInput = document.getElementById('simulacros-section-title');
+    const subtitleInput = document.getElementById('simulacros-section-subtitle');
+    
+    if (titleInput) {
+      titleInput.addEventListener('input', () => this.saveTitles());
+    }
+    if (subtitleInput) {
+      subtitleInput.addEventListener('input', () => this.saveTitles());
+    }
+  }
+
+  loadSimulacros() {
+    try {
+      const data = localStorage.getItem(this.storageKey);
+      this.simulacros = data ? JSON.parse(data) : [];
+    } catch (error) {
+      console.error('Error al cargar simulacros:', error);
+      this.simulacros = [];
+    }
+  }
+
+  saveSimulacros() {
+    try {
+      localStorage.setItem(this.storageKey, JSON.stringify(this.simulacros));
+      this.showNotification('✅ Simulacros guardados correctamente', 'success');
+    } catch (error) {
+      console.error('Error al guardar simulacros:', error);
+      this.showNotification('❌ Error al guardar simulacros', 'error');
+    }
+  }
+
+  renderSimulacrosList() {
+    const container = document.getElementById('simulacros-list');
+    if (!container) return;
+
+    if (this.simulacros.length === 0) {
+      container.innerHTML = `
+        <div style="text-align: center; padding: 2rem; color: #94a3b8; background: #1e293b; border-radius: 8px; border: 2px dashed #334155;">
+          <p style="margin: 0; font-size: 1.1rem;">📚 No hay simulacros agregados</p>
+          <small style="color: #64748b;">Completa el formulario arriba para agregar uno</small>
+        </div>
+      `;
+      return;
+    }
+
+    container.innerHTML = `
+      <div class="simulacros-grid">
+        ${this.simulacros.map((item, index) => `
+          <div class="simulacro-card">
+            <div class="simulacro-icon">📄</div>
+            <div class="simulacro-info">
+              <h4>${item.nombre}</h4>
+              <p class="simulacro-filename">${item.nombreArchivo}</p>
+            </div>
+            <div class="simulacro-actions">
+              <button onclick="simulacrosSystem.deleteSimulacro(${index})" class="btn-delete" title="Eliminar">
+                🗑️
+              </button>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+    `;
+  }
+
+  async addSimulacro() {
+    const nameInput = document.getElementById('simulacro-name');
+    const fileInput = document.getElementById('simulacro-file');
+
+    if (!nameInput.value.trim()) {
+      this.showNotification('❌ Por favor ingresa un nombre', 'error');
+      return;
+    }
+
+    if (!fileInput.files || fileInput.files.length === 0) {
+      this.showNotification('❌ Por favor selecciona al menos un archivo PDF', 'error');
+      return;
+    }
+
+    const files = Array.from(fileInput.files);
+    
+    // Procesar cada archivo
+    for (const file of files) {
+      if (file.type !== 'application/pdf') {
+        this.showNotification(`❌ ${file.name} no es un archivo PDF válido`, 'error');
+        continue;
+      }
+
+      const simulacro = {
+        nombre: nameInput.value.trim(),
+        nombreArchivo: file.name,
+        rutaArchivo: `documents/simulacros/${file.name}`
+      };
+
+      this.simulacros.push(simulacro);
+
+      // Descargar el PDF para que el usuario lo coloque manualmente
+      this.downloadFile(file);
+    }
+
+    this.saveSimulacros();
+    this.renderSimulacrosList();
+
+    // Limpiar campos
+    nameInput.value = '';
+    fileInput.value = '';
+
+    this.showNotification(`✅ ${files.length} archivo(s) agregado(s). Colócalos en documents/simulacros/`, 'success');
+  }
+
+  downloadFile(file) {
+    const url = URL.createObjectURL(file);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = file.name;
+    document.body.appendChild(a);
+    a.click();
+    document.body.removeChild(a);
+    URL.revokeObjectURL(url);
+  }
+
+  deleteSimulacro(index) {
+    if (confirm('¿Estás seguro de que deseas eliminar este simulacro?')) {
+      const deleted = this.simulacros.splice(index, 1)[0];
+      this.saveSimulacros();
+      this.renderSimulacrosList();
+      this.showNotification(`✅ Simulacro "${deleted.nombre}" eliminado`, 'success');
+    }
+  }
+
+  saveTitles() {
+    const title = document.getElementById('simulacros-section-title')?.value || 'SIMULACROS';
+    const subtitle = document.getElementById('simulacros-section-subtitle')?.value || 'Material de práctica';
+    
+    const titles = { title, subtitle };
+    localStorage.setItem('simulacros_titles', JSON.stringify(titles));
+  }
+
+  loadTitles() {
+    try {
+      const data = localStorage.getItem('simulacros_titles');
+      if (data) {
+        const titles = JSON.parse(data);
+        const titleInput = document.getElementById('simulacros-section-title');
+        const subtitleInput = document.getElementById('simulacros-section-subtitle');
+        
+        if (titleInput) titleInput.value = titles.title || 'SIMULACROS';
+        if (subtitleInput) subtitleInput.value = titles.subtitle || 'Material de práctica';
+      }
+    } catch (error) {
+      console.error('Error al cargar títulos:', error);
+    }
+  }
+
+  showNotification(message, type = 'info') {
+    const notification = document.createElement('div');
+    notification.className = `notification notification-${type}`;
+    notification.textContent = message;
+    notification.style.cssText = `
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      background: ${type === 'success' ? '#4CAF50' : type === 'error' ? '#f44336' : '#2196F3'};
+      color: white;
+      border-radius: 8px;
+      z-index: 10000;
+      max-width: 400px;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+      font-weight: 500;
+    `;
+    
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.remove();
+    }, 5000);
+  }
+}
 // ==================== INICIALIZACIÓN ====================
 let authSystem;
 let ingresantesSystem;
@@ -2893,6 +3095,7 @@ let coursesSystem;
 let calendarSystem;
 let contactSystem;
 let socialMediaSystem;
+let simulacrosSystem;
 let profesoresSystem;
 let footerSystem;
 let backupRestoreSystem;
@@ -2944,6 +3147,11 @@ document.addEventListener('DOMContentLoaded', () => {
   socialMediaSystem = new SocialMediaSystem();
   socialMediaSystem.init();
   window.socialMediaSystem = socialMediaSystem;
+
+  // Inicializar sistema de simulacros
+  simulacrosSystem = new SimulacrosSystem();
+  simulacrosSystem.init();
+  window.simulacrosSystem = simulacrosSystem;
 
   // Inicializar sistema de profesores
   profesoresSystem = new ProfesoresSystem();
