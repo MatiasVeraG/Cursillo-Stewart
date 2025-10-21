@@ -11,6 +11,65 @@
  * ╚═══════════════════════════════════════════════════════════════╝
  */
 
+// ==================== UTILIDADES DE LOCALSTORAGE ====================
+const LocalStorageUtils = {
+  /**
+   * Verifica el uso actual de localStorage
+   * @returns {Object} Información sobre el uso de localStorage
+   */
+  checkUsage() {
+    let total = 0;
+    const items = {};
+    
+    for (let key in localStorage) {
+      if (localStorage.hasOwnProperty(key)) {
+        const size = (localStorage[key].length + key.length) * 2; // UTF-16
+        items[key] = {
+          size: size,
+          sizeKB: (size / 1024).toFixed(2)
+        };
+        total += size;
+      }
+    }
+    
+    return {
+      totalBytes: total,
+      totalKB: (total / 1024).toFixed(2),
+      totalMB: (total / 1024 / 1024).toFixed(2),
+      items: items,
+      itemCount: Object.keys(items).length
+    };
+  },
+
+  /**
+   * Obtiene los items más pesados en localStorage
+   * @param {number} limit - Cantidad de items a retornar
+   * @returns {Array} Array de items ordenados por tamaño
+   */
+  getLargestItems(limit = 5) {
+    const usage = this.checkUsage();
+    return Object.entries(usage.items)
+      .sort((a, b) => b[1].size - a[1].size)
+      .slice(0, limit)
+      .map(([key, data]) => ({ key, ...data }));
+  },
+
+  /**
+   * Muestra información de uso en consola
+   */
+  logUsage() {
+    const usage = this.checkUsage();
+    console.group('📊 LocalStorage Usage Report');
+    console.log(`Total: ${usage.totalKB} KB (${usage.totalMB} MB)`);
+    console.log(`Items: ${usage.itemCount}`);
+    console.log('\n🔝 Top 5 Largest Items:');
+    this.getLargestItems(5).forEach((item, i) => {
+      console.log(`${i + 1}. ${item.key}: ${item.sizeKB} KB`);
+    });
+    console.groupEnd();
+  }
+};
+
 // ==================== AUTENTICACIÓN ====================
 class AuthSystem {
   constructor() {
@@ -768,25 +827,32 @@ class BannerSystem {
         // Intervalo del carousel
         carouselInterval: parseInt(document.getElementById('carousel-interval')?.value || 10),
         
-        // Imágenes del carousel
-        carouselImages: JSON.parse(localStorage.getItem('carousel_images') || 'null') || this.defaultImages,
-        
-        // Logo
-        logo: localStorage.getItem('website_logo') || null,
+        // NO guardar imágenes grandes en Base64 para evitar QuotaExceededError
+        // Solo guardar referencias a si existen imágenes personalizadas
+        hasCustomImages: !!localStorage.getItem('carousel_images'),
+        hasCustomLogo: !!localStorage.getItem('website_logo'),
         
         // Timestamp
         savedAt: new Date().toISOString()
       };
 
-      // Guardar configuración por defecto
+      // Guardar configuración por defecto (sin imágenes pesadas)
       localStorage.setItem('banner_default_config', JSON.stringify(defaultConfig));
       
       showToast('✅ Configuración guardada como predeterminada', 'success');
-      console.log('✅ Default configuration saved:', defaultConfig);
+      console.log('✅ Default configuration saved (without heavy images):', defaultConfig);
+      console.log('ℹ️ Las imágenes del carousel y el logo se mantienen en sus claves separadas');
       
     } catch (error) {
       console.error('Error saving default configuration:', error);
-      showToast('❌ Error al guardar configuración por defecto', 'error');
+      
+      // Mostrar error más específico
+      if (error.name === 'QuotaExceededError') {
+        showToast('❌ Error: Espacio insuficiente en localStorage. Considera limpiar datos antiguos.', 'error');
+        console.error('💾 localStorage está lleno. Limpia datos con: localStorage.clear() o elimina items específicos');
+      } else {
+        showToast('❌ Error al guardar configuración por defecto', 'error');
+      }
     }
   }
 
@@ -869,22 +935,32 @@ class BannerSystem {
         if (intervalInput) intervalInput.value = defaultConfig.carouselInterval;
       }
 
-      // Restaurar imágenes
+      // Restaurar imágenes del carousel (si existen en la config antigua)
+      // Nueva versión: solo verificar si había imágenes personalizadas
       if (defaultConfig.carouselImages) {
+        // Configuración antigua (compatibilidad)
         localStorage.setItem('carousel_images', JSON.stringify(defaultConfig.carouselImages));
         this.displayBackgroundImages(defaultConfig.carouselImages);
+      } else if (defaultConfig.hasCustomImages === false) {
+        // Nueva versión: restaurar imágenes por defecto
+        localStorage.setItem('carousel_images', JSON.stringify(this.defaultImages));
+        this.displayBackgroundImages(this.defaultImages);
       }
+      // Si hasCustomImages === true, mantener las imágenes actuales en localStorage
 
-      // Restaurar logo
+      // Restaurar logo (si existe en la config antigua)
       if (defaultConfig.logo) {
+        // Configuración antigua (compatibilidad)
         localStorage.setItem('website_logo', defaultConfig.logo);
         const logoImg = document.getElementById('current-logo');
         if (logoImg) logoImg.src = defaultConfig.logo;
-      } else {
+      } else if (defaultConfig.hasCustomLogo === false) {
+        // Nueva versión: restaurar logo por defecto
         localStorage.removeItem('website_logo');
         const logoImg = document.getElementById('current-logo');
         if (logoImg) logoImg.src = 'images/1-1-logo-cursillo-stewart.png';
       }
+      // Si hasCustomLogo === true, mantener el logo actual en localStorage
 
       // Guardar todos los cambios
       this.saveBannerData();

@@ -2658,6 +2658,22 @@
       console.log(`📊 ${$all('.reveal').length} elementos con animación reveal`);
       console.log(`🔢 ${$all('.metric-number[data-count]').length} contadores animados`);
       console.log(`🎭 ${parallaxEls.length} elementos con parallax`);
+
+      // ===== BOTÓN INSCRÍBETE AHORA =====
+      const btnInscription = document.querySelector('.banner .btn-primary');
+      if (btnInscription) {
+        btnInscription.addEventListener('click', (e) => {
+          e.preventDefault();
+          const inscriptionSection = document.getElementById('inscripcion');
+          if (inscriptionSection) {
+            inscriptionSection.scrollIntoView({ 
+              behavior: 'smooth', 
+              block: 'start' 
+            });
+            console.log('📝 Navegando a sección de inscripción');
+          }
+        });
+      }
     </script>
   </body>
 </html>
