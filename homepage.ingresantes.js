@@ -205,8 +205,16 @@ async function showExamYear(key) {
     // Renderizar contenido - MOSTRAR TODOS LOS INGRESANTES (máximo 500)
     contentContainer.innerHTML = `
       <div class="year-content active" id="year-${key.replace('-', '')}">
-        <div class="ingresantes-list">
-          ${renderIngresantesList(itemsToShow)}
+        <div class="ranking">
+          <div class="ranking__head">
+            <span>Nombre</span>
+            <span>Puntaje</span>
+            <span>Carrera</span>
+            <span>Puesto</span>
+          </div>
+          <div class="ranking-body">
+            ${renderIngresantesList(itemsToShow)}
+          </div>
         </div>
       </div>
     `;
@@ -220,7 +228,14 @@ async function showExamYear(key) {
   }
 }
 
-// Renderizar lista de ingresantes con formato bonito
+// SVG de medalla (inline para no depender de imágenes externas)
+const MEDALLA_SVG = `
+<svg aria-hidden="true" class="medalla" viewBox="0 0 24 24">
+  <circle cx="12" cy="12" r="8" fill="currentColor"></circle>
+  <path d="M7 2h3l2 3 2-3h3l-4 6h-2L7 2z" fill="currentColor" opacity=".6"></path>
+</svg>`;
+
+// Renderizar lista de ingresantes con nuevo diseño de cards
 function renderIngresantesList(items) {
   console.log(`📋 Renderizando ${items.length} estudiantes`);
 
@@ -231,9 +246,10 @@ function renderIngresantesList(items) {
   return items
     .map(item => {
       const position = parseInt(item.posicion) || parseInt(item.puesto) || 999;
-      const isTop10 = position <= 10;
+      const puntaje = Number(item.puntaje || 0).toFixed(2);
+      const carrera = item.carrera && item.carrera.trim() ? item.carrera : "—";
 
-      // Verificar si es preferencial de forma estricta - SOLO valores verdaderos
+      // Verificar si es preferencial de forma estricta
       const isPreferencial =
         item.preferencial === true ||
         item.preferencial === 'true' ||
@@ -248,37 +264,26 @@ function renderIngresantesList(items) {
       if (isPreferencial) {
         countPreferencial++;
         console.log(
-          `✨ DORADO: ${item.nombre} - Preferencial: ${item.preferencial} (Puesto: ${position})`
+          `🏅 PREFERENCIAL: ${item.nombre} - Preferencial: ${item.preferencial} (Puesto: ${position})`
         );
       } else {
         countNoPreferencial++;
-        console.log(
-          `⚪ NORMAL: ${item.nombre} - Preferencial: ${item.preferencial} (Puesto: ${position})`
-        );
       }
 
-      let medal = '';
-      if (position === 1) medal = '🥇';
-      else if (position === 2) medal = '🥈';
-      else if (position === 3) medal = '🥉';
-      else if (position <= 10) medal = '🏅';
-
-      // Solo agregar clase 'preferencial' si ES preferencial
-      const classes = [
-        'ingresante-item',
-        isTop10 ? 'top-10' : '',
-        isPreferencial ? 'preferencial' : '',
-      ]
-        .filter(Boolean)
-        .join(' ');
+      // Medalla solo para preferenciales
+      const medalla = isPreferencial ? MEDALLA_SVG : "";
 
       return `
-      <div class="${classes}">
-        ${medal ? `<span class="medal">${medal}</span>` : ''}
-        <span class="nombre">${item.nombre || 'Sin nombre'}</span>
-        <span class="puntaje">${Number(item.puntaje || 0).toFixed(2)}</span>
-        ${item.carrera ? `<span class="carrera">${item.carrera}</span>` : ''}
-        <span class="posicion">#${position}</span>
+      <div class="ranking__row">
+        <span class="col col--name">
+          <span class="name">
+            ${medalla}
+            <span class="name__text">${item.nombre || 'Sin nombre'}</span>
+          </span>
+        </span>
+        <span class="col col--score">${puntaje}</span>
+        <span class="col col--career">${carrera}</span>
+        <span class="col col--rank">#${position}</span>
       </div>
     `;
     })
@@ -286,7 +291,7 @@ function renderIngresantesList(items) {
       // Mostrar resumen al final
       if (index === array.length - 1) {
         console.log(
-          `\n📊 RESUMEN: ${countPreferencial} preferenciales (DORADO) + ${countNoPreferencial} normales = ${items.length} total\n`
+          `\n📊 RESUMEN: ${countPreferencial} preferenciales (con medalla) + ${countNoPreferencial} normales = ${items.length} total\n`
         );
       }
       return html;

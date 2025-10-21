@@ -143,52 +143,73 @@
     return `<div class="schedule-grid">${schedulesHTML}</div>`;
   }
 
-  // Render course information section
+  // Render course information section with collapsible content
   function renderCourseInfo(course) {
     return `
       <div class="program-info">
-        <div class="info-card">
-          <h4>📚 Contenido del Cursillo</h4>
-          <div class="book-info">
-            <h5>"Precalculus - Mathematics for Calculus"</h5>
-            <p class="author">por <strong>James Stewart</strong></p>
-            <p class="book-description">
-              Reconocido mundialmente como uno de los mejores textos de Precálculo, este libro
-              proporciona una base sólida para el estudio del Cálculo y las matemáticas
-              superiores. <strong>Materiales en inglés.</strong>
-            </p>
+        <!-- Collapsible: Contenido del Cursillo -->
+        <div class="info-card collapsible-card">
+          <button class="collapsible-header" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active');">
+            <h4>📚 Contenido del Cursillo</h4>
+            <span class="toggle-icon">▼</span>
+          </button>
+          <div class="collapsible-content">
+            <div class="book-info">
+              <h5>"Precalculus - Mathematics for Calculus"</h5>
+              <p class="author">por <strong>James Stewart</strong></p>
+              <p class="book-description">
+                Reconocido mundialmente como uno de los mejores textos de Precálculo, este libro
+                proporciona una base sólida para el estudio del Cálculo y las matemáticas
+                superiores. <strong>Materiales en inglés.</strong>
+              </p>
+            </div>
+            <ul>
+              <li>Chapter 1: Fundamentals</li>
+              <li>Chapter 2: Functions</li>
+              <li>Chapter 3: Polynomial and Rational Functions</li>
+              <li>Chapter 4: Exponential and Logarithmic Functions</li>
+              <li>Chapter 5: Trigonometric Functions: Unit Circle Approach</li>
+              <li>Chapter 6: Trigonometric Functions: Right Triangle Approach</li>
+              <li>Chapter 7: Analytic Trigonometry</li>
+              <li>Chapter 8: Polar Coordinates and Parametric Equations</li>
+              <li>Chapter 9: Vectors in Two and Three Dimensions</li>
+              <li>Chapter 10: Systems of Equations and Inequalities</li>
+              <li>Chapter 11: Conic Sections</li>
+              <li>Chapter 12: Sequences and Series</li>
+              <li>Chapter 13: Limits: A Preview of Calculus</li>
+            </ul>
           </div>
-          <ul>
-            <li>Chapter 1: Fundamentals</li>
-            <li>Chapter 2: Functions</li>
-            <li>Chapter 3: Polynomial and Rational Functions</li>
-            <li>Chapter 4: Exponential and Logarithmic Functions</li>
-            <li>Chapter 5: Trigonometric Functions: Unit Circle Approach</li>
-            <li>Chapter 6: Trigonometric Functions: Right Triangle Approach</li>
-            <li>Chapter 7: Analytic Trigonometry</li>
-            <li>Chapter 8: Polar Coordinates and Parametric Equations</li>
-            <li>Chapter 9: Vectors in Two and Three Dimensions</li>
-            <li>Chapter 10: Systems of Equations and Inequalities</li>
-            <li>Chapter 11: Conic Sections</li>
-            <li>Chapter 12: Sequences and Series</li>
-            <li>Chapter 13: Limits: A Preview of Calculus</li>
-          </ul>
         </div>
-        <div class="info-card">
-          <h4>✅ Modalidades Disponibles</h4>
-          <ul>
-            ${getUniqueBadges(course.schedules)}
-          </ul>
 
-          <h4>📝 Materiales y Actividades Incluidas</h4>
-          <ul>
-            <li>📋 Ejercitarios por capítulo</li>
-            <li>📊 Exámenes parciales y totales</li>
-            <li>📚 Weekly Problems (ejercicios del libro)</li>
-            <li>🎯 Actividades de práctica dirigida</li>
-            <li>📖 Material de apoyo complementario</li>
-            <li>💻 Recursos digitales interactivos</li>
-          </ul>
+        <!-- Collapsible: Modalidades -->
+        <div class="info-card collapsible-card">
+          <button class="collapsible-header" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active');">
+            <h4>✅ Modalidades Disponibles</h4>
+            <span class="toggle-icon">▼</span>
+          </button>
+          <div class="collapsible-content">
+            <ul>
+              ${getUniqueBadges(course.schedules)}
+            </ul>
+          </div>
+        </div>
+
+        <!-- Collapsible: Materiales -->
+        <div class="info-card collapsible-card">
+          <button class="collapsible-header" onclick="this.classList.toggle('active'); this.nextElementSibling.classList.toggle('active');">
+            <h4>📝 Materiales y Actividades Incluidas</h4>
+            <span class="toggle-icon">▼</span>
+          </button>
+          <div class="collapsible-content">
+            <ul>
+              <li>📋 Ejercitarios por capítulo</li>
+              <li>📊 Exámenes parciales y totales</li>
+              <li>📚 Weekly Problems (ejercicios del libro)</li>
+              <li>🎯 Actividades de práctica dirigida</li>
+              <li>📖 Material de apoyo complementario</li>
+              <li>💻 Recursos digitales interactivos</li>
+            </ul>
+          </div>
         </div>
       </div>
     `;

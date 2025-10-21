@@ -103,7 +103,18 @@
     sortedData.forEach(entry => {
       const title = entry.title ? ` - ${entry.title}` : '';
       const description = entry.description || '';
-      
+
+      // Build a user-friendly label for the image: strip file extension if present
+      let imageLabel = '';
+      if (entry.imageName && typeof entry.imageName === 'string') {
+        // Remove extension like .jpg .jpeg .png .webp .gif
+        imageLabel = entry.imageName.replace(/\.[^/.]+$/, '');
+      } else if (entry.year) {
+        imageLabel = `Imagen de ${entry.year}`;
+      } else {
+        imageLabel = 'Imagen';
+      }
+
       timelineHTML += `
         <div class="timeline-item">
           <div class="timeline-marker"></div>
@@ -132,7 +143,7 @@
                   display: block;
                   margin-top: 0.5rem;
                 ">
-                  ${entry.imageName || `Imagen de ${entry.year}`}
+                  ${imageLabel}
                 </small>
               </div>
             `

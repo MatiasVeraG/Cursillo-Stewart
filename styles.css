@@ -756,7 +756,150 @@ section {
   transform: translateY(0);
 }
 
-/* Lista de ingresantes */
+/* ===== NUEVO DISEÑO DE RANKING DE INGRESANTES ===== */
+/* Contenedor general del ranking */
+.ranking {
+  width: 100%;
+  max-width: 920px;
+  margin: 32px auto;
+  font-family: "Poppins", system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  color: #1f2937;
+  border-radius: 14px;
+}
+
+/* Encabezado del ranking */
+.ranking__head {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr 0.7fr;
+  gap: 12px;
+  padding: 14px 18px;
+  background: #f5f6f7;
+  border-radius: 12px 12px 0 0;
+  font-weight: 600;
+  font-size: 14px;
+  text-align: center;
+}
+
+.ranking__head span:first-child { 
+  text-align: left; 
+}
+
+/* Fila de cada estudiante */
+.ranking__row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1.5fr 0.7fr;
+  gap: 12px;
+  align-items: center;
+  padding: 16px 18px;
+  background: #ffffff;
+  border-bottom: 1px solid #eee;
+  box-shadow: 0 0 0 1px rgba(0,0,0,0.02);
+  transition: all 0.3s ease;
+}
+
+.ranking__row:last-child { 
+  border-radius: 0 0 12px 12px; 
+}
+
+.ranking__row:hover { 
+  background: #fafafa;
+  transform: translateX(3px);
+}
+
+/* Columnas */
+.col { 
+  text-align: center; 
+}
+
+.col--name { 
+  text-align: left; 
+}
+
+/* Nombre con medalla */
+.name {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-weight: 600;
+}
+
+.name__text {
+  color: var(--navy);
+}
+
+/* Puntaje en rojo */
+.col--score {
+  color: #e53935;
+  font-weight: 700;
+  font-size: 1.05rem;
+}
+
+/* Carrera */
+.col--career {
+  color: var(--gray-600);
+  font-size: 0.95rem;
+}
+
+/* Puesto */
+.col--rank {
+  color: var(--gray-700);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+/* Medalla (solo para preferenciales) */
+.medalla {
+  width: 20px;
+  height: 20px;
+  color: #f59e0b; /* tono dorado SOLO para el ícono */
+  flex-shrink: 0;
+}
+
+/* Responsivo del ranking */
+@media (max-width: 720px) {
+  .ranking__head,
+  .ranking__row {
+    grid-template-columns: 2fr 1fr 1fr 0.6fr;
+    font-size: 14px;
+    padding: 12px 14px;
+  }
+  
+  .medalla { 
+    width: 18px; 
+    height: 18px; 
+  }
+
+  .name {
+    gap: 6px;
+  }
+
+  .col--score {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .ranking__head,
+  .ranking__row {
+    grid-template-columns: 2fr 0.8fr 0.6fr;
+    gap: 8px;
+    font-size: 13px;
+    padding: 10px 12px;
+  }
+
+  /* Ocultar columna de carrera en móviles pequeños */
+  .ranking__head span:nth-child(3),
+  .ranking__row .col--career {
+    display: none;
+  }
+
+  .medalla {
+    width: 16px;
+    height: 16px;
+  }
+}
+
+/* Lista de ingresantes - Fallback para compatibilidad */
 .ingresantes-list {
   background: var(--white);
   border-radius: 1rem;
@@ -782,9 +925,6 @@ section {
   background: var(--gray-50);
   transform: translateX(5px);
 }
-
-/* NOTA: El tono dorado SOLO se aplica a estudiantes con preferencial=si */
-/* La clase 'top-10' ya no aplica estilos dorados automáticamente */
 
 .ingresante-item.special {
   background: linear-gradient(90deg, rgba(59, 130, 246, 0.1), rgba(255, 255, 255, 0.1));
@@ -835,22 +975,6 @@ section {
   font-style: italic;
   flex: 1;
   text-align: right;
-}
-
-.carrera,
-.puntaje {
-  color: var(--red);
-  font-weight: 600;
-  font-size: 1.1rem;
-  margin-bottom: 0.3rem;
-}
-
-.universidad,
-.posicion {
-  color: var(--gray-600);
-  font-size: 0.95rem;
-  font-style: italic;
-  margin-bottom: 0.2rem;
 }
 
 .modalidad {
@@ -1247,6 +1371,93 @@ tbody td:first-child {
   font-size: 1.1rem;
 }
 
+/* Collapsible Cards */
+.collapsible-card {
+  background: var(--white);
+  border: 2px solid var(--gray-200);
+  overflow: hidden;
+}
+
+.collapsible-header {
+  width: 100%;
+  background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
+  color: var(--white);
+  border: none;
+  padding: 1.25rem 1.5rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.collapsible-header:hover {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--navy) 100%);
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+.collapsible-header h4 {
+  margin: 0;
+  color: var(--white);
+  font-size: 1.1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.toggle-icon {
+  font-size: 1.2rem;
+  transition: transform 0.3s ease;
+  display: inline-block;
+}
+
+.collapsible-header.active .toggle-icon {
+  transform: rotate(180deg);
+}
+
+.collapsible-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.4s ease;
+  padding: 0 1.5rem;
+  background: linear-gradient(135deg, var(--gray-50) 0%, var(--white) 100%);
+}
+
+.collapsible-content.active {
+  max-height: 2000px;
+  padding: 1.5rem;
+  border-top: 2px solid var(--gray-200);
+}
+
+.collapsible-content ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.collapsible-content li {
+  padding: 0.75rem 0;
+  border-bottom: 1px solid var(--gray-200);
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.collapsible-content li:last-child {
+  border-bottom: none;
+}
+
+.collapsible-content li::before {
+  content: '✓';
+  color: var(--red);
+  font-weight: bold;
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
 /* Book Information Styles */
 .book-info {
   background: linear-gradient(135deg, var(--navy) 0%, var(--blue) 100%);
@@ -1363,6 +1574,84 @@ tbody td:first-child {
 .calendar-card p {
   color: var(--gray-600);
   font-size: 0.875rem;
+}
+
+/* Simulacros Section */
+.simulacros-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.simulacro-card {
+  background: white;
+  border-radius: 12px;
+  padding: 1.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s ease;
+  border: 2px solid var(--gray-100);
+  display: flex;
+  flex-direction: column;
+}
+
+.simulacro-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  border-color: var(--navy);
+}
+
+.simulacro-icon {
+  font-size: 3rem;
+  margin-bottom: 1rem;
+  text-align: center;
+}
+
+.simulacro-title {
+  font-size: 1.3rem;
+  font-weight: 600;
+  color: var(--navy);
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+.simulacro-download {
+  display: inline-block;
+  width: 100%;
+  padding: 0.875rem 1.5rem;
+  background: var(--navy);
+  color: white;
+  text-align: center;
+  border-radius: 8px;
+  text-decoration: none;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  border: none;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 1rem;
+}
+
+.simulacro-download:hover {
+  background: var(--blue);
+  transform: scale(1.02);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.simulacro-download:active {
+  transform: scale(0.98);
+}
+
+.no-simulacros {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--gray-600);
+}
+
+.no-simulacros-icon {
+  font-size: 4rem;
+  margin-bottom: 1rem;
+  opacity: 0.5;
 }
 
 /* Forms */
@@ -2048,6 +2337,18 @@ section:not(#inicio) {
 
   .banner .subtitle {
     font-size: 1.25rem;
+  }
+
+  /* Simulacros Responsive */
+  .simulacros-grid {
+    grid-template-columns: 1fr;
+    gap: 1.5rem;
+  }
+}
+
+@media (max-width: 1024px) {
+  .simulacros-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 

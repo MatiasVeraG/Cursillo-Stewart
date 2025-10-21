@@ -135,7 +135,7 @@
             <a href="#conocenos" role="button" aria-label="Ir a Conócenos">Conócenos</a>
             <a href="#ingresantes" role="button" aria-label="Ir a Ingresantes">Ingresantes</a>
             <a href="#programa" role="button" aria-label="Ir a Cursos">Cursos</a>
-            <a href="simulacros.html">Simulacros</a>
+            <a href="#simulacros" role="button" aria-label="Ir a Simulacros">Simulacros</a>
             <a href="profesores.html">Profesores</a>
             <a href="#contacto" role="button" aria-label="Ir a Contacto">¡Contáctanos!</a>
           </nav>
@@ -150,7 +150,7 @@
           <a href="#conocenos">Conócenos</a>
           <a href="#ingresantes">Ingresantes</a>
           <a href="#programa">Cursos</a>
-          <a href="simulacros.html">Simulacros</a>
+          <a href="#simulacros">Simulacros</a>
           <a href="profesores.html">Profesores</a>
           <a href="#contacto">Contacto</a>
         </div>
@@ -697,8 +697,29 @@
       </div>
     </section>
 
+    <!-- Simulacros -->
+    <section id="simulacros" class="bg-gray">
+      <div class="container">
+        <div class="section-header reveal fade-up">
+          <h2 id="simulacros-title">Simulacros de Práctica</h2>
+          <p id="simulacros-subtitle">Descarga material de práctica para prepararte para tu examen de ingreso</p>
+        </div>
+
+        <div class="simulacros-grid reveal zoom-in" id="simulacros-container">
+          <!-- Los simulacros se cargarán dinámicamente desde el panel de administración -->
+        </div>
+
+        <!-- Mensaje cuando no hay simulacros -->
+        <div class="no-simulacros" id="no-simulacros" style="display: none">
+          <div class="no-simulacros-icon">📚</div>
+          <h3 style="color: var(--navy); margin-bottom: 0.5rem">No hay simulacros disponibles</h3>
+          <p>Pronto subiremos material de práctica para tu preparación.</p>
+        </div>
+      </div>
+    </section>
+
     <!-- Calendario -->
-    <section id="calendario" class="bg-gray">
+    <section id="calendario">
       <div class="container">
         <div class="section-header">
           <h2>Calendario de Eventos</h2>
@@ -2674,6 +2695,117 @@
           }
         });
       }
+
+      // ===== CARGAR SIMULACROS =====
+      function loadSimulacros() {
+        try {
+          const data = localStorage.getItem('simulacros_data');
+          const simulacros = data ? JSON.parse(data) : [];
+          
+          const container = document.getElementById('simulacros-container');
+          const noSimulacros = document.getElementById('no-simulacros');
+          
+          if (!simulacros || simulacros.length === 0) {
+            if (noSimulacros) noSimulacros.style.display = 'block';
+            if (container) container.innerHTML = '';
+            return;
+          }
+          
+          if (noSimulacros) noSimulacros.style.display = 'none';
+          if (container) {
+            container.innerHTML = simulacros.map((simulacro, index) => `
+              <div class="simulacro-card">
+                <div class="simulacro-icon">📄</div>
+                <h3 class="simulacro-title">${simulacro.nombre}</h3>
+                <button 
+                   class="simulacro-download" 
+                   onclick="downloadSimulacro(${index})"
+                   type="button">
+                  📥 Descargar PDF
+                </button>
+              </div>
+            `).join('');
+          }
+        } catch (error) {
+          console.error('Error al cargar simulacros:', error);
+          const noSimulacros = document.getElementById('no-simulacros');
+          if (noSimulacros) noSimulacros.style.display = 'block';
+        }
+      }
+
+      // Función para descargar simulacro como PDF
+      window.downloadSimulacro = function(index) {
+        try {
+          const data = localStorage.getItem('simulacros_data');
+          const simulacros = data ? JSON.parse(data) : [];
+          const simulacro = simulacros[index];
+          
+          if (!simulacro) {
+            alert('Simulacro no encontrado');
+            return;
+          }
+          
+          // Si tiene pdfData en Base64, crear Blob y descargar
+          if (simulacro.pdfData) {
+            // Remover el prefijo data:application/pdf;base64, si existe
+            const base64Data = simulacro.pdfData.includes('base64,') 
+              ? simulacro.pdfData.split('base64,')[1] 
+              : simulacro.pdfData;
+            
+            // Convertir Base64 a binary
+            const binaryString = atob(base64Data);
+            const bytes = new Uint8Array(binaryString.length);
+            for (let i = 0; i < binaryString.length; i++) {
+              bytes[i] = binaryString.charCodeAt(i);
+            }
+            
+            // Crear Blob
+            const blob = new Blob([bytes], { type: 'application/pdf' });
+            
+            // Crear URL temporal y descargar
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = simulacro.nombreArchivo || (simulacro.nombre + '.pdf');
+            document.body.appendChild(a);
+            a.click();
+            
+            // Limpiar después de un delay para permitir que la descarga inicie
+            setTimeout(() => {
+              document.body.removeChild(a);
+              URL.revokeObjectURL(url);
+            }, 500);
+            
+            console.log('✅ Simulacro descargado:', simulacro.nombre);
+          } else {
+            alert('No hay datos de PDF disponibles para este simulacro');
+          }
+        } catch (error) {
+          console.error('❌ Error al descargar simulacro:', error);
+          alert('Error al descargar el simulacro. Por favor, intenta nuevamente.');
+        }
+      }
+
+      // Cargar títulos de simulacros desde localStorage
+      function loadSimulacrosTitles() {
+        try {
+          const data = localStorage.getItem('simulacros_titles');
+          if (data) {
+            const titles = JSON.parse(data);
+            const titleEl = document.getElementById('simulacros-title');
+            const subtitleEl = document.getElementById('simulacros-subtitle');
+            
+            if (titleEl && titles.title) titleEl.textContent = titles.title;
+            if (subtitleEl && titles.subtitle) subtitleEl.textContent = titles.subtitle;
+          }
+        } catch (error) {
+          console.error('Error al cargar títulos de simulacros:', error);
+        }
+      }
+
+      // Inicializar simulacros
+      loadSimulacros();
+      loadSimulacrosTitles();
     </script>
   </body>
 </html>

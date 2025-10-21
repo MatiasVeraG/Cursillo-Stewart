@@ -4615,14 +4615,39 @@ class SimulacrosSystem {
   }
 
   downloadFile(file) {
-    const url = URL.createObjectURL(file);
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = file.name;
-    document.body.appendChild(a);
-    a.click();
-    document.body.removeChild(a);
-    URL.revokeObjectURL(url);
+    try {
+      const url = URL.createObjectURL(file);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = file.name || 'download';
+      // Some browsers require the link to be in the DOM
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      // Delay revoke to ensure the browser has started the download process
+      setTimeout(() => {
+        try { URL.revokeObjectURL(url); } catch (e) { /* ignore */ }
+      }, 500);
+    } catch (err) {
+      console.error('Error during downloadFile:', err);
+      // Fallback: attempt to download by reading as data URL
+      try {
+        const reader = new FileReader();
+        reader.onload = function (e) {
+          const a2 = document.createElement('a');
+          a2.href = e.target.result;
+          a2.download = file.name || 'download';
+          document.body.appendChild(a2);
+          a2.click();
+          document.body.removeChild(a2);
+        };
+        reader.readAsDataURL(file);
+      } catch (e2) {
+        console.error('Fallback download also failed:', e2);
+        alert('Error al iniciar la descarga. Por favor, inténtalo manualmente desde la carpeta de archivos.');
+      }
+    }
   }
 
   deleteSimulacro(index) {
