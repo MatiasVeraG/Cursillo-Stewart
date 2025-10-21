@@ -1,164 +1,235 @@
-# Cursillo Stewart - Sitio Web Oficial
+# Cursillo Stewart – Sitio Oficial UPTP
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](https://github.com/MatiasVeraG/Cursillo-Stewart)
-[![Developer](https://img.shields.io/badge/Developer-Mat%C3%ADas%20Vera-blue.svg)](https://github.com/MatiasVeraG)
+[![GitHub Pages](https://img.shields.io/badge/demo-live-success?logo=github)](https://matiasverag.github.io/Cursillo-Stewart/)
+[![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![HTML5](https://img.shields.io/badge/HTML-5-E34F26?logo=html5&logoColor=white)
+![CSS3](https://img.shields.io/badge/CSS-3-1572B6?logo=css3&logoColor=white)
+![JavaScript](https://img.shields.io/badge/JavaScript-Vanilla-F7DF1E?logo=javascript&logoColor=black)
 
-## 👨‍💻 Desarrollador
+**Preparación universitaria para aspirantes a la Universidad Politécnica Taiwan Paraguay (UPTP).**  
+Landing page moderna + Panel de Administración sin backend para gestión de ingresantes, simulacros, countdown y contenido editable.
 
-**Matías Vera**  
-[![GitHub](https://img.shields.io/badge/GitHub-MatiasVeraG-181717?logo=github)](https://github.com/MatiasVeraG)
+👉 **[Ver Demo en Vivo](https://matiasverag.github.io/Cursillo-Stewart/)** 
 
 ---
 
-## 📖 Descripción
+## 📸 Capturas de Pantalla
 
-Sitio web oficial del **Cursillo Stewart**, un programa introductorio de apoyo académico para aspirantes a la **Universidad Politécnica Taiwan Paraguay (UPTP)**. Este sitio proporciona información sobre el programa, horarios, profesores y proceso de inscripción.
+### 🏠 Página Principal
+![Homepage Hero](docs/assets/hero-screenshot.png)
+*Landing page con animaciones elegantes y diseño responsive*
 
-## 🎨 Características
+### 🎛️ Panel de Administración
+![Admin Panel](docs/assets/admin-screenshot.png)
+*Panel de administración completo sin necesidad de backend*
 
-- ✅ Diseño responsive y moderno
-- ✅ Paleta de colores roja y azul acorde al logo institucional
-- ✅ Navegación intuitiva y accesible
-- ✅ Optimizado para dispositivos móviles
-- ✅ Carga rápida y eficiente
+### 📄 Gestión de Simulacros
+![Simulacros](docs/assets/simulacros-screenshot.png)
+*Sistema de gestión y descarga de simulacros en PDF*
 
-## 🚀 Tecnologías Utilizadas
+---
 
-- **HTML5**: Estructura semántica
-- **CSS3**: Estilos modernos con Variables CSS y Flexbox/Grid
-- **JavaScript**: Interactividad (futuras implementaciones)
-- **Git**: Control de versiones con GitFlow
+## ✨ Características
 
-## 📱 Secciones
+- **🎯 Admin sin Backend**: JSON + localStorage para gestión completa
+- **📊 Gestión de Ingresantes**: Carga CSV, preferenciales destacados, filtros por examen
+- **📄 Simulacros**: PDFs organizados por categoría con descarga directa
+- **⏰ Countdown Editable**: Contador regresivo personalizable desde admin
+- **📝 Contenido Dinámico**: Sección "Conócenos", cursos, calendario editables
+- **🎨 Animaciones Elegantes**: CountUp.js, scroll reveal, parallax sutil
+- **📱 Responsive**: Optimizado para mobile, tablet y desktop
+- **♿ Accesible**: Soporte prefers-reduced-motion, ARIA labels
+- **🚀 Performance**: Lazy loading, IntersectionObserver, 60 FPS
 
-1. **Inicio**: Banner principal con call-to-action
-2. **Sobre Nosotros**: Información del programa
-3. **Programa**: Detalles del cursillo
-4. **Horarios**: Cronograma de clases
-5. **Profesores**: Equipo docente
-6. **Inscripción**: Proceso de registro
-7. **Contacto**: Información de contacto
+---
 
-## 🛠️ Instalación y Uso
+## ⚡️ Quick Start
 
-### Prerrequisitos
-- Navegador web moderno
-- Editor de código (recomendado: VS Code)
-
-### Instalación
 ```bash
 # Clonar el repositorio
 git clone https://github.com/MatiasVeraG/Cursillo-Stewart.git
-
-# Navegar al directorio
 cd Cursillo-Stewart
 
-# Abrir en el navegador
-start index.html
+# Abrir index.html en tu navegador
+start index.html       # Windows
+open index.html        # macOS
+xdg-open index.html    # Linux
+
+# O usar un servidor local (opcional)
+tools/run-server.bat   # Windows con PHP
+python -m http.server  # Cualquier OS con Python
 ```
 
-### Desarrollo
-```bash
-# Cambiar a rama de desarrollo
-git checkout develop
+**¡Eso es todo!** No requiere instalación de dependencias.
 
-# Crear nueva feature
-git checkout -b feature/nueva-funcionalidad
+### 🎛️ Acceder al Panel de Admin
 
-# Hacer cambios y commit
-git add .
-git commit -m "feat: descripción de la funcionalidad"
+1. Abre `admin.html` en tu navegador
+2. Gestiona ingresantes, simulacros, countdown y más
+3. Los cambios se reflejan automáticamente en `index.html`
 
-# Push de la feature
-git push origin feature/nueva-funcionalidad
-```
+---
 
-## 📁 Estructura del Proyecto
+## 📚 Documentación
+
+| Guía | Descripción |
+|------|-------------|
+| [**📖 Índice de Docs**](docs/README.md) | TOC completo de toda la documentación |
+| [🎛️ Guía Admin](docs/ADMIN.md) | Panel de administración completo |
+| [⏰ Countdown](docs/COUNTDOWN_EDITABLE_GUIDE.md) | Sistema de contador regresivo |
+| [📖 Conócenos](docs/CONOCENOS_EDITABLE_GUIDE.md) | Gestión de contenido "Conócenos" |
+| [📄 Simulacros](docs/INSTRUCCIONES_SIMULACROS.md) | Sistema de PDFs de simulacros |
+| [✨ Animaciones](docs/ANIMACIONES_SISTEMA.md) | Sistema completo de animaciones |
+| [📊 Implementación](docs/IMPLEMENTACION_ANIMACIONES.md) | Resumen técnico de features |
+
+---
+
+## 🧱 Estructura del Proyecto
 
 ```
 Cursillo-Stewart/
-├── index.html          # Página principal
-├── styles.css          # Estilos principales
-├── images/             # Recursos gráficos
-│   ├── logo-cursillo-stewart.png
-│   └── .gitkeep
-├── README.md           # Documentación
-├── .gitignore          # Archivos ignorados por Git
-└── .github/            # Configuraciones de GitHub
-    └── workflows/      # CI/CD (futuro)
+├── index.html              # Página principal
+├── styles.css              # Estilos globales
+├── admin.html              # Panel de administración
+├── simulacros.html         # Página de simulacros
+├── profesores.html         # Página de profesores
+├── homepage.*.js           # Scripts modulares (countdown, ingresantes, etc.)
+│
+├── /admin                  # Sistema modular de admin
+│   ├── admin-modular.js
+│   └── modules/            # Módulos por funcionalidad
+│
+├── /api                    # API REST simulada (PHP)
+│   └── admin_api.php
+│
+├── /data                   # JSON de contenido
+│   ├── courses.json
+│   ├── sections.json
+│   ├── simulacros.json
+│   └── ingresantes/        # CSVs de ingresantes por examen
+│
+├── /documents              # PDFs de simulacros
+│   └── simulacros/
+│
+├── /images                 # Assets de producción
+├── /Icons                  # Iconografía SVG
+├── /schemas                # JSON schemas de validación
+│
+├── /docs                   # 📚 Documentación completa
+│   ├── README.md           # Índice de docs
+│   ├── assets/             # Capturas, GIFs para docs
+│   └── *.md                # Guías técnicas
+│
+├── /examples               # 🧪 Archivos de prueba
+│   └── test-*.html
+│
+└── /tools                  # 🔧 Scripts auxiliares
+    ├── run-server.bat
+    └── *.js (fixes, patches)
 ```
 
-## 🎨 Paleta de Colores
+---
 
-| Color | Hex | Uso |
-|-------|-----|-----|
-| Azul Marino | `#1e40af` | Header, títulos principales |
-| Azul | `#3b82f6` | Elementos secundarios |
-| Azul Claro | `#93c5fd` | Hover states |
-| Rojo | `#dc2626` | Botones, acentos |
-| Rojo Claro | `#fca5a5` | Hover de botones |
-| Blanco | `#ffffff` | Fondos, texto sobre oscuro |
+## 🤝 Contribuir
 
-## 📋 Roadmap
+¡Las contribuciones son bienvenidas! Este proyecto usa **[Conventional Commits](https://www.conventionalcommits.org/)**.
 
-- [ ] Implementar sistema de inscripciones online
-- [ ] Agregar galería de fotos
-- [ ] Integrar formulario de contacto funcional
-- [ ] Implementar modo oscuro
-- [ ] Agregar animaciones avanzadas
-- [ ] Optimización SEO
-- [ ] PWA (Progressive Web App)
+### Pasos para Contribuir
 
-## 🤝 Contribución
+```bash
+# 1. Fork el repositorio
+# 2. Crea una rama
+git checkout -b feature/mi-funcionalidad
 
-1. Fork el proyecto
-2. Crear feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit los cambios (`git commit -m 'Add: AmazingFeature'`)
-4. Push al branch (`git push origin feature/AmazingFeature`)
-5. Abrir un Pull Request
+# 3. Haz tus cambios y commit
+git commit -m "feat: agregar búsqueda de ingresantes"
 
-### Convenciones de Commit
+# 4. Push y abre un PR
+git push origin feature/mi-funcionalidad
+```
 
-Usamos [Conventional Commits](https://conventionalcommits.org/):
+**Convenciones de Commits:**
 
 - `feat:` Nueva funcionalidad
 - `fix:` Corrección de bugs
 - `docs:` Cambios en documentación
-- `style:` Cambios de formato (no afectan funcionalidad)
-- `refactor:` Refactorización de código
-- `test:` Agregar o modificar tests
-- `chore:` Tareas de mantenimiento
+- `style:` Formateo de código
+- `refactor:` Refactorización
+- `perf:` Mejoras de performance
+- `test:` Tests
+- `chore:` Mantenimiento
 
-## 📄 Licencia
+Ver [CONTRIBUTING.md](CONTRIBUTING.md) para más detalles.
 
-Este proyecto está bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
+---
 
-## �‍💻 Autor
+## 🧪 Testing y Ejemplos
+
+Archivos de prueba disponibles en `/examples/`:
+
+- `test-countdown-system.html` - Probar contador regresivo
+- `test-ingresantes.html` - Probar sistema de ingresantes
+- `test-simulacros-descarga.html` - Probar descarga de PDFs
+- `test-sistema-completo.html` - Validación end-to-end
+
+---
+
+## 📝 Licencia
+
+[MIT](LICENSE) © 2025 Matías Vera G
+
+---
+
+## 👨‍💻 Autor
+
+**Matías Vera G**
+
+- GitHub: [@MatiasVeraG](https://github.com/MatiasVeraG)
+- Proyecto: [Cursillo Stewart](https://github.com/MatiasVeraG/Cursillo-Stewart)
+
+---
+
+## 🎨 Social Preview
+
+Para configurar la imagen de preview en redes sociales:
+
+1. Ir a **Settings** > **General** (del repositorio)
+2. En **Social preview**, hacer clic en **Edit**
+3. Subir la imagen: `docs/assets/social-preview.png` (1280×640 px)
+
+Esta imagen aparecerá cuando compartas el repo en redes sociales.
+
+---
+
+## 🌟 Features Destacados
+
+- ✅ **Zero Dependencies**: Solo Vanilla JS (excepto CountUp.js desde CDN)
+- ✅ **No Build Step**: Abre y funciona, sin npm install
+- ✅ **Offline-Ready**: localStorage para persistencia
+- ✅ **Modern Web APIs**: IntersectionObserver, MutationObserver, fetch
+- ✅ **Accessible**: WCAG compliance, keyboard navigation
+- ✅ **SEO Friendly**: Semantic HTML, meta tags optimizados
+
+---
+
+## 📊 Stack Técnico
+
+| Tecnología | Uso |
+|------------|-----|
+| HTML5 | Estructura semántica |
+| CSS3 | Custom properties, Grid, Flexbox, Animations |
+| JavaScript ES6+ | Modules, async/await, observers |
+| CountUp.js | Conteos animados |
+| EmailJS | Formulario de contacto sin backend |
+| localStorage | Persistencia de datos |
+| JSON | Almacenamiento de contenido |
+
+---
 
 <div align="center">
-  <img src="https://github.com/MatiasVeraG.png" width="100" style="border-radius: 50%;" />
-  
-  ### Matías Vera
-  
-  **Desarrollador Full Stack**
-  
-  [![GitHub](https://img.shields.io/badge/GitHub-MatiasVeraG-181717?style=for-the-badge&logo=github)](https://github.com/MatiasVeraG)
-  
-  *Desarrollo completo del sitio web y panel de administración*
-  
-  © 2025 - Todos los derechos reservados
+
+**[⬆ Volver arriba](#cursillo-stewart--sitio-oficial-uptp)**
+
+Made with ❤️ by [Matías Vera G](https://github.com/MatiasVeraG)
+
 </div>
-
----
-
-## 📞 Contacto
-
-**Universidad Politécnica Taiwan Paraguay**
-- Email: info@uptp.edu.py
-- Teléfono: +595 XXX XXX XXX
-- Dirección: Paraguay
-
----
-
-⭐ ¡No olvides dar una estrella al proyecto si te fue útil!

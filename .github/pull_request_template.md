@@ -1,10 +1,10 @@
 # Pull Request
 
 ## 📝 Descripción
-Una descripción clara de los cambios realizados.
+<!-- Describe los cambios realizados en este PR -->
 
 ## 🔗 Issue Relacionado
-Fixes #(número del issue)
+Closes #
 
 ## 🧪 Tipo de Cambio
 - [ ] 🐛 Bug fix (cambio que no rompe funcionalidad y corrige un issue)
@@ -15,14 +15,14 @@ Fixes #(número del issue)
 - [ ] ♻️ Refactorización de código
 - [ ] ⚡ Mejoras de rendimiento
 
+## 📸 Screenshots
+<!-- Si aplica, agrega capturas de antes y después -->
+
 ## 🧪 Testing
 - [ ] He probado mis cambios localmente
 - [ ] Los cambios funcionan en diferentes navegadores
 - [ ] Los cambios funcionan en dispositivos móviles
 - [ ] No he introducido nuevos warnings o errores
-
-## 📸 Screenshots (si aplica)
-Agrega screenshots de los cambios visuales realizados.
 
 ## ✅ Checklist
 - [ ] Mi código sigue las convenciones de estilo del proyecto
@@ -30,7 +30,23 @@ Agrega screenshots de los cambios visuales realizados.
 - [ ] He comentado mi código, particularmente en áreas difíciles de entender
 - [ ] He hecho los cambios correspondientes a la documentación
 - [ ] Mis cambios no generan nuevos warnings
-- [ ] He agregado tests que prueban que mi fix es efectivo o que mi funcionalidad funciona
+- [ ] Los nombres de commits siguen Conventional Commits
 
 ## 📋 Notas Adicionales
-Cualquier información adicional que consideres relevante.
+<!-- Cualquier información adicional que consideres relevante -->
+
+---
+
+## � Conventional Commits
+
+Este proyecto usa [Conventional Commits](https://www.conventionalcommits.org/). Ejemplos:
+
+```
+feat: agregar sistema de búsqueda de ingresantes
+fix: corregir error en formulario de contacto
+docs: actualizar README con nuevas instrucciones
+style: formatear código con Prettier
+refactor: reorganizar estructura de carpetas
+perf: optimizar carga de imágenes
+chore: actualizar dependencias
+```
