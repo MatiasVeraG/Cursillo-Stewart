@@ -192,6 +192,13 @@ nav a:hover {
   align-items: center;
   position: relative;
   overflow: hidden;
+  /* Mejora la calidad de renderizado de imágenes */
+  image-rendering: -webkit-optimize-contrast;
+  image-rendering: crisp-edges;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
 }
 
 .banner::before {
@@ -1956,8 +1963,12 @@ section:not(#inicio) {
 /* Optimización para dispositivos móviles */
 @media (max-width: 768px) {
   .banner {
-    background-attachment: scroll;
+    background-attachment: scroll; /* Cambiar a scroll en móviles */
     min-height: 80vh;
+    /* Forzar renderizado de alta calidad en móviles */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+    will-change: background-image;
   }
 
   .banner h2 {
@@ -1966,6 +1977,14 @@ section:not(#inicio) {
 
   .banner .subtitle {
     font-size: 1.25rem;
+  }
+}
+
+/* Media query adicional para pantallas muy pequeñas */
+@media (max-width: 480px) {
+  .banner {
+    background-size: cover;
+    background-position: center center;
   }
 }
 

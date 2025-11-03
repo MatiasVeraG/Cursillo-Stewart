@@ -186,7 +186,7 @@
               </p>
               <div class="timeline-image" style="text-align: center; margin-top: 1.5rem">
                 <img
-                  src="images/Nuestros_ingresantes_del_2023.jpg"
+                  src="images/nuestros_ingresantes_del_2023.jpg"
                   alt="Departamento inicial del Cursillo Stewart"
                   style="
                     width: 100%;
@@ -222,7 +222,7 @@
               </p>
               <div class="timeline-image" style="text-align: center; margin-top: 1.5rem">
                 <img
-                  src="images/Nuestros_ingresantes_del_2024.jpg"
+                  src="images/nuestros_ingresantes_del_2024.jpg"
                   alt="Departamento inicial del Cursillo Stewart"
                   style="
                     width: 100%;
@@ -259,8 +259,8 @@
               </p>
               <div class="timeline-image" style="text-align: center; margin-top: 1.5rem">
                 <img
-                  src="images/Nuestras_nuevas_instalaciones.jpg"
-                  alt="Departamento inicial del Cursillo Stewart"
+                  src="images/nuestras_nuevas_instalaciones.jpg"
+                  alt="departamento inicial del Cursillo Stewart"
                   style="
                     width: 100%;
                     max-width: 400px;
@@ -2566,10 +2566,12 @@
 
         setInitialBackground() {
           if (this.banner) {
+            const isMobile = window.innerWidth <= 768;
             this.banner.style.backgroundImage = `linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(30, 64, 175, 0.15) 100%), url('${this.images[0]}')`;
             this.banner.style.backgroundSize = 'cover';
             this.banner.style.backgroundPosition = 'center';
-            this.banner.style.backgroundAttachment = 'fixed';
+            // En móviles, usar scroll en lugar de fixed para mejor rendimiento
+            this.banner.style.backgroundAttachment = isMobile ? 'scroll' : 'fixed';
           }
         }
 
@@ -2598,9 +2600,16 @@
           const newImage = this.images[this.currentIndex];
 
           if (this.banner) {
-            // Smooth transition
-            this.banner.style.transition = 'background-image 1s ease-in-out';
-            this.banner.style.backgroundImage = `linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(30, 64, 175, 0.15) 100%), url('${newImage}')`;
+            // Precargar la imagen antes de cambiarla
+            const img = new Image();
+            img.onload = () => {
+              // Smooth transition una vez que la imagen esté cargada
+              this.banner.style.transition = 'background-image 1s ease-in-out';
+              this.banner.style.backgroundImage = `linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(30, 64, 175, 0.15) 100%), url('${newImage}')`;
+              this.banner.style.backgroundSize = 'cover';
+              this.banner.style.backgroundPosition = 'center';
+            };
+            img.src = newImage;
           }
         }
 
