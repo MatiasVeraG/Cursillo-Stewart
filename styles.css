@@ -3188,3 +3188,10 @@ nav a.active::after {
 .toggle-section.active .toggle-content > * {
   animation: slideDown 0.4s ease-out;
 }
+
+/* ===== CORRECCIÓN PARA MÓVILES ===== */
+@media (max-width: 768px) {
+  .banner {
+    background-attachment: scroll;
+  }
+}
