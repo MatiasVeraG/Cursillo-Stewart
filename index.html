@@ -1,0 +1,2942 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Cursillo Stewart - Programa introductorio de apoyo académico para aspirantes a la Universidad Politécnica Taiwan Paraguay (UPTP). Prepárate para tu futuro universitario."
+    />
+    <meta
+      name="keywords"
+      content="cursillo, stewart, UPTP, universidad, paraguay, taiwan, educación, preparación universitaria"
+    />
+    <meta name="author" content="Universidad Politécnica Taiwan Paraguay" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta
+      property="og:type"
+      content="web      // EmailJS initialization
+      (function() {
+        emailjs.init('xW-mdqdZ0aTjeEmGS'); // Clave pública de EmailJS
+      })();"
+    />
+    <meta property="og:url" content="https://stewart.com.py/" />
+    <meta
+      property="og:title"
+      content="Cursillo Stewart - Universidad Politécnica Taiwan Paraguay"
+    />
+    <meta
+      property="og:description"
+      content="Programa introductorio de apoyo académico para aspirantes universitarios. Prepárate para tu futuro en UPTP."
+    />
+    <meta property="og:image" content="images/logo-cursillo-stewart.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://stewart.com.py/" />
+    <meta
+      property="twitter:title"
+      content="Cursillo Stewart - Universidad Politécnica Taiwan Paraguay"
+    />
+    <meta
+      property="twitter:description"
+      content="Programa introductorio de apoyo académico para aspirantes universitarios. Prepárate para tu futuro en UPTP."
+    />
+    <meta property="twitter:image" content="images/logo-cursillo-stewart.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/1-1-logo-cursillo-stewart.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/1-1-logo-cursillo-stewart.png" />
+    <link rel="apple-touch-icon" href="images/1-1-logo-cursillo-stewart.png" />
+
+    <title>
+      Cursillo Stewart - Universidad Politécnica Taiwan Paraguay | Preparación Universitaria
+    </title>
+
+    <!-- Preconnect para mejorar rendimiento -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- EmailJS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.2/dist/confetti.browser.min.js"></script>
+
+    <!-- Anime.js for animations -->
+    <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "Cursillo Stewart - UPTP",
+        "description": "Programa introductorio de apoyo académico para aspirantes a la Universidad Politécnica Taiwan Paraguay",
+        "url": "https://cursillo-stewart.uptp.edu.py/",
+        "logo": "images/logo-cursillo-stewart.png",
+        "sameAs": ["https://www.facebook.com/uptp", "https://www.instagram.com/uptp"]
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <!-- Logo -->
+          <div class="logo">
+            <img
+              src="images/logo-cursillo-stewart.png"
+              alt="Cursillo Stewart Logo"
+              class="logo-image"
+            />
+          </div>
+
+          <!-- Navigation Menu -->
+          <nav>
+            <a href="#inicio" role="button" aria-label="Ir a Inicio">Inicio</a>
+            <a href="#conocenos" role="button" aria-label="Ir a Conócenos">Conócenos</a>
+            <a href="#ingresantes" role="button" aria-label="Ir a Ingresantes">Ingresantes</a>
+            <a href="#programa" role="button" aria-label="Ir a Cursos">Cursos</a>
+            <a href="#simulacros" role="button" aria-label="Ir a Simulacros">Simulacros</a>
+            <a href="profesores.html">Profesores</a>
+            <a href="#contacto" role="button" aria-label="Ir a Contacto">¡Contáctanos!</a>
+          </nav>
+
+          <!-- Mobile Menu Button -->
+          <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+          <a href="#inicio">Inicio</a>
+          <a href="#conocenos">Conócenos</a>
+          <a href="#ingresantes">Ingresantes</a>
+          <a href="#programa">Cursos</a>
+          <a href="#simulacros">Simulacros</a>
+          <a href="profesores.html">Profesores</a>
+          <a href="#contacto">¡Contáctanos!</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Banner Initial -->
+    <section id="inicio" class="banner">
+      <div class="container">
+        <h2>Cursillo Stewart</h2>
+        <p class="banner-subtitle">Somos el <strong>cursillo #1</strong> para la Universidad Politécnica Taiwán-Paraguay en porcentaje,<br> cantidad y calidad de ingresantes.</p>
+        
+        <div class="banner-image" onclick="triggerConfetti()" style="cursor: pointer;">
+          <img src="images/El_cursillo_numero_1.png" alt="El cursillo número 1 para la Universidad Politécnica Taiwan-Paraguay" class="banner-main-image">
+        </div>
+
+      <!-- Indicadores del carousel -->
+      <div class="carousel-indicators">
+        <div class="indicator active"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+        <div class="indicator"></div>
+      </div>
+    </section>
+
+    <!-- Sección Conócenos -->
+    <section id="conocenos" class="bg-gray scroll-reveal">
+      <div class="container">
+        <div class="section-header">
+          <h2>Conócenos</h2>
+          <p>
+            Descubre la historia y evolución del Cursillo Stewart, desde sus
+            humildes inicios hasta convertirse en el programa <strong>#1</strong> del país
+            para el ingreso a la UPTP.
+          </p>
+        </div>
+
+        <!-- Historia en Timeline -->
+        <div class="timeline-container">
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>2022 — El Comienzo</h3>
+              <p>
+                Desde un pequeño departamento, cuatro estudiantes de la UPTP
+                —Facundo Rolón , Alejandro López, Leandro Volta y Mirella López—
+                iniciaron Stewart con un grupo reducido de alumnos y un objetivo: utilizar
+                su experiencia en el ingreso a la UPTP para crear el mejor curso de
+                preparación.
+              </p>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>2023 — Primer Gran Logro</h3>
+              <p>
+                Nuestra primera promoción alcanzó 14 ingresantes, un pequeño paso, el
+                cual sumado a los comentarios positivos, atrajo a más postulantes. Así,
+                decidimos mudarnos a un espacio más grande.
+              </p>
+              <div class="timeline-image" style="text-align: center; margin-top: 1.5rem">
+                <img
+                  src="images/Nuestros_ingresantes_del_2023.jpg"
+                  alt="Departamento inicial del Cursillo Stewart"
+                  style="
+                    width: 100%;
+                    max-width: 400px;
+                    border-radius: 8px;
+                    margin: 0 auto;
+                    display: block;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                  "
+                />
+                <small
+                  style="
+                    color: var(--gray-600);
+                    font-style: italic;
+                    display: block;
+                    margin-top: 0.5rem;
+                  "
+                >
+                  Ingresantes del Cursillo Stewart 2023
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>2024 — Crecimiento y Reconocimiento</h3>
+              <p>
+                Con 37 ingresantes y los primeros puestos, Stewart se consolidó como una
+                marca reconocida en la preparación para la UPTP. Nuestra comunidad
+                creció y con ella, también nuestras instalaciones.
+              </p>
+              <div class="timeline-image" style="text-align: center; margin-top: 1.5rem">
+                <img
+                  src="images/Nuestros_ingresantes_del_2024.jpg"
+                  alt="Departamento inicial del Cursillo Stewart"
+                  style="
+                    width: 100%;
+                    max-width: 400px;
+                    border-radius: 8px;
+                    margin: 0 auto;
+                    display: block;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                  "
+                />
+                <small
+                  style="
+                    color: var(--gray-600);
+                    font-style: italic;
+                    display: block;
+                    margin-top: 0.5rem;
+                  "
+                >
+                  Ingresantes del Cursillo Stewart 2024
+                </small>
+              </div>
+            </div>
+          </div>
+
+          <div class="timeline-item">
+            <div class="timeline-marker"></div>
+            <div class="timeline-content">
+              <h3>2025 — Consolidación y Excelencia</h3>
+              <p>
+                Volvimos a lograr 35 ingresantes y los primeros puestos, reafirmando
+                nuestro compromiso con la calidad. Nos mudamos a nuestro actual
+                edificio, con el fín de ofrecer la máxima comodidad y experiencia de
+                aprendizaje.
+              </p>
+              <div class="timeline-image" style="text-align: center; margin-top: 1.5rem">
+                <img
+                  src="images/Nuestras_nuevas_instalaciones.jpg"
+                  alt="Departamento inicial del Cursillo Stewart"
+                  style="
+                    width: 100%;
+                    max-width: 400px;
+                    border-radius: 8px;
+                    margin: 0 auto;
+                    display: block;
+                    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                  "
+                />
+                <small
+                  style="
+                    color: var(--gray-600);
+                    font-style: italic;
+                    display: block;
+                    margin-top: 0.5rem;
+                  "
+                >
+                  Instalaciones Cursillo Stewart 2025
+                </small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contador Regresivo -->
+    <section class="countdown-section">
+      <div class="container scroll-reveal">
+        <div class="countdown-header">
+          <h2>Próximo Cursillo Intensivo</h2>
+          <p>¡No te pierdas nuestro próximo cursillo intensivo!</p>
+          <div class="countdown-date">
+            <strong>9 de Diciembre 2025 - 8:00 AM</strong>
+          </div>
+        </div>
+
+        <div class="countdown-timer" id="countdown">
+          <div class="countdown-item">
+            <div class="countdown-number" id="days">0</div>
+            <div class="countdown-label">Días</div>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-item">
+            <div class="countdown-number" id="hours">0</div>
+            <div class="countdown-label">Horas</div>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-item">
+            <div class="countdown-number" id="minutes">0</div>
+            <div class="countdown-label">Minutos</div>
+          </div>
+          <div class="countdown-separator">:</div>
+          <div class="countdown-item">
+            <div class="countdown-number" id="seconds">0</div>
+            <div class="countdown-label">Segundos</div>
+          </div>
+        </div>
+
+        <div class="countdown-cta">
+          <p>¡Inscríbete ahora y asegura tu cupo!</p>
+          <a href="#inscripcion" class="btn-countdown">Inscribirme Ahora</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Nuestros Ingresantes -->
+    <section id="ingresantes" class="bg-gray scroll-reveal">
+      <div class="container">
+        <div class="section-header">
+          <h2>Ingresantes</h2>
+          <p>Conoce a los estudiantes que han confiado en nosotros para su preparación.</p>
+        </div>
+
+        <!-- Tabs para años -->
+        <div class="years-tabs">
+          <button class="year-tab" data-year="2025" onclick="showYear('2025')">2025</button>
+          <button class="year-tab" data-year="2024" onclick="showYear('2024')">2024</button>
+          <button class="year-tab" data-year="2023" onclick="showYear('2023')">2023</button>
+        </div>
+
+        <!-- Contenido por año -->
+        <div class="years-content">
+          <!-- Ingresantes 2025 -->
+          <div id="year-2025" class="year-content">
+            <div class="ranking">
+              <!-- Encabezado del ranking -->
+              <div class="ranking__head">
+                <span>Nombre</span>
+                <span>Puntaje</span>
+                <span>Carrera</span>
+                <span>Puesto General</span>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_oro.png" alt="Medalla de oro" class="medalla">
+                    <span class="name__text">Mateo Mongelos</span>
+                  </div>
+                </div>
+                <div class="col col--score">100</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#1</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Axel Acosta</span>
+                  </div>
+                </div>
+                <div class="col col--score">84.62</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#6</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Thiago Aguilar</span>
+                  </div>
+                </div>
+                <div class="col col--score">80.77</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#10</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Andrés Torres</span>
+                  </div>
+                </div>
+                <div class="col col--score">80.77</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#11</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Naomi Reyes</span>
+                  </div>
+                </div>
+                <div class="col col--score">76.92</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#15</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Alberto Pukall</span>
+                  </div>
+                </div>
+                <div class="col col--score">73.08</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#22</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Samuel Ortiz</span>
+                  </div>
+                </div>
+                <div class="col col--score">69.23</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#26</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Fernando Alvarenga</span>
+                  </div>
+                </div>
+                <div class="col col--score">69.23</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#28</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Mateo Mendieta</span>
+                  </div>
+                </div>
+                <div class="col col--score">69.23</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#31</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Marco Ortigoza</span>
+                  </div>
+                </div>
+                <div class="col col--score">69.23</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#33</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Alejandra Ferreira</span>
+                  </div>
+                </div>
+                <div class="col col--score">71.99</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#36</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Joaquín Acosta</span>
+                  </div>
+                </div>
+                <div class="col col--score">71.05</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#37</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Analia Alcaraz</span>
+                  </div>
+                </div>
+                <div class="col col--score">65.48</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#49</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Camila Valdez</span>
+                  </div>
+                </div>
+                <div class="col col--score">64.28</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#52</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Dioggo Pizurno</span>
+                  </div>
+                </div>
+                <div class="col col--score">63.96</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#53</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Anibal Sapriza</span>
+                  </div>
+                </div>
+                <div class="col col--score">63.65</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#57</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Mateo Ruiz Diaz</span>
+                  </div>
+                </div>
+                <div class="col col--score">63.61</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#58</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Alejandro Laconich</span>
+                  </div>
+                </div>
+                <div class="col col--score">62.14</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#60</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Alejandro Villalba</span>
+                  </div>
+                </div>
+                <div class="col col--score">61.83</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#61</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Alejandro Velázquez</span>
+                  </div>
+                </div>
+                <div class="col col--score">61.78</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#62</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Elías Telmo Páez</span>
+                  </div>
+                </div>
+                <div class="col col--score">61.52</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#63</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Mauricio Asfadurroff</span>
+                  </div>
+                </div>
+                <div class="col col--score">61.15</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#70</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Magali Melgarejo</span>
+                  </div>
+                </div>
+                <div class="col col--score">60.89</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#71</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Franco Cáceres</span>
+                  </div>
+                </div>
+                <div class="col col--score">60.89</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#72</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Hugo Alviso</span>
+                  </div>
+                </div>
+                <div class="col col--score">60.21</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#76</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Alan Gayoso</span>
+                  </div>
+                </div>
+                <div class="col col--score">59.9</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#77</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Enzo Fernández</span>
+                  </div>
+                </div>
+                <div class="col col--score">59.86</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#79</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Mateo De La Cueva</span>
+                  </div>
+                </div>
+                <div class="col col--score">59.33</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#82</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Paloma Frutos</span>
+                  </div>
+                </div>
+                <div class="col col--score">59.33</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#83</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Fabian Cartes</span>
+                  </div>
+                </div>
+                <div class="col col--score">59.23</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#85</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Gonzalo Doldan</span>
+                  </div>
+                </div>
+                <div class="col col--score">59.06</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#86</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Nelly Chen</span>
+                  </div>
+                </div>
+                <div class="col col--score">58.71</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#87</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Ignacio Gimenez</span>
+                  </div>
+                </div>
+                <div class="col col--score">58.71</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#89</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Santiago Paredes</span>
+                  </div>
+                </div>
+                <div class="col col--score">57.46</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#95</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Bernardo Delvalle</span>
+                  </div>
+                </div>
+                <div class="col col--score">57.40</div>
+                <div class="col col--career">-</div>
+                <div class="col col--rank">#96</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ingresantes 2024 -->
+          <div id="year-2024" class="year-content">
+            <div class="ranking">
+              <!-- Encabezado del ranking -->
+              <div class="ranking__head">
+                <span>Nombre</span>
+                <span>Puntaje</span>
+                <span>Carrera</span>
+                <span>Puesto por Carrera</span>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_oro.png" alt="Medalla de oro" class="medalla">
+                    <span class="name__text">Albert Servín</span>
+                  </div>
+                </div>
+                <div class="col col--score">100</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#1</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_plata.png" alt="Medalla de plata" class="medalla">
+                    <span class="name__text">Samira López</span>
+                  </div>
+                </div>
+                <div class="col col--score">97.5</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#2</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_oro.png" alt="Medalla de oro" class="medalla">
+                    <span class="name__text">Rubén Vera</span>
+                  </div>
+                </div>
+                <div class="col col--score">97.5</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#1</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_bronce.jpg" alt="Medalla bronce" class="medalla">
+                    <span class="name__text">Máximo Casalla</span>
+                  </div>
+                </div>
+                <div class="col col--score">95</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#3</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_bronce.jpg" alt="Medalla bronce" class="medalla">
+                    <span class="name__text">Guillermo Torres</span>
+                  </div>
+                </div>
+                <div class="col col--score">95</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#3</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_oro.png" alt="Medalla oro" class="medalla">
+                    <span class="name__text">Elías Cañete</span>
+                  </div>
+                </div>
+                <div class="col col--score">92.5</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#1</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_plata.png" alt="Medalla plata" class="medalla">
+                    <span class="name__text">Alfredo Garcete</span>
+                  </div>
+                </div>
+                <div class="col col--score">92.5</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#2</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_plata.png" alt="Medalla plata" class="medalla">
+                    <span class="name__text">Guillermo Cazal</span>
+                  </div>
+                </div>
+                <div class="col col--score">92.5</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#2</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_bronce.jpg" alt="Medalla bronce" class="medalla">
+                    <span class="name__text">Mathias Invernizzi</span>
+                  </div>
+                </div>
+                <div class="col col--score">90</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#3</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Belén Chamorro</span>
+                  </div>
+                </div>
+                <div class="col col--score">87.5</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#4</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Ana Barrios</span>
+                  </div>
+                </div>
+                <div class="col col--score">87.5</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#6</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_plata.png" alt="Medalla plata" class="medalla">
+                    <span class="name__text">Diego Insfrán</span>
+                  </div>
+                </div>
+                <div class="col col--score">85</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#2</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Bianca Garay</span>
+                  </div>
+                </div>
+                <div class="col col--score">85</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#5</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Anto Di Natale</span>
+                  </div>
+                </div>
+                <div class="col col--score">84.08</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#14</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Edna Irala</span>
+                  </div>
+                </div>
+                <div class="col col--score">82.55</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#18</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_bronce.jpg" alt="Medalla bronce" class="medalla">
+                    <span class="name__text">Mauricio Sánchez</span>
+                  </div>
+                </div>
+                <div class="col col--score">82.5</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#3</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Esteban Gómez</span>
+                  </div>
+                </div>
+                <div class="col col--score">82.5</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#6</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">William Martínez</span>
+                  </div>
+                </div>
+                <div class="col col--score">79.65</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#20</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Tamara Id</span>
+                  </div>
+                </div>
+                <div class="col col--score">78.56</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#17</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Guillermo Candia</span>
+                  </div>
+                </div>
+                <div class="col col--score">78.44</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#18</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Cristian Guerreño</span>
+                  </div>
+                </div>
+                <div class="col col--score">77.48</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#21</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">José Costa</span>
+                  </div>
+                </div>
+                <div class="col col--score">77.28</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#25</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Santiago Gamarra</span>
+                  </div>
+                </div>
+                <div class="col col--score">75.8</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#23</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Alejandro Yegros</span>
+                  </div>
+                </div>
+                <div class="col col--score">75</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#6</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Fiorella Filippi</span>
+                  </div>
+                </div>
+                <div class="col col--score">74.6</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#25</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Enzo Brítez</span>
+                  </div>
+                </div>
+                <div class="col col--score">74.08</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#11</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Yngrid Ramírez</span>
+                  </div>
+                </div>
+                <div class="col col--score">73.2</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#15</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Bruno Paniagua</span>
+                  </div>
+                </div>
+                <div class="col col--score">73.2</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#16</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">David Ayala</span>
+                  </div>
+                </div>
+                <div class="col col--score">70.12</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#19</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Sofía Rojas</span>
+                  </div>
+                </div>
+                <div class="col col--score">67.72</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#20</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Damaris Ruiz</span>
+                  </div>
+                </div>
+                <div class="col col--score">67.36</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#21</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Renatto Ferreira</span>
+                  </div>
+                </div>
+                <div class="col col--score">66.2</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#22</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Joel Trauth</span>
+                  </div>
+                </div>
+                <div class="col col--score">65.85</div>
+                <div class="col col--career">Ing. Industrial</div>
+                <div class="col col--rank">#18</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Juan Pablo Villanueva</span>
+                  </div>
+                </div>
+                <div class="col col--score">65</div>
+                <div class="col col--career">Ing. Industrial</div>
+                <div class="col col--rank">#5</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Cathia Ayala</span>
+                  </div>
+                </div>
+                <div class="col col--score">65</div>
+                <div class="col col--career">Ing. Industrial</div>
+                <div class="col col--rank">#5</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Moisés Villalba</span>
+                  </div>
+                </div>
+                <div class="col col--score">63.08</div>
+                <div class="col col--career">Ing. Industrial</div>
+                <div class="col col--rank">#21</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Lucas Menesse</span>
+                  </div>
+                </div>
+                <div class="col col--score">59.8</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#25</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Ingresantes 2023 -->
+          <div id="year-2023" class="year-content">
+            <div class="ranking">
+              <!-- Encabezado del ranking -->
+              <div class="ranking__head">
+                <span>Nombre</span>
+                <span>Puntaje</span>
+                <span>Carrera</span>
+                <span>Puesto por Carrera</span>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Giovana Bogado</span>
+                  </div>
+                </div>
+                <div class="col col--score">90</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#5</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Gabriela Gómez</span>
+                  </div>
+                </div>
+                <div class="col col--score">82.5</div>
+                <div class="col col--career">Ing. Informática</div>
+                <div class="col col--rank">#9</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Jose Samaniego</span>
+                  </div>
+                </div>
+                <div class="col col--score">77.5</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#6</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Alfredo Maciel</span>
+                  </div>
+                </div>
+                <div class="col col--score">77.5</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#7</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Eliezer Ruiz</span>
+                  </div>
+                </div>
+                <div class="col col--score">72.5</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#21</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Alan Ferreira</span>
+                  </div>
+                </div>
+                <div class="col col--score">70</div>
+                <div class="col col--career">Ing. Civil</div>
+                <div class="col col--rank">#17</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Giuliana Brizuela</span>
+                  </div>
+                </div>
+                <div class="col col--score">70</div>
+                <div class="col col--career">Ing. Electromecánica</div>
+                <div class="col col--rank">#22</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Belén Santacruz</span>
+                  </div>
+                </div>
+                <div class="col col--score">65</div>
+                <div class="col col--career">Ing. Industrial</div>
+                <div class="col col--rank">#19</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Filippo Maldonado</span>
+                  </div>
+                </div>
+                <div class="col col--score">65</div>
+                <div class="col col--career">Ing. Industrial</div>
+                <div class="col col--rank">#14</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Florencia López</span>
+                  </div>
+                </div>
+                <div class="col col--score">62.5</div>
+                <div class="col col--career">Ing. Industrial</div>
+                <div class="col col--rank">#17</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Cesar Bracho</span>
+                  </div>
+                </div>
+                <div class="col col--score">62.5</div>
+                <div class="col col--career">Ing. Industrial</div>
+                <div class="col col--rank">#18</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Daniel Cárdenas</span>
+                  </div>
+                </div>
+                <div class="col col--score">60</div>
+                <div class="col col--career">Ing. Industrial</div>
+                <div class="col col--rank">#20</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Tamara Benítez</span>
+                  </div>
+                </div>
+                <div class="col col--score">55</div>
+                <div class="col col--career">Ing. Industrial</div>
+                <div class="col col--rank">#24</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Lujan Martínez</span>
+                  </div>
+                </div>
+                <div class="col col--score">50</div>
+                <div class="col col--career">Ing. Industrial</div>
+                <div class="col col--rank">#25</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Estadísticas resumidas -->
+        <div class="ingresantes-stats">
+          <div class="stat-item">
+            <span class="stat-number" data-countup="35">0</span>
+            <span class="stat-label">Ingresantes 2025</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-countup="37">0</span>
+            <span class="stat-label">Ingresantes 2024</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-countup="13">0</span>
+            <span class="stat-label">Ingresantes 2023</span>
+          </div>
+          <div class="stat-item">
+            <span class="stat-number" data-countup="85">0</span>
+            <span class="stat-label">Total Ingresantes</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Programa -->
+    <section id="programa" class="scroll-reveal">
+      <div class="container">
+        <div class="section-header reveal fade-up">
+          <h2>Cursos</h2>
+        </div>
+
+        <!-- Toggle Navigation -->
+        <div class="years-tabs reveal fade-up">
+          <button class="year-tab" data-course="intensivo" onclick="showCourse('intensivo')">Intensivo</button>
+          <button class="year-tab" data-course="extensivo" onclick="showCourse('extensivo')">Extensivo</button>
+          <button class="year-tab" data-course="mofa" onclick="showCourse('mofa')">MOFA</button>
+        </div>
+
+        <!-- Course Content Containers -->
+        <div class="years-content">
+          <!-- Intensivo Course -->
+          <div id="intensivo-content" class="year-content active">
+          <div class="schedule-grid stagger">
+            <!-- Grupo 1: Turno Mañana -->
+            <div class="schedule-card presencial reveal fade-up">
+              <div class="schedule-header">
+                <h3>Grupo Colegio</h3>
+                <span class="schedule-type presencial">Semanal Presencial</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 8:00 a 12:00 y 14:00 a 18:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Lunes a Viernes</div>
+                <div class="schedule-dates">
+                  <strong>Período:</strong> 9 de diciembre hasta la primera semana de Enero.
+                </div>
+              </div>
+            </div>
+
+          </div>
+
+          <!-- Información del Curso Intensivo -->
+          <div class="program-info">
+            <!-- Toggle: Contenido del Cursillo -->
+            <div class="toggle-section">
+              <div class="toggle-header" onclick="toggleSection(this)">
+                <h4>📚 Contenido del Cursillo</h4>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="toggle-content">
+                <div class="book-info">
+                  <h5>"Precalculus - Mathematics for Calculus"</h5>
+                  <p class="author">por <strong>James Stewart</strong></p>
+                  <p class="book-description">
+                    Reconocido mundialmente como uno de los mejores textos de Precálculo, este libro
+                    proporciona una base sólida para el estudio del Cálculo y las matemáticas
+                    superiores. <strong>Materiales en inglés.</strong>
+                  </p>
+                </div>
+                <ul>
+                  <li>Chapter 1: Fundamentals</li>
+                  <li>Chapter 2: Functions</li>
+                  <li>Chapter 3: Polynomial and Rational Functions</li>
+                  <li>Chapter 4: Exponential and Logarithmic Functions</li>
+                  <li>Chapter 5: Trigonometric Functions: Unit Circle Approach</li>
+                  <li>Chapter 6: Trigonometric Functions: Right Triangle Approach</li>
+                  <li>Chapter 7: Analytic Trigonometry</li>
+                  <li>Chapter 8: Polar Coordinates and Parametric Equations</li>
+                  <li>Chapter 9: Vectors in Two and Three Dimensions</li>
+                  <li>Chapter 10: Systems of Equations and Inequalities</li>
+                  <li>Chapter 11: Conic Sections</li>
+                  <li>Chapter 12: Sequences and Series</li>
+                  <li>Chapter 13: Limits: A Preview of Calculus</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Toggle: Modalidades y Materiales -->
+            <div class="toggle-section">
+              <div class="toggle-header" onclick="toggleSection(this)">
+                <h4>✅ Modalidades y Materiales</h4>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="toggle-content">
+                <h4>Modalidades Disponibles</h4>
+                <ul>
+                  <li><span class="badge presencial">Semanal Presencial</span> Lunes a Viernes</li>
+                  <li><span class="badge sabados">Sábados Presencial</span> Solo Sábados</li>
+                  <li><span class="badge virtual">Sábados Virtual</span> Sábados Nocturnos</li>
+                </ul>
+
+                <h4>📝 Materiales y Actividades Incluidas</h4>
+                <ul>
+                  <li>📋 Ejercitarios por capítulo</li>
+                  <li>📊 Exámenes parciales y totales</li>
+                  <li>📚 Weekly Problems (ejercicios del libro)</li>
+                  <li>🎯 Actividades de práctica dirigida</li>
+                  <li>📖 Material de apoyo complementario</li>
+                  <li>💻 Recursos digitales interactivos</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="course-inscription-btn">
+            <a href="#inscripcion" class="btn-inscripcion" data-course="intensivo"
+              >Inscribirse a Curso Intensivo</a
+            >
+          </div>
+        </div>
+
+          <!-- Extensivo Course -->
+          <div id="extensivo-content" class="year-content">
+          <div class="schedule-grid">
+            <!-- Grupo 1: Extensivo Sabados -->
+            <div class="schedule-card virtual">
+              <div class="schedule-header">
+                <h3>Grupo Sabados</h3>
+                <span class="schedule-type virtual">Presencial</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 8:00 a 12:00 y 14:00 a 18:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Sábados</div>
+                <div class="schedule-dates"><strong>Período:</strong> Marzo - Diciembre</div>
+              </div>
+            </div>
+
+            <!-- Grupo 2: Extensivo Mañana -->
+            <div class="schedule-card presencial">
+              <div class="schedule-header">
+                <h3>Grupo Semanal Mañana</h3>
+                <span class="schedule-type presencial">Presencial</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 8:00 - 12:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Lunes a Viernes</div>
+                <div class="schedule-dates"><strong>Período:</strong> Agosto - Diciembre</div>
+              </div>
+            </div>
+
+            <!-- Grupo 3: Extensivo Tarde -->
+            <div class="schedule-card presencial">
+              <div class="schedule-header">
+                <h3>Grupo Semanal Tarde</h3>
+                <span class="schedule-type presencial">Presencial</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 14:00 a 18:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Lunes a Viernes</div>
+                <div class="schedule-dates"><strong>Período:</strong> Agosto - Diciembre</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Información del Curso Extensivo -->
+          <div class="program-info">
+            <!-- Toggle: Contenido del Cursillo -->
+            <div class="toggle-section">
+              <div class="toggle-header" onclick="toggleSection(this)">
+                <h4>📚 Contenido del Cursillo</h4>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="toggle-content">
+                <div class="book-info">
+                  <h5>"Precalculus - Mathematics for Calculus"</h5>
+                  <p class="author">por <strong>James Stewart</strong></p>
+                  <p class="book-description">
+                    Reconocido mundialmente como uno de los mejores textos de Precálculo, este libro
+                    proporciona una base sólida para el estudio del Cálculo y las matemáticas
+                    superiores. <strong>Materiales en inglés.</strong>
+                  </p>
+                </div>
+                <ul>
+                  <li>Chapter 1: Fundamentals</li>
+                  <li>Chapter 2: Functions</li>
+                  <li>Chapter 3: Polynomial and Rational Functions</li>
+                  <li>Chapter 4: Exponential and Logarithmic Functions</li>
+                  <li>Chapter 5: Trigonometric Functions: Unit Circle Approach</li>
+                  <li>Chapter 6: Trigonometric Functions: Right Triangle Approach</li>
+                  <li>Chapter 7: Analytic Trigonometry</li>
+                  <li>Chapter 8: Polar Coordinates and Parametric Equations</li>
+                  <li>Chapter 9: Vectors in Two and Three Dimensions</li>
+                  <li>Chapter 10: Systems of Equations and Inequalities</li>
+                  <li>Chapter 11: Conic Sections</li>
+                  <li>Chapter 12: Sequences and Series</li>
+                  <li>Chapter 13: Limits: A Preview of Calculus</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Toggle: Modalidades y Materiales -->
+            <div class="toggle-section">
+              <div class="toggle-header" onclick="toggleSection(this)">
+                <h4>✅ Modalidades y Materiales</h4>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="toggle-content">
+                <h4>Modalidades Disponibles</h4>
+                <ul>
+                  <li><span class="badge presencial">Presencial</span> Martes y Jueves</li>
+                  <li><span class="badge virtual">Virtual</span> Miércoles y Viernes</li>
+                </ul>
+
+                <h4>📝 Materiales y Actividades Incluidas</h4>
+                <ul>
+                  <li>📋 Ejercitarios por capítulo</li>
+                  <li>📊 Exámenes parciales y totales</li>
+                  <li>📚 Weekly Problems (ejercicios del libro)</li>
+                  <li>🎯 Actividades de práctica dirigida</li>
+                  <li>📖 Material de apoyo complementario</li>
+                  <li>💻 Recursos digitales interactivos</li>
+                  <li>⏰ Horarios flexibles para estudiantes y trabajadores</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="course-inscription-btn">
+            <a href="#inscripcion" class="btn-inscripcion" data-course="extensivo"
+              >Inscribirse a Curso Extensivo</a
+            >
+          </div>
+        </div>
+
+          <!-- MOFA Course -->
+          <div id="mofa-content" class="year-content">
+          <div class="schedule-grid">
+            <!-- MOFA Group 1 -->
+            <div class="schedule-card presencial">
+              <div class="schedule-header">
+                <h3>Grupo Colegio</h3>
+                <span class="schedule-type presencial">Presencial</span>
+              </div>
+              <div class="schedule-info">
+                <div class="schedule-time"><strong>Horario:</strong> 8:00 a 12:00 y 14:00 a 18:00</div>
+                <div class="schedule-days"><strong>Días:</strong> Lunes a Viernes</div>
+                <div class="schedule-dates"><strong>Período:</strong> 9 de diciembre hasta la primera semana de Enero.</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Información del Curso MOFA -->
+          <div class="program-info">
+            <!-- Toggle: Contenido del Cursillo -->
+            <div class="toggle-section">
+              <div class="toggle-header" onclick="toggleSection(this)">
+                <h4>📚 Contenido del Cursillo</h4>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="toggle-content">
+                <div class="book-info">
+                  <h5>"Precalculus - Mathematics for Calculus"</h5>
+                  <p class="author">por <strong>James Stewart</strong></p>
+                  <p class="book-description">
+                    Reconocido mundialmente como uno de los mejores textos de Precálculo, este libro
+                    proporciona una base sólida para el estudio del Cálculo y las matemáticas
+                    superiores. <strong>Materiales en inglés.</strong>
+                  </p>
+                </div>
+                <ul>
+                  <li>Chapter 1: Fundamentals</li>
+                  <li>Chapter 2: Functions</li>
+                  <li>Chapter 3: Polynomial and Rational Functions</li>
+                  <li>Chapter 4: Exponential and Logarithmic Functions</li>
+                  <li>Chapter 5: Trigonometric Functions: Unit Circle Approach</li>
+                  <li>Chapter 6: Trigonometric Functions: Right Triangle Approach</li>
+                  <li>Chapter 7: Analytic Trigonometry</li>
+                  <li>Chapter 8: Polar Coordinates and Parametric Equations</li>
+                  <li>Chapter 9: Vectors in Two and Three Dimensions</li>
+                  <li>Chapter 10: Systems of Equations and Inequalities</li>
+                  <li>Chapter 11: Conic Sections</li>
+                  <li>Chapter 12: Sequences and Series</li>
+                  <li>Chapter 13: Limits: A Preview of Calculus</li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Toggle: Modalidades y Materiales -->
+            <div class="toggle-section">
+              <div class="toggle-header" onclick="toggleSection(this)">
+                <h4>✅ Modalidades y Materiales</h4>
+                <span class="toggle-icon">▼</span>
+              </div>
+              <div class="toggle-content">
+                <h4>Modalidades Disponibles</h4>
+                <ul>
+                  <li><span class="badge mofa">MOFA Presencial</span> Lunes a Viernes</li>
+                  <li><span class="badge mofa">MOFA Virtual</span> Lunes, Miércoles, Viernes</li>
+                </ul>
+
+                <h4>📝 Materiales y Actividades Incluidas</h4>
+                <ul>
+                  <li>📋 Ejercitarios especializados por capítulo</li>
+                  <li>📊 Exámenes adaptados al sistema MOFA</li>
+                  <li>📚 Weekly Problems (ejercicios del libro)</li>
+                  <li>🎯 Actividades de práctica intensiva</li>
+                  <li>📖 Material de apoyo especializado</li>
+                  <li>💻 Plataforma digital exclusiva MOFA</li>
+                  <li>🎆 Preparación especializada para exámenes MOFA</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+
+          <div class="course-inscription-btn">
+            <a href="#inscripcion" class="btn-inscripcion" data-course="mofa"
+              >Inscribirse a Curso MOFA</a
+            >
+          </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Simulacros -->
+    <section id="simulacros" class="scroll-reveal">
+      <div class="container">
+        <div class="section-header">
+          <h2>Simulacros</h2>
+          <p>Cada año realizamos nuestro simulacro abierto, el cual se crea tomando
+            como referencia el último examen oficial de ingreso.</p>
+        </div>
+
+        <div class="grid grid-3">
+          <!-- Simulacro 1 -->
+          
+          <div class="simulacro-card">
+            <div class="simulacro-header">
+              <h3>Examen Simulacro 2025</h3>
+              <span class="simulacro-type">No-oficial</span>
+            </div>
+            <div class="simulacro-footer">
+              <a href="documents/Examen_Simulacro_2025.pdf" download="Examen_Simulacro_2025.pdf" class="btn btn-primary">
+                <i class="download-icon">📄</i> Descargar Simulacro
+              </a>
+            </div>
+          </div>
+         
+          <!-- Simulacro 2 -->
+          <div class="simulacro-card">
+            <div class="simulacro-header">
+              <h3>Examen Simulacro 2024</h3>
+              <span class="simulacro-type">No-oficial</span>
+            </div>
+            <div class="simulacro-footer">
+              <a href="documents/Examen_Simulacro_2024.pdf" download="Examen_Simulacro_2024.pdf" class="btn btn-primary">
+                <i class="download-icon">📄</i> Descargar Simulacro
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Calendario -->
+    <section id="calendario" class="bg-gray scroll-reveal">
+      <div class="container">
+        <div class="section-header">
+          <h2>Calendario de Eventos</h2>
+          <p>Mantente informado sobre fechas importantes</p>
+        </div>
+        <div class="grid grid-3">
+
+          <div class="calendar-card">
+            <div class="calendar-date">
+              <div class="date-circle">9</div>
+              <div class="date-info">
+                <h3>Diciembre</h3>
+                <p>2025</p>
+              </div>
+            </div>
+            <h4>Inicio de Curso Intensivo</h4>
+            <p>Comienza el Cursillo Intensivo de Preparación UPTP, diseñado para reforzar tus bases en Pre-Cálculo.</p>
+          </div>
+
+          <div class="calendar-card">
+            <div class="calendar-date">
+              <div class="date-circle">29</div>
+              <div class="date-info">
+                <h3>Enero</h3>
+                <p>2026</p>
+              </div>
+            </div>
+            <h4>Examen de Ingreso UPTP</h4>
+            <p>Examen de Ingreso oficial de la Universidad Politécnica Taiwán-Paraguay.</p>
+          </div>
+
+          <div class="calendar-card">
+            <div class="calendar-date">
+              <div class="date-circle">6</div>
+              <div class="date-info">
+                <h3>Febrero</h3>
+                <p>2026</p>
+              </div>
+            </div>
+            <h4>Entrevista y lista de ingresantes.</h4>
+            <p>Preparación para la entrevista hasta la publicación de resultados.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Inscripción -->
+    <section id="inscripcion" class="scroll-reveal-scale">
+      <div class="container">
+        <div class="section-header">
+          <h2>Inscripción</h2>
+          <p>Completa tu registro para formar parte del Cursillo Stewart</p>
+        </div>
+        <div class="form-container">
+          <p style="text-align: center; margin-bottom: 2rem; font-size: 1.1rem; color: var(--navy)">
+            ¡Bienvenido a Cursillo Stewart! Por favor completar el formulario para finalizar el
+            proceso de inscripción
+          </p>
+          <form id="inscription-form" class="form">
+            <!-- Nombre y apellido -->
+            <div class="form-group">
+              <label class="form-label">Nombre y Apellido *</label>
+              <input
+                type="text"
+                name="nombre_apellido"
+                class="form-input"
+                placeholder="Ejemplo: Juan Carlos Pérez López"
+                pattern="[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{3,50}"
+                title="Solo se permiten letras, espacios y acentos. Mínimo 3 caracteres, máximo 50."
+                minlength="3"
+                maxlength="50"
+                required
+              />
+              <small class="form-help">Solo letras, espacios y acentos</small>
+            </div>
+
+            <!-- Número de cédula -->
+            <div class="form-group">
+              <label class="form-label">Número de cédula *</label>
+              <input
+                type="text"
+                name="cedula"
+                class="form-input"
+                placeholder="1234567 (7-8 dígitos)"
+                pattern="[0-9]{7,8}"
+                title="Solo números. Debe tener entre 7 y 8 dígitos."
+                minlength="7"
+                maxlength="8"
+                inputmode="numeric"
+                required
+              />
+              <small class="form-help">Entre 7 y 8 dígitos solamente</small>
+            </div>
+
+            <!-- Número de teléfono -->
+            <div class="form-group">
+              <label class="form-label">Número de teléfono *</label>
+              <input
+                type="tel"
+                name="telefono"
+                class="form-input"
+                placeholder="0981123456 (10 dígitos)"
+                pattern="(09[0-9]{8}|[0-9]{9})"
+                title="Formato válido: 0981123456 (celular) o 021123456 (fijo)"
+                minlength="9"
+                maxlength="10"
+                inputmode="numeric"
+                required
+              />
+              <small class="form-help">Celular: 09xxxxxxxx | Fijo: 021xxxxxx</small>
+            </div>
+
+            <!-- Colegio o institución -->
+            <div class="form-group">
+              <label class="form-label">Colegio o institución de estudios secundarios *</label>
+              <input
+                type="text"
+                name="colegio"
+                class="form-input"
+                placeholder="Ejemplo: Colegio Nacional de la Capital"
+                pattern="[a-zA-ZÀ-ÿ\u00f1\u00d1\s\.,\-0-9]{5,100}"
+                title="Nombre del colegio. Mínimo 5 caracteres, máximo 100."
+                minlength="5"
+                maxlength="100"
+                required
+              />
+              <small class="form-help">Nombre completo del colegio o institución</small>
+            </div>
+
+            <!-- Nombre y apellido de familiar -->
+            <div class="form-group">
+              <label class="form-label">Nombre y apellido de un familiar o encargado *</label>
+              <input
+                type="text"
+                name="familiar_nombre"
+                class="form-input"
+                placeholder="Ejemplo: María González Rodríguez"
+                pattern="[a-zA-ZÀ-ÿ\u00f1\u00d1\s]{3,50}"
+                title="Solo se permiten letras, espacios y acentos. Mínimo 3 caracteres, máximo 50."
+                minlength="3"
+                maxlength="50"
+                required
+              />
+              <small class="form-help">Solo letras, espacios y acentos</small>
+            </div>
+
+            <!-- Teléfono de familiar -->
+            <div class="form-group">
+              <label class="form-label">Número de teléfono de un familiar o encargado *</label>
+              <input
+                type="tel"
+                name="familiar_telefono"
+                class="form-input"
+                placeholder="0981123456 (10 dígitos)"
+                pattern="(09[0-9]{8}|[0-9]{9})"
+                title="Formato válido: 0981123456 (celular) o 021123456 (fijo)"
+                minlength="9"
+                maxlength="10"
+                inputmode="numeric"
+                required
+              />
+              <small class="form-help">Celular: 09xxxxxxxx | Fijo: 021xxxxxx</small>
+            </div>
+
+            <!-- Términos y condiciones con enlace -->
+            <div class="form-group">
+              <div style="margin-bottom: 1rem">
+                <p style="margin-bottom: 0.5rem; color: var(--navy)">
+                  He leído los términos y condiciones del curso extensivo, y me comprometo a
+                  seguirlos.
+                  <a
+                    href="documents/terminos_y_condiciones.pdf"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style="color: var(--primary); text-decoration: underline"
+                    >Haga click aquí.</a
+                  >
+                  *
+                </p>
+              </div>
+              <div class="form-group">
+                <label class="form-label">
+                  <input
+                    type="checkbox"
+                    name="acepto_terminos"
+                    required
+                    style="margin-right: 0.5rem"
+                  />
+                  Acepto los términos y condiciones (Luego te paso los términos y condiciones) *
+                </label>
+              </div>
+            </div>
+
+            <button type="submit" class="btn-primary" style="width: 100%">
+              Enviar Inscripción
+            </button>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- Contacto -->
+    <section id="contacto" class="scroll-reveal">
+      <div class="container">
+        <div class="section-header">
+          <h2>¡Contáctanos!</h2>
+          <p>Estamos aquí para resolver todas tus dudas</p>
+        </div>
+        <div class="contact-grid">
+          <!-- Formulario de Contacto -->
+          <div>
+            <h3
+              style="
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: var(--navy);
+                margin-bottom: 1.5rem;
+              "
+            >
+              Envíanos un Mensaje
+            </h3>
+            <form id="contact-form" style="display: flex; flex-direction: column; gap: 1.5rem">
+              <div class="form-group">
+                <label class="form-label">Nombre Completo</label>
+                <input
+                  type="text"
+                  name="from_name"
+                  class="form-input"
+                  placeholder="Tu nombre completo"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Correo Electrónico</label>
+                <input
+                  type="email"
+                  name="from_email"
+                  class="form-input"
+                  placeholder="tu@email.com"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Asunto</label>
+                <input
+                  type="text"
+                  name="subject"
+                  class="form-input"
+                  placeholder="Asunto de tu consulta"
+                  required
+                />
+              </div>
+              <div class="form-group">
+                <label class="form-label">Mensaje</label>
+                <textarea
+                  name="message"
+                  class="form-input"
+                  placeholder="Escribe tu mensaje aquí"
+                  required
+                ></textarea>
+              </div>
+              <button type="submit" id="submit-btn" class="btn-primary" style="width: 100%">
+                Enviar Mensaje
+              </button>
+            </form>
+          </div>
+
+          <!-- Información de Contacto y Mapa -->
+          <div>
+            <h3
+              style="
+                font-size: 1.5rem;
+                font-weight: bold;
+                color: var(--navy);
+                margin-bottom: 1.5rem;
+              "
+            >
+              Información de Contacto
+            </h3>
+            <div style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem">
+              <div class="contact-item">
+                <div class="contact-icon">📍</div>
+                <div class="contact-info">
+                  <p>Dirección</p>
+                  <p>
+                    Independencia Nacional 1159 entre Av. Rodríguez de Francia y Rca. de Colombia,
+                    Asunción
+                  </p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">📞</div>
+                <div class="contact-info">
+                  <p>Teléfono</p>
+                  <p>+595 985 350550</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">📧</div>
+                <div class="contact-info">
+                  <p>Email</p>
+                  <p>cursillostewart@gmail.com</p>
+                </div>
+              </div>
+
+              <div class="contact-item">
+                <div class="contact-icon">🕒</div>
+                <div class="contact-info">
+                  <p>Horarios</p>
+                  <p>Lun - Sáb: 8:00 - 12:00 y 14:00 - 18:00</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Google Maps -->
+            <div class="map-container">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14290.629488811443!2d-57.63289752233832!3d-25.288506144782207!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x945da78778a93781%3A0xa7c23edfe28540ce!2sCursillo%20STEWART!5e0!3m2!1sen!2spy!4v1758971873336!5m2!1sen!2spy"
+                width="600"
+                height="450"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              >
+              </iframe>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">
+              <img
+                id="footer-logo-img"
+                src="images/Cursillo_Blanco.png"
+                alt="Cursillo Stewart Logo"
+                class="footer-logo-image"
+              />
+            </div>
+            <p id="footer-description-text" style="color: var(--gray-300); font-size: 0.875rem">
+              Preparándote para un futuro universitario exitoso en la Universidad Politécnica Taiwan
+              Paraguay.
+            </p>
+          </div>
+
+
+
+          <div>
+            <h4>Enlaces Rápidos</h4>
+            <ul>
+              <li>
+                <a href="index.html" style="color: #fff; text-decoration: none !important"
+                  >Inicio</a
+                >
+              </li>
+              <li>
+                <a href="index.html#conocenos" style="color: #fff; text-decoration: none !important"
+                  >Conócenos</a
+                >
+              </li>
+              <li>
+                <a href="index.html#programa" style="color: #fff; text-decoration: none !important"
+                  >Cursos</a
+                >
+              </li>
+              <li>
+                <a href="simulacros.html" style="color: #fff; text-decoration: none !important"
+                  >Simulacros</a
+                >
+              </li>
+              <li>
+                <a href="profesores.html" style="color: #fff; text-decoration: none !important"
+                  >Profesores</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Información</h4>
+            <ul>
+              <li>
+                <a href="index.html#contacto" style="color: #fff; text-decoration: none !important"
+                  >Contacto</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Síguenos</h4>
+            <div class="social-links">
+              <a
+                href="https://www.facebook.com/cursillostewart"
+                id="social-facebook"
+                style="color: #fff"
+                class="social-link"
+                title="Facebook"
+              >
+                <img
+                  src="Icons/facebook.png"
+                  alt="Facebook"
+                  style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
+                />
+              </a>
+              <a
+                href="https://www.instagram.com/cursillouptp"
+                id="social-instagram"
+                style="color: #fff"
+                class="social-link"
+                title="Instagram"
+              >
+                <img
+                  src="Icons/instagram.png"
+                  alt="Instagram"
+                  style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
+                />
+              </a>
+              <a href="https://www.tiktok.com/@cursillostewartpy" id="social-tiktok" style="color: #fff" class="social-link" title="TikTok">
+                <img
+                  src="Icons/tiktok.png"
+                  alt="TikTok"
+                  style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
+                />
+              </a>
+              <a
+                href="https://www.youtube.com/@cursillostewart"
+                id="social-youtube"
+                style="color: #fff"
+                class="social-link"
+                title="YouTube"
+              >
+                <img
+                  src="Icons/youtube.png"
+                  alt="YouTube"
+                  style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
+                />
+              </a>
+              <a
+                href="https://wa.me/+595985350550"
+                id="social-whatsapp"
+                style="color: #fff"
+                class="social-link"
+                title="WhatsApp"
+              >
+                <img
+                  src="Icons/whatsapp.png"
+                  alt="WhatsApp"
+                  style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p id="footer-copyright-text">
+            &copy; 2025 Cursillo Stewart - UPTP. Todos los derechos reservados.
+          </p>
+          <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--gray-400);">
+            Desarrollado por <a href="https://github.com/MatiasVeraG" target="_blank" rel="noopener noreferrer" style="color: var(--blue); text-decoration: none; font-weight: 500;">Matías Vera</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Toggle mobile menu
+      function toggleMenu() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.remove('hidden');
+          mobileMenu.classList.add('show');
+        } else {
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('show');
+        }
+      }
+
+      // Smooth scrolling for anchor links
+      document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function (e) {
+          e.preventDefault();
+          const target = document.querySelector(this.getAttribute('href'));
+          if (target) {
+            target.scrollIntoView({
+              behavior: 'smooth',
+              block: 'start',
+            });
+          }
+          // Close mobile menu if open
+          const mobileMenu = document.getElementById('mobile-menu');
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('show');
+        });
+      });
+
+      // EmailJS initialization
+      (function () {
+        emailjs.init('xW-mdqdZ0aTjeEmGS'); // Clave pública de EmailJS
+      })();
+
+      // Form submission handlers
+      document.querySelectorAll('form').forEach(form => {
+        // Solo aplicar a formularios que NO sean el de contacto o inscripción
+        if (form.id !== 'contact-form' && form.id !== 'inscription-form') {
+          form.addEventListener('submit', function (e) {
+            e.preventDefault();
+            alert('¡Gracias por tu mensaje! Te contactaremos pronto.');
+          });
+        }
+      });
+
+      // Funciones de validación QA
+      function validateName(name) {
+        const nameRegex = /^[a-zA-ZÀ-ÿñÑ\s]{3,50}$/;
+        return nameRegex.test(name.trim());
+      }
+
+      function validateCedula(cedula) {
+        const cedulaRegex = /^[0-9]{7,8}$/;
+        return cedulaRegex.test(cedula.trim());
+      }
+
+      function validatePhone(phone) {
+        const phoneRegex = /^(09[0-9]{8}|[0-9]{9})$/;
+        return phoneRegex.test(phone.trim());
+      }
+
+      function validateCollege(college) {
+        const collegeRegex = /^[a-zA-ZÀ-ÿñÑ\s\.,\-0-9]{5,100}$/;
+        return collegeRegex.test(college.trim());
+      }
+
+      function showFieldError(fieldName, message) {
+        const field = document.querySelector(`input[name="${fieldName}"]`);
+        field.style.borderColor = '#e74c3c';
+        field.style.backgroundColor = '#fdf2f2';
+
+        // Remover error anterior si existe
+        const existingError = field.parentNode.querySelector('.field-error');
+        if (existingError) {
+          existingError.remove();
+        }
+
+        // Agregar nuevo mensaje de error
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'field-error';
+        errorDiv.style.color = '#e74c3c';
+        errorDiv.style.fontSize = '0.85rem';
+        errorDiv.style.marginTop = '0.25rem';
+        errorDiv.textContent = message;
+        field.parentNode.appendChild(errorDiv);
+
+        // Quitar error al escribir
+        field.addEventListener(
+          'input',
+          function () {
+            field.style.borderColor = '';
+            field.style.backgroundColor = '';
+            const errorMsg = field.parentNode.querySelector('.field-error');
+            if (errorMsg) {
+              errorMsg.remove();
+            }
+          },
+          { once: true }
+        );
+      }
+
+      // Manejo específico del formulario de inscripción con validaciones QA
+      const inscriptionForm = document.getElementById('inscription-form');
+      if (inscriptionForm) {
+        inscriptionForm.addEventListener('submit', function (e) {
+          e.preventDefault();
+
+          // Obtener todos los valores
+          const nombreApellido = document
+            .querySelector('input[name="nombre_apellido"]')
+            .value.trim();
+          const cedula = document.querySelector('input[name="cedula"]').value.trim();
+          const telefono = document.querySelector('input[name="telefono"]').value.trim();
+          const colegio = document.querySelector('input[name="colegio"]').value.trim();
+          const familiarNombre = document
+            .querySelector('input[name="familiar_nombre"]')
+            .value.trim();
+          const familiarTelefono = document
+            .querySelector('input[name="familiar_telefono"]')
+            .value.trim();
+          const terminosCheckbox = document.querySelector('input[name="acepto_terminos"]');
+
+          let hasErrors = false;
+
+          // Validar nombre y apellido
+          if (!validateName(nombreApellido)) {
+            showFieldError(
+              'nombre_apellido',
+              'Nombre inválido. Solo letras, espacios y acentos (3-50 caracteres).'
+            );
+            hasErrors = true;
+          }
+
+          // Validar cédula
+          if (!validateCedula(cedula)) {
+            showFieldError('cedula', 'Cédula inválida. Debe tener entre 7 y 8 dígitos solamente.');
+            hasErrors = true;
+          }
+
+          // Validar teléfono
+          if (!validatePhone(telefono)) {
+            showFieldError(
+              'telefono',
+              'Teléfono inválido. Formato: 0981123456 (celular) o 021123456 (fijo).'
+            );
+            hasErrors = true;
+          }
+
+          // Validar colegio
+          if (!validateCollege(colegio)) {
+            showFieldError('colegio', 'Nombre del colegio inválido (5-100 caracteres).');
+            hasErrors = true;
+          }
+
+          // Validar nombre familiar
+          if (!validateName(familiarNombre)) {
+            showFieldError(
+              'familiar_nombre',
+              'Nombre del familiar inválido. Solo letras, espacios y acentos (3-50 caracteres).'
+            );
+            hasErrors = true;
+          }
+
+          // Validar teléfono familiar
+          if (!validatePhone(familiarTelefono)) {
+            showFieldError(
+              'familiar_telefono',
+              'Teléfono del familiar inválido. Formato: 0981123456 (celular) o 021123456 (fijo).'
+            );
+            hasErrors = true;
+          }
+
+          // Validar términos y condiciones
+          if (!terminosCheckbox.checked) {
+            alert('⚠️ Debes aceptar los términos y condiciones para continuar.');
+            hasErrors = true;
+          }
+
+          // Si hay errores, no enviar
+          if (hasErrors) {
+            alert('❌ Por favor, corrige los errores en el formulario antes de continuar.');
+            return;
+          }
+
+          // Cambiar estado del botón
+          const submitBtn = this.querySelector('button[type="submit"]');
+          const originalText = submitBtn.textContent;
+          submitBtn.textContent = '⏳ Enviando inscripción...';
+          submitBtn.disabled = true;
+          submitBtn.style.opacity = '0.7';
+
+          // Enviar inscripción usando EmailJS
+          emailjs
+            .sendForm('service_t7mw6ob', 'template_g65oru4', this)
+            .then(
+              function (response) {
+                console.log('INSCRIPTION SUCCESS!', response.status, response.text);
+                alert(
+                  `✅ ¡Inscripción enviada exitosamente!\n\n👤 Gracias ${nombreApellido}, hemos recibido tu solicitud de inscripción.\n📞 Te contactaremos pronto al número ${telefono} con más información sobre el proceso.\n\n� También puedes llamarnos al +595 985 350550`
+                );
+                // Limpiar formulario
+                inscriptionForm.reset();
+              },
+              function (error) {
+                console.log('INSCRIPTION FAILED...', error);
+                alert(
+                  '❌ Error al enviar la inscripción.\n\n🔄 Por favor, inténtalo nuevamente en unos minutos.\n📞 Si el problema persiste, llámanos al +595 985 350550.'
+                );
+              }
+            )
+            .finally(function () {
+              // Restaurar estado del botón
+              submitBtn.textContent = originalText;
+              submitBtn.disabled = false;
+              submitBtn.style.opacity = '1';
+            });
+        });
+      }
+
+      // Manejo del formulario de contacto con EmailJS
+      document.getElementById('contact-form').addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const submitBtn = document.getElementById('submit-btn');
+        const originalText = submitBtn.textContent;
+
+        // Cambiar estado del botón
+        submitBtn.textContent = 'Enviando...';
+        submitBtn.disabled = true;
+        submitBtn.style.opacity = '0.7';
+
+        // Enviar email usando EmailJS
+        emailjs
+          .sendForm('service_t7mw6ob', 'template_x4d3xyy', this)
+          .then(
+            function (response) {
+              console.log('SUCCESS!', response.status, response.text);
+              alert(
+                '¡Mensaje enviado exitosamente! Te contactaremos pronto a ' +
+                  document.querySelector('input[name="from_email"]').value
+              );
+              document.getElementById('contact-form').reset();
+            },
+            function (error) {
+              console.log('FAILED...', error);
+              alert(
+                'Error al enviar el mensaje. Por favor, inténtalo nuevamente o contáctanos directamente al +595 985 350550.'
+              );
+            }
+          )
+          .finally(function () {
+            // Restaurar estado del botón
+            submitBtn.textContent = originalText;
+            submitBtn.disabled = false;
+            submitBtn.style.opacity = '1';
+          });
+      });
+
+      // ===== CAROUSEL DE IMÁGENES DE FONDO =====
+      class BackgroundCarousel {
+        constructor() {
+          this.images = [
+            'images/Imagen de Fondo 1.jpeg',
+            'images/Imagen de Fondo 3.jpeg',
+            'images/Imagen de Fondo 4.jpeg',
+            'images/Imagen de Fondo 5.jpeg',
+          ];
+          this.currentIndex = 0;
+          this.banner = document.querySelector('.banner');
+          this.indicators = document.querySelectorAll('.indicator');
+          this.intervalTime = 10000; // 10 segundos
+          this.interval = null;
+          this.init();
+        }
+
+        init() {
+          this.preloadImages();
+          this.setInitialBackground();
+          this.setupIndicators();
+          this.startCarousel();
+        }
+
+        preloadImages() {
+          this.images.forEach(src => {
+            const img = new Image();
+            img.src = src;
+          });
+        }
+
+        setInitialBackground() {
+          if (this.banner) {
+            this.banner.style.backgroundImage = `linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(30, 64, 175, 0.15) 100%), url('${this.images[0]}')`;
+            this.banner.style.backgroundSize = 'cover';
+            this.banner.style.backgroundPosition = 'center';
+            this.banner.style.backgroundAttachment = 'fixed';
+          }
+        }
+
+        setupIndicators() {
+          this.indicators.forEach((indicator, index) => {
+            indicator.addEventListener('click', () => {
+              this.goToSlide(index);
+            });
+          });
+        }
+
+        updateIndicators() {
+          this.indicators.forEach((indicator, index) => {
+            indicator.classList.toggle('active', index === this.currentIndex);
+          });
+        }
+
+        goToSlide(index) {
+          this.currentIndex = index;
+          this.changeBackground();
+          this.updateIndicators();
+          this.restartCarousel();
+        }
+
+        changeBackground() {
+          const newImage = this.images[this.currentIndex];
+
+          if (this.banner) {
+            // Smooth transition
+            this.banner.style.transition = 'background-image 1s ease-in-out';
+            this.banner.style.backgroundImage = `linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(30, 64, 175, 0.15) 100%), url('${newImage}')`;
+          }
+        }
+
+        nextSlide() {
+          this.currentIndex = (this.currentIndex + 1) % this.images.length;
+          this.changeBackground();
+          this.updateIndicators();
+        }
+
+        startCarousel() {
+          this.interval = setInterval(() => {
+            this.nextSlide();
+          }, this.intervalTime);
+        }
+
+        restartCarousel() {
+          if (this.interval) {
+            clearInterval(this.interval);
+          }
+          this.startCarousel();
+        }
+      }
+
+      // Inicializar el carousel cuando el DOM esté listo
+      document.addEventListener('DOMContentLoaded', () => {
+        new BackgroundCarousel();
+      });
+
+      // Función para cambiar entre años en la sección de ingresantes
+      function showYear(year) {
+        const selectedYearContent = document.getElementById(`year-${year}`);
+        const selectedTab = document.querySelector(`[data-year="${year}"]`);
+
+        // Verificar si el año ya está activo para cerrarlo
+        if (selectedYearContent && selectedYearContent.classList.contains('active')) {
+          // Si ya está activo, ocultarlo
+          selectedYearContent.classList.remove('active');
+          selectedTab.classList.remove('active');
+        } else {
+          // Ocultar todos los contenidos de años
+          const allYearContents = document.querySelectorAll('.year-content');
+          allYearContents.forEach(content => {
+            content.classList.remove('active');
+          });
+
+          // Remover clase active de todos los tabs
+          const allTabs = document.querySelectorAll('.year-tab');
+          allTabs.forEach(tab => {
+            tab.classList.remove('active');
+          });
+
+          // Mostrar el contenido del año seleccionado
+          if (selectedYearContent) {
+            selectedYearContent.classList.add('active');
+          }
+
+          // Activar el tab seleccionado
+          if (selectedTab) {
+            selectedTab.classList.add('active');
+          }
+        }
+      }
+    </script>
+
+    <!-- Contador Regresivo Script -->
+    <script>
+      // Contador regresivo
+      function initCountdown() {
+        // Fecha objetivo: 9 de Diciembre 2025, 8:00 AM (UTC-3 Argentina)
+        const targetDate = new Date('2025-12-09T08:00:00-03:00').getTime();
+
+        const daysElement = document.getElementById('days');
+        const hoursElement = document.getElementById('hours');
+        const minutesElement = document.getElementById('minutes');
+        const secondsElement = document.getElementById('seconds');
+
+        // Verificar que todos los elementos existen
+        if (!daysElement || !hoursElement || !minutesElement || !secondsElement) {
+          console.error('No se encontraron todos los elementos del contador');
+          return;
+        }
+
+        console.log('Contador inicializado. Fecha objetivo:', new Date(targetDate));
+
+        let countdownAnimated = false; // Flag para saber si ya se animó
+
+        function updateCountdown() {
+          const now = new Date().getTime();
+          const distance = targetDate - now;
+
+          if (distance < 0) {
+            // Si la fecha ya pasó
+            daysElement.textContent = '0';
+            hoursElement.textContent = '0';
+            minutesElement.textContent = '0';
+            secondsElement.textContent = '0';
+            return;
+          }
+
+          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          // Actualizar con animación de pulso cuando cambia
+          updateWithPulse(daysElement, days);
+          updateWithPulse(hoursElement, hours);
+          updateWithPulse(minutesElement, minutes);
+          updateWithPulse(secondsElement, seconds);
+        }
+
+        function updateWithPulse(element, newValue) {
+          if (!element) return;
+
+          const currentValue = element.textContent;
+          if (currentValue !== newValue.toString()) {
+            element.textContent = newValue;
+            element.classList.add('pulse');
+            setTimeout(() => {
+              element.classList.remove('pulse');
+            }, 500);
+          }
+        }
+
+        // Función para animar el countdown la primera vez que aparece
+        function animateCountdownOnScroll() {
+          if (countdownAnimated) return;
+
+          const now = new Date().getTime();
+          const distance = targetDate - now;
+
+          if (distance < 0) return;
+
+          const finalDays = Math.floor(distance / (1000 * 60 * 60 * 24));
+          const finalHours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+          const finalMinutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+          const finalSeconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+          // Animar cada elemento
+          let daysData = { count: 0 };
+          let hoursData = { count: 0 };
+          let minutesData = { count: 0 };
+          let secondsData = { count: 0 };
+
+          anime({
+            targets: daysData,
+            count: [0, finalDays],
+            duration: 1500,
+            round: 1,
+            easing: 'easeOutCubic',
+            update() {
+              daysElement.textContent = daysData.count;
+            }
+          });
+
+          anime({
+            targets: hoursData,
+            count: [0, finalHours],
+            duration: 1500,
+            round: 1,
+            delay: 200,
+            easing: 'easeOutCubic',
+            update() {
+              hoursElement.textContent = hoursData.count;
+            }
+          });
+
+          anime({
+            targets: minutesData,
+            count: [0, finalMinutes],
+            duration: 1500,
+            round: 1,
+            delay: 400,
+            easing: 'easeOutCubic',
+            update() {
+              minutesElement.textContent = minutesData.count;
+            }
+          });
+
+          anime({
+            targets: secondsData,
+            count: [0, finalSeconds],
+            duration: 1500,
+            round: 1,
+            delay: 600,
+            easing: 'easeOutCubic',
+            update() {
+              secondsElement.textContent = secondsData.count;
+            },
+            complete() {
+              countdownAnimated = true;
+              // Después de la animación, empezar el countdown normal
+              setInterval(updateCountdown, 1000);
+            }
+          });
+        }
+
+        // Observer para detectar cuando el countdown entra en vista
+        const countdownObserver = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting && !countdownAnimated) {
+              animateCountdownOnScroll();
+              countdownObserver.unobserve(entry.target);
+            }
+          });
+        }, { threshold: 0.3 });
+
+        const countdownSection = document.querySelector('.countdown-timer');
+        if (countdownSection) {
+          countdownObserver.observe(countdownSection);
+        }
+      }
+
+      // Inicializar cuando el DOM esté listo
+      document.addEventListener('DOMContentLoaded', function () {
+        initCountdown();
+        initCourseToggles();
+      });
+
+      // Course Toggle Functionality
+      function showCourse(course) {
+  const selectedContent = document.getElementById(course + '-content');
+  const selectedTab = document.querySelector(`#programa .year-tab[data-course="${course}"]`);
+
+  // Si el contenido ya está activo, cerrarlo (toggle)
+  if (selectedContent && selectedContent.classList.contains('active')) {
+    selectedContent.classList.remove('active');
+    selectedTab.classList.remove('active');
+    return; // salir para no reabrir
+  }
+
+  // Ocultar todos los contenidos de cursos
+  const allContents = document.querySelectorAll('#programa .year-content');
+  allContents.forEach(content => content.classList.remove('active'));
+
+  // Quitar clase active de todos los botones
+  const allTabs = document.querySelectorAll('#programa .year-tab');
+  allTabs.forEach(tab => tab.classList.remove('active'));
+
+  // Mostrar el contenido del curso seleccionado
+  if (selectedContent) {
+    selectedContent.classList.add('active');
+  }
+
+  // Activar el botón seleccionado
+  if (selectedTab) {
+    selectedTab.classList.add('active');
+  }
+}
+
+
+      function initCourseToggles() {
+        // Initialize with intensivo as default
+        showCourse('intensivo');
+      }
+
+      // Variables para el cooldown del confetti
+      let confettiClickCount = 0;
+      let confettiCooldown = false;
+      let cooldownTimer = null;
+
+      // Función de confetti usando canvas-confetti con cooldown
+      function triggerConfetti() {
+        // Si está en cooldown, no hacer nada
+        if (confettiCooldown) return;
+
+        // Incrementar contador de clicks
+        confettiClickCount++;
+
+        // Ejecutar el confetti
+        const celebration = () => {
+          const duration = 2 * 1000;
+          const animationEnd = Date.now() + duration;
+          // Colores del cursillo: rojo, azul, dorado y blanco
+          const cursilloColors = ['#dc2626', '#1e40af', '#c9a63b', '#ffffff'];
+          const defaults = { startVelocity: 30, spread: 360, ticks: 100, zIndex: 10000, colors: cursilloColors };
+
+          function randomInRange(min, max) {
+            return Math.random() * (max - min) + min;
+          }
+
+          const interval = setInterval(function() {
+            const timeLeft = animationEnd - Date.now();
+
+            if (timeLeft <= 0) {
+              return clearInterval(interval);
+            }
+
+            const particleCount = 100 * (timeLeft / duration);
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.2 } }));
+            confetti(Object.assign({}, defaults, { particleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.2 } }));
+          }, 250);
+        };
+
+        celebration();
+
+        // Si ya hay 2 clicks, activar cooldown
+        if (confettiClickCount >= 15) {
+          confettiCooldown = true;
+          confettiClickCount = 0;
+
+          // Crear el reloj de cooldown
+          const timerDiv = document.createElement('div');
+          timerDiv.className = 'cooldown-timer';
+          timerDiv.innerHTML = `
+            <div class="wrapper">
+              <div class="pie spinner"></div>
+              <div class="pie filler"></div>
+              <div class="mask"></div>
+            </div>
+          `;
+          document.body.appendChild(timerDiv);
+
+          // Remover el reloj y resetear cooldown después de 5 segundos
+          cooldownTimer = setTimeout(() => {
+            document.body.removeChild(timerDiv);
+            confettiCooldown = false;
+          }, 5000);
+        }
+      }
+
+      // Función para hacer que todos los links internos funcionen como redirects con smooth scroll
+      document.addEventListener('DOMContentLoaded', function() {
+        const allLinks = document.querySelectorAll('a[href^="#"]');
+        
+        allLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Ignorar links vacíos (#)
+            if (href === '#') {
+              e.preventDefault();
+              return;
+            }
+            
+            const targetId = href.substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+              e.preventDefault();
+              
+              // Scroll suave al elemento
+              targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+              
+              // Actualizar URL sin recargar la página
+              history.pushState(null, '', href);
+            }
+          });
+        });
+      });
+
+      // ===== COUNT UP ANIMATION =====
+      function countup(el, target) {
+        let data = { count: 0 };
+        anime({
+          targets: data,
+          count: [0, target],
+          duration: 2000,
+          round: 1,
+          delay: 200,
+          easing: 'easeOutCubic',
+          update() {
+            el.innerText = data.count.toLocaleString();
+          }
+        });
+      }
+
+      function makeCountup(el) {
+        const text = el.getAttribute('data-countup');
+        const target = parseInt(text, 10);
+
+        const io = new IntersectionObserver(entries => {
+          entries.forEach(entry => {
+            if (entry.intersectionRatio > 0) {
+              countup(el, target);
+              io.unobserve(entry.target);
+            }
+          });
+        });
+
+        io.observe(el);
+      }
+
+      // ===== SCROLL REVEAL ANIMATION =====
+      function scrollReveal() {
+        const reveals = document.querySelectorAll('.scroll-reveal, .scroll-reveal-left, .scroll-reveal-right, .scroll-reveal-scale');
+        
+        const observer = new IntersectionObserver((entries) => {
+          entries.forEach(entry => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add('revealed');
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.1,
+          rootMargin: '0px 0px -50px 0px'
+        });
+
+        reveals.forEach(reveal => {
+          observer.observe(reveal);
+        });
+      }
+
+      // ===== TOGGLE SECTION FUNCTION =====
+      function toggleSection(header) {
+        const section = header.parentElement;
+        const allSections = document.querySelectorAll('.toggle-section');
+        
+        // Toggle the clicked section
+        section.classList.toggle('active');
+        
+        // Optional: Close other sections (uncomment if you want accordion behavior)
+        // allSections.forEach(s => {
+        //   if (s !== section) {
+        //     s.classList.remove('active');
+        //   }
+        // });
+      }
+
+      // Inicializar cuando el DOM esté listo
+      document.addEventListener('DOMContentLoaded', function() {
+        // Inicializar countUp
+        const countupEls = document.querySelectorAll('[data-countup]');
+        countupEls.forEach(makeCountup);
+
+        // Inicializar scroll reveal
+        scrollReveal();
+      });
+    </script>
+  </body>
+</html>

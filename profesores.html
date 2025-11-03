@@ -1,0 +1,806 @@
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Conoce a nuestro equipo de profesores altamente calificados del Cursillo Stewart. Expertos en matemáticas y preparación universitaria para la Universidad Politécnica Taiwan Paraguay (UPTP)."
+    />
+    <meta
+      name="keywords"
+      content="profesores, cursillo stewart, matemáticas, UPTP, universidad, paraguay, taiwan, educación, preparación universitaria, docentes"
+    />
+    <meta name="author" content="Matías Vera - MatiasVeraG" />
+    <meta name="developer" content="Matías Vera" />
+    <meta name="robots" content="index, follow" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://cursillo-stewart.uptp.edu.py/profesores.html" />
+    <meta
+      property="og:title"
+      content="Profesores - Cursillo Stewart | Universidad Politécnica Taiwan Paraguay"
+    />
+    <meta
+      property="og:description"
+      content="Conoce a nuestro equipo de profesores expertos en matemáticas y preparación universitaria. Profesionales comprometidos con tu éxito académico."
+    />
+    <meta property="og:image" content="images/logo-cursillo-stewart.png" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://cursillo-stewart.uptp.edu.py/profesores.html" />
+    <meta
+      property="twitter:title"
+      content="Profesores - Cursillo Stewart | Universidad Politécnica Taiwan Paraguay"
+    />
+    <meta
+      property="twitter:description"
+      content="Conoce a nuestro equipo de profesores expertos en matemáticas y preparación universitaria. Profesionales comprometidos con tu éxito académico."
+    />
+    <meta property="twitter:image" content="images/logo-cursillo-stewart.png" />
+
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" sizes="32x32" href="images/1-1-logo-cursillo-stewart.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/1-1-logo-cursillo-stewart.png" />
+    <link rel="apple-touch-icon" href="images/1-1-logo-cursillo-stewart.png" />
+
+    <title>
+      Profesores - Cursillo Stewart | Universidad Politécnica Taiwan Paraguay | Equipo Docente
+    </title>
+
+    <!-- Preconnect para mejorar rendimiento -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <!-- EmailJS -->
+    <script
+      type="text/javascript"
+      src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"
+    ></script>
+
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "EducationalOrganization",
+        "name": "Cursillo Stewart - UPTP",
+        "description": "Equipo de profesores especializados en preparación universitaria para la Universidad Politécnica Taiwan Paraguay",
+        "url": "https://cursillo-stewart.uptp.edu.py/profesores.html",
+        "logo": "images/logo-cursillo-stewart.png",
+        "sameAs": ["https://www.facebook.com/uptp", "https://www.instagram.com/uptp"],
+        "employee": [
+          {
+            "@type": "Person",
+            "name": "Profesor de Matemáticas",
+            "jobTitle": "Especialista en Precálculo"
+          },
+          {
+            "@type": "Person",
+            "name": "Profesora de Álgebra",
+            "jobTitle": "Especialista en Álgebra y Funciones"
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <!-- Logo -->
+          <div class="logo">
+            <img
+              src="images/logo-cursillo-stewart.png"
+              alt="Cursillo Stewart Logo"
+              class="logo-image"
+            />
+          </div>
+
+          <!-- Navigation Menu -->
+          <nav>
+            <a href="index.html">Inicio</a>
+            <a href="index.html#conocenos">Conócenos</a>
+            <a href="index.html#ingresantes">Ingresantes</a>
+            <a href="index.html#programa">Cursos</a>
+            <a href="index.html#simulacros">Simulacros</a>
+            <a href="index.html#contacto">¡Contáctanos!</a>
+          </nav>
+
+          <!-- Mobile Menu Button -->
+          <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        </div>
+
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="mobile-menu hidden">
+          <a href="index.html">Inicio</a>
+          <a href="index.html#conocenos">Conócenos</a>
+          <a href="index.html#ingresantes">Ingresantes</a>
+          <a href="index.html#programa">Cursos</a>
+          <a href="index.html#simulacros">Simulacros</a>
+          <a href="index.html#contacto">¡Contáctanos!</a>
+        </div>
+      </div>
+    </header>
+
+    <!-- Profesores Section -->
+    <section class="profesores-section" style="padding-top: 6rem">
+      <div class="container">
+        <div class="section-header" style="margin-bottom: 3rem">
+          <h2 id="profesores-title" style="font-size: 2.5rem; margin-bottom: 0.5rem">
+            Equipo Docente Profesionales
+          </h2>
+          <p id="profesores-subtitle" style="font-size: 1.1rem; color: #666">
+            Conoce al equipo que te guiará hacia el éxito académico
+          </p>
+        </div>
+
+        <div class="profesores-grid-modern" id="profesores-container">
+          <!-- Profe  Leandro-->
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_leandro.jpg" alt="Profesor Leandro" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Prof. Leandro Volta</h3>
+              <p class="profesor-position">Est. de Ingeniería Electromecánica (Último año)</p>
+              
+              <ul class="profesor-logros-list">
+                <li>Acelon Chemicals & Fiber Corporation, Encargado de Mantenimiento (Changhua, Taiwán) (2025)</li>
+                <li>Taiwan Tech (2024-2025)</li>
+                <li>Taller Práctico de Automatización Programación de PLC (Taipéi, Taiwán) (2024)</li>
+                <li>Vicepresidente del Centro de Estudiantes de la UPTP (2023).</li>
+                <li>4 años de docencia en el ingreso a la UPTP.</li>
+                
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="#" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/tiktok.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Profe Ale -->  
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_ale.jpg" alt="Alejandro López" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Prof. Alejandro López Patiño</h3>
+              <p class="profesor-position">Est. de Ingeniería Civil (Ultimo año)</p>
+              
+              <ul class="profesor-logros-list">
+                <li>Taiwan Tech (2024-2025)</li>
+                <li>Ganador del campamento para estudiantes internacionales SINOTECH (Taipéi, Taiwán)(2024)</li>
+                <li>Presidente del Centro de Estudiantes de la UPTP (2023)</li>
+                <li>TOP Ingresante a la UPTP (2023)</li>
+                <li>4 años de docencia en el ingreso a la UPTP</li>
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="#" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/email.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profe Facu -->
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_facu.jpg" alt="Facundo Rolón" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Prof. Facundo Rolón</h3>
+              <p class="profesor-position">Est. de Ingeniería Electromecánica (Último año)</p>
+              
+              <ul class="profesor-logros-list">
+                <li>Taiwan Tech (2024-2025)</li>
+                <li>Mención de Honor Proyecto de Responsabilidad Social Universitaria, UPTP (2023)</li>
+                <li>Taller Práctico de Automatización Programación de PLC (Taipéi, Taiwán) (2024)</li>
+                <li>TOP Ingresante a la UPTP (2022)</li>
+                <li>4 años de docencia en el ingreso a la UPTP</li>
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="#" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/email.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profe Mirella -->
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_mirella.jpg" alt="Profesor Mirella González" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Prof. Mirella González</h3>
+              <p class="profesor-position">Directora y Profesora Principal</p>
+              
+              <ul class="profesor-logros-list">
+                <li>Licenciado en Ciencias de la Computación</li>
+                <li>Especialista en Desarrollo Full-Stack</li>
+                <li>Fundador del Cursillo #1 de Paraguay</li>
+                <li>+100 estudiantes ingresados exitosamente</li>
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="https://www.linkedin.com" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/tiktok.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/facebook.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+                 <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/tiktok.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profe Edna Irala-->
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_edna.jpg" alt="Profesor Edna Irala" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Prof. Edna Irala</h3>
+              <p class="profesor-position">Est. de Ingeniería Civil (Último año)</p>
+              
+              <ul class="profesor-logros-list">
+                <li>Mejor Egresada con Medalla de Oro del Colegio Cristo Rey</li>
+                <li>Docente de Química y Ciencias en el programa "Autogobierno" del Cristo Rey</li>
+                <li>Más de 10 años de capacitación en lengua inglesa.</li>
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="#" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/tiktok.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profe  Elias-->
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_elias.jpg" alt="Profesor Elias Cañete" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Prof. Elias Cañete</h3>
+              <p class="profesor-position">Est. de Ingeniería Civil (Último año)</p>
+              
+              <ul class="profesor-logros-list">
+                <li>Ingresante TOP 1 en Ingeniería Civil (2024)</li>
+                <li>Miembro del Centro de Estudiantes de la UPTP (2024)</li>
+                <li>Egresado destacado con medalla de plata del colegio C.E.I. Bella Vista</li>
+                <li>Profesor particular de matemáticas y física</li>
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="#" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/tiktok.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profe Mauri-->
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_mauri.jpg" alt="Profesor " class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Prof. Mauricio Sanchez</h3>
+              <p class="profesor-position">Est. de Ingeniería Civil (Último año)</p>
+              
+              <ul class="profesor-logros-list">
+                <li>Top Ingresante a la UPTP (2024)</li>
+                <li>Tesorero del Centro de Estudiantes de la UPTP (2025)</li>
+                <li>Mejor Egresado con Medalla de Oro del Colegio Adventista de Asunción (2023)</li>
+                <li>Mejor Egresado Bachillerato en Informática del Colegio Adventista de Asunción (2023)</li>
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="#" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/tiktok.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profe Andres-->
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_andres.jpg" alt="Profesor Andres Torres" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Prof. Andres Torres</h3>
+              <p class="profesor-position">Est. de Ingeniería Informática</p>
+              
+              <ul class="profesor-logros-list">
+                <li>TOP ingresante a la UPTP (2025)</li>
+                <li>Medallista en la Olimpiada Nacional de Matemáticas (OMAPA) (2024)</li>
+                <li>Técnico en electrónica (Instituto Paraguayo de Telecomunicaciones) (2024)</li>
+                <li>Técnico en Lengua Inglesa (CEIFAER)</li>
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="#" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/tiktok.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profe Dani-->
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_nadie.jpg" alt="Profesor Daniel Cárdenas" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Prof. Daniel Cárdenas</h3>
+              <p class="profesor-position">Est. de Ingeniería Industrial</p>
+              
+              <ul class="profesor-logros-list">
+                <li>Taiwan Tech (2025)</li>
+                <li>Miembro del Centro de Estudiantes de la UPTP (2024).</li>
+                <li>Mención de Honor Proyecto de Responsabilidad Social Universitaria, UPTP (2023)</li>
+                <li>Publicación científica aceptada, International Congress on Engineering and Information (2025)</li>
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="#" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/tiktok.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profe Mateo-->
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_mateo.jpg" alt="Profesor Mateo Mongelos" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Prof. Mateo Mongelos</h3>
+              <p class="profesor-position">Est. de Ingeniería Electromecánica</p>
+              
+              <ul class="profesor-logros-list">
+                <li>TOP 1 General en el ingreso a la UPTP (2025)</li>
+                <li>Profesor particular de física y matemáticas (inglés y español) (2024)</li>
+                <li>⁠Egresado del Colegio Técnico Nacional de Asunción (2023)</li>
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="#" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/tiktok.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profe Mateo DLC-->
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_mateo_dlc.jpg" alt="Profesor Mateo de la Cueva" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Prof. Mateo de la Cueva</h3>
+              <p class="profesor-position">Est. de Ingeniería Civil</p>
+              
+              <ul class="profesor-logros-list">
+                <li>Medallista en las Olimpiadas Nacionales de Matemática (OMAPA).</li>
+                <li>Participante del programa Jóvenes Talentos OMAPA.</li>
+                <li>3° Puesto Internacional en las Olimpiadas de Ingenio Matemático (Colegio Tarbut).</li>
+                <li>Campeón en las Olimpiadas Matemáticas Kanguro.</li>
+                <li>Participación en proyectos y torneos de robótica educativa (PYBOT y FIRST LEGO League).</li>
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="#" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/tiktok.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <!-- Profe Matias
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_matias.jpg" alt="Profesor Matias" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Prof. Matias Vera</h3>
+              <p class="profesor-position">Est. Ing. Informática  FPUNA</p>
+              
+              <ul class="profesor-logros-list">
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="https://github.com/MatiasVeraG" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="https://www.linkedin.com/in/matias-vera-88a01a28a/" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="https://www.instagram.com/matiass_verag" class="social-icon" title="Email">
+                  <img src="Icons/instagram.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>-->
+        </div>
+
+        <!-- Equipo Administrativo Section -->
+        <div class="section-header" style="margin-bottom: 3rem">
+          <h2 id="profesores-title" style="font-size: 2.5rem; margin-bottom: 0.5rem">
+            Equipo Administrativo
+          </h2>
+          <p id="profesores-subtitle" style="font-size: 1.1rem; color: #666">
+            El equipo administrativo coordina y acompaña cada etapa del cursillo, 
+            asegurando una experiencia organizada y de calidad para todos los estudiantes.
+          </p>
+        </div>
+
+        <div class="profesores-grid-modern" id="profesores-container">
+          <!-- Profe Lourdes-->
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_nadie.jpg" alt="Profesor Lourdes" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Lourdes Duarte</h3>
+              <p class="profesor-position">Secretaria</p>
+              
+              <ul class="profesor-logros-list">
+                <!-- <li></li>
+                <li></li>
+                <li></li>
+                <li></li>-->
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="#" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/tiktok.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+          <!-- Profe Esteban-->
+          <div class="profesor-card-wrapper">
+            <div class="profesor-card-modern">
+              <div class="profesor-image-wrapper">
+                <img src="images/profe_nadie.jpg" alt="Profesor Esteban Volta" class="profesor-avatar-circular">
+              </div>
+
+              <h3 class="profesor-name">Esteban Volta</h3>
+              <p class="profesor-position">Administrador</p>
+              
+              <ul class="profesor-logros-list">
+               <!-- <li></li>
+                <li></li>
+                <li></li>
+                <li></li>-->
+              </ul>
+              
+              <div class="profesor-social-icons">
+                <a href="#" target="_blank" class="social-icon" title="GitHub">
+                  <img src="Icons/github.png" alt="GitHub" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="LinkedIn">
+                  <img src="Icons/linkedin.png" alt="LinkedIn" style="filter: brightness(0) invert(1);">
+                </a>
+                <a href="#" class="social-icon" title="Email">
+                  <img src="Icons/tiktok.png" alt="Email" style="filter: brightness(0) invert(1);">
+                </a>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Botón de Inscripción -->
+        <div style="text-align: center; margin-top: 3rem; padding: 2rem 0">
+          <h3 style="color: var(--navy); margin-bottom: 1rem; font-size: 1.8rem">
+            ¿Listo para empezar tu preparación?
+          </h3>
+          <p style="color: #666; margin-bottom: 1.5rem; font-size: 1.1rem">
+            Únete a cientos de estudiantes que han logrado sus objetivos académicos con nosotros
+          </p>
+          <a
+            href="index.html#inscripcion"
+            class="btn-primary"
+            style="
+              padding: 1rem 2.5rem;
+              font-size: 1.1rem;
+              text-decoration: none;
+              display: inline-block;
+            "
+          >
+            📝 Inscríbete Ahora
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="footer-grid">
+          <div>
+            <div class="footer-logo">
+              <img
+                id="footer-logo-img"
+                src="images/Cursillo_Blanco.png"
+                alt="Cursillo Stewart Logo"
+                class="footer-logo-image"
+              />
+            </div>
+            <p id="footer-description-text" style="color: var(--gray-300); font-size: 0.875rem">
+              Preparándote para un futuro universitario exitoso en la Universidad Politécnica Taiwan
+              Paraguay.
+            </p>
+          </div>
+
+
+
+          <div>
+            <h4>Enlaces Rápidos</h4>
+            <ul>
+              <li>
+                <a href="index.html" style="color: #fff; text-decoration: none !important"
+                  >Inicio</a
+                >
+              </li>
+              <li>
+                <a href="index.html#conocenos" style="color: #fff; text-decoration: none !important"
+                  >Conócenos</a
+                >
+              </li>
+              <li>
+                <a href="index.html#programa" style="color: #fff; text-decoration: none !important"
+                  >Cursos</a
+                >
+              </li>
+              <li>
+                <a href="index.html#simulacros" style="color: #fff; text-decoration: none !important"
+                  >Simulacros</a
+                >
+              </li>
+              <li>
+                <a href="profesores.html" style="color: #fff; text-decoration: none !important"
+                  >Profesores</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Información</h4>
+            <ul>
+              <li>
+                <a href="index.html#contacto" style="color: #fff; text-decoration: none !important"
+                  >Contacto</a
+                >
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <h4>Síguenos</h4>
+            <div class="social-links">
+              <a
+                href="https://www.facebook.com/cursillostewart"
+                id="social-facebook"
+                style="color: #fff"
+                class="social-link"
+                title="Facebook"
+              >
+                <img
+                  src="Icons/facebook.png"
+                  alt="Facebook"
+                  style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
+                />
+              </a>
+              <a
+                href="https://www.instagram.com/cursillouptp"
+                id="social-instagram"
+                style="color: #fff"
+                class="social-link"
+                title="Instagram"
+              >
+                <img
+                  src="Icons/instagram.png"
+                  alt="Instagram"
+                  style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
+                />
+              </a>
+              <a href="https://www.tiktok.com/@cursillostewartpy" id="social-tiktok" style="color: #fff" class="social-link" title="TikTok">
+                <img
+                  src="Icons/tiktok.png"
+                  alt="TikTok"
+                  style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
+                />
+              </a>
+              <a
+                href="https://www.youtube.com/@cursillostewart"
+                id="social-youtube"
+                style="color: #fff"
+                class="social-link"
+                title="YouTube"
+              >
+                <img
+                  src="Icons/youtube.png"
+                  alt="YouTube"
+                  style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
+                />
+              </a>
+              <a
+                href="https://wa.me/+595985350550"
+                id="social-whatsapp"
+                style="color: #fff"
+                class="social-link"
+                title="WhatsApp"
+              >
+                <img
+                  src="Icons/whatsapp.png"
+                  alt="WhatsApp"
+                  style="width: 20px; height: 20px; filter: brightness(0) invert(1)"
+                />
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer-bottom">
+          <p id="footer-copyright-text">
+            &copy; 2025 Cursillo Stewart - UPTP. Todos los derechos reservados.
+          </p>
+          <p style="margin-top: 0.5rem; font-size: 0.875rem; color: var(--gray-400);">
+            Desarrollado por <a href="https://github.com/MatiasVeraG" target="_blank" rel="noopener noreferrer" style="color: var(--blue); text-decoration: none; font-weight: 500;">Matías Vera</a>
+          </p>
+        </div>
+      </div>
+    </footer>
+
+    <script>
+      // Mobile menu toggle
+      function toggleMenu() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.remove('hidden');
+          mobileMenu.classList.add('show');
+        } else {
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('show');
+        }
+      }
+
+      // Función para hacer que todos los links internos funcionen como redirects con smooth scroll
+      document.addEventListener('DOMContentLoaded', function() {
+        const allLinks = document.querySelectorAll('a[href^="#"]');
+        
+        allLinks.forEach(link => {
+          link.addEventListener('click', function(e) {
+            const href = this.getAttribute('href');
+            
+            // Ignorar links vacíos (#)
+            if (href === '#') {
+              e.preventDefault();
+              return;
+            }
+            
+            const targetId = href.substring(1);
+            const targetElement = document.getElementById(targetId);
+            
+            if (targetElement) {
+              e.preventDefault();
+              
+              // Scroll suave al elemento
+              targetElement.scrollIntoView({
+                behavior: 'smooth',
+                block: 'start'
+              });
+              
+              // Actualizar URL sin recargar la página
+              history.pushState(null, '', href);
+            }
+          });
+        });
+      });
+    </script>
+  </body>
+</html>
