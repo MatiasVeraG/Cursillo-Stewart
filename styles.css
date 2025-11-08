@@ -177,124 +177,6 @@ nav a:hover {
   color: var(--red);
 }
 
-/* ===== DROPDOWN MENU ===== */
-.dropdown {
-  position: relative;
-  display: inline-block;
-}
-
-.dropdown-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  cursor: pointer;
-}
-
-.dropdown-arrow {
-  font-size: 0.75rem;
-  transition: transform 0.3s ease;
-}
-
-.dropdown:hover .dropdown-arrow {
-  transform: rotate(180deg);
-}
-
-.dropdown-menu {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  min-width: 220px;
-  background: var(--white);
-  border: 1px solid var(--gray-200);
-  border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 1000;
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(-10px);
-  transition: all 0.3s ease;
-  margin-top: 0.5rem;
-}
-
-.dropdown:hover .dropdown-menu {
-  opacity: 1;
-  visibility: visible;
-  transform: translateY(0);
-}
-
-.dropdown-item {
-  display: block;
-  padding: 0.75rem 1rem;
-  color: var(--navy);
-  text-decoration: none;
-  font-weight: 500;
-  border-bottom: 1px solid var(--gray-100);
-  transition: all 0.3s ease;
-}
-
-.dropdown-item:last-child {
-  border-bottom: none;
-  border-radius: 0 0 8px 8px;
-}
-
-.dropdown-item:first-child {
-  border-radius: 8px 8px 0 0;
-}
-
-.dropdown-item:hover {
-  background-color: var(--gray-50);
-  color: #e63946;
-  padding-left: 1.25rem;
-}
-
-/* Mobile dropdown */
-.mobile-dropdown {
-  position: relative;
-}
-
-.mobile-dropdown-toggle {
-  display: flex;
-  align-items: center;
-  gap: 0.25rem;
-  cursor: pointer;
-}
-
-.mobile-dropdown-menu {
-  display: none;
-  padding-left: 1rem;
-  background-color: var(--gray-50);
-  border-radius: 4px;
-  margin-top: 0.5rem;
-}
-
-.mobile-dropdown.active .mobile-dropdown-menu {
-  display: block;
-}
-
-.mobile-dropdown.active .dropdown-arrow {
-  transform: rotate(180deg);
-}
-
-.mobile-dropdown-item {
-  display: block;
-  padding: 0.5rem 0.75rem;
-  color: var(--navy);
-  text-decoration: none;
-  font-size: 0.9rem;
-  transition: color 0.3s ease;
-}
-
-.mobile-dropdown-item:hover {
-  color: var(--red);
-}
-
-/* Desktop dropdown visibility */
-@media (min-width: 769px) {
-  .mobile-dropdown {
-    display: none;
-  }
-}
-
 /* ===== BANNER CON CAROUSEL DE FONDO ===== */
 .banner {
   background: linear-gradient(135deg, rgba(30, 64, 175, 0.2) 0%, rgba(30, 64, 175, 0.15) 100%);
@@ -1862,11 +1744,6 @@ footer {
 
   .mobile-menu.show {
     display: flex;
-  }
-
-  /* Hide desktop dropdown on mobile */
-  .dropdown {
-    display: none;
   }
 
   .banner h2 {
