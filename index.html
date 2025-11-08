@@ -3,10 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <!-- SUBTITULO -->
     <meta
       name="description"
-      content="Cursillo Stewart - Programa introductorio de apoyo académico para aspirantes a la Universidad Politécnica Taiwan Paraguay (UPTP). Prepárate para tu futuro universitario."
+      content="Inscribite a nuestro cursillo. Reforzá tus bases en precálculo y llegá preparado al examen de ingreso."
     />
     <meta
       name="keywords"
@@ -24,14 +23,13 @@
       })();"
     />
     <meta property="og:url" content="https://stewart.com.py/" />
-    <!-- TITULO -->
     <meta
       property="og:title"
-      content="Cursillo Stewart - Universidad Politécnica Taiwan Paraguay"
+      content="Cursillo Stewart - El cursillo NRO #1 para la Universidad Politécnica Taiwán-Paraguay"
     />
     <meta
       property="og:description"
-      content="Programa introductorio de apoyo académico para aspirantes universitarios. Prepárate para tu futuro en UPTP."
+      content="Inscribite a nuestro cursillo. Reforzá tus bases en precálculo y llegá preparado al examen de ingreso."
     />
     <meta property="og:image" content="images/logo-cursillo-stewart.png" />
 
@@ -40,11 +38,11 @@
     <meta property="twitter:url" content="https://stewart.com.py/" />
     <meta
       property="twitter:title"
-      content="Cursillo Stewart - Universidad Politécnica Taiwan Paraguay"
+      content="Cursillo Stewart - El cursillo NRO #1 para la Universidad Politécnica Taiwán-Paraguay"
     />
     <meta
       property="twitter:description"
-      content="Programa introductorio de apoyo académico para aspirantes universitarios. Prepárate para tu futuro en UPTP."
+      content="Inscribite a nuestro cursillo. Reforzá tus bases en precálculo y llegá preparado al examen de ingreso."
     />
     <meta property="twitter:image" content="images/logo-cursillo-stewart.png" />
 
@@ -54,7 +52,7 @@
     <link rel="apple-touch-icon" href="images/1-1-logo-cursillo-stewart.png" />
 
     <title>
-      Cursillo Stewart - Universidad Politécnica Taiwan Paraguay | Preparación Universitaria
+      Cursillo Stewart - El cursillo NRO #1 para la Universidad Politécnica Taiwán-Paraguay
     </title>
 
     <!-- Preconnect para mejorar rendimiento -->
@@ -84,7 +82,7 @@
         "@context": "https://schema.org",
         "@type": "EducationalOrganization",
         "name": "Cursillo Stewart - UPTP",
-        "description": "Programa introductorio de apoyo académico para aspirantes a la Universidad Politécnica Taiwan Paraguay",
+        "description": "Inscribite a nuestro cursillo. Reforzá tus bases en precálculo y llegá preparado al examen de ingreso.",
         "url": "https://cursillo-stewart.uptp.edu.py/",
         "logo": "images/logo-cursillo-stewart.png",
         "sameAs": ["https://www.facebook.com/uptp", "https://www.instagram.com/uptp"]
@@ -111,7 +109,13 @@
             <a href="#conocenos" role="button" aria-label="Ir a Conócenos">Conócenos</a>
             <a href="#ingresantes" role="button" aria-label="Ir a Ingresantes">🏆 Ingresantes</a>
             <a href="#programa" role="button" aria-label="Ir a Cursos">📚 Cursos</a>
-            <a href="#simulacros" role="button" aria-label="Ir a Simulacros">Simulacros</a>
+            <div class="dropdown">
+              <a href="#simulacros" role="button" aria-label="Ir a Simulacros" class="dropbtn">📝Simulacros ▼</a>
+              <div class="dropdown-content">
+                <a href="documents/Examen_Simulacro_2025.pdf" download>Simulacro 2025</a>
+                <a href="documents/Examen_Simulacro_2024.pdf" download>Simulacro 2024</a>
+              </div>
+            </div>
             <a href="profesores.html">🧑‍🏫 Profesores</a>
             <a href="#contacto" role="button" aria-label="Ir a Contacto">¡Contáctanos!</a>
           </nav>
@@ -126,8 +130,14 @@
           <a href="#conocenos">Conócenos</a>
           <a href="#ingresantes">🏆 Ingresantes</a>
           <a href="#programa">📚 Cursos</a>
-          <a href="#simulacros">Simulacros</a>
-          <a href="profesores.html">Profesores</a>
+          <div class="mobile-dropdown">
+            <a href="#simulacros" onclick="toggleMobileDropdown(event)">📝 Simulacros ▼</a>
+            <div class="mobile-dropdown-content">
+              <a href="documents/Examen_Simulacro_2025.pdf" download>Simulacro 2025</a>
+              <a href="documents/Examen_Simulacro_2024.pdf" download>Simulacro 2024</a>
+            </div>
+          </div>
+          <a href="profesores.html">🧑‍🏫 Profesores</a>
           <a href="#contacto">¡Contáctanos!</a>
         </div>
       </div>
@@ -146,6 +156,7 @@
       <!-- Indicadores del carousel -->
       <div class="carousel-indicators">
         <div class="indicator active"></div>
+        <div class="indicator"></div>
         <div class="indicator"></div>
         <div class="indicator"></div>
         <div class="indicator"></div>
@@ -172,8 +183,8 @@
               <h3>2022 — El Comienzo</h3>
               <p>
                 Desde un pequeño departamento, cuatro estudiantes de la UPTP
-                —Facundo Rolón , Alejandro López, Leandro Volta y Mirella López—
-                iniciaron Stewart con un grupo reducido de alumnos y un objetivo: utilizar
+                —<strong>Facundo Rolón, Alejandro López, Leandro Volta y Mirella López
+                </strong>— iniciaron Stewart con un grupo reducido de alumnos y un objetivo: utilizar
                 su experiencia en el ingreso a la UPTP para crear el mejor curso de
                 preparación.
               </p>
@@ -185,8 +196,8 @@
             <div class="timeline-content">
               <h3>2023 — Primer Gran Logro</h3>
               <p>
-                Nuestra primera promoción alcanzó 14 ingresantes, un pequeño paso, el
-                cual sumado a los comentarios positivos, atrajo a más postulantes. Así,
+                Nuestra primera promoción alcanzó <strong>14 ingresantes</strong>, un pequeño paso, el
+                cual sumado a los <strong>comentarios positivos</strong>, atrajo a más postulantes. Así,
                 decidimos mudarnos a un espacio más grande.
               </p>
               <div class="timeline-image" style="text-align: center; margin-top: 1.5rem">
@@ -221,9 +232,9 @@
             <div class="timeline-content">
               <h3>2024 — Crecimiento y Reconocimiento</h3>
               <p>
-                Con 37 ingresantes y los primeros puestos, Stewart se consolidó como una
+                Con <strong>37 ingresantes y los primeros puestos</strong>, Stewart se consolidó como una
                 marca reconocida en la preparación para la UPTP. Nuestra comunidad
-                creció y con ella, también nuestras instalaciones.
+                creció, aumentamos la comodidad, la organización y la exigencia.
               </p>
               <div class="timeline-image" style="text-align: center; margin-top: 1.5rem">
                 <img
@@ -257,10 +268,10 @@
             <div class="timeline-content">
               <h3>2025 — Consolidación y Excelencia</h3>
               <p>
-                Volvimos a lograr 35 ingresantes y los primeros puestos, reafirmando
+                Stewart destacó nuevamente con <strong>35 ingresantes y los primeros puestos</strong>, reafirmando
                 nuestro compromiso con la calidad. Nos mudamos a nuestro actual
-                edificio, con el fín de ofrecer la máxima comodidad y experiencia de
-                aprendizaje.
+                edificio, con el fín de ofrecer la <strong>máxima comodidad y experiencia de
+                aprendizaje.</strong>
               </p>
               <div class="timeline-image" style="text-align: center; margin-top: 1.5rem">
                 <img
@@ -459,7 +470,7 @@
               <div class="ranking__head">
                 <span>Nombre</span>
                 <span>Puntaje</span>
-                <span>Carrera</span>
+                <span></span>
                 <span>Puesto General</span>
               </div>
               <div class="ranking__row">
@@ -470,7 +481,7 @@
                   </div>
                 </div>
                 <div class="col col--score">100</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#1</div>
               </div>
               <div class="ranking__row">
@@ -481,7 +492,7 @@
                   </div>
                 </div>
                 <div class="col col--score">84.62</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#6</div>
               </div>
               <div class="ranking__row">
@@ -492,7 +503,7 @@
                   </div>
                 </div>
                 <div class="col col--score">80.77</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#10</div>
               </div>
               <div class="ranking__row">
@@ -503,7 +514,7 @@
                   </div>
                 </div>
                 <div class="col col--score">80.77</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#11</div>
               </div>
               <div class="ranking__row">
@@ -514,7 +525,7 @@
                   </div>
                 </div>
                 <div class="col col--score">76.92</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#15</div>
               </div>
               <div class="ranking__row">
@@ -525,7 +536,7 @@
                   </div>
                 </div>
                 <div class="col col--score">73.08</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#22</div>
               </div>
               <div class="ranking__row">
@@ -536,7 +547,7 @@
                   </div>
                 </div>
                 <div class="col col--score">69.23</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#26</div>
               </div>
               <div class="ranking__row">
@@ -547,7 +558,7 @@
                   </div>
                 </div>
                 <div class="col col--score">69.23</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#28</div>
               </div>
               <div class="ranking__row">
@@ -558,7 +569,7 @@
                   </div>
                 </div>
                 <div class="col col--score">69.23</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#31</div>
               </div>
               <div class="ranking__row">
@@ -569,7 +580,7 @@
                   </div>
                 </div>
                 <div class="col col--score">69.23</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#33</div>
               </div>
               <div class="ranking__row">
@@ -580,7 +591,7 @@
                   </div>
                 </div>
                 <div class="col col--score">71.99</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#36</div>
               </div>
               <div class="ranking__row">
@@ -591,7 +602,7 @@
                   </div>
                 </div>
                 <div class="col col--score">71.05</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#37</div>
               </div>
               <div class="ranking__row">
@@ -602,7 +613,7 @@
                   </div>
                 </div>
                 <div class="col col--score">65.48</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#49</div>
               </div>
               <div class="ranking__row">
@@ -613,7 +624,7 @@
                   </div>
                 </div>
                 <div class="col col--score">64.28</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#52</div>
               </div>
               <div class="ranking__row">
@@ -624,7 +635,7 @@
                   </div>
                 </div>
                 <div class="col col--score">63.96</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#53</div>
               </div>
               <div class="ranking__row">
@@ -635,7 +646,7 @@
                   </div>
                 </div>
                 <div class="col col--score">63.65</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#57</div>
               </div>
               <div class="ranking__row">
@@ -646,7 +657,7 @@
                   </div>
                 </div>
                 <div class="col col--score">63.61</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#58</div>
               </div>
               <div class="ranking__row">
@@ -657,7 +668,7 @@
                   </div>
                 </div>
                 <div class="col col--score">62.14</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#60</div>
               </div>
               <div class="ranking__row">
@@ -668,7 +679,7 @@
                   </div>
                 </div>
                 <div class="col col--score">61.83</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#61</div>
               </div>
               <div class="ranking__row">
@@ -679,7 +690,7 @@
                   </div>
                 </div>
                 <div class="col col--score">61.78</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#62</div>
               </div>
               <div class="ranking__row">
@@ -690,7 +701,7 @@
                   </div>
                 </div>
                 <div class="col col--score">61.52</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#63</div>
               </div>
               <div class="ranking__row">
@@ -701,7 +712,7 @@
                   </div>
                 </div>
                 <div class="col col--score">61.15</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#70</div>
               </div>
               <div class="ranking__row">
@@ -712,7 +723,7 @@
                   </div>
                 </div>
                 <div class="col col--score">60.89</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#71</div>
               </div>
               <div class="ranking__row">
@@ -723,7 +734,7 @@
                   </div>
                 </div>
                 <div class="col col--score">60.89</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#72</div>
               </div>
               <div class="ranking__row">
@@ -734,7 +745,7 @@
                   </div>
                 </div>
                 <div class="col col--score">60.21</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#76</div>
               </div>
               <div class="ranking__row">
@@ -745,7 +756,7 @@
                   </div>
                 </div>
                 <div class="col col--score">59.9</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#77</div>
               </div>
               <div class="ranking__row">
@@ -756,7 +767,7 @@
                   </div>
                 </div>
                 <div class="col col--score">59.86</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#79</div>
               </div>
               <div class="ranking__row">
@@ -767,7 +778,7 @@
                   </div>
                 </div>
                 <div class="col col--score">59.33</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#82</div>
               </div>
               <div class="ranking__row">
@@ -778,7 +789,7 @@
                   </div>
                 </div>
                 <div class="col col--score">59.33</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#83</div>
               </div>
               <div class="ranking__row">
@@ -789,7 +800,7 @@
                   </div>
                 </div>
                 <div class="col col--score">59.23</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#85</div>
               </div>
               <div class="ranking__row">
@@ -800,7 +811,7 @@
                   </div>
                 </div>
                 <div class="col col--score">59.06</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#86</div>
               </div>
               <div class="ranking__row">
@@ -811,7 +822,7 @@
                   </div>
                 </div>
                 <div class="col col--score">58.71</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#87</div>
               </div>
               <div class="ranking__row">
@@ -822,7 +833,7 @@
                   </div>
                 </div>
                 <div class="col col--score">58.71</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#89</div>
               </div>
               <div class="ranking__row">
@@ -833,7 +844,7 @@
                   </div>
                 </div>
                 <div class="col col--score">57.46</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#95</div>
               </div>
               <div class="ranking__row">
@@ -844,7 +855,7 @@
                   </div>
                 </div>
                 <div class="col col--score">57.40</div>
-                <div class="col col--career">-</div>
+                <div class="col col--career"></div>
                 <div class="col col--rank">#96</div>
               </div>
             </div>
@@ -1441,19 +1452,23 @@
         <!-- Estadísticas resumidas -->
         <div class="ingresantes-stats">
           <div class="stat-item">
+            <span class="stat-number" data-countup="9">0</span>
+            <span class="stat-label">MOFA 2025</span>
+          </div>
+          <div class="stat-item">
             <span class="stat-number" data-countup="35">0</span>
-            <span class="stat-label">Ingresantes 2025</span>
+            <span class="stat-label">UPTP 2025</span>
           </div>
           <div class="stat-item">
             <span class="stat-number" data-countup="37">0</span>
-            <span class="stat-label">Ingresantes 2024</span>
+            <span class="stat-label">UPTP 2024</span>
           </div>
           <div class="stat-item">
-            <span class="stat-number" data-countup="13">0</span>
-            <span class="stat-label">Ingresantes 2023</span>
+            <span class="stat-number" data-countup="14">0</span>
+            <span class="stat-label">UPTP 2023</span>
           </div>
           <div class="stat-item">
-            <span class="stat-number" data-countup="85">0</span>
+            <span class="stat-number" data-countup="95">0</span>
             <span class="stat-label">Total Ingresantes</span>
           </div>
         </div>
@@ -1543,8 +1558,6 @@
                 <h4>Modalidades Disponibles</h4>
                 <ul>
                   <li><span class="badge presencial">Semanal Presencial</span> Lunes a Viernes</li>
-                  <li><span class="badge sabados">Sábados Presencial</span> Solo Sábados</li>
-                  <li><span class="badge virtual">Sábados Virtual</span> Sábados Nocturnos</li>
                 </ul>
 
                 <h4>📝 Materiales y Actividades Incluidas</h4>
@@ -1655,8 +1668,8 @@
               <div class="toggle-content">
                 <h4>Modalidades Disponibles</h4>
                 <ul>
-                  <li><span class="badge presencial">Presencial</span> Martes y Jueves</li>
-                  <li><span class="badge virtual">Virtual</span> Miércoles y Viernes</li>
+                  <li><span class="badge presencial">Presencial</span> Lunes a Viernes</li>
+                  <li><span class="badge virtual">Presencial</span> Sábados</li>
                 </ul>
 
                 <h4>📝 Materiales y Actividades Incluidas</h4>
@@ -1743,18 +1756,15 @@
                 <h4>Modalidades Disponibles</h4>
                 <ul>
                   <li><span class="badge mofa">MOFA Presencial</span> Lunes a Viernes</li>
-                  <li><span class="badge mofa">MOFA Virtual</span> Lunes, Miércoles, Viernes</li>
                 </ul>
 
                 <h4>📝 Materiales y Actividades Incluidas</h4>
                 <ul>
                   <li>📋 Ejercitarios especializados por capítulo</li>
-                  <li>📊 Exámenes adaptados al sistema MOFA</li>
+                  <li>📊 Exámenes de simulacro</li>
                   <li>📚 Weekly Problems (ejercicios del libro)</li>
                   <li>🎯 Actividades de práctica intensiva</li>
                   <li>📖 Material de apoyo especializado</li>
-                  <li>💻 Plataforma digital exclusiva MOFA</li>
-                  <li>🎆 Preparación especializada para exámenes MOFA</li>
                 </ul>
               </div>
             </div>
@@ -1771,12 +1781,12 @@
     </section>
 
     <!-- Simulacros -->
-    <section id="simulacros" class="scroll-reveal">
+    <section id="simulacros" class="bg-gray scroll-reveal">
       <div class="container">
         <div class="section-header">
-          <h2>Simulacros</h2>
-          <strong>Cada año</strong> realizamos nuestro <strong>simulacro abierto</strong>, el cual se crea tomando
-            como referencia el último examen oficial de ingreso.</p>
+          <h2>📝Simulacros</h2>
+          <strong>Cada año realizamos nuestro simulacro abierto</strong>, el cual se crea tomando
+            como referencia el último examen oficial de ingreso UPTP.</p>
         </div>
 
         <div class="grid grid-3">
@@ -1784,7 +1794,7 @@
           
           <div class="simulacro-card">
             <div class="simulacro-header">
-              <h3>Examen Simulacro 2025</h3>
+              <h3>Simulacro Stewart 2025</h3>
               <span class="simulacro-type">No-oficial</span>
             </div>
             <div class="simulacro-footer">
@@ -1797,7 +1807,7 @@
           <!-- Simulacro 2 -->
           <div class="simulacro-card">
             <div class="simulacro-header">
-              <h3>Examen Simulacro 2024</h3>
+              <h3>Simulacro Stewart 2024</h3>
               <span class="simulacro-type">No-oficial</span>
             </div>
             <div class="simulacro-footer">
@@ -1828,7 +1838,7 @@
               </div>
             </div>
             <h4>Inicio de Curso Intensivo</h4>
-            <p>Preparación UPTP y MOFA.</p>
+            <p>Inicio curso de preparación UPTP y MOFA.</p>
           </div>
 
           <div class="calendar-card">
@@ -1863,7 +1873,7 @@
     <section id="inscripcion" class="scroll-reveal-scale">
       <div class="container">
         <div class="section-header">
-          <h2>Inscripción</h2>
+          <h2>📞 Inscripción</h2>
         <div class="form-container" style="text-align: center; padding: 3rem 2rem;">
           <p style="margin-bottom: 2rem; font-size: 1.2rem; color: var(--navy); line-height: 1.6;">
           <br>Para inscribirte, comunícate con nosotros directamente por WhatsApp.<br>
@@ -2176,6 +2186,15 @@
         }
       }
 
+      // Toggle mobile dropdown
+      function toggleMobileDropdown(event) {
+        event.preventDefault();
+        const dropdownContent = event.target.nextElementSibling;
+        if (dropdownContent) {
+          dropdownContent.classList.toggle('show');
+        }
+      }
+
       // Smooth scrolling for anchor links
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         anchor.addEventListener('click', function (e) {
@@ -2254,6 +2273,7 @@
         constructor() {
           this.images = [
             'images/Imagen de Fondo 1.jpeg',
+            'images/Imagen de Fondo 2.jpeg',
             'images/Imagen de Fondo 3.jpeg',
             'images/Imagen de Fondo 4.jpeg',
             'images/Imagen de Fondo 5.jpeg',
