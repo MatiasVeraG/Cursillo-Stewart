@@ -594,8 +594,8 @@ section {
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  width: 4.4rem;
-  height: 4.4rem;
+  width: 2.2rem;
+  height: 2.2rem;
   animation: sandclockSway 3s ease-in-out infinite;
 }
 
@@ -603,8 +603,8 @@ section {
   display: block;
   width: 100% !important;
   height: 100% !important;
-  max-width: 4.4rem !important;
-  max-height: 4.4rem !important;
+  max-width: 2.2rem !important;
+  max-height: 2.2rem !important;
 }
 
 @keyframes sandclockSway {
@@ -771,13 +771,13 @@ section {
   }
   
   .sandclock-icon {
-    width: 3.6rem;
-    height: 3.6rem;
+    width: 1.8rem;
+    height: 1.8rem;
   }
   
   .sandclock-icon dotlottie-wc {
-    max-width: 3.6rem !important;
-    max-height: 3.6rem !important;
+    max-width: 1.8rem !important;
+    max-height: 1.8rem !important;
   }
   
   .countdown-timer {
@@ -805,13 +805,13 @@ section {
   }
   
   .sandclock-icon {
-    width: 3rem;
-    height: 3rem;
+    width: 1.5rem;
+    height: 1.5rem;
   }
   
   .sandclock-icon dotlottie-wc {
-    max-width: 3rem !important;
-    max-height: 3rem !important;
+    max-width: 1.5rem !important;
+    max-height: 1.5rem !important;
   }
   
   .countdown-item {
