@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!-- SUBTITULO -->
     <meta
       name="description"
       content="Cursillo Stewart - Programa introductorio de apoyo académico para aspirantes a la Universidad Politécnica Taiwan Paraguay (UPTP). Prepárate para tu futuro universitario."
@@ -23,6 +24,7 @@
       })();"
     />
     <meta property="og:url" content="https://stewart.com.py/" />
+    <!-- TITULO -->
     <meta
       property="og:title"
       content="Cursillo Stewart - Universidad Politécnica Taiwan Paraguay"
@@ -73,6 +75,9 @@
     <!-- Anime.js for animations -->
     <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
 
+    <!-- Lottie Web Player -->
+    <script src="https://unpkg.com/@lottiefiles/dotlottie-wc@0.8.5/dist/dotlottie-wc.js" type="module"></script>
+
     <!-- Structured Data -->
     <script type="application/ld+json">
       {
@@ -104,8 +109,8 @@
           <nav>
             <a href="#inicio" role="button" aria-label="Ir a Inicio">Inicio</a>
             <a href="#conocenos" role="button" aria-label="Ir a Conócenos">Conócenos</a>
-            <a href="#ingresantes" role="button" aria-label="Ir a Ingresantes">Ingresantes</a>
-            <a href="#programa" role="button" aria-label="Ir a Cursos">Cursos</a>
+            <a href="#ingresantes" role="button" aria-label="Ir a Ingresantes">🏆 Ingresantes</a>
+            <a href="#programa" role="button" aria-label="Ir a Cursos">📚 Cursos</a>
             <a href="#simulacros" role="button" aria-label="Ir a Simulacros">Simulacros</a>
             <a href="profesores.html">Profesores</a>
             <a href="#contacto" role="button" aria-label="Ir a Contacto">¡Contáctanos!</a>
@@ -119,8 +124,8 @@
         <div id="mobile-menu" class="mobile-menu hidden">
           <a href="#inicio">Inicio</a>
           <a href="#conocenos">Conócenos</a>
-          <a href="#ingresantes">Ingresantes</a>
-          <a href="#programa">Cursos</a>
+          <a href="#ingresantes">🏆 Ingresantes</a>
+          <a href="#programa">📚 Cursos</a>
           <a href="#simulacros">Simulacros</a>
           <a href="profesores.html">Profesores</a>
           <a href="#contacto">¡Contáctanos!</a>
@@ -291,7 +296,17 @@
     <section class="countdown-section">
       <div class="container scroll-reveal">
         <div class="countdown-header">
-          <h2>Próximo Cursillo Intensivo</h2>
+          <h2 class="countdown-title">
+            <span class="sandclock-icon">
+              <dotlottie-wc
+                src="https://lottie.host/85cc88a0-fe3f-46e6-8cc9-f492c3f615e8/0PSs0dhvme.lottie"
+                style="width: 3em; height: 3em"
+                autoplay
+                loop>
+              </dotlottie-wc>
+            </span>
+            Próximo Cursillo Intensivo
+          </h2>
           <p>¡No te pierdas nuestro próximo cursillo intensivo!</p>
           <div class="countdown-date">
             <strong>9 de Diciembre 2025 - 8:00 AM</strong>
@@ -331,7 +346,7 @@
     <section id="ingresantes" class="bg-gray scroll-reveal">
       <div class="container">
         <div class="section-header">
-          <h2>Ingresantes</h2>
+          <h2>🏆 Ingresantes</h2>
           <p>Conoce a los estudiantes que han confiado en nosotros para su preparación.</p>
         </div>
 
@@ -1450,7 +1465,7 @@
     <section id="programa" class="scroll-reveal">
       <div class="container">
         <div class="section-header reveal fade-up">
-          <h2>Cursos</h2>
+          <h2>📚 Cursos</h2>
           <p>Modalidades disponibles para tu preparación.</p>
         </div>
 
