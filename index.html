@@ -6,7 +6,7 @@
     <!-- SUBTITULO -->
     <meta
       name="description"
-      content="Cursillo Stewart - Programa introductorio de apoyo académico para aspirantes a la Universidad Politécnica Taiwan Paraguay (UPTP). Prepárate para tu futuro universitario."
+      content="Inscribite a nuestro cursillo. Reforzá tus bases en precálculo y llegá preparado al examen de ingreso."
     />
     <meta
       name="keywords"
@@ -27,11 +27,11 @@
     <!-- TITULO -->
     <meta
       property="og:title"
-      content="Cursillo Stewart - Universidad Politécnica Taiwan Paraguay"
+      content="Cursillo Stewart - El cursillo NRO #1 para la Universidad Politécnica Taiwán-Paraguay | Preparación Universitaria"
     />
     <meta
       property="og:description"
-      content="Programa introductorio de apoyo académico para aspirantes universitarios. Prepárate para tu futuro en UPTP."
+      content="Inscribite a nuestro cursillo. Reforzá tus bases en precálculo y llegá preparado al examen de ingreso."
     />
     <meta property="og:image" content="images/logo-cursillo-stewart.png" />
 
@@ -40,11 +40,11 @@
     <meta property="twitter:url" content="https://stewart.com.py/" />
     <meta
       property="twitter:title"
-      content="Cursillo Stewart - Universidad Politécnica Taiwan Paraguay"
+      content="Cursillo Stewart - El cursillo NRO #1 para la Universidad Politécnica Taiwán-Paraguay | Preparación Universitaria"
     />
     <meta
       property="twitter:description"
-      content="Programa introductorio de apoyo académico para aspirantes universitarios. Prepárate para tu futuro en UPTP."
+      content="Inscribite a nuestro cursillo. Reforzá tus bases en precálculo y llegá preparado al examen de ingreso."
     />
     <meta property="twitter:image" content="images/logo-cursillo-stewart.png" />
 
@@ -54,7 +54,7 @@
     <link rel="apple-touch-icon" href="images/1-1-logo-cursillo-stewart.png" />
 
     <title>
-      Cursillo Stewart - Universidad Politécnica Taiwan Paraguay | Preparación Universitaria
+      Cursillo Stewart - El cursillo NRO #1 para la Universidad Politécnica Taiwán-Paraguay | Preparación Universitaria
     </title>
 
     <!-- Preconnect para mejorar rendimiento -->
@@ -84,7 +84,7 @@
         "@context": "https://schema.org",
         "@type": "EducationalOrganization",
         "name": "Cursillo Stewart - UPTP",
-        "description": "Programa introductorio de apoyo académico para aspirantes a la Universidad Politécnica Taiwan Paraguay",
+        "description": "Inscribite a nuestro cursillo. Reforzá tus bases en precálculo y llegá preparado al examen de ingreso.",
         "url": "https://cursillo-stewart.uptp.edu.py/",
         "logo": "images/logo-cursillo-stewart.png",
         "sameAs": ["https://www.facebook.com/uptp", "https://www.instagram.com/uptp"]
@@ -113,6 +113,18 @@
             <a href="#programa" role="button" aria-label="Ir a Cursos">📚 Cursos</a>
             <a href="#simulacros" role="button" aria-label="Ir a Simulacros">Simulacros</a>
             <a href="profesores.html">🧑‍🏫 Profesores</a>
+            <a href="#ingresantes" role="button" aria-label="Ir a Ingresantes">Ingresantes</a>
+            <a href="#programa" role="button" aria-label="Ir a Cursos">Cursos</a>
+            <div class="dropdown">
+              <a href="#simulacros" role="button" aria-label="Ir a Simulacros" class="dropdown-toggle">
+                Simulacros <span class="dropdown-arrow">▼</span>
+              </a>
+              <div class="dropdown-menu">
+                <a href="documents/Examen_Simulacro_2025.pdf" download="Examen_Simulacro_2025.pdf" class="dropdown-item">📄 Simulacro 2025</a>
+                <a href="documents/Examen_Simulacro_2024.pdf" download="Examen_Simulacro_2024.pdf" class="dropdown-item">📄 Simulacro 2024</a>
+              </div>
+            </div>
+            <a href="profesores.html">Profesores</a>
             <a href="#contacto" role="button" aria-label="Ir a Contacto">¡Contáctanos!</a>
           </nav>
 
@@ -127,6 +139,15 @@
           <a href="#ingresantes">🏆 Ingresantes</a>
           <a href="#programa">📚 Cursos</a>
           <a href="#simulacros">Simulacros</a>
+          <a href="#ingresantes">Ingresantes</a>
+          <a href="#programa">Cursos</a>
+          <div class="mobile-dropdown">
+            <a href="#simulacros" class="mobile-dropdown-toggle">Simulacros <span class="dropdown-arrow">▼</span></a>
+            <div class="mobile-dropdown-menu">
+              <a href="documents/Examen_Simulacro_2025.pdf" download="Examen_Simulacro_2025.pdf" class="mobile-dropdown-item">📄 Simulacro 2025</a>
+              <a href="documents/Examen_Simulacro_2024.pdf" download="Examen_Simulacro_2024.pdf" class="mobile-dropdown-item">📄 Simulacro 2024</a>
+            </div>
+          </div>
           <a href="profesores.html">Profesores</a>
           <a href="#contacto">¡Contáctanos!</a>
         </div>
@@ -2176,6 +2197,19 @@
           mobileMenu.classList.remove('show');
         }
       }
+
+      // Toggle mobile dropdown
+      document.addEventListener('DOMContentLoaded', function() {
+        const mobileDropdownToggle = document.querySelector('.mobile-dropdown-toggle');
+        const mobileDropdown = document.querySelector('.mobile-dropdown');
+        
+        if (mobileDropdownToggle && mobileDropdown) {
+          mobileDropdownToggle.addEventListener('click', function(e) {
+            e.preventDefault();
+            mobileDropdown.classList.toggle('active');
+          });
+        }
+      });
 
       // Smooth scrolling for anchor links
       document.querySelectorAll('a[href^="#"]').forEach(anchor => {
