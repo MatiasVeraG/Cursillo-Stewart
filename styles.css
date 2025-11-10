@@ -324,6 +324,7 @@ nav a:hover {
   padding: 0 2rem;
 }
 
+.banner h1,
 .banner h2 {
   font-family: 'Poppins', sans-serif;
   font-size: 3rem;
@@ -333,6 +334,12 @@ nav a:hover {
   position: relative;
   z-index: 2;
   animation: fadeInUp 1s ease-out;
+}
+
+/* SEO optimización para H1 principal */
+.banner h1 {
+  color: #ffffff;
+  text-align: center;
 }
 
 .banner .subtitle {
@@ -1988,6 +1995,7 @@ footer {
     display: flex;
   }
 
+  .banner h1,
   .banner h2 {
     font-size: 2rem;
   }
