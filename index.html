@@ -324,14 +324,600 @@
 
         <!-- Tabs para años -->
         <div class="years-tabs">
+          <button class="year-tab" data-year="UPTP-2026" onclick="showYear('UPTP-2026')">UPTP 2026</button>
           <button class="year-tab" data-year="MOFA-2025" onclick="showYear('MOFA-2025')">MOFA 2025</button>
           <button class="year-tab" data-year="UPTP-2025" onclick="showYear('UPTP-2025')">UPTP 2025</button>
           <button class="year-tab" data-year="UPTP-2024" onclick="showYear('UPTP-2024')">UPTP 2024</button>
-          <button class="year-tab" data-year="UPTP-2023" onclick="showYear('UPTP-2023')">UPTP 2023</button>
+          <!--<button class="year-tab" data-year="UPTP-2023" onclick="showYear('UPTP-2023')">UPTP 2023</button>-->
         </div>
 
         <!-- Contenido por año -->
         <div class="years-content">
+          <!-- Ingresantes UPTP - 2026 -->
+          <div id="year-UPTP-2026" class="year-content">
+            <div class="ranking">
+              <!-- Encabezado del ranking -->
+              <div class="ranking__head">
+                <span>Nombre</span>
+                <span>Puntaje</span>
+                <span></span>
+                <span>Puesto General</span>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Mateo Moreno</span>
+                  </div>
+                </div>
+                <div class="col col--score">81.5</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#3</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Pacholi Valdez</span>
+                  </div>
+                </div>
+                <div class="col col--score">81</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#4</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Pedro Roa</span>
+                  </div>
+                </div>
+                <div class="col col--score">77.5</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#9</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Nicolás Bareiro</span>
+                  </div>
+                </div>
+                <div class="col col--score">77.5</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#10</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">María Paz Ovelar</span>
+                  </div>
+                </div>
+                <div class="col col--score">77</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#11</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Angel Arce</span>
+                  </div>
+                </div>
+                <div class="col col--score">76.5</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#13</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Carlos Vitale</span>
+                  </div>
+                </div>
+                <div class="col col--score">76</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#14</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Montserrat Berdejo</span>
+                  </div>
+                </div>
+                <div class="col col--score">75.5</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#15</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Alexia Plate</span>
+                  </div>
+                </div>
+                <div class="col col--score">75.5</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#16</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Eduardo Bogado</span>
+                  </div>
+                </div>
+                <div class="col col--score">75.5</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#17</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Sebastián Balanovsky</span>
+                  </div>
+                </div>
+                <div class="col col--score">75</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#18</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Estrella Martínez</span>
+                  </div>
+                </div>
+                <div class="col col--score">74.5</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#19</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Andrés Barrail</span>
+                  </div>
+                </div>
+                <div class="col col--score">74.5</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#20</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Alejandro Barúa</span>
+                  </div>
+                </div>
+                <div class="col col--score">72.5</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#23</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_preferencial.png" alt="Medalla preferencial" class="medalla">
+                    <span class="name__text">Jose Stanley</span>
+                  </div>
+                </div>
+                <div class="col col--score">72.5</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#25</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Josué Hartmann</span>
+                  </div>
+                </div>
+                <div class="col col--score">72.88</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#28</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Eva Nakatani</span>
+                  </div>
+                </div>
+                <div class="col col--score">72.62</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#29</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Diego Sachelaridi</span>
+                  </div>
+                </div>
+                <div class="col col--score">72.41</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#31</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Octavio Escobar</span>
+                  </div>
+                </div>
+                <div class="col col--score">71.74</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#33</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Eliam Mendoza</span>
+                  </div>
+                </div>
+                <div class="col col--score">71.07</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#35</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Fabrizio Irala</span>
+                  </div>
+                </div>
+                <div class="col col--score">70.86</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#37</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Valentina Zorrilla</span>
+                  </div>
+                </div>
+                <div class="col col--score">68.6</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#39</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Yves Chávez</span>
+                  </div>
+                </div>
+                <div class="col col--score">68.49</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#41</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Cecilia Chaves</span>
+                  </div>
+                </div>
+                <div class="col col--score">67.38</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#43</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Cecilia Lezcano</span>
+                  </div>
+                </div>
+                <div class="col col--score">67.33</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#44</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Santino Bonzi</span>
+                  </div>
+                </div>
+                <div class="col col--score">66.78</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#46</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Maximiliano Ferloni</span>
+                  </div>
+                </div>
+                <div class="col col--score">66.77</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#47</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Axel Trinidad</span>
+                  </div>
+                </div>
+                <div class="col col--score">66.48</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#49</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Ricardo Florencio</span>
+                  </div>
+                </div>
+                <div class="col col--score">65.73</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#51</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Mateo Gómez</span>
+                  </div>
+                </div>
+                <div class="col col--score">65.64</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#52</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Bianca Salinas</span>
+                  </div>
+                </div>
+                <div class="col col--score">65.33</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#53</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Luana Rolón</span>
+                  </div>
+                </div>
+                <div class="col col--score">65.21</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#54</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Carlos Gómez</span>
+                  </div>
+                </div>
+                <div class="col col--score">65.11</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#55</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Isaac Jara</span>
+                  </div>
+                </div>
+                <div class="col col--score">64.49</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#59</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Hernán Liseras</span>
+                  </div>
+                </div>
+                <div class="col col--score">64.01</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#63</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Lucía Riquelme</span>
+                  </div>
+                </div>
+                <div class="col col--score">63.75</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#64</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Adrián Aguilera</span>
+                  </div>
+                </div>
+                <div class="col col--score">63.15</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#66</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Sebastián Yunis</span>
+                  </div>
+                </div>
+                <div class="col col--score">63.03</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#67</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Amin Chappex</span>
+                  </div>
+                </div>
+                <div class="col col--score">63.02</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#68</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Sebastián Colmán</span>
+                  </div>
+                </div>
+                <div class="col col--score">62.63</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#70</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Maximiliano Cañete</span>
+                  </div>
+                </div>
+                <div class="col col--score">60.35</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#78</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Ivo Recalde</span>
+                  </div>
+                </div>
+                <div class="col col--score">60.12</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#79</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Josué Jara</span>
+                  </div>
+                </div>
+                <div class="col col--score">59.5</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#81</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Fabrizio Sánchez</span>
+                  </div>
+                </div>
+                <div class="col col--score">59.38</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#82</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Nicole Petters</span>
+                  </div>
+                </div>
+                <div class="col col--score">59.19</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#83</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Gonzalo Ríos</span>
+                  </div>
+                </div>
+                <div class="col col--score">58.97</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#84</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Sofía Araya</span>
+                  </div>
+                </div>
+                <div class="col col--score">57.8</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#89</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Daichi Uesugui</span>
+                  </div>
+                </div>
+                <div class="col col--score">57.8</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#90</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Agustín Sanchez</span>
+                  </div>
+                </div>
+                <div class="col col--score">57.78</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#91</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Tobías Coronel</span>
+                  </div>
+                </div>
+                <div class="col col--score">56.93</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#95</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Jose Gaona</span>
+                  </div>
+                </div>
+                <div class="col col--score">56.04</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#99</div>
+              </div>
+              <div class="ranking__row">
+                <div class="col col--name">
+                  <div class="name">
+                    <img src="images/medalla_normal.png" alt="Medalla normal" class="medalla">
+                    <span class="name__text">Bruno Duarte</span>
+                  </div>
+                </div>
+                <div class="col col--score">55.8</div>
+                <div class="col col--career"></div>
+                <div class="col col--rank">#100</div>
+              </div>
+            </div>
+          </div>
+          
           <!-- Ingresantes MOFA - 2025 -->
           <div id="year-MOFA-2025" class="year-content">
             <div class="ranking">
@@ -1244,9 +1830,10 @@
           </div>
 
           <!-- Ingresantes UPTP - 2023 -->
+        <!--  
           <div id="year-UPTP-2023" class="year-content">
             <div class="ranking">
-              <!-- Encabezado del ranking -->
+               Encabezado del ranking
               <div class="ranking__head">
                 <span>Nombre</span>
                 <span>Puntaje</span>
@@ -1409,10 +1996,16 @@
               </div>
             </div>
           </div>
+        -->
+          
         </div>
 
         <!-- Estadísticas resumidas -->
         <div class="ingresantes-stats">
+          <div class="stat-item">
+            <span class="stat-number" data-countup="52">0</span>
+            <span class="stat-label">UPTP 2026</span>
+          </div>
           <div class="stat-item">
             <span class="stat-number" data-countup="9">0</span>
             <span class="stat-label">MOFA 2025</span>
@@ -1425,12 +2018,16 @@
             <span class="stat-number" data-countup="37">0</span>
             <span class="stat-label">UPTP 2024</span>
           </div>
+
+          <!--
           <div class="stat-item">
             <span class="stat-number" data-countup="14">0</span>
             <span class="stat-label">UPTP 2023</span>
           </div>
+          -->
+
           <div class="stat-item">
-            <span class="stat-number" data-countup="95">0</span>
+            <span class="stat-number" data-countup="147">0</span>
             <span class="stat-label">Total Ingresantes</span>
           </div>
         </div>
@@ -1752,7 +2349,50 @@
         </div>
 
         <div class="grid grid-3">
+          <!-- Resultados Simulacro 2026 -->
+          <div class="simulacro-card">
+            <div class="simulacro-header">
+              <h3>Resultados Simulacro 2026 (UPTP)</h3>
+              <span class="simulacro-type">Resultados</span>
+            </div>
+            <div class="simulacro-footer">
+              <a href="documents/SIMULACRO 2025_2026 - RESULTADOS UPTP.pdf" download="Resultados_Simulacro_2026_UPTP.pdf" class="btn btn-primary">
+                <i class="download-icon">📊</i> Descargar Resultados
+              </a>
+            </div>
+          </div>
+
+
+
           <!-- Simulacro 1 -->
+          
+          <div class="simulacro-card">
+            <div class="simulacro-header">
+              <h3>Resultados Simulacro 2026 (MOFA)</h3>
+              <span class="simulacro-type">Resultados</span>
+            </div>
+            <div class="simulacro-footer">
+              <a href="documents/SIMULACRO 2025_2026 - RESULTADOS MOFA.pdf" download="Resultados_Simulacro_2026_MOFA.pdf" class="btn btn-primary">
+                <i class="download-icon">📊</i> Descargar Resultados
+              </a>
+            </div>
+          </div>
+
+          <!-- Simulacro 2026 por carrera -->
+          
+          <div class="simulacro-card">
+            <div class="simulacro-header">
+              <h3>Resultados Simulacro por Carrera</h3>
+              <span class="simulacro-type">Resultados</span>
+            </div>
+            <div class="simulacro-footer">
+              <a href="documents/RANKING_POR_CARRERAS.pdf" download="Ranking_por_Carreras.pdf" class="btn btn-primary">
+                <i class="download-icon">📊</i> Descargar Resultados
+              </a>
+            </div>
+          </div>
+
+          <!-- Simulacro 2 -->
           
           <div class="simulacro-card">
             <div class="simulacro-header">
@@ -1766,7 +2406,7 @@
             </div>
           </div>
          
-          <!-- Simulacro 2 -->
+          <!-- Simulacro 3 -->
           <div class="simulacro-card">
             <div class="simulacro-header">
               <h3>Simulacro Stewart 2024</h3>
