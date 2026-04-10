@@ -87,7 +87,7 @@
           <!-- Navigation Menu -->
           <nav>
             <a href="#inicio" role="button" aria-label="Ir a Inicio">Inicio</a>
-            <a href="#conocenos" role="button" aria-label="Ir a Conócenos">Conócenos</a>
+            <a href="becas.html" aria-label="Ir a Becas">🎓 Becas</a>
             <a href="#ingresantes" role="button" aria-label="Ir a Ingresantes">🏆 Ingresantes</a>
             <a href="#programa" role="button" aria-label="Ir a Cursos">📚 Cursos</a>
             <a href="#simulacros" role="button" aria-label="Ir a Simulacros">📝 Simulacros</a>
@@ -102,7 +102,7 @@
         <!-- Mobile Menu -->
         <div id="mobile-menu" class="mobile-menu hidden">
           <a href="#inicio">Inicio</a>
-          <a href="#conocenos">Conócenos</a>
+          <a href="becas.html">🎓 Becas</a>
           <a href="#ingresantes">🏆 Ingresantes</a>
           <a href="#programa">📚 Cursos</a>
           <a href="#simulacros">📝 Simulacros</a>
@@ -305,48 +305,6 @@
               </div>
             </div>
           </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contador Regresivo -->
-    <section class="countdown-section">
-      <div class="container scroll-reveal">
-        <div class="countdown-header">
-          <h2 class="countdown-title">
-            <span class="title-text">Cursillo Extensivo Ingreso 2027</span>
-          </h2>
-          <p>¡Prepárate para alcanzar el éxito!</p>
-          <div class="countdown-date">
-            <strong>9 de Marzo 2026</strong>
-          </div>
-        </div>
-
-        <div class="countdown-timer" id="countdown">
-          <div class="countdown-item">
-            <div class="countdown-number" id="days">0</div>
-            <div class="countdown-label">Días</div>
-          </div>
-          <div class="countdown-separator">:</div>
-          <div class="countdown-item">
-            <div class="countdown-number" id="hours">0</div>
-            <div class="countdown-label">Horas</div>
-          </div>
-          <div class="countdown-separator">:</div>
-          <div class="countdown-item">
-            <div class="countdown-number" id="minutes">0</div>
-            <div class="countdown-label">Minutos</div>
-          </div>
-          <div class="countdown-separator">:</div>
-          <div class="countdown-item">
-            <div class="countdown-number" id="seconds">0</div>
-            <div class="countdown-label">Segundos</div>
-          </div>
-        </div>
-
-        <div class="countdown-cta">
-          <p>¡Inscríbete ahora y asegura tu cupo!</p>
-          <a href="#inscripcion" class="btn-countdown">Inscribirme Ahora</a>
         </div>
       </div>
     </section>
@@ -2380,198 +2338,19 @@
         </div>
 
         <div class="grid grid-3">
-          <!-- Resultados Simulacro 2026 -->
-          <div class="simulacro-card">
-            <div class="simulacro-header">
-              <h3>Resultados Simulacro 2026 (UPTP)</h3>
-              <span class="simulacro-type">Resultados</span>
-            </div>
-            <div class="simulacro-footer">
-              <a href="documents/SIMULACRO 2025_2026 - RESULTADOS UPTP.pdf" download="Resultados_Simulacro_2026_UPTP.pdf" class="btn btn-primary">
-                <i class="download-icon">📊</i> Descargar Resultados
-              </a>
-            </div>
-          </div>
-
-
-
-          <!-- Simulacro 1 -->
-          
-          <div class="simulacro-card">
-            <div class="simulacro-header">
-              <h3>Resultados Simulacro 2026 (MOFA)</h3>
-              <span class="simulacro-type">Resultados</span>
-            </div>
-            <div class="simulacro-footer">
-              <a href="documents/SIMULACRO 2025_2026 - RESULTADOS MOFA.pdf" download="Resultados_Simulacro_2026_MOFA.pdf" class="btn btn-primary">
-                <i class="download-icon">📊</i> Descargar Resultados
-              </a>
-            </div>
-          </div>
-
           <!-- Simulacro 2026 por carrera -->
           
           <div class="simulacro-card">
             <div class="simulacro-header">
               <h3>Resultados Simulacro por Carrera</h3>
               <span class="simulacro-type">Resultados</span>
-            </div>
-            <div class="simulacro-footer">
-              <a href="documents/RANKING_POR_CARRERAS.pdf" download="Ranking_por_Carreras.pdf" class="btn btn-primary">
-                <i class="download-icon">📊</i> Descargar Resultados
-              </a>
-            </div>
-          </div>
+            <script>
+              // Inicializar cuando el DOM esté listo
+              document.addEventListener('DOMContentLoaded', function () {
+                initCourseToggles();
+              });
 
-          <!-- Simulacro 2 -->
-          
-          <div class="simulacro-card">
-            <div class="simulacro-header">
-              <h3>Simulacro Stewart 2025</h3>
-              <span class="simulacro-type">No-oficial</span>
-            </div>
-            <div class="simulacro-footer">
-              <a href="documents/Examen_Simulacro_2025.pdf" download="Examen_Simulacro_2025.pdf" class="btn btn-primary">
-                <i class="download-icon">📄</i> Descargar Simulacro
-              </a>
-            </div>
-          </div>
-         
-          <!-- Simulacro 3 -->
-          <div class="simulacro-card">
-            <div class="simulacro-header">
-              <h3>Simulacro Stewart 2024</h3>
-              <span class="simulacro-type">No-oficial</span>
-            </div>
-            <div class="simulacro-footer">
-              <a href="documents/Examen_Simulacro_2024.pdf" download="Examen_Simulacro_2024.pdf" class="btn btn-primary">
-                <i class="download-icon">📄</i> Descargar Simulacro
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- Calendario -->
-    <section id="calendario" class="bg-gray scroll-reveal">
-      <div class="container">
-        <div class="section-header">
-          <h2>Calendario de Eventos</h2>
-          <p>Mantente informado sobre fechas importantes</p>
-        </div>
-        <div class="grid grid-3">
-
-          <div class="calendar-card">
-            <div class="calendar-date">
-              <div class="date-circle">9</div>
-              <div class="date-info">
-                <h3>Marzo</h3>
-                <p>2026</p>
-              </div>
-            </div>
-            <h4>Inicio de Grupos ENTRE Semana</h4>
-            <p>Inicio de grupos colegio y avanzado entre semana, 
-              teniendo un foco intenso de estudio en cara al examen 
-              de ingreso a la UPTP 2027, para llegar con la mejor 
-              preparación posible.
-            </p>
-          </div>
-
-          <div class="calendar-card">
-            <div class="calendar-date">
-              <div class="date-circle">14</div>
-              <div class="date-info">
-                <h3>Marzo</h3>
-                <p>2026</p>
-              </div>
-            </div>
-            <h4>Inicio de Grupos SOLO Sábados</h4>
-            <p>Inicio del grupo colegio, solo sábados. Ideal para estudiantes
-              que quieren llevar una menor carga horaria para poder balancearla
-              con los estudios de último año de colegio.
-            </p>
-          </div>
-
-          
-        </div>
-      </div>
-    </section>
-
-    <!-- Inscripción -->
-    <section id="inscripcion" class="scroll-reveal-scale">
-      <div class="container">
-        <div class="section-header">
-          <h2>📞 Inscripción</h2>
-        <div class="form-container" style="text-align: center; padding: 3rem 2rem;">
-          <p style="margin-bottom: 2rem; font-size: 1.2rem; color: var(--navy); line-height: 1.6;">
-          <br>Para inscribirte, comunícate con nosotros directamente por WhatsApp.<br>
-            Nuestro equipo te brindará toda la información necesaria.</br>
-        </div>
-          
-          <a 
-            href="https://wa.me/595985350550?text=Hola%2C%20me%20gustar%C3%ADa%20inscribirme%20en%20el%20Cursillo%20Stewart" 
-            target="_blank"
-            rel="noopener noreferrer"
-            class="btn-whatsapp"
-            style="display: inline-flex; align-items: center; gap: 0.75rem; padding: 1.25rem 2.5rem; font-size: 1.1rem; background-color: #25D366; color: white; text-decoration: none; border-radius: 50px; font-weight: bold; transition: all 0.3s ease; box-shadow: 0 4px 15px rgba(37, 211, 102, 0.3);"
-            onmouseover="this.style.backgroundColor='#128C7E'; this.style.transform='translateY(-2px)'; this.style.boxShadow='0 6px 20px rgba(37, 211, 102, 0.4)';"
-            onmouseout="this.style.backgroundColor='#25D366'; this.style.transform='translateY(0)'; this.style.boxShadow='0 4px 15px rgba(37, 211, 102, 0.3)';"
-          >
-            <img src="Icons/whatsapp.png" alt="WhatsApp" style="width: 28px; height: 28px; filter: brightness(0) invert(1);">
-            Inscribirme por WhatsApp
-          </a>
-          
-          <p style="margin-top: 2rem; font-size: 0.95rem; color: var(--gray-600);">
-            📞 También puedes llamarnos al: <strong>+595 985 350550</strong>
-          </p>
-        </div>
-      </div>
-    </section>
-
-    <!-- Contacto -->
-    <section id="contacto" class="scroll-reveal">
-      <div class="container">
-        <div class="section-header">
-          <h2>¡Contáctanos!</h2>
-          <p>Estamos aquí para resolver todas tus dudas</p>
-        </div>
-        <div class="contact-grid">
-          <!-- Formulario de Contacto -->
-          <div>
-            <h3
-              style="
-                font-size: 1.5rem;
-                font-weight: bold;
-                color: var(--navy);
-                margin-bottom: 1.5rem;
-              "
-            >
-              Envíanos un Mensaje
-            </h3>
-            <form id="contact-form" style="display: flex; flex-direction: column; gap: 1.5rem">
-              <div class="form-group">
-                <label class="form-label">Nombre Completo</label>
-                <input
-                  type="text"
-                  name="from_name"
-                  class="form-input"
-                  placeholder="Tu nombre completo"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Correo Electrónico</label>
-                <input
-                  type="email"
-                  name="from_email"
-                  class="form-input"
-                  placeholder="tu@email.com"
-                  required
-                />
-              </div>
-              <div class="form-group">
-                <label class="form-label">Asunto</label>
+              // Course Toggle Functionality
                 <input
                   type="text"
                   name="subject"
@@ -2692,13 +2471,13 @@
                 >
               </li>
               <li>
-                <a href="index.html#conocenos" style="color: #fff; text-decoration: none !important"
-                  >Conócenos</a
+                <a href="index.html#programa" style="color: #fff; text-decoration: none !important"
+                  >Cursos</a
                 >
               </li>
               <li>
-                <a href="index.html#programa" style="color: #fff; text-decoration: none !important"
-                  >Cursos</a
+                <a href="becas.html" style="color: #fff; text-decoration: none !important"
+                  >Becas</a
                 >
               </li>
               <li>
@@ -3039,158 +2818,9 @@
       }
     </script>
 
-    <!-- Contador Regresivo Script -->
     <script>
-      // Contador regresivo
-      function initCountdown() {
-        // Fecha objetivo: 9 de Marzo 2026, 8:00 AM (UTC-3 Argentina)
-        const targetDate = new Date('2026-03-09T08:00:00-03:00').getTime();
-
-        const daysElement = document.getElementById('days');
-        const hoursElement = document.getElementById('hours');
-        const minutesElement = document.getElementById('minutes');
-        const secondsElement = document.getElementById('seconds');
-
-        // Verificar que todos los elementos existen
-        if (!daysElement || !hoursElement || !minutesElement || !secondsElement) {
-          console.error('No se encontraron todos los elementos del contador');
-          return;
-        }
-
-        console.log('Contador inicializado. Fecha objetivo:', new Date(targetDate));
-
-        let countdownAnimated = false; // Flag para saber si ya se animó
-
-        function updateCountdown() {
-          const now = new Date().getTime();
-          const distance = targetDate - now;
-
-          if (distance < 0) {
-            // Si la fecha ya pasó
-            daysElement.textContent = '0';
-            hoursElement.textContent = '0';
-            minutesElement.textContent = '0';
-            secondsElement.textContent = '0';
-            return;
-          }
-
-          const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-          const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          const seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-          // Actualizar con animación de pulso cuando cambia
-          updateWithPulse(daysElement, days);
-          updateWithPulse(hoursElement, hours);
-          updateWithPulse(minutesElement, minutes);
-          updateWithPulse(secondsElement, seconds);
-        }
-
-        function updateWithPulse(element, newValue) {
-          if (!element) return;
-
-          const currentValue = element.textContent;
-          if (currentValue !== newValue.toString()) {
-            element.textContent = newValue;
-            element.classList.add('pulse');
-            setTimeout(() => {
-              element.classList.remove('pulse');
-            }, 500);
-          }
-        }
-
-        // Función para animar el countdown la primera vez que aparece
-        function animateCountdownOnScroll() {
-          if (countdownAnimated) return;
-
-          const now = new Date().getTime();
-          const distance = targetDate - now;
-
-          if (distance < 0) return;
-
-          const finalDays = Math.floor(distance / (1000 * 60 * 60 * 24));
-          const finalHours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-          const finalMinutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-          const finalSeconds = Math.floor((distance % (1000 * 60)) / 1000);
-
-          // Animar cada elemento
-          let daysData = { count: 0 };
-          let hoursData = { count: 0 };
-          let minutesData = { count: 0 };
-          let secondsData = { count: 0 };
-
-          anime({
-            targets: daysData,
-            count: [0, finalDays],
-            duration: 1500,
-            round: 1,
-            easing: 'easeOutCubic',
-            update() {
-              daysElement.textContent = daysData.count;
-            }
-          });
-
-          anime({
-            targets: hoursData,
-            count: [0, finalHours],
-            duration: 1500,
-            round: 1,
-            delay: 200,
-            easing: 'easeOutCubic',
-            update() {
-              hoursElement.textContent = hoursData.count;
-            }
-          });
-
-          anime({
-            targets: minutesData,
-            count: [0, finalMinutes],
-            duration: 1500,
-            round: 1,
-            delay: 400,
-            easing: 'easeOutCubic',
-            update() {
-              minutesElement.textContent = minutesData.count;
-            }
-          });
-
-          anime({
-            targets: secondsData,
-            count: [0, finalSeconds],
-            duration: 1500,
-            round: 1,
-            delay: 600,
-            easing: 'easeOutCubic',
-            update() {
-              secondsElement.textContent = secondsData.count;
-            },
-            complete() {
-              countdownAnimated = true;
-              // Después de la animación, empezar el countdown normal
-              setInterval(updateCountdown, 1000);
-            }
-          });
-        }
-
-        // Observer para detectar cuando el countdown entra en vista
-        const countdownObserver = new IntersectionObserver((entries) => {
-          entries.forEach(entry => {
-            if (entry.isIntersecting && !countdownAnimated) {
-              animateCountdownOnScroll();
-              countdownObserver.unobserve(entry.target);
-            }
-          });
-        }, { threshold: 0.3 });
-
-        const countdownSection = document.querySelector('.countdown-timer');
-        if (countdownSection) {
-          countdownObserver.observe(countdownSection);
-        }
-      }
-
       // Inicializar cuando el DOM esté listo
       document.addEventListener('DOMContentLoaded', function () {
-        initCountdown();
         initCourseToggles();
       });
 

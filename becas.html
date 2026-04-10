@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Programa de Becas y Beneficios OMAPA & STEWART para estudiantes destacados en matemáticas que buscan ingresar a la UPTP o postular a becas MOFA."
+    />
+    <meta
+      name="keywords"
+      content="becas, cursillo stewart, omapa, matematica, uptp, mofa, beneficios"
+    />
+    <meta name="author" content="Cursillo Stewart" />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="images/1-1-logo-cursillo-stewart.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="images/1-1-logo-cursillo-stewart.png" />
+    <link rel="apple-touch-icon" href="images/1-1-logo-cursillo-stewart.png" />
+
+    <title>Becas - Cursillo Stewart</title>
+
+    <link rel="stylesheet" href="styles.css" />
+
+    <style>
+      body {
+        background: linear-gradient(180deg, #f8fafc 0%, #eef2ff 100%);
+      }
+
+      .becas-hero {
+        padding: 4.5rem 0 1.6rem;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .becas-hero::before,
+      .becas-hero::after {
+        content: '';
+        position: absolute;
+        border-radius: 999px;
+        z-index: 0;
+        filter: blur(2px);
+      }
+
+      .becas-hero::before {
+        width: 420px;
+        height: 420px;
+        background: radial-gradient(circle, rgba(59, 130, 246, 0.2) 0%, rgba(59, 130, 246, 0) 70%);
+        top: -140px;
+        right: -120px;
+      }
+
+      .becas-hero::after {
+        width: 320px;
+        height: 320px;
+        background: radial-gradient(circle, rgba(30, 64, 175, 0.15) 0%, rgba(30, 64, 175, 0) 70%);
+        bottom: -120px;
+        left: -80px;
+      }
+
+      .becas-chip {
+        display: inline-block;
+        background: #dbeafe;
+        color: #1e40af;
+        border: 1px solid #93c5fd;
+        border-radius: 999px;
+        padding: 0.35rem 0.85rem;
+        font-size: 0.85rem;
+        font-weight: 600;
+        letter-spacing: 0.01em;
+        margin-bottom: 1rem;
+      }
+
+      .becas-title {
+        color: #1e3a8a;
+        font-size: clamp(1.9rem, 3vw, 2.7rem);
+        line-height: 1.2;
+        margin-bottom: 0.75rem;
+      }
+
+      .hero-panel {
+        position: relative;
+        z-index: 1;
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.94), rgba(255, 255, 255, 0.84));
+        border: 1px solid #dbeafe;
+        border-radius: 18px;
+        padding: 1.2rem;
+        box-shadow: 0 18px 42px rgba(30, 64, 175, 0.12);
+      }
+
+      .becas-subtitle {
+        max-width: 900px;
+        color: #334155;
+        font-size: 1.02rem;
+      }
+
+      .hero-badges {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.65rem;
+        margin-top: 1rem;
+      }
+
+      .hero-badge {
+        padding: 0.45rem 0.75rem;
+        border-radius: 999px;
+        border: 1px solid #bfdbfe;
+        background: #eff6ff;
+        color: #1e3a8a;
+        font-size: 0.82rem;
+        font-weight: 600;
+      }
+
+      .cta-wrap {
+        margin-top: 1.1rem;
+        display: flex;
+        gap: 0.8rem;
+        flex-wrap: wrap;
+      }
+
+      .becas-card {
+        position: relative;
+        z-index: 1;
+        background: #ffffff;
+        border-radius: 16px;
+        box-shadow: 0 12px 32px rgba(30, 64, 175, 0.1);
+        border: 1px solid #e2e8f0;
+        padding: 1.2rem;
+        margin: 1.1rem 0;
+      }
+
+      .info-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 1rem;
+      }
+
+      .info-block {
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 0.9rem;
+      }
+
+      .info-block h3 {
+        font-size: 0.95rem;
+        color: #0f172a;
+        margin-bottom: 0.35rem;
+      }
+
+      .info-block p {
+        font-size: 0.92rem;
+        color: #475569;
+      }
+
+      .programa-section {
+        position: relative;
+        z-index: 1;
+        background: #ffffff;
+        border-radius: 16px;
+        border: 1px solid #e2e8f0;
+        box-shadow: 0 16px 40px rgba(15, 23, 42, 0.08);
+        padding: 1.4rem;
+        margin-top: 1.2rem;
+      }
+
+      .section-title {
+        color: #0f172a;
+        font-size: 1.35rem;
+        margin-bottom: 0.7rem;
+      }
+
+      .section-copy {
+        color: #475569;
+        font-size: 0.96rem;
+        margin-bottom: 0.8rem;
+      }
+
+      .category-list {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0.9rem;
+        margin-top: 1rem;
+      }
+
+      .category-item {
+        background: #f8fafc;
+        border: 1px solid #dbeafe;
+        border-radius: 12px;
+        padding: 0.95rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .category-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 10px 22px rgba(30, 64, 175, 0.12);
+      }
+
+      .category-item h3 {
+        color: #1d4ed8;
+        font-size: 0.95rem;
+        margin-bottom: 0.35rem;
+      }
+
+      .category-item p {
+        color: #334155;
+        font-size: 0.9rem;
+      }
+
+      .note-box {
+        margin-top: 1rem;
+        background: #fff7ed;
+        border: 1px solid #fed7aa;
+        color: #9a3412;
+        border-radius: 12px;
+        padding: 0.85rem;
+        font-size: 0.9rem;
+      }
+
+      .steps {
+        list-style: none;
+        counter-reset: step;
+        margin: 0.7rem 0 0;
+        padding-left: 0;
+        color: #334155;
+      }
+
+      .steps li {
+        counter-increment: step;
+        margin-bottom: 0.8rem;
+        background: #f8fafc;
+        border: 1px solid #e2e8f0;
+        border-radius: 12px;
+        padding: 0.8rem 0.85rem 0.8rem 3rem;
+        position: relative;
+      }
+
+      .steps li::before {
+        content: counter(step);
+        position: absolute;
+        left: 0.85rem;
+        top: 0.85rem;
+        width: 1.55rem;
+        height: 1.55rem;
+        border-radius: 999px;
+        background: #2563eb;
+        color: #ffffff;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 0.82rem;
+        font-weight: 700;
+      }
+
+      .steps strong {
+        color: #0f172a;
+      }
+
+      .btn-primary-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        background: linear-gradient(90deg, #1d4ed8, #2563eb);
+        color: #ffffff;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border-radius: 999px;
+        padding: 0.82rem 1.3rem;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      .btn-primary-link:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 8px 18px rgba(29, 78, 216, 0.28);
+      }
+
+      .btn-secondary-link {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        background: #ffffff;
+        border: 1px solid #cbd5e1;
+        color: #1e293b;
+        font-weight: 600;
+        font-size: 0.95rem;
+        border-radius: 999px;
+        padding: 0.82rem 1.3rem;
+      }
+
+      .commitment {
+        color: #334155;
+        font-size: 0.95rem;
+      }
+
+      .final-cta {
+        margin-top: 1.2rem;
+        background: #f1f5f9;
+        border: 1px solid #cbd5e1;
+        border-radius: 14px;
+        padding: 1rem;
+      }
+
+      .final-cta p {
+        color: #334155;
+        font-size: 0.93rem;
+      }
+
+      .final-cta .cta-wrap {
+        margin-top: 0.8rem;
+      }
+
+      @media (max-width: 900px) {
+        .info-grid,
+        .category-list {
+          grid-template-columns: 1fr;
+        }
+
+        .becas-hero {
+          padding-top: 4rem;
+        }
+
+        .hero-panel {
+          padding: 1rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container">
+        <div class="header-content">
+          <div class="logo">
+            <img
+              src="images/logo-cursillo-stewart.png"
+              alt="Cursillo Stewart Logo"
+              class="logo-image"
+            />
+          </div>
+
+          <nav>
+            <a href="index.html">Inicio</a>
+            <a href="becas.html" aria-current="page">🎓 Becas</a>
+            <a href="index.html#ingresantes">🏆 Ingresantes</a>
+            <a href="index.html#programa">📚 Cursos</a>
+            <a href="index.html#simulacros">📝 Simulacros</a>
+            <a href="profesores.html">🧑‍🏫 Profesores</a>
+            <a href="index.html#contacto">¡Contáctanos!</a>
+          </nav>
+
+          <button class="mobile-menu-btn" onclick="toggleMenu()">☰</button>
+        </div>
+
+        <div id="mobile-menu" class="mobile-menu hidden">
+          <a href="index.html">Inicio</a>
+          <a href="becas.html" aria-current="page">🎓 Becas</a>
+          <a href="index.html#ingresantes">🏆 Ingresantes</a>
+          <a href="index.html#programa">📚 Cursos</a>
+          <a href="index.html#simulacros">📝 Simulacros</a>
+          <a href="profesores.html">🧑‍🏫 Profesores</a>
+          <a href="index.html#contacto">¡Contáctanos!</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="becas-hero">
+        <div class="container">
+          <div class="hero-panel">
+            <span class="becas-chip">Becas</span>
+            <h1 class="becas-title">Programa de Becas y Beneficios: OMAPA &amp; STEWART</h1>
+            <p class="becas-subtitle">
+              Este acuerdo establece categorías de apoyo económico para cursos de
+              preparación, dirigidos a estudiantes con méritos vinculados a OMAPA
+              que busquen ingresar a la UPTP o postular a las becas MOFA.
+            </p>
+
+            <div class="hero-badges" aria-label="Resumen de beneficios">
+              <span class="hero-badge">Oro 2026-2027: 100%</span>
+              <span class="hero-badge">Plata 2026-2027: 50%</span>
+              <span class="hero-badge">Bronce y JT: Descuento variable</span>
+              <span class="hero-badge">Solo 2do y 3er año de la media</span>
+            </div>
+
+            <div class="cta-wrap">
+              <a
+                class="btn-primary-link"
+                href="https://forms.gle/4oSDGAG2dmXjhKxH7"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Ir al formulario de Google
+              </a>
+            </div>
+          </div>
+
+          <div class="becas-card" aria-label="Información general del programa">
+            <div class="info-grid">
+              <div class="info-block">
+                <h3>Instituciones involucradas</h3>
+                <p>Programa conjunto entre OMAPA y Cursillo Stewart.</p>
+              </div>
+              <div class="info-block">
+                <h3>Público objetivo</h3>
+                <p>
+                  Estudiantes de 2do o 3er año de la Educación Media con méritos
+                  en olimpiadas de matemática.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <section class="programa-section" aria-labelledby="categorias-title">
+            <h2 id="categorias-title" class="section-title">1. Categorías de Beneficios</h2>
+            <p class="section-copy">
+              El apoyo económico se define según la categoría de logro del estudiante.
+            </p>
+
+            <div class="category-list">
+              <article class="category-item">
+                <h3>Becas Completas (100%)</h3>
+                <p>
+                  Exclusivas para Medallistas de Oro de la Olimpiada Nacional Juvenil
+                  de Matemática (años 2026 y 2027).
+                </p>
+              </article>
+
+              <article class="category-item">
+                <h3>Medias Becas (50%)</h3>
+                <p>
+                  Destinadas a Medallistas de Plata de la Olimpiada Nacional Juvenil
+                  de Matemática (años 2026 y 2027).
+                </p>
+              </article>
+
+              <article class="category-item">
+                <h3>Descuentos Específicos</h3>
+                <p>
+                  Para Medallistas de Bronce y miembros de Jóvenes Talentos (JT).
+                  El monto se define tras evaluar el perfil del estudiante.
+                </p>
+              </article>
+            </div>
+
+            <p class="note-box">
+              Nota importante: Estos beneficios son válidos únicamente para estudiantes
+              que estén cursando actualmente el 2do o 3er año de la Educación Media.
+            </p>
+          </section>
+
+          <section class="programa-section" aria-labelledby="protocolo-title">
+            <h2 id="protocolo-title" class="section-title">2. Protocolo de Aplicación</h2>
+            <p class="section-copy">
+              Para acceder a los beneficios, seguí estrictamente este procedimiento.
+            </p>
+
+            <ol class="steps">
+              <li>
+                <strong>Formulario:</strong> Completar el formulario oficial de solicitud
+                de beca difundido por OMAPA y STEWART. Se debe adjuntar la documentación
+                digital que acredite los méritos (certificados de medallas, constancias de JT, etc.).
+              </li>
+              <li>
+                <strong>Contacto:</strong> Tras enviar el formulario, el estudiante debe
+                comunicarse con la administración de Cursillo Stewart para notificar
+                formalmente su postulación.
+              </li>
+              <li>
+                <strong>Evaluación y Respuesta:</strong> El interesado deberá esperar la
+                respuesta oficial de la institución. En esta etapa se validarán los datos
+                y se confirmará el porcentaje de beneficio asignado antes de proceder con
+                la inscripción definitiva.
+              </li>
+            </ol>
+          </section>
+
+        </div>
+      </section>
+    </main>
+
+    <script>
+      function toggleMenu() {
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenu.classList.contains('hidden')) {
+          mobileMenu.classList.remove('hidden');
+          mobileMenu.classList.add('show');
+        } else {
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('show');
+        }
+      }
+
+    </script>
+  </body>
+</html>
