@@ -1449,7 +1449,7 @@ tbody td:first-child {
 }
 
 .info-card li::before {
-  content: '✓';
+  content: '•';
   color: var(--red);
   font-weight: bold;
   font-size: 1.1rem;
@@ -2357,7 +2357,7 @@ section:not(#inicio) {
 }
 
 .simulacro-content li::before {
-  content: '✓';
+  content: '•';
   background: var(--green);
   color: white;
   width: 18px;
@@ -2932,7 +2932,7 @@ section:not(#inicio) {
 }
 
 .profesor-logros li::before {
-  content: '✓ ';
+  content: '• ';
   color: var(--red);
   font-weight: bold;
   margin-right: 0.25rem;
@@ -3035,7 +3035,7 @@ section:not(#inicio) {
 }
 
 .profesor-logros-list li::before {
-  content: '✓ ';
+  content: '• ';
   color: var(--primary);
   font-weight: bold;
   margin-right: 0.5rem;
@@ -3434,7 +3434,7 @@ nav a.active::after {
 }
 
 .toggle-content ul li::before {
-  content: '✓';
+  content: '•';
   color: var(--blue);
   font-weight: bold;
   font-size: 1.1rem;
