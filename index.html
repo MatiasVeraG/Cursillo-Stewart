@@ -86,17 +86,17 @@
 
           <!-- Navigation Menu -->
           <nav>
-            <a href="#inicio" role="button" aria-label="Ir a Inicio">Inicio</a>
+            <a href="#inicio" aria-label="Ir a Inicio">Inicio</a>
             <a href="becas.html" aria-label="Ir a Becas">Becas</a>
-            <a href="#ingresantes" role="button" aria-label="Ir a Ingresantes">Ingresantes</a>
-            <a href="#programa" role="button" aria-label="Ir a Cursos">Cursos</a>
-            <a href="#simulacros" role="button" aria-label="Ir a Simulacros">Simulacros</a>
-            <a href="profesores.html">Profesores</a>
-            <a href="#contacto" role="button" aria-label="Ir a Contacto">¡Contáctanos!</a>
+            <a href="#ingresantes" aria-label="Ir a Ingresantes">Ingresantes</a>
+            <a href="#programa" aria-label="Ir a Cursos">Cursos</a>
+            <a href="#simulacros" aria-label="Ir a Simulacros">Simulacros</a>
+            <a href="profesores.html" aria-label="Ir a Profesores">Profesores</a>
+            <a href="#contacto" aria-label="Ir a Contacto">¡Contáctanos!</a>
           </nav>
 
           <!-- Mobile Menu Button -->
-          <button class="mobile-menu-btn" onclick="toggleMenu()">Menu</button>
+          <button class="mobile-menu-btn" onclick="toggleMenu()" aria-label="Abrir menú de navegación" aria-expanded="false">&#9776;</button>
         </div>
 
         <!-- Mobile Menu -->
@@ -115,12 +115,13 @@
     <!-- Banner Initial -->
     <section id="inicio" class="banner">
       <div class="container">
-        <h2>Cursillo Stewart</h2>
+        <h1>Cursillo Stewart</h1>
         <p class="banner-subtitle">Somos el <strong>cursillo #1</strong> para la Universidad Politécnica Taiwán-Paraguay en porcentaje,<br> cantidad y calidad de ingresantes.</p>
-        
+
         <div class="banner-image" onclick="triggerConfetti()" style="cursor: pointer;">
           <img src="images/El_cursillo_numero_1.png" alt="El cursillo número 1 para la Universidad Politécnica Taiwan-Paraguay" class="banner-main-image">
         </div>
+      </div>
 
       <!-- Indicadores del carousel -->
       <div class="carousel-indicators">
@@ -201,7 +202,7 @@
             <div class="timeline-content">
               <h3>2024 — Crecimiento y Reconocimiento</h3>
               <p>
-                Con <strong>37 ingresantes y los primeros puestos</strong>, Stewart se consolidó como una
+                Con <strong>37 ingresantes y el TOP 1 General</strong>, Stewart se consolidó como una
                 marca reconocida en la preparación para la UPTP. Nuestra comunidad
                 creció, aumentamos la comodidad, la organización y la exigencia.
               </p>
@@ -237,7 +238,7 @@
             <div class="timeline-content">
               <h3>2025 — Consolidación y Excelencia</h3>
               <p>
-                Stewart destacó nuevamente con <strong>35 ingresantes y los primeros puestos</strong>, reafirmando
+                Stewart destacó nuevamente con <strong>35 ingresantes y el TOP 1 General</strong>, reafirmando
                 nuestro compromiso con la calidad. Nos mudamos a un <strong>nuevo
                 edificio</strong>, contando con la <strong>mejor infraestructura para el aprendizaje.</strong>
               </p>
@@ -275,9 +276,9 @@
             <div class="timeline-content">
               <h3>2026- ¡Stewart da el batacazo!</h3>
               <p>
-                Stewart se impone con <strong>más de la mitad de los ingresantes a la UPTP, el mejor puntaje general del examen UPTP/MOFA 
-                y la mayoría de los ingresantes preferenciales.</strong> Dejando clara nuestra posición como cursillo 
-                <strong>LÍDER</strong> a la <strong>UPTP</strong>.
+                Stewart crea el <strong>récord histórico de cantidad de ingresantes (52), y </strong>  también el <strong>TOP 1
+                general del examen.</strong> Dejando clara nuestra posición como cursillo líder absoluto al ingreso
+                a la UPTP y MOFA.
               </p>
               <div class="timeline-image" style="text-align: center; margin-top: 1.5rem">
                 <img
@@ -310,7 +311,7 @@
     </section>
 
     <!-- Contador Regresivo -->
-    <section class="countdown-section" style="display: none;" aria-hidden="true">
+    <section class="countdown-section">
       <div class="container scroll-reveal">
         <div class="countdown-header">
           <h2 class="countdown-title">
@@ -318,7 +319,7 @@
           </h2>
           <p>¡Prepárate para alcanzar el éxito!</p>
           <div class="countdown-date">
-            <strong>9 de Marzo 2026</strong>
+            <strong>2 de Mayo 2026</strong>
           </div>
         </div>
 
@@ -362,6 +363,7 @@
         <!-- Tabs para años -->
         <div class="years-tabs">
           <button class="year-tab" data-year="UPTP-2026" onclick="showYear('UPTP-2026')">UPTP 2026</button>
+          <button class="year-tab" data-year="MOFA-2025" onclick="showYear('MOFA-2025')">MOFA 2025</button>
           <button class="year-tab" data-year="UPTP-2025" onclick="showYear('UPTP-2025')">UPTP 2025</button>
           <button class="year-tab" data-year="UPTP-2024" onclick="showYear('UPTP-2024')">UPTP 2024</button>
           <button class="year-tab" data-year="UPTP-2023" onclick="showYear('UPTP-2023')">UPTP 2023</button>
@@ -2375,7 +2377,7 @@
       <div class="container">
         <div class="section-header">
           <h2>Simulacros</h2>
-          <strong>Cada año realizamos nuestro simulacro abierto</strong>, el cual se crea tomando
+          <p><strong>Cada año realizamos nuestro simulacro abierto</strong>, el cual se crea tomando
             como referencia el último examen oficial de ingreso UPTP.</p>
         </div>
 
@@ -2421,32 +2423,15 @@
 
           <div class="calendar-card">
             <div class="calendar-date">
-              <div class="date-circle">9</div>
+              <div class="date-circle">2</div>
               <div class="date-info">
-                <h3>Marzo</h3>
+                <h3>Mayo</h3>
                 <p>2026</p>
               </div>
             </div>
-            <h4>Inicio de Grupos ENTRE Semana</h4>
-            <p>Inicio de grupos colegio y avanzado entre semana, 
-              teniendo un foco intenso de estudio en cara al examen 
-              de ingreso a la UPTP 2027, para llegar con la mejor 
-              preparación posible.
-            </p>
-          </div>
-
-          <div class="calendar-card">
-            <div class="calendar-date">
-              <div class="date-circle">14</div>
-              <div class="date-info">
-                <h3>Marzo</h3>
-                <p>2026</p>
-              </div>
-            </div>
-            <h4>Inicio de Grupos SOLO Sábados</h4>
-            <p>Inicio del grupo colegio, solo sábados. Ideal para estudiantes
-              que quieren llevar una menor carga horaria para poder balancearla
-              con los estudios de último año de colegio.
+            <h4>Inicio de grupo virtual y presencial.</h4>
+            <p><strong>Inicio del grupo colegio</strong>, solo sábados. Ideal para estudiantes que quieren llevar el estudio
+                para el ingreso al mismo tiempo que las materias del último año de colegio.
             </p>
           </div>
 
@@ -3002,8 +2987,8 @@
     <script>
       // Contador regresivo
       function initCountdown() {
-        // Fecha objetivo: 9 de Marzo 2026, 8:00 AM (UTC-3 Argentina)
-        const targetDate = new Date('2026-03-09T08:00:00-03:00').getTime();
+        // Fecha objetivo: 2 de Mayo 2026, 8:00 AM (UTC-3 Paraguay)
+        const targetDate = new Date('2026-05-02T08:00:00-03:00').getTime();
 
         const daysElement = document.getElementById('days');
         const hoursElement = document.getElementById('hours');

@@ -144,9 +144,11 @@ nav a {
   border-bottom: 2px solid transparent;
 }
 
-nav a:hover {
+nav a:hover,
+nav a:focus-visible {
   color: #e63946;
   border-bottom: 2px solid #e63946;
+  outline: none;
 }
 
 /* Dropdown menu styles */
@@ -221,6 +223,14 @@ nav a:hover {
   color: var(--navy);
   font-size: 1.5rem;
   cursor: pointer;
+  padding: 0.25rem;
+  border-radius: 4px;
+  line-height: 1;
+}
+
+.mobile-menu-btn:focus-visible {
+  outline: 2px solid var(--navy);
+  outline-offset: 2px;
 }
 
 .mobile-menu {
@@ -362,7 +372,7 @@ nav a:hover {
 
 /* Estilos para la imagen del banner */
 .banner-image {
-  margin-bottom: 8rem;
+  margin-bottom: 2rem;
   text-align: center;
   animation: fadeInUp 1s ease-out 0.4s both;
 }
@@ -440,10 +450,13 @@ nav a:hover {
   box-shadow: 0 4px 15px rgba(230, 57, 70, 0.3);
 }
 
-.btn-primary:hover {
+.btn-primary:hover,
+.btn-primary:focus-visible {
   background: linear-gradient(135deg, #c92030, #b91c1c);
   transform: scale(1.05);
   box-shadow: 0 6px 20px rgba(230, 57, 70, 0.4);
+  outline: 3px solid #e63946;
+  outline-offset: 2px;
 }
 
 .btn-primary:disabled {
@@ -1012,13 +1025,16 @@ section {
 }
 
 .year-tab:hover::before,
+.year-tab:focus-visible::before,
 .year-tab.active::before {
   left: 0;
 }
 
 .year-tab:hover,
+.year-tab:focus-visible,
 .year-tab.active {
   color: var(--white) !important;
+  outline: none;
   transform: translateY(-2px);
   box-shadow: 0 8px 25px rgba(220, 38, 38, 0.3);
 }
@@ -2093,9 +2109,16 @@ footer {
     font-size: 1.75rem;
   }
 
+  .grid-2,
   .grid-3,
   .grid-4 {
     grid-template-columns: 1fr;
+  }
+
+  .stats {
+    grid-template-columns: repeat(2, 1fr);
+    padding: 2rem;
+    gap: 1.5rem;
   }
 
   /* Countdown Responsive */
@@ -2186,11 +2209,6 @@ footer {
     padding: 2.5rem;
     gap: 1.5rem;
   }
-}
-
-/* Smooth scrolling */
-html {
-  scroll-behavior: smooth;
 }
 
 /* Animation for cards */
