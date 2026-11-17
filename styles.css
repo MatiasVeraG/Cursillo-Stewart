@@ -1852,6 +1852,12 @@ select.form-input {
   line-height: 1;
 }
 
+.contact-icon img {
+  width: 1.15rem;
+  height: 1.15rem;
+  object-fit: contain;
+}
+
 .contact-info p:first-child {
   font-weight: 600;
   color: var(--navy);
